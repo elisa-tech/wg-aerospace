@@ -18,22 +18,22 @@
 
 ## Attended this meeting
 - Steve VanderLeest – Boeing
-
+- Qasim Majeed 
+- Wanja Zaeske - DLR
+- Matt Kelly - Boeing
+- Martin Halle – TUHH
+- Ulises V 
 
 ## Attended in the past
 - Sebastien Boria
 - Sam Bristow
 - Olivier Charrier – Wind River
-- Martin Halle – TUHH
-- Matt Kelly - Boeing
 - Shuah Khan – Linux Foundation
 - LenkaKT – TUL CZ
-- Qasim Majeed 
 - Sam Thompson – Rapita
 - Richard Wagener
 - Chuck Wolber – Boeing
 - Jeremy York - Boeing
-- Wanja Zaeske - DLR
 
 # Brief Notices
 
@@ -66,19 +66,30 @@
 # Discussion Topics
 Rank-ordered discussion topics
 
+* How to organize our work, our documents, software
+    * Workflow - should we use a branch and merge strategy for most members?
+    * Assign at least a few people as owner/maintainer to approve merges (perhaps a WG vice-chair)
 * Survey on the state of the art (not only from aero, but from other industries)
-    * Outcome: Published paper?
+    * What would be a collaborative approach?  Github wiki?  Overleaf?
+    * Need to better define the scope of the survey - what should be included or not?
+    * How will we split up the effort between authors to avoid duplication of effort?
+       * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project     
+       * Define the threshold for determining if someone is listed as an author or simply listed in acknowlgement
+    * Outcome: White paper at first, eventually Published paper
 * Needs for compiling documentation (Shuah and Kate, starting with work from Medical Devices WG)
     * E.g., Tracing a workload, [Tracing With Ftrace: Critical Tooling For Linux Development](https://www.linuxfoundation.org/webinars/tracefs-the-building-blocks-of-linux-kernel-tracing-by-ftrace?hsLang&#61;en)
     * [PATCH v3 docs: add workload-tracing document to admin-guide](https://lore.kernel.org/linux-doc/Y9nkqhAS6EW2Lu8Z@debian.me/T/#t)
-* How to organize our work, our documents, software, tools
 * What features must be supported?  How do de-risk (or even deactivate) those not needed?
 * Achieving high Design Assurance Level (DAL) DO-178C processes
 * Proving real-time performance
 * Aerospace use cases
     * Identify typical architectures and platforms for avionics
     * must clearly articulate expectations in order to make suggestions to other working groups (e.g., tools WG)
+    * Candidates
+        * [PX4 + Linux](https://auterion.com/drone-manufacturers/skynode/) - PX4 It can be on any Posix OS (including Linux) 
+        * [ARINC653 sim](https://github.com/aeronautical-informatics/apex-linux) - And there is our ARINC653 simulator using Linux Namespaces + CGroups
 * Tooling
+    * What tool needs are unique to Aerospace?   
     * Coordinating with Tools WG (not duplicating their work)
 * How to abstract OS behaviors needed for avionics and real-time safety-critical requirements. 
     * Can I simulate (early) what I need from an OS and refine requirements. 
@@ -89,16 +100,16 @@ Rank-ordered discussion topics
 
 # Closing
 ## Next Steps
-* Organize our ongoing agenda for discussion
+* Organize our ongoing agenda for discussion [mostly done for now]
     * Start collecting literature on state-of-the-art [All]
         * Review [recorded presentation](https://st1.zoom.us/web_client/bai5dum/html/externalLinkPage.html?ref=https://www.youtube.com/watch?v=Fea5XODLBM8&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=3) on state of real-time Linux 
         * Establish list of resources for anyone interested in getting started with Linux in aerospace – the problem and possible solutions
 # Action Items
-* Open Action Items
-    * Invite Stefano Stabellini from AMD to a future meeting for discussion on hypervisor [S. VanderLeest] (consider co-meeting with the system WG)
-* Closed Action Items
-    * Forward our 2023 goals to TSC [S. VanderLeest] - Closed
-    * Establish document areas [S. VanderLeest] - Closed
+* [ ] Invite Stefano Stabellini from AMD to a future meeting for discussion on hypervisor [S. VanderLeest] (consider co-meeting with the system WG)
+* [ ] Check how to assign roles for our github [S. VanderLeest]
+* [ ] If interested in co-authoring survey, notify Martin Halle (Martin.Halle@tuhh.de) of your interest and email underwhich you would like to register for Overleaf
+* [X] Forward our 2023 goals to TSC [S. VanderLeest]
+* [X] Establish document areas [S. VanderLeest]
 
 # Round Table
 
