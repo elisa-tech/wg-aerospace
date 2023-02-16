@@ -64,6 +64,7 @@
 * Identify candidate use cases using Linux
 
 # Discussion Topics
+Trial
 Rank-ordered discussion topics
 
 * Survey on the state of the art (not only from aero, but from other industries)
