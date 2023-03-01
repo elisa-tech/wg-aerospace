@@ -28,6 +28,7 @@
 - Sebastien Boria
 - Sam Bristow
 - Olivier Charrier – Wind River
+- Stefano Dell'Osa - Intel
 - Martin Halle – TUHH
 - Shuah Khan – Linux Foundation
 - LenkaKT – TUL CZ
