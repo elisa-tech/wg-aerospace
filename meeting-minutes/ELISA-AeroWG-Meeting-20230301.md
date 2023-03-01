@@ -19,6 +19,9 @@
 
 ## Attended this meeting
 - Steve VanderLeest – Boeing
+- Qasim Majeed 
+- Matt Kelly - Boeing
+- Stefano Dell'Osa - Intel
 
 
 ## Attended in the past
@@ -26,10 +29,8 @@
 - Sam Bristow
 - Olivier Charrier – Wind River
 - Martin Halle – TUHH
-- Matt Kelly - Boeing
 - Shuah Khan – Linux Foundation
 - LenkaKT – TUL CZ
-- Qasim Majeed 
 - Sam Thompson – Rapita
 - Ulises V 
 - Steve VanderLeest – Boeing
@@ -113,6 +114,7 @@ Rank-ordered discussion topics
 * Compare/contrast Linux approach to COTS avionics OS offerings
 * Terminology of partitions and ARINC 653 – do we see Linux as the partitioning environment itself or does it become a host OS within a partition?
 * The link between Linux support on top of architecture (especially the newest ones, such as RISC-V)
+* Support of mixed criticality for aerospace applications
 
 # Closing
 
