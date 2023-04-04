@@ -3,17 +3,19 @@
 # Minutes 
 ## 05 Apr 2023
 
+
 # Agenda
 - Roll Call
 - Brief Notices
 - Announcements
 - Mandate and Goals
-- Prioritize Discussion Topics 
-- Work on Survey Paper 
+- Prioritize Discussion Topics
+- Work on Survey Paper
 - Closing
     - Next Steps
     - Action Items
     - Round Table
+
 
 # Roll Call
 
@@ -30,14 +32,15 @@
 - Matt Kelly - Boeing
 - Shuah Khan – Linux Foundation
 - LenkaKT – TUL CZ
-- Qasim Majeed 
+- Qasim Majeed
 - Sam Thompson – Rapita
-- Ulises V 
+- Ulises V
 - Steve VanderLeest – Boeing
 - Richard Wagener
 - Chuck Wolber – Boeing
 - Jeremy York - Boeing
 - Wanja Zaeske - DLR
+
 
 # Brief Notices
 
@@ -52,11 +55,12 @@
     * Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
 
+
 # Announcements
 
 ## Upcoming Conferences
 * [Open Source Summit North America](https://events.linuxfoundation.org/open-source-summit-north-america/)  - 10-12 May 2023
-    * Likely ELISA workshop during OSSNA
+    * ELISA workshop during OSSNA
 * [Embedded Open Source Summit](https://events.linuxfoundation.org/embedded-open-source-summit/) - 27-30 June 2023
 * [Digital Avionics Systems Conference](https://2023.dasconline.org/) - 1-5 Oct 2023
 
@@ -77,16 +81,16 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 Survey on the state of the art (not only from aero, but from other industries)
 * Outcome: White paper at first, eventually Published paper
-* What would be a collaborative approach?  
-    * [Overleaf](https://www.overleaf.com/project/63ee5a398ae14b0bad694e21)
+* What would be a collaborative approach? Overleaf
 * Need to better define the scope of the survey - what should be included or not?
 * How will we split up the effort between authors to avoid duplication of effort?
-    * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project     
+    * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project
     * Define the threshold for determining if someone is listed as an author or simply listed in acknowledgement
-* If interested in co-authoring survey, notify Martin Halle (Martin.Halle@tuhh.de) of your interest and email underwhich you would like to register for Overleaf
-* Start collecting literature on state-of-the-art 
-    * Review [recorded presentation](https://st1.zoom.us/web_client/bai5dum/html/externalLinkPage.html?ref=https://www.youtube.com/watch?v=Fea5XODLBM8&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=3) on state of real-time Linux 
+* If interested in co-authoring survey, notify Martin Halle (Martin.Halle@tuhh.de) of your interest and email under which you would like to register for Overleaf
+* Start collecting literature on state-of-the-art
+    * Review [recorded presentation](https://st1.zoom.us/web_client/bai5dum/html/externalLinkPage.html?ref=https://www.youtube.com/watch?v=Fea5XODLBM8&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=3) on state of real-time Linux
     * Establish list of resources for anyone interested in getting started with Linux in aerospace – the problem and possible solutions
+
 
 # Discussion Topics
 Rank-ordered discussion topics
@@ -102,13 +106,13 @@ Rank-ordered discussion topics
     * Identify typical architectures and platforms for avionics
     * must clearly articulate expectations in order to make suggestions to other working groups (e.g., tools WG)
     * Candidates
-        * [PX4 + Linux](https://auterion.com/drone-manufacturers/skynode/) - PX4 It can be on any Posix OS (including Linux) 
+        * [PX4 + Linux](https://auterion.com/drone-manufacturers/skynode/) - PX4 It can be on any Posix OS (including Linux)
         * [ARINC653 sim](https://github.com/aeronautical-informatics/apex-linux) - And there is our ARINC653 simulator using Linux Namespaces + CGroups
 * Tooling
-    * What tool needs are unique to Aerospace?   
+    * What tool needs are unique to Aerospace?
     * Coordinating with Tools WG (not duplicating their work)
-* How to abstract OS behaviors needed for avionics and real-time safety-critical requirements. 
-    * Can I simulate (early) what I need from an OS and refine requirements. 
+* How to abstract OS behaviors needed for avionics and real-time safety-critical requirements.
+    * Can I simulate (early) what I need from an OS and refine requirements.
     * For example, try something in hypervisor or formal language early.
 * Compare/contrast Linux approach to COTS avionics OS offerings
 * Terminology of partitions and ARINC 653 – do we see Linux as the partitioning environment itself or does it become a host OS within a partition?
@@ -117,25 +121,21 @@ Rank-ordered discussion topics
 
 # Closing
 
-# Action Items 
-M = Moved to gitlab
+
+# Action Items
 * How to organize our work, our documents, software
-    * [M] Workflow - should we use a branch and merge strategy for most members?
-    * [M] Assign at least a few people as owner/maintainer to approve merges (perhaps a WG vice-chair)
+    * [ ] Workflow - should we use a branch and merge strategy for most members?
+    * [ ] Assign at least a few people as owner/maintainer to approve merges (perhaps a WG vice-chair)
     * [X] Check how to assign roles for our github [S. VanderLeest]
         - Yes, Steve can access Settings > Add People for the [AeroWG github](https://github.com/elisa-tech/wg-aerospace/)
 * [M] Invite Stefano Stabellini from AMD to a future meeting for discussion on hypervisor [S. VanderLeest] (consider co-meeting with the system WG)
-    - This issue was duplicated to github [issue #2](https://github.com/elisa-tech/wg-aerospace/issues/2) 
+    - This issue was duplicated to github [issue #2](https://github.com/elisa-tech/wg-aerospace/issues/2) as an experiment
 * [X] Forward our 2023 goals to TSC [S. VanderLeest]
 * [X] Establish document areas [S. VanderLeest]
 
 
 
 # Round Table
-
-
-
-
 
 
 
