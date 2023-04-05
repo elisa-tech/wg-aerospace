@@ -21,7 +21,10 @@
 
 ## Attended this meeting
 - Steve VanderLeest – Boeing
-
+- Martin Halle – TUHH
+- Sam Thompson – Rapita
+- Stefano Dell'Osa - Intel
+- Rajesh Kurapati
 
 ## Attended in the past
 - Sebastien Boria
@@ -86,6 +89,8 @@ Survey on the state of the art (not only from aero, but from other industries)
 * How will we split up the effort between authors to avoid duplication of effort?
     * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project
     * Define the threshold for determining if someone is listed as an author or simply listed in acknowledgement
+      * The authors should agree together about who should be listed as an author (and why)
+      * roughly speaking, they should contribute significant content  
 * If interested in co-authoring survey, notify Martin Halle (Martin.Halle@tuhh.de) of your interest and email under which you would like to register for Overleaf
 * Start collecting literature on state-of-the-art
     * Review [recorded presentation](https://st1.zoom.us/web_client/bai5dum/html/externalLinkPage.html?ref=https://www.youtube.com/watch?v=Fea5XODLBM8&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=3) on state of real-time Linux
@@ -100,6 +105,16 @@ Rank-ordered discussion topics
     * E.g., Tracing a workload, [Tracing With Ftrace: Critical Tooling For Linux Development](https://www.linuxfoundation.org/webinars/tracefs-the-building-blocks-of-linux-kernel-tracing-by-ftrace?hsLang&#61;en)
     * [PATCH v3 docs: add workload-tracing document to admin-guide](https://lore.kernel.org/linux-doc/Y9nkqhAS6EW2Lu8Z@debian.me/T/#t)
 * What features must be supported?  How do de-risk (or even deactivate) those not needed?
+  * What are the criteria for inclusion of features?
+  * How do we configure a subset of features with robust configuration management (e.g., kernel config files)
+  * Obtaining necessary and sufficient timing and precision
+  * List of system functions that must be able to run and their requirements
+  * Supported I/O
+  * What configuration of which features are supported according to what schedules
+  * Driven by use cases
+  * Should we limit to aerospace? Or consider broader than aerospace? Consider only one area of aerospace? 
+  * What criticality (software level, design assurance level) should we consider?
+  * What resources must be available for which criticality levels  
 * Achieving high Design Assurance Level (DAL) DO-178C processes
 * Proving real-time performance
 * Aerospace use cases
