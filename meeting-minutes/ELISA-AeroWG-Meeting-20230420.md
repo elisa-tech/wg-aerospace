@@ -101,7 +101,27 @@ Our working group plans to produce a survey paper on the state of the art for us
 
 ## Open Questions and Issues
 * Need to better define the scope of the survey
+    * What conclusions or outcomes do we expect?
+        * Demonstrates that Linux is used in aerospace
+        * Identifies challenges and ways forward   
     * What should be included or not?
+      * Decided: Must be aerospace.  
+      * Decided: Both air and space
+      * Decided: Can be Real-Time (Hard or Soft) or Non-Real-Time
+      * Decided: Must be safety-critical or mission-critical system (e.g., DO-178C/ED-12 Software Level D or higher, TBD: NASA levels?), but may be some areas that are not safety-critical
+      * Decision: Linux must be somewhere in the system
+      * options?
+        * Focus only on RTOS based on the Linux kernel
+        * Focus on Linux OS somewhere in the system (not necessarily real-time)
+        * Focus on OS or RTOS are loosely based on Linux
+        * Focus on open source (GPL-ish) OS or RTOS (e.g., Zephyer) or hypervisor (e.g. Xen or seL4), but Linux somewhere in the system
+        * Focus on any OS (open or closed) but with Linux somewhere in the system (e.g., WR Helix with Linux guest) - must be able to document it
+      * What device types? 
+      * APIs: ARINC 653, FACE, [Fprime](https://nasa.github.io/fprime/) - must connection with Linux
+      * Programming languages questions
+         * Rust - may be too big, https://github.com/AeroRust/Welcome
+         * C++
+    * Do we include unmanned (drone) vehicles? If so, paper may divide between manned and unmanned  - must be safety critical
     * Should we address not only aerospace but also from other industries?
 * How will we split up the effort between authors to avoid duplication of effort?
     * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project
