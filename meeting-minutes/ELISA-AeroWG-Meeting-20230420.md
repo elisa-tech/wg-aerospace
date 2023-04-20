@@ -73,7 +73,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
     * ELISA workshop during OSSNA
 * [Embedded Open Source Summit](https://events.linuxfoundation.org/embedded-open-source-summit/) - 27-30 June 2023
 * [Digital Avionics Systems Conference](https://2023.dasconline.org/) - 1-5 Oct 2023
-* [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/)
+* [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) - 14-15 Nov 2023
 
 
 
