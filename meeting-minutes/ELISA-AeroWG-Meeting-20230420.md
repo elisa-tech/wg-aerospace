@@ -20,7 +20,13 @@
 # Roll Call
 
 ## Attended this meeting
-- Steve VanderLeest – Boeing
+s- Steve VanderLeest – Boeing
+- Wanja Zaeske - DLR
+- Martin Halle – TUHH
+- Matt Kelly - Boeing
+- Rajesh Kurapati - KMC
+- Lenka Koskova – TUL CZ
+- Olivier Charrier – Wind River
 
 
 ## Attended in the past
@@ -31,7 +37,8 @@
 - Martin Halle – TUHH
 - Matt Kelly - Boeing
 - Shuah Khan – Linux Foundation
-- LenkaKT – TUL CZ
+- Lenka Koskova – TUL CZ
+- Rajesh Kurapati - KMC
 - Qasim Majeed
 - Sam Thompson – Rapita
 - Ulises V
