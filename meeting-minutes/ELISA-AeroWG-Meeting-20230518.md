@@ -23,6 +23,9 @@
 
 ## Attended this meeting
 - Steve VanderLeest – Boeing
+- Qasim Majeed
+- Sam Thompson – Rapita
+- Matt Kelly - Boeing
 
 
 ## Attended in the past
@@ -31,11 +34,9 @@
 - Olivier Charrier – Wind River
 - Stefano Dell'Osa - Intel
 - Martin Halle – TUHH
-- Matt Kelly - Boeing
 - Shuah Khan – Linux Foundation
 - Lenka Koskova – TUL CZ
 - Rajesh Kurapati - KMC
-- Qasim Majeed
 - Sam Thompson – Rapita
 - Ulises V
 - Steve VanderLeest – Boeing
@@ -82,54 +83,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 * [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) - 14-15 Nov 2023
 
 
----
-# Survey Paper
-
-Our working group plans to produce a survey paper on the state of the art for use of Linux in aerospace 
-
-* The outcome will be a white paper at first, eventually a published paper.
-* Our writing tool is Overleaf (uses LaTeX)
-    * [Survey paper in Overleaf](https://www.overleaf.com/project/63ee5a398ae14b0bad694e21) 
-    * If interested in co-authoring survey, notify Martin Halle (Martin.Halle@tuhh.de) of your interest and email under which you would like to register for Overleaf
-
-## Next Steps
-* Start collecting literature on state-of-the-art
-    * Review [recorded presentation](https://st1.zoom.us/web_client/bai5dum/html/externalLinkPage.html?ref=https://www.youtube.com/watch?v=Fea5XODLBM8&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=3) on state of real-time Linux
-    * Establish list of resources for anyone interested in getting started with Linux in aerospace – the problem and possible solutions
-
-
-## Open Questions and Issues
-
-### Need to better define the scope of the survey
-* What conclusions or outcomes do we expect?
-    * Demonstrates that Linux is used in aerospace
-    * Identifies challenges and ways forward   
-* What should be included or not?
-    * Decided: Must be aerospace.  
-    * Decided: Both air and space
-    * Decided: Can be Real-Time (Hard or Soft) or Non-Real-Time
-    * Decided: Must be safety-critical or mission-critical system (e.g., DO-178C/ED-12 Software Level D or higher, TBD: NASA levels?), but may be some areas that are not safety-critical
-    * Decision: Linux must be somewhere in the system
- * Breadth/scope options include:
-    * Focus only on RTOS based on the Linux kernel
-    * Focus on Linux OS somewhere in the system (not necessarily real-time)
-    * Focus on OS or RTOS are loosely based on Linux
-    * Focus on open source (GPL-ish) OS or RTOS (e.g., Zephyer) or hypervisor (e.g. Xen or seL4), but Linux somewhere in the system
-    * Focus on any OS (open or closed) but with Linux somewhere in the system (e.g., WR Helix with Linux guest) - must be able to document it
- * Other aspects/topics that we might include in paper:
-    * What device types? 
-    * APIs: ARINC 653, FACE, [Fprime](https://nasa.github.io/fprime/) - must be connected with Linux
-    * Programming languages questions - must be connected with Linux
-        * Rust - may be too big, https://github.com/AeroRust/Welcome
-        * C++
-    * Do we include unmanned (drone) vehicles? If so, paper may divide between manned and unmanned  - must be safety critical
-### Other questions    
-* How will we split up the effort between authors to avoid duplication of effort?
-  * Relate papers to projects, assign one of the survey paper authors to address that collection of work related to the project
-
-* Define the threshold for determining if someone is listed as an author or simply listed in acknowledgement
-   * The authors should agree together about who should be listed as an author (and why)
-   * roughly speaking, they should contribute significant content  
 
 
 ---
@@ -137,17 +90,43 @@ Our working group plans to produce a survey paper on the state of the art for us
 A future discussion will cover "Features Required for Aerospace". Next steps are to create an agenda for the discussion (see below for start).
 
 
-* What features must be supported?  
-* How do de-risk (or even deactivate) those not needed?
-* What are the criteria for inclusion of features?
+## Scope
+* Discussion at this time 
+  * limited to aerospace (subsequent discussions may be broadened to other domains)
+  * will be on an entire distribution (subsequent discussions may focus narrowly on the kernel)
+  * will cover all criticality (software levels), but may sort answers by level
+  * will we time limit each major section so that all are covered in first meeting, schedule subsequent meetings on narrower topics as needed
+
+## What are the outcomes of discussion?
+* List of features
+  * Features that are essential to include
+  * Features that are essential to remove (via configuration)
+* Refinement of our Aerospace use-case
+* Convergence of our focus
+* Next steps for our list of features
+  * Convincing the Linux community to focus on these features, e.g., providing more comprehensive testing, architecture
+  * Develop patch sets to make things more configurable to achieve our defined feature list
+  * List to help us compare with other working group list of features
+    * The differences in lists should be examined and may imply gaps
+
+## Configuration
 * How do we configure a subset of features with robust configuration management (e.g., kernel config files)
+* What configuration of which features are supported according to what schedules
+* How do de-risk (or even deactivate) those not needed?
+* Do we configure via kernel config, via yocto recipe, something else?
+  * May be able to derive a aero-specific kernel config
+ 
+
+## Method of identifying features
+* Driven by use cases
+* What are the criteria for inclusion of features?
+
+
+## Features identification
+* What features must be supported?  
 * Obtaining necessary and sufficient timing and precision
 * List of system functions that must be able to run and their requirements
 * Supported I/O
-* What configuration of which features are supported according to what schedules
-* Driven by use cases
-* Should we limit to aerospace? Or consider broader than aerospace? Consider only one area of aerospace? 
-* What criticality (software level, design assurance level) should we consider?
 * What resources must be available for which criticality levels  
 
 
