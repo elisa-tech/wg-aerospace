@@ -73,11 +73,13 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ---
 # Announcements
 
+* No meeting on Wed 7 Jun 2023
+* Next meeting is Thu 15 Jun 2023, Steve is away, so Matt will lead
+
 ## Upcoming Conferences
 * [Embedded Open Source Summit](https://events.linuxfoundation.org/embedded-open-source-summit/) - 27-30 June 2023
 * [Digital Avionics Systems Conference](https://2023.dasconline.org/) - 1-5 Oct 2023
 * [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) - 14-15 Nov 2023
-
 
 
 ---
