@@ -1,7 +1,7 @@
 ![logo](logo_elisa_small.png )
 ## ELISA Aerospace Working Group 
 # Minutes 
-## 6 June 2023
+## 05 Jul 2023
 
 
 ---
@@ -23,27 +23,25 @@
 
 ## Attended this meeting
 
-- Matt Kelly - Boeing
+
+## Attended recently in the past
+
+- Sebastien Boria - Airbus
+- Sam Bristow
+- Olivier Charrier – Wind River
+- Stefano Dell'Osa - Intel
 - Martin Halle – TUHH
+- Matt Kelly - Boeing
+- Shuah Khan – Linux Foundation
+- Abdi Kitesa
+- Lenka Koskova – TUL CZ
+- Rajesh Kurapati - KMC
 - Qasim Majeed
 - Sam Thompson – Rapita
-- Lenka Koskova – TUL CZ
-- Sebastien Boria - Airbus
-- Abdi Kitesa
-- Wanja Zaeske - DLR
-- Olivier Charrier – Wind River
-
-## Attended in the past
-
-- Steve VanderLeest – Boeing
-- Sam Bristow
-- Stefano Dell'Osa - Intel
-- Shuah Khan – Linux Foundation
-- Rajesh Kurapati - KMC
 - Ulises V
+- Steve VanderLeest – Boeing
 - Richard Wagener
-- Chuck Wolber – Boeing
-- Jeremy York - Boeing
+- Wanja Zaeske - DLR
 
 
 
@@ -75,12 +73,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ---
 # Announcements
 
-* Next meeting is Thu 15 Jun 2023, Steve is away, so Matt will lead
-* Stefano Stabellini talk on Xen Hypvervisior in Sept. 
+## Upcoming Webinars
+* Chuck Wolber webinar on yocto on 18 Jul 2023 at 10am EDT
+* Stefano Stabellini webinar on Xen Hypervisor on 6 Sep 2023 at 10am EDT
 
 ## Upcoming Conferences
-* [Embedded Open Source Summit](https://events.linuxfoundation.org/embedded-open-source-summit/) - 27-30 June 2023
-* [ELISA Berlin Workshop]
 * [Digital Avionics Systems Conference](https://2023.dasconline.org/) - 1-5 Oct 2023
 * [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) - 14-15 Nov 2023
 
