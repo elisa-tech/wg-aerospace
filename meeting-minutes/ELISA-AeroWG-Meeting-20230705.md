@@ -10,6 +10,7 @@
 - Brief Notices
 - Announcements
 - Mandate and Goals
+- Collaboration with other groups
 - Work on Survey Paper
 - Prepare Discussion Agenda
 - Closing
@@ -74,15 +75,44 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 # Announcements
 
 ## Upcoming Webinars
-* Chuck Wolber webinar on yocto on 18 Jul 2023 at 10am EDT
-* Stefano Stabellini webinar on Xen Hypervisor on 6 Sep 2023 at 10am EDT
+* 18 Jul 2023, 10am EDT, Chuck Wolber webinar on yocto
+* 6 Sep 2023, 10am EDT, Stefano Stabellini webinar on Xen Hypervisor 
 
 ## Upcoming Conferences
-* [Digital Avionics Systems Conference](https://2023.dasconline.org/) - 1-5 Oct 2023
-* [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) - 14-15 Nov 2023
+* 1-5 Oct 2023 [Digital Avionics Systems Conference](https://2023.dasconline.org/)
+* 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) 
+
 
 ---
+
+# Collaboration with Other Groups
+
+* Collaboration with other ELISA working groups
+  * Horizontal (technical focus)
+    * Linux features for Safety-Critical Systems
+    * Open-Source Engineering Process
+    * Safety Architecture
+    * Systems
+    * Tool Investigation and Code Improvement
+  * Vertical (industry focus)
+    * Automotive
+    * Medical Device
+* Collaboration with groups outside ELISA
+  * linux4space.org
+  * Xen
+  * Yocto
+
+
+---
+
+# Survey Paper
+
+[Survey paper](https://www.overleaf.com/project/63ee5a398ae14b0bad694e21)
+
+---
+
 # Features Required for Aerospace
+
 A future discussion will cover "Features Required for Aerospace". Next steps are to create an agenda for the discussion (see below for start).
 
 ## Scope
