@@ -133,10 +133,6 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 
 - Need to break into groups and start tackling concrete issues
 - Ensure we document these sub-group activities very well
-- Features have been classified
-  - Support for safety
-  - The rest
-  - Methods of including mixed-criticality is different between aerospace and automotive
 
 ## Method of identifying features
 
@@ -144,6 +140,10 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 - What are the criteria for inclusion of features?
 - Need to very explicitly know what we are including
 - Very important we know specific configuration, modules, etc.
+- Features have been classified
+  - Support for safety
+  - The rest
+  - Methods of including mixed-criticality is different between aerospace and automotive
 
 ## Features identification
 
@@ -211,7 +211,7 @@ Identify use case categories that require differentiated set of features
 
 - What features do we want?
   - Driver support
-  - ABI Compatiblity
+  - ABI Compatibility
   - Using existing SW
 - What don't we want?
   - Complex behavior
@@ -240,7 +240,6 @@ Identify use case categories that require differentiated set of features
   - Yocto supports this
 - Often discovered after long periods that we don't need features that people requested
   - Must document and trace the rationale for including
-
 
 ---
 
