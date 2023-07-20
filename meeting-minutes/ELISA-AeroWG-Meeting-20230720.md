@@ -25,6 +25,12 @@
 # Roll Call
 
 ## Attended this meeting
+- Sebastien Boria - Airbus
+- Martin Halle – TUHH
+- Steve VanderLeest – Boeing
+- Wanja Zaeske - DLR
+- Sam Thompson – Rapita
+- Steward Hildebrand - AMD
 
 ## Attended recently in the past
 
@@ -78,14 +84,14 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Webinars
 
-* 18 Jul 2023, 10am EDT, Chuck Wolber webinar on yocto
+* 18 Jul 2023, 10am EDT, Chuck Wolber [webinar](https://www.youtube.com/watch?v=UguCnpNXyS0&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=4) on yocto
 - 6 Sep 2023, 10am EDT, Stefano Stabellini webinar on Xen Hypervisor
 
 ## Upcoming Conferences
 
-* 1-5 Oct 2023 [Digital Avionics Systems Conference](https://2023.dasconline.org/)
-- 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/)
-- AvioSE
+* 1-5 Oct 2023 [Digital Avionics Systems Conference](https://2023.dasconline.org/) in Barcelona, Spain
+- 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
+- 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
 
 ---
 
@@ -97,37 +103,73 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 
 * Discussion at this time
   - limited to aerospace (subsequent discussions may be broadened to other domains)
+    - may have different answers in aero compared to space
   - covers features in an entire distribution (subsequent discussions may focus narrowly on the kernel)
   - covers all criticality (software levels), but may have different answers for different software levels
   - time limit each major section so that all are covered in first meeting, schedule subsequent meetings on narrower topics as needed
 
+* how many meetings?
+  * more than one?
+* when do we schedule?
+  * cautious of holidays coming up in Europe
+* do we schedule these during our regular working group time slots?
+  * yes same time slot for first overall meeting
+  * allow for different time slots when splitting to sub-groups
+
 ## What are the outcomes of discussion?
 
-* List of features
+- List of features
   - Features that are essential to include
   - Features that are essential to remove (via configuration)
+- Methods for selecting features and evaluating the impact (e.g., DAL)
 - Refinement of our Aerospace use-case
+  - The use-case may help us concretely decide the features for the specified system functionality
+  - focus first on applications that we all have in common 
 - Convergence of our focus
   - Focus on a single processor architecture?
 - Next steps for our list of features
-  - Convincing the Linux community to focus on these features, e.g., providing more comprehensive testing, architecture
+  - Convincing the Linux community to focus on these included features, e.g., providing more comprehensive testing, architecture
   - Develop patch sets to make things more configurable to achieve our defined feature list
   - List to help us compare with other working group list of features
     - The differences in lists should be examined and may imply gaps
+
+- May ask group to vote on certain topics to quantify our mindset (to either show consensus or show diversity of opinion)
+  - either vote during meeting or perhaps provide method of voting asynchronously (e.g., via "like" links)
+  - You could nicely use "Google Forms" for polls (where the options are explained accordingly for those not present when the poll was created). Just in case Github does not provide something useful.
 
 ---
 
 # Topics for "Features Required for Aerospace" Discussion
 
-- Workflow
-- Configuration
+- Method of proceeding with identification of features
+- Configuration of features (include/exclude)
+  - connection to partitioning
+  - features that are included/excluded in a real-time aspect  
+  - different safety features that configured and are certified at different levels (e.g., DO-178C software level)
+    - may exclude features, e.g., exclude any feature certified below DAL-B
 - Use Cases
 - Maintenance and Support
 - Tools
 
+
+other ways to categorize:
+- first look at kernel? Then go higher layers? kernel layer, services layer, application layer
+  - where do drivers fit in discussion?
+  - API for system applications (user level) - is that a feature?, e.g., ARINC 653
+  - 
+
+- Multiple perspectives on where to start discussion
+  - kernel/services/application
+  - DAL level 
+  - use case
+    - aero vs space
+  
+- Perhaps we have a matrix of the two dimensions above and walk through the intersections of those rows and columns
+
+
 ---
 
-# Features Required for Aerospace: Workflow
+# Features Required for Aerospace: Method of proceeding with identification of features
 
 ## overall workflow notes
 
@@ -194,7 +236,7 @@ Identify use case categories that require differentiated set of features
   - Firecracker, Cata Container (from Intel)
 - Use case Vote
   - Space - XXX
-  - Aerospace - XXXXXXXX
+  - Aerospace - XXXXXXXXX
   - Ground Systems - XX
 - Space case
   - Combination of ARM Cores + Microcontroller
@@ -209,11 +251,11 @@ Identify use case categories that require differentiated set of features
 
 # Features Required for Aerospace: Candidate Features
 
-- What features do we want?
+- What features do we want? Included
   - Driver support
   - ABI Compatibility
   - Using existing SW
-- What don't we want?
+- What don't we want? Excluded
   - Complex behavior
     - Loading of kernel modules, adaptive scheduling, etc.
 
