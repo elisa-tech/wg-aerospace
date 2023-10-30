@@ -4,8 +4,9 @@
 
 # Minutes
 
-## 19 Oct 2023
+## 1 Nov 2023
 
+Note: European Summer Time ended, but United States Daylight Saving Time has not yet. Thus the meeting time is shifted one hour early for those in Europe, just for this week.
 
 ---
 
@@ -26,11 +27,7 @@
 # Roll Call
 
 ## Attended this meeting
-- Martin Halle - TUHH
-- Qasim Majeed - Siemens
-- Ulises Vega - Luxoft (but joined privately)
-- Sam Thompson - Rapita
-- Lenka Koskova - TUL CZ
+
 
 ## Attended recently in the past
 
@@ -85,12 +82,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Recent Events
 
 - Stefano Stabellini webinar on Xen Hypervisor for Safety-Critical Domains on ELISA Youtube channel](https://t.sidekickopen27.com/Ctc/RI+23284/cZw--04/JkM2-6qcW6N1vHY6lZ3kqW4GQ8GV7F5vbBW7V_pQp2lrM5tW5MQG4w5Wp4C9W23wbNC1t4g5SW1ndryk5BmgTmVbvF1z6L01wHW7ByzFd5BV5fTVp9P9t83S3WdW1KLzR03FWnsVW2WhGcg4MlcrNW3zmWb74js_ZWVy54w158j7RMW2zfRfZ9jxkyQVm3g2v3m5Q4mW6jcW708MpbgJW5rRvYd2Ff54xW8tsntp2JFXGsW5bL7rR1YlMFbW7pdcJF6l_t_ZW6c8DTQ3pC3D5W8nQgrR237VrqN2gwNvgcfKdRf39HkR404)
-- Digital Avionics Systems Conference
 
 
 ## Upcoming Events
 
-- "The Road to Safe Space Exploration" - ELISA webinar. Due to technical difficulties, was cancelled on 11 Oct, will be rescheduled soon
+- "The Road to Safe Space Exploration" - ELISA webinar. Due to technical difficulties, was cancelled on 11 Oct, now scheduled for 1 Nov 
 - 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
 - 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
   - Papers due 27 Oct 2023
@@ -98,37 +94,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Abstracts due 30 Nov 2023
 
 ---
-# Follow-up for Recent Events
-
-- Webinar on Xen by Stabellini
-  - Any follow up steps?
-    -  Software life cycle data supporting certification from AMD
-- Digital Avionics Systems Conference (next slide)
-
----
-# Follow-up on Digital Avionics Systems Conference
-
-- paper #1 (Steve VanderLeest, DASC):
-  - short presentation of the content, commenst as follows:
-  - Sam: There is som more work on overarching properties by NASA, Mallory Graydon
-    - proposal: get in toucch with her wrt experiences
-  - Sam: Comments on Reverse Engineering (RE) approach:
-    - feasible, but going to be a lot of work...
-    - inline assembly could be hard to remove
-    - drivers: some may contain binary firmware > would propose a significant issue
-    - drivers: reverse engineer requirements for object code is difficult
-  - Lenka: agrees on best approach is RE
-    - Linux in space: did a similar study, will publish about it
-    - addresses certification only to drivers that are OpenSource, no use of binary drivers and pre-selected HW configuration
-    - experience so far: selected 5 different HW plattforms where drivers are included in a compatible way
-  - Qasim
-    - No comments
-  - Ulises:
-    - No comments
-- paper #2 (Steve VanderLeest, DASC):
-  - short presentation of the content
-  - (no comments)
-
 # Logistics for "Features Required for Aerospace" Discussion
 
 A future discussion will cover "Features Required for Aerospace". Next steps are to create an agenda for the discussion (see below for start).
