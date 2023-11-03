@@ -8,3 +8,4 @@ For more information, contact the working group chair, [Dr. Steve VanderLeest](m
 
 # External Links
 * [ELISA Home](https://elisa.tech/)
+* [ELISA Aerospace on GitHub](https://github.com/elisa-tech/wg-aerospace)
