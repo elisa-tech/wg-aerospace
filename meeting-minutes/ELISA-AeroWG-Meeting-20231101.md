@@ -28,6 +28,12 @@ Note: European Summer Time ended, but United States Daylight Saving Time has not
 
 ## Attended this meeting
 
+- Matt Kelly - Boeing
+- Ivan Perez - NASA Ames
+- Chuck Wolber - Boeing
+- Wanja Zaeske - DLR
+- Nora Breitmoser-Widdecke - DLR
+- Ulises Vega - Luxoft (but joined ELISA privately)
 
 ## Attended recently in the past
 
@@ -36,17 +42,13 @@ Note: European Summer Time ended, but United States Daylight Saving Time has not
 - Olivier Charrier - Wind River
 - Stefano Dell'Osa - Intel
 - Martin Halle - TUHH
-- Matt Kelly - Boeing
 - Shuah Khan - Linux Foundation
 - Abdi Kitesa
 - Lenka Koskova - TUL CZ
 - Rajesh Kurapati - KMC
-- Qasim Majeed - Siemens
 - Sam Thompson - Rapita
-- Ulises Vega - Luxoft (but joined ELISA privately)
 - Steve VanderLeest - Boeing
 - Richard Wagener
-- Wanja Zaeske - DLR
 
 ---
 
@@ -86,7 +88,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Events
 
-- "The Road to Safe Space Exploration" - ELISA webinar. Due to technical difficulties, was cancelled on 11 Oct, now scheduled for 1 Nov 
+- "The Road to Safe Space Exploration" - ELISA webinar. Due to technical difficulties, was cancelled on 11 Oct, now scheduled for 1 Nov
 - 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
 - 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
   - Papers due 27 Oct 2023
@@ -108,7 +110,7 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
       - most simple functions max. DAL-C (DAL-D...)
   - limited to aerospace (subsequent discussions may be broadened to other domains)
     - may have different answers in aero compared to space
-    - different regulations nned to be considered, but can learn from each other
+    - different regulations need to be considered, but can learn from each other
     - less complicated in space due to many aspects without human beings
   - covers features in an entire distribution (subsequent discussions may focus narrowly on the kernel)
     - setup a working group to continue Steves work on analysing and "stripping" the kernel?
@@ -201,6 +203,7 @@ other ways to categorize:
   - Support for safety
   - The rest
   - Methods of including mixed-criticality is different between aerospace and automotive
+    - NASA has it's own standards as well (separate from aerospace and automotive)
 
 ## Features identification
 
@@ -239,7 +242,25 @@ other ways to categorize:
 - How do de-risk (or even deactivate) those not needed?
 - Do we configure via kernel config, via yocto recipe, something else?
   - May be able to derive a aero-specific kernel config
+  - Could create a linux-yocto-aero that is focused on aerospace such that it is a configuration option within Yocto
+    - This would include defconfigs that are geared toward aerospace (and in particulart the identified use case)
 - How do we minimize variation from the vanilla kernel to avoid increase maintenance?
+  - Upstream as fast as possible (easier said than done)
+  - In particular, contribute additional configuration options to enable making things smaller
+- Examine the base Yocto image.bbclass and base.bbclass to understand what could be removed
+  - Could (technically) get down to a single application + kernel
+- Nix would be an alternative to Yocto for declaratively defining a small kernel
+
+- What are the desirable features of Linux/Nix that drive us to use it as the base?
+  - HW Support
+  - Init Systems
+  - Industry standard API!
+- If you trim the kernel down so aggressively, do you still really have Linux?
+
+- Is the combination of features exponential? How do we test and verify these combination?
+  - Can we look at product line management to help with this?
+  - Most important to show that a single configuration *can* work
+  - Be very clear about what has been tested vs. not tested
 
 ---
 
@@ -248,7 +269,7 @@ other ways to categorize:
 Identify use case categories that require differentiated set of features
 
 - Some interesting projects in the area MicroVM
-  - Firecracker, Cata Container (from Intel)
+  - Firecracker, Kata Container (from Intel)
 - Use case Vote
   - Space - XXX
   - Aerospace - XXXXXXXXX
@@ -262,17 +283,65 @@ Identify use case categories that require differentiated set of features
   - These are running RTOS or baremetal
   - Linux is used for "payload" operations
 
+- Choice of architecture can effect testing
+  - Some instructions don't exist on different architectures which can cause strange bugs
+- Is there anything aiming to replace PPC?
+  - There is a decent amount of interest around using RISC-V to create simple SoCs with rad hardening
+  - Planned workshop around architectures for high-performance space computing (including RISC-V) in space around SMC/IT
+  - Mars Helicopter is Linux-based on ARM Snapdragon
+  - Extensive use of FPGAs in Space domain
+    - FPGAs probably aren't part of this broader discussion since they typically aren't running an OS
+- Do we expect hard-real time?
+  - If we expect to support anything above SWL-D, then we must
+  - Generally agreed we want to include hard-real time as part of the use case
+
 ---
 
 # Features Required for Aerospace: Candidate Features
 
 - What features do we want? Included
+  - HW/SoC support in general (focus on specific use case)
   - Driver support
+    - Mostly the primitive devices (UART, *simple* networking)
+    - PCI/PCI-E
+      - Could be excluded from the base case?
+      - Probably hard to find a real world use-case that doesn't include it
+      - Probably not possible to remove it either from the kernel
+    - What is the minimal configuration for microVMs and how does that interface to the outside world?
+    - What bus systems should be included/excluded?
   - ABI Compatibility
-  - Using existing SW
+    - Ability to use existing SW
+    - NASA has several open-source frameworks CFS, ROS2, fPrime that would be desirable to work
+      - CFS has been certed to NASA NPR7150.2 Class A Class A
+      - These could be valuable test cases 
+  - Schedulers
+    - SCHED_DEADLINE + CBS
+    - Do we need to contribute a new scheduler?
+      - There has been some work here, but unlikely to be merge upstream
+      - There are issues with pure static scheduling (no response to events)
+      - https://ieeexplore.ieee.org/document/7005306
+      - https://dl.acm.org/doi/10.1145/2245276.2232037
+      - https://linuxdevices.org/real-time-linux-gains-arinc-653-scheduler/
 - What don't we want? Excluded
   - Complex behavior
     - Loading of kernel modules, adaptive scheduling, etc.
+    - eBPF/BPF (for high assurance)
+      - Used for runtime verification
+      - Don't need this in the deploy system for run-time verification
+    - cgroups/namespace (for high assurance)
+      - Opposing view: You could use cgroups to provide time/space partitioning
+    - kvm
+      - Opposing view: You could use cgroups to provide time/space partitioning
+      - Do we lose ABI compatibility from using kvm?
+    - SELinux
+      - Generally, agreed
+    - Filesystems
+      - Most would be trimed out
+      - 1 for general purpose, 1 for small fixed flash?
+  - Most of the schedulers
+  - Various features that hinder determinism
+
+// End discussion
 
 ---
 
@@ -310,6 +379,8 @@ Identify use case categories that require differentiated set of features
   - Motivation - Matt Kelly
   - Other Open Source RTOS - Martin Halle
   - Linux non-safety-critical in partitioned - Steve VanderLeest
+
+- Ivan Perez Interesting in participarting 
 
 ---
 
