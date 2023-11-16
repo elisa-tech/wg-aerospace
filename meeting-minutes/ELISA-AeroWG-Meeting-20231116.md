@@ -311,6 +311,25 @@ Identify use case categories that require differentiated set of features
 - Often discovered after long periods that we don't need features that people requested
   - Must document and trace the rationale for including
 
+---
+
+# Hints and Tips for the Group
+
+Working on GitHub (see below) requires to be assigned to the project.
+For access, ask one of the team leaders.
+
+To actually get access and be able to commit, there are things to keep in mind:
+Cloning the repo using the command line GIT (the same is true for SmartGIT, a UI-based tool) and then try to commit may fail. The reason is most likely because GitHub no longer supports authentication using name/password only.
+ 
+What works is to use the GitHub CLI. To do so:
+- if you don't have one, create a GitHub account (probably related to your email address you are allow using within ELISA)
+- install the GitHub CLI (either directly or through chocolatey or any other package manager)
+- use the CLI command to authenticate
+  - this will create an access token for your machine that need to be setup/entered into the browser
+- use the following CLI command to create a working copy that authenticates correctly against your GitHub account:
+  - gh repo clone elisa-tech/wg-aerospace
+
+Finally, both: GIT command line tool and others (like SmartGIT) are working properly.
 
 ---
 
