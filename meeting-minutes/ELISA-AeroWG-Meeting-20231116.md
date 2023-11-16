@@ -24,6 +24,12 @@
 # Roll Call
 
 ## Attended this meeting
+- Steve VanderLeest - Boeing
+- Martin Halle - TUHH
+- Sam Thompson - Rapita
+- Olivier Charrier - Wind River
+- Rajesh Kurapati - KMC
+- Joseph Lee - Skytrac
 
 
 ## Attended recently in the past
@@ -44,6 +50,7 @@
 - Steve VanderLeest - Boeing
 - Richard Wagener
 - Wanja Zaeske - DLR
+- Joseph Lee - Skytrac
 
 ---
 
@@ -88,10 +95,15 @@ Martin Halle has been appointed as the vice-chair of the ELISA aerospace working
 
 ## Upcoming Events
 
+- Feb 7/8 2024 [MEA](https://conference-mea.org/)
 - 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
+- Apr 16 to 18  [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich
+- June 11th-12th [ERTS](https://www.erts2024.org/) in Toulouse
 - 29 Jul - 2 Aug 2024 [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, US
   - Abstracts due 30 Nov 2023
-- 1-3 Oct 2024 IEEE [Digital Avionics Systems Conference](http://dasconline.org/)
+- 1-3 Oct 2024 IEEE [Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, US
+- 2-9 Mar [IEEE Aero](https://www.aeroconf.org/)
+
 
 ---
 
@@ -99,217 +111,7 @@ Martin Halle has been appointed as the vice-chair of the ELISA aerospace working
 
 [Survey paper](https://www.overleaf.com/project/63ee5a398ae14b0bad694e21)
 
-- For section on Linux in federated: <http://www.boeing.com/commercial/aeromagazine/aero_23/EFB.pdf>
-
-- Lead authors for sections
-  - Motivation - Matt Kelly
-  - Other Open Source RTOS - Martin Halle
-  - Linux non-safety-critical in partitioned - Steve VanderLeest
-
----
-# Logistics for "Features Required for Aerospace" Discussion
-
-A future discussion will cover "Features Required for Aerospace". Next steps are to create an agenda for the discussion (see below for start).
-
-## Scope
-
-* Discussion at this time
-  - address challenges in both ways: top-bottom and bottom-up approach in parallel to capture different views
-    - is there a common, compatible use-case?
-      - remotely piloted aircraft is similar and easier than manned aircraft
-      - common ground/use-case: plattform deployable in several objects (e.g. flying helicopters on mars)
-      - most simple functions max. DAL-C (DAL-D...)
-  - limited to aerospace (subsequent discussions may be broadened to other domains)
-    - may have different answers in aero compared to space
-    - different regulations nned to be considered, but can learn from each other
-    - less complicated in space due to many aspects without human beings
-  - covers features in an entire distribution (subsequent discussions may focus narrowly on the kernel)
-    - setup a working group to continue Steves work on analysing and "stripping" the kernel?
-    - octa project: provides pre-defined kernel images, e.g. "core-minimal" image (octa-project: not only kernel, also boot-loader)
-      - Lenka could prepare a short presentation about the project and the work done there (1st of November)
-      - white paper: Results after analysing the kernel
-      - Linux is soft-realtime. Is that an issue?
-        - Linux foundation is happy to implement things that make it hard real-time.
-        - asks for examples why it is soft-real-time
-        - suggestion: establish a round-table e.g. on Embedded Linux Conferences for this discussion
-    - would it fit a use-case we have in mind?
-  - covers all criticality (software levels), but may have different answers for different software levels
-  - time limit each major section so that all are covered in first meeting, schedule subsequent meetings on narrower topics as needed
-
-* how many meetings?
-  * more than one?
-* when do we schedule?
-  * cautious of holidays coming up in Europe
-* do we schedule these during our regular working group time slots?
-  * yes same time slot for first overall meeting
-  * allow for different time slots when splitting to sub-groups
-
-## What are the outcomes of discussion?
-
-- List of features
-  - Features that are essential to include
-  - Features that are essential to remove (via configuration)
-- Methods for selecting features and evaluating the impact (e.g., DAL)
-- Refinement of our Aerospace use-case
-  - The use-case may help us concretely decide the features for the specified system functionality
-  - focus first on applications that we all have in common
-- Convergence of our focus
-  - Focus on a single processor architecture?
-- Next steps for our list of features
-  - Convincing the Linux community to focus on these included features, e.g., providing more comprehensive testing, architecture
-  - Develop patch sets to make things more configurable to achieve our defined feature list
-  - List to help us compare with other working group list of features
-    - The differences in lists should be examined and may imply gaps
-
-- May ask group to vote on certain topics to quantify our mindset (to either show consensus or show diversity of opinion)
-  - either vote during meeting or perhaps provide method of voting asynchronously (e.g., via "like" links)
-  - You could nicely use "Google Forms" for polls (where the options are explained accordingly for those not present when the poll was created). Just in case Github does not provide something useful.
-
----
-
-# Topics for "Features Required for Aerospace" Discussion
-
-- Method of proceeding with identification of features
-- Configuration of features (include/exclude)
-  - connection to partitioning
-  - features that are included/excluded in a real-time aspect
-  - different safety features that configured and are certified at different levels (e.g., DO-178C software level)
-    - may exclude features, e.g., exclude any feature certified below DAL-B
-- Use Cases
-- Maintenance and Support
-- Tools
-
-
-other ways to categorize:
-- first look at kernel? Then go higher layers? kernel layer, services layer, application layer
-  - where do drivers fit in discussion?
-  - API for system applications (user level) - is that a feature?, e.g., ARINC 653
-  -
-
-- Multiple perspectives on where to start discussion
-  - kernel/services/application
-  - DAL level
-  - use case
-    - aero vs space
-
-- Perhaps we have a matrix of the two dimensions above and walk through the intersections of those rows and columns
-
-
----
-
-# Features Required for Aerospace: Method of proceeding with identification of features
-
-## overall workflow notes
-
-- Need to break into groups and start tackling concrete issues
-- Ensure we document these sub-group activities very well
-
-## Method of identifying features
-
-- Driven by use cases
-- What are the criteria for inclusion of features?
-- Need to very explicitly know what we are including
-- Very important we know specific configuration, modules, etc.
-- Features have been classified
-  - Support for safety
-  - The rest
-  - Methods of including mixed-criticality is different between aerospace and automotive
-
-## Features identification
-
-- What features must be supported?
-- Obtaining necessary and sufficient timing and precision
-- List of system functions that must be able to run and their requirements
-- Supported I/O
-- What resources must be available for which criticality levels
-- Ensure we document the rationale for including/excluding
-- Should we classify features in some way?
-  - Kernelspace vs. userspace?
-  - Safety vs. other?
-- Do we need to focus on specific architectures?
-  - Avoid complex processors that increase interference concerns
-  - Eliminate processor based on power requirements
-  - Transition from PPC to ARM happening actively
-- Hypervisor (and type Type 1 vs. Type 2) is a critical feature to decide upon
-
-## Use case identification
-
-- Refining the use case
-  - Agree on a single architect that has existing pedigree?
-    - PPC?
-  - Define whether we are running on a primary computing unit
-  - Define whether we are running a virtualized/hypervisor environment
-  - Our usecase should be target at getting Linux to DAL-C first
-- ESA Standards may not allow use of Linux for certain usecases
-  - They are also fairly prescriptive rather than guideline
-
----
-
-# Features Required for Aerospace: Configuration of Features
-
-- How do we configure a subset of features with robust configuration management (e.g., kernel config files)
-- What configuration of which features are supported according to what schedules
-- How do de-risk (or even deactivate) those not needed?
-- Do we configure via kernel config, via yocto recipe, something else?
-  - May be able to derive a aero-specific kernel config
-- How do we minimize variation from the vanilla kernel to avoid increase maintenance?
-
----
-
-# Features Required for Aerospace: Use Cases
-
-Identify use case categories that require differentiated set of features
-
-- Some interesting projects in the area MicroVM
-  - Firecracker, Cata Container (from Intel)
-- Use case Vote
-  - Space - XXX
-  - Aerospace - XXXXXXXXX
-  - Ground Systems - XX
-- Space case
-  - Combination of ARM Cores + Microcontroller
-  - Linux is not responsible for the mission critical part
-  - Project working on distribution for CubeSat projects
-    - Working on requirements for over a year
-  - Control of the spacecraft is done by "small" microcontrollers
-  - These are running RTOS or baremetal
-  - Linux is used for "payload" operations
-
----
-
-# Features Required for Aerospace: Candidate Features
-
-- What features do we want? Included
-  - Driver support
-  - ABI Compatibility
-  - Using existing SW
-- What don't we want? Excluded
-  - Complex behavior
-    - Loading of kernel modules, adaptive scheduling, etc.
-
----
-
-# Features Required for Aerospace: Maintenance and Support
-
-- Long-term support
-  - May need to use this kernel for 30 years?
-    - Civil Infrastructure Platform?
-  - Kernel developers were not high on the idea of long-term maintenance
-  - Hopefully can update the OS w/o updating the applications
-    - Need a stable ABI/API for very long term
-  - HW obsolescence can sometimes prevent upgrades of the kernel (MMU changes from 2.8->4.X)
-- Deviation from the vanilla kernel will increase maintenance burden
-  - Can we use eBPF to introduce specific features into the kernel?
-- A natural tension between maintenance of removing features vs. need from complete structural coverage
-
----
-
-# Features Required for Aerospace: Tools
-
-- Tool which gives a software bill of materials / dependency tracker
-  - Yocto supports this
-- Often discovered after long periods that we don't need features that people requested
-  - Must document and trace the rationale for including
+We revised the title and noted scope in the abstract.
 
 ---
 
@@ -336,6 +138,8 @@ Finally, both: GIT command line tool and others (like SmartGIT) are working prop
 # Closing
 
 ## Action Items
+
+Did not have time to review action items.
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
