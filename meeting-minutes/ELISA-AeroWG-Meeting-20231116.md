@@ -112,6 +112,7 @@ Martin Halle has been appointed as the vice-chair of the ELISA aerospace working
 [Survey paper](https://www.overleaf.com/project/63ee5a398ae14b0bad694e21)
 
 We revised the title and noted scope in the abstract.
+(To get access to it on Overleaf, please send an Email to: Martin.Halle@tuhh.de with an information about what Email address should join.)
 
 ---
 
