@@ -25,11 +25,23 @@
 
 ## Attended this meeting
 
+- Martin Halle - TUHH
+- Justin Pearson - Lynx Software
+- Olivier Charrier - Wind River
+- Ivan Perez - NASA Ames
+- Chuck Wolber - Boeing
+- Matt Weber - Boeing
+- Ulises Vega - Luxoft (but joined ELISA privately)
+- Matt Kelly - Boeing
+- Sam Bristow - Rocket Lab
+- Steve VanderLeest - Boeing
+- Qasim Majeed - Siemens
+
 
 ## Attended recently in the past
 
 - Sebastien Boria - Airbus
-- Sam Bristow
+- Sam Bristow - Rocket Lab
 - Olivier Charrier - Wind River
 - Stefano Dell'Osa - Intel
 - Martin Halle - TUHH
@@ -39,11 +51,15 @@
 - Lenka Koskova - TUL CZ
 - Rajesh Kurapati - KMC
 - Joseph Lee - Skytrac
+- Justin Pearson - Lynx Software
+- Ivan Perez - NASA Ames
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
 - Ulises Vega - Luxoft (but joined ELISA privately)
 - Steve VanderLeest - Boeing
 - Richard Wagener
+- Matt Weber - Boeing
+- Chuck Wolber - Boeing
 - Wanja Zaeske - DLR
 
 ---
@@ -94,6 +110,8 @@ Martin Halle has been appointed as the vice-chair of the ELISA aerospace working
 - 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/)
 - Apr 16 to 18  [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich
 - June 11th-12th [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse
+- 15-19 July 2024 [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) - IEEE Space Computing Conference . Mountain View, CA, US
+  - Full paper due 9 Feb 2024
 - 29 Jul - 2 Aug 2024 [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, US
   - Abstracts due 30 Nov 2023
 - 1-3 Oct 2024 IEEE [Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, US
@@ -114,19 +132,27 @@ In November, we revised the title and noted scope in the abstract.
 
 - Scope for feature selection
   - Technical scope
-    - kernel
-    - full distribution (kernel, services, drviers, API, libraries, applications, bootloader, etc.)
+    - Software
+      - first, discuss kernel (try to finish, and only discuss broader distribution if necessary to make a decision about kernel)
+        - subsystem by subsystem, by DAL
+      - second, full distribution (kernel, services, BSP/drivers, API, libraries, applications, bootloader, etc.)
+    - Hardware
+      - MMU as minimum?, multicore?, availability (physical or simulation at first), validation, crypto, etc.
   - Certification scope 
-    - Safety-critical (DAL-C or higher)
-      - Real-time
+    - Non-critical - discuss first, DAL-D and lower
+      - Decisions about features to include at low DAL do not (necessarily) apply to high DAL
     - Mission-critical
       - Real-time
-    - Non-critical
+    - Safety-critical (DO-178C SWL-C or higher)
+      - Real-time
+    - Security-critical (DO-326A, DO-356A)
+      - SAL may not follow DAL, but may actually need to be inverse
   - Location
     - Air
     - Space
-    - Ground equipment
+    - Ground equipment - secondary discussion
 - Use Cases
+  - a use case should define a system architecture and function
 - Identification of features for use cases
 - Mechanisms to configure features (include/exclude)
   - connection to partitioning
@@ -134,9 +160,17 @@ In November, we revised the title and noted scope in the abstract.
   - different safety features that configured and are certified at different levels (e.g., DO-178C software level)
     - may exclude features, e.g., exclude any feature certified below DAL-B
 - Maintenance and Support
+  - Need to maintain for decades
 - Tools
+  - Identify features unique to aerospace, DO-330 qualification 
+
+## Way of working
+
+- Get agreement on one area before moving on to next topic
+- Drive one simple use case through all areas 
 
 ---
+
 # Closing
 
 ## Action Items
@@ -144,5 +178,10 @@ In November, we revised the title and noted scope in the abstract.
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
+* Attract airworthiness authority participation (FAA, EASA)
+  * hot topic for them is AI, may be an opening to also discuss Linux
+
 
 ## Round Table
+
+* Matt Kelly noted he will try to add more to the white paper
