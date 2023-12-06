@@ -180,6 +180,7 @@ Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 * Attract airworthiness authority participation (FAA, EASA)
   * hot topic for them is AI, may be an opening to also discuss Linux
+* Invite vendor contacts
 
 
 ## Round Table
