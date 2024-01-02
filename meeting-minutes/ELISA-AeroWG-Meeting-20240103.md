@@ -13,7 +13,9 @@
 - Roll Call
 - Brief Notices
 - Announcements
+- Action Items
 - Goals for 2024
+- Preparation for WG Updates Next Week
 - Organize Notes on Features for Aerospace
 - Closing
   - Action Items
@@ -33,7 +35,7 @@
 - Sam Bristow - Rocket Lab
 - Olivier Charrier - Wind River
 - Stefano Dell'Osa - Intel
-- Martin Halle - TUHH
+- Martin Halle - Technische Universität Hamburg (TUHH)
 - Matt Kelly - Boeing
 - Shuah Khan - Linux Foundation
 - Abdi Kitesa
@@ -46,7 +48,6 @@
 - Sam Thompson - Rapita
 - Ulises Vega - Luxoft (but joined ELISA privately)
 - Steve VanderLeest - Boeing
-- Richard Wagener
 - Matt Weber - Boeing
 - Chuck Wolber - Boeing
 - Wanja Zaeske - DLR
@@ -82,24 +83,33 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Events
 
-- Feb 7/8 2024 [More Electric Aircraft (MEA)](https://conference-mea.org/)
-- 27 Feb 2024 [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
-- 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/)
-- Apr 16 to 18  [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich
-- June 11th-12th [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse
-- 15-19 July 2024 [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) - IEEE Space Computing Conference . Mountain View, CA, US
-  - Full paper due 9 Feb 2024
-- 29 Jul - 2 Aug 2024 [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, US
-  - Abstracts due 30 Nov 2023
-- 1-3 Oct 2024 IEEE [Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, US
+- 6-8 Feb [ansformative Vertical Flight](https://vtol.org/tvf2024) in Santa Clara, USA
+- 7-8 Feb [More Electric Aircraft (MEA)](https://conference-mea.org/) in Toulouse
+- 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
+- 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/) in Montana, USA
+- 12-14 Mar [SAE AeroTech](https://www.sae.org/attend/aerotech) in Charlotte, USA
+- 16-18 Apr [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich
+- 23-25 Apr [Integrated Communications, Navigation and Surveillance](https://i-cns.org/) in Herndon, VA, USA
+- 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse
+- 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
+  - Full paper due 9 Feb 
+- 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, USA
+- 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, USA
+  - Abstracts due 23 Feb
 
 ---
+# Action Items
+
+- Review status of action items (in preparation for defining 2024 goals)
+
+---
+
 
 # 2024 Goals
 
 ## 2023 Goals
 
-* Establishing our operations as a new working group
+- Establishing our operations as a new working group
 - Survey on the state of the art within aerospace on use of Linux and associated certification approach and equivalent Design Assurance Level (DAL)
 - Identify the challenges to adopting Linux in aerospace
 - Identify candidate use cases using Linux
@@ -107,6 +117,21 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## 2024 Goals
 
+- What goals should we carry over?
+- Shall we includes are ongoing work on:
+  - Features Required for Aerospace
+  - White paper: Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics
+
+
+---
+# Preparation for WG Updates Next Week
+
+- All ELISA working groups presenting updates on 16-17 Jan. Aerospace WG update is on 17 Jan.
+- Expected Content:
+  - Look back at major milestone and achievements in 2023
+  - Current focus and activities
+  - What’s coming up in 2024 and areas and opportunities for collaboration
+  - Onboarding resources and how to get involved
 
 ---
 
@@ -161,10 +186,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
-
-* Attract airworthiness authority participation (FAA, EASA)
-  * hot topic for them is AI, may be an opening to also discuss Linux
-* Invite vendor contacts
 
 
 ## Round Table
