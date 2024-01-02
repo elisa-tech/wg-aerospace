@@ -4,7 +4,7 @@
 
 # Minutes
 
-## 3 Jan 2024
+## 18 Jan 2024
 
 ---
 
@@ -15,11 +15,8 @@
 - Announcements
 - Action Items
 - Goals for 2024
-- Preparation for WG Updates Next Week
 - Organize Notes on Features for Aerospace
 - Closing
-  - Action Items
-  - Round Table
 
 ---
 
@@ -101,6 +98,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 # Action Items
 
 - Review status of action items (in preparation for defining 2024 goals)
+- [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ---
 
@@ -121,17 +119,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Shall we includes are ongoing work on:
   - Features Required for Aerospace
   - White paper: Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics
-
-
----
-# Preparation for WG Updates Next Week
-
-- All ELISA working groups presenting updates on 16-17 Jan. Aerospace WG update is on 17 Jan.
-- Expected Content:
-  - Look back at major milestone and achievements in 2023
-  - Current focus and activities
-  - What’s coming up in 2024 and areas and opportunities for collaboration
-  - Onboarding resources and how to get involved
 
 ---
 
