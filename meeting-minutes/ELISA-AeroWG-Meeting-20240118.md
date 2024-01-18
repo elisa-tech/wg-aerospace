@@ -24,7 +24,12 @@
 
 ## Attended this meeting
 
-
+- Martin Halle - Hamburg University of Technology
+- Qasim Majeed - Siemens
+- Sam Thompson - Rapita
+- Steve VanderLeest - Boeing
+- Matt Weber - Boeing
+- Chuck Wolber - Boeing
 
 ## Attended recently in the past
 
@@ -32,9 +37,8 @@
 - Sam Bristow - Rocket Lab
 - Olivier Charrier - Wind River
 - Stefano Dell'Osa - Intel
-- Martin Halle - Technische Universität Hamburg (TUHH)
+- Martin Halle - Hamburg University of Technology
 - Matt Kelly - Boeing
-- Shuah Khan - Linux Foundation
 - Abdi Kitesa
 - Lenka Koskova - TUL CZ
 - Rajesh Kurapati - KMC
@@ -43,7 +47,6 @@
 - Ivan Perez - NASA Ames
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
-- Ulises Vega - Luxoft (but joined ELISA privately)
 - Steve VanderLeest - Boeing
 - Matt Weber - Boeing
 - Chuck Wolber - Boeing
@@ -55,7 +58,7 @@
 
 ## Code of Conduct and Legal Notices
 
-* ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
+- ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
   - [Linux Foundation Antitrust Policy](http://www.linuxfoundation.org/antitrust-policy)
 - Email communication will be treated as documentation and be received and made available by the Project under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0). Please refer to the ELISA Technical Charter section 7 subsection iv. for details.
 - The discussions in these meetings are exploratory. The opinions expressed by participants are not necessarily the policy of the companies.
@@ -69,41 +72,36 @@
 
 The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.
 
-
 ---
 
 # Announcements
 
-
-## Recent Events
-
-
 ## Upcoming Events
 
-- 6-8 Feb [ansformative Vertical Flight](https://vtol.org/tvf2024) in Santa Clara, USA
-- 7-8 Feb [More Electric Aircraft (MEA)](https://conference-mea.org/) in Toulouse
+- 6-8 Feb [Transformative Vertical Flight](https://vtol.org/tvf2024) in Santa Clara, CA, USA
+- 7-8 Feb [More Electric Aircraft (MEA)](https://conference-mea.org/) in Toulouse, France
 - 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
 - 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/) in Montana, USA
-- 12-14 Mar [SAE AeroTech](https://www.sae.org/attend/aerotech) in Charlotte, USA
-- 16-18 Apr [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich
+- 12-14 Mar [SAE AeroTech](https://www.sae.org/attend/aerotech) in Charlotte, NC, USA
+- 16-18 Apr [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich, Germany
 - 23-25 Apr [Integrated Communications, Navigation and Surveillance](https://i-cns.org/) in Herndon, VA, USA
-- 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse
+- 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse, France
 - 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
-  - Full paper due 9 Feb 
-- 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, USA
-- 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, USA
+  - Full paper due 9 Feb
+- 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
+- 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Abstracts due 23 Feb
 
 ---
-# Action Items
+
+# Review Action Items
 
 - Review status of action items (in preparation for defining 2024 goals)
 - [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ---
 
-
-# 2024 Goals
+# Set 2024 Goals
 
 ## 2023 Goals
 
@@ -112,13 +110,14 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Identify the challenges to adopting Linux in aerospace
 - Identify candidate use cases using Linux
 
+## Proposed 2024 Goals
 
-## 2024 Goals
-
-- What goals should we carry over?
-- Shall we includes are ongoing work on:
-  - Features Required for Aerospace
-  - White paper: Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics
+- Identify the challenges to adopting Linux in aerospace
+- Identify candidate use cases using Linux
+- Continue discussion on Features Required for Aerospace 
+- White paper: Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics
+- Increase collaboration, with Subject Matter Experts, with other ELISA working groups, and with groups outside ELISA, such as the Zephyr and Xen communities
+- Recruit additional members
 
 ---
 
@@ -165,15 +164,31 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Get agreement on one area before moving on to next topic
 - Drive one simple use case through all areas 
 
+## Divide discussion into 1 hour topics
+
+### First discussion
+
+- Technical Scope
+  - Software: device driver within "basic" Kernel, a system function, memory allocation, non-volatile storage, device communication, logging
+    - ARINC 653?
+  - Hardware:
+    - temperature and pressure sensor input 
+    - warning light output
+    - communication between input and output
+- Certification Scope
+  - Non-critical: DAL-D
+  - isolation between devices
+  - ARINC 653?
+
 ---
 
 # Closing
 
 ## Action Items
 
-
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
-
 ## Round Table
+
+
 
