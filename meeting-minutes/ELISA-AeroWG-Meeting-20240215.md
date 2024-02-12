@@ -4,7 +4,7 @@
 
 # Minutes
 
-## 7 Feb 2024
+## 15 Feb 2024
 
 ---
 
@@ -83,6 +83,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Abstracts due 23 Feb
+
+## Published Articles
+
+* Posch, Maya, [The Usage of Embedded Linux in Spacecraft](https://hackaday.com/2024/02/10/the-usage-of-embedded-linux-in-spacecraft/), Hackaday, 12 Feb 2024.
 
 ---
 
