@@ -23,7 +23,10 @@
 # Roll Call
 
 ## Attended this meeting
-
+- Martin Halle - Hamburg University of Technology
+- Ivan Perez - NASA Ames
+- Sam Thompson - Rapita
+- Ulises Vega
 
 ## Attended recently in the past
 
@@ -79,7 +82,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - 23-25 Apr [Integrated Communications, Navigation and Surveillance](https://i-cns.org/) in Herndon, VA, USA
 - 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse, France
 - 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
-  - Full paper due 9 Feb
+  - Full paper due 9 Feb extended to Feb 23
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Abstracts due 23 Feb
@@ -109,6 +112,9 @@ These goals were tentatively identified at our last meeting, need to confirm in 
 - White paper: Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics
 - Increase collaboration, with Subject Matter Experts, with other ELISA working groups, and with groups outside ELISA, such as the Zephyr and Xen communities
 - Recruit additional members
+
+
+Consensus on 2024 goals was confirmed at the 15 Feb 2024 meeting.
 
 ---
 
@@ -159,17 +165,26 @@ These goals were tentatively identified at our last meeting, need to confirm in 
 
 ### First discussion
 
+"Developing a Minimal, Community Linux Platform for Aerospace"
+
+- Use Case
+  - Detect a sensor value out of normal range, light a warning light
+  - Simplify communication I/O to only Ethernet
+    - temperature and pressure sensor input (received via an Ethernet message)
+    - warning light output (transmitted via an Ethernet message)
 - Technical Scope
   - Software: device driver within "basic" Kernel, a system function, memory allocation, non-volatile storage, device communication, logging
-    - ARINC 653?
-  - Hardware:
-    - temperature and pressure sensor input 
-    - warning light output
-    - communication between input and output
+    - Not yet ARINC 653 in this discussion (for simplicity)
 - Certification Scope
   - Non-critical: DAL-D
-  - isolation between devices
-  - ARINC 653?
+
+
+Logistics:
+  - Minimum audience for discussion is 6
+  - Check the background of audience for air versus space, if biased, hold a follow-on meeting for missing experience
+  - Advertise the meeting via ELISA Aero email list, LinkedIn
+  - Invite Linux kernel experts, but perhaps not to first meeting, but once we get to kernel details
+  - Hold on Wednesday, March 6
 
 ---
 
@@ -178,6 +193,10 @@ These goals were tentatively identified at our last meeting, need to confirm in 
 ## Action Items
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
+
+New action item:
+- Consider creating a database of relevant literature, perhaps on our github site (e.g., bibtex)
+- Advertise the discussion
 
 ## Round Table
 
