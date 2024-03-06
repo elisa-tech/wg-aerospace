@@ -20,9 +20,19 @@
 
 # Roll Call
 
-* Capture screen shot
-
 ## Attended this meeting
+
+- Olivier Charrier - Wind River
+- Gaston Gonzalez
+- Emmanuel Gravel - Skytrac
+- Martin Halle - Hamburg University of Technology
+- Matt Kelly - Boeing
+- Gabriele Paoloni - Red Hat
+- Ivan Perez - NASA Ames
+- Piotr Skrzypek - ESA
+- Steve VanderLeest - Boeing
+- Matt Weber - Boeing
+- Chuck Wolber - Boeing
 
 ## Attended recently in the past
 
@@ -69,8 +79,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Announcements
 
-* Skip this section for March 6 in interest of time
-
 ## Upcoming Events
 
 - 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
@@ -87,14 +95,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Published Articles
 
-* Posch, Maya, [The Usage of Embedded Linux in Spacecraft](https://hackaday.com/2024/02/10/the-usage-of-embedded-linux-in-spacecraft/), Hackaday, 12 Feb 2024.
-
+- Posch, Maya, [The Usage of Embedded Linux in Spacecraft](https://hackaday.com/2024/02/10/the-usage-of-embedded-linux-in-spacecraft/), Hackaday, 12 Feb 2024.
 
 ---
 
 # Organizing "Features Required for Aerospace" Discussion
-
-* Briefly overview this section as context of discussion series
 
 ## Divide discussion into focused sub-topics
 
@@ -138,11 +143,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Drive one simple use case through all areas 
 
 ## Logistics
-  - Minimum audience for discussion is 6
-  - Check the background of audience for air versus space, if biased, hold a follow-on meeting for missing experience
-  - Advertise the meeting via ELISA Aero email list, LinkedIn
-  - Invite Linux kernel experts, but perhaps not to first meeting, but once we get to kernel details
-  - Hold on Wednesday, March 6
+
+- Minimum audience for discussion is 6
+- Check the background of audience for air versus space, if biased, hold a follow-on meeting for missing experience
+- Advertise the meeting via ELISA Aero email list, LinkedIn
+- Invite Linux kernel experts, but perhaps not to first meeting, but once we get to kernel details
+- Hold on Wednesday, March 6
 
 ---
 
@@ -150,12 +156,23 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 - Use Case
   - Detect a sensor value out of normal range, light a warning light
-  - Simplify communication I/O to only Ethernet
-    - temperature and pressure sensor input (received via an Ethernet message)
-    - warning light output (transmitted via an Ethernet message)
+  - Simplify communication I/O to only UDP/IP/Ethernet
+    - temperature and pressure sensor input (received via an UDP message)
+    - warning light output (transmitted via an UDP message), but the warning is innocuous, such as "video streaming not available"
+    - application and the end devices (sensor, actuator) all have ability to use the end-to-end protocol (e.g, insert ID or timestamp)
+  - OS provides some abstractions (e.g., a file system interface) to simplify some activities of the application
+  - System must recognize late or missing messages and take appropriate error/fault response
+  - Driver behavior is configurable and API provided to userland applications
+  - The system must recognize some history of the data in order to identify intermittent versus permanent issues
+    - For this use case, handle within the single application, later, consider a use case with two applications and the system provides a health management service
+  - Some details that are not significant to our main discussion on the core Linux, but are important to be acknowledged, e.g., some hardware details
 - Technical Scope
   - Software: device driver within "basic" Kernel, a system function, memory allocation, non-volatile storage, device communication, logging
-    - Not yet ARINC 653 in this discussion (for simplicity)
+    - remove eBPF (programmatic, configurable packet filtering)
+    - remove all capabilities to load dynamically
+      - what about kernel modules?
+    - Can remove all drivers and protocols that are not needed (e.g., USB) - best to remove so we do not need to demonstrate non-interference (and later for higher DAL, to minimize lines of code)
+    - Not yet ARINC 653 partitioning in this discussion (for simplicity)
 - Certification Scope
   - Non-critical: DAL-D
 
