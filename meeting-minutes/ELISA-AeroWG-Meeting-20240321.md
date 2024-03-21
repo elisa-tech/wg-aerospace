@@ -22,6 +22,11 @@
 
 ## Attended this meeting
 
+- Emmanuel Gravel - Skytrac
+- Martin Halle - Hamburg University of Technology
+- Qasim Majeed - Siemens
+- Ivan Perez - NASA Ames
+- Steve VanderLeest - Boeing
 
 ## Attended recently in the past
 
@@ -71,17 +76,13 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Events
 
-- 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
-- 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/) in Montana, USA
-- 12-14 Mar [SAE AeroTech](https://www.sae.org/attend/aerotech) in Charlotte, NC, USA
 - 16-18 Apr [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich, Germany
 - 23-25 Apr [Integrated Communications, Navigation and Surveillance](https://i-cns.org/) in Herndon, VA, USA
 - 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse, France
 - 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
-  - Full paper due 9 Feb extended to Feb 23
+  - will include a workshop on open-source led by Ivan
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
-  - Abstracts due 23 Feb
 
 ## Published Articles
 
@@ -89,59 +90,21 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ---
 
-# Organizing "Features Required for Aerospace" Discussion
-
-## Divide discussion into focused sub-topics
-
-- Scope for feature selection
-  - Technical scope
-    - Software
-      - first, discuss kernel (try to finish, and only discuss broader distribution if necessary to make a decision about kernel)
-        - subsystem by subsystem, by DAL
-    - Hardware
-  - Certification scope 
-    - Non-critical - discuss first, DAL-D and lower
-- Identification of features for use cases
-- Mechanisms to configure features (include/exclude)
-- Maintenance and Support
-- Tools
-
-## Way of working
-
-- Get agreement on one area before moving on to next topic
-- Drive one simple use case through all areas 
-
----
-
 # Developing a Minimal, Community Linux Platform for Aerospace
 
-- Use Case
-  - Detect a sensor value out of normal range, light a warning light
-  - Simplify communication I/O to only UDP/IP/Ethernet
-    - temperature and pressure sensor input (received via an UDP message)
-    - warning light output (transmitted via an UDP message), but the warning is innocuous, such as "video streaming not available"
-    - application and the end devices (sensor, actuator) all have ability to use the end-to-end protocol (e.g, insert ID or timestamp)
-  - OS provides some abstractions (e.g., a file system interface) to simplify some activities of the application
-  - System must recognize late or missing messages and take appropriate error/fault response
-  - Driver behavior is configurable and API provided to userland applications
-  - The system must recognize some history of the data in order to identify intermittent versus permanent issues
-    - For this use case, handle within the single application, later, consider a use case with two applications and the system provides a health management service
-  - Some details that are not significant to our main discussion on the core Linux, but are important to be acknowledged, e.g., some hardware details
-- Technical Scope
-  - Software: device driver within "basic" Kernel, a system function, memory allocation, non-volatile storage, device communication, logging
-    - remove eBPF (programmatic, configurable packet filtering)
-    - remove all capabilities to load dynamically
-      - what about kernel modules?
-    - Can remove all drivers and protocols that are not needed (e.g., USB) - best to remove so we do not need to demonstrate non-interference (and later for higher DAL, to minimize lines of code)
-    - Not yet ARINC 653 partitioning in this discussion (for simplicity)
-- Certification Scope
-  - Non-critical: DAL-D
+Insufficient size of group today for discussion series, deferring to next meeting.
 
 ---
 
 # Scope of Survey White Paper
 
-If time allows, discuss scope of white paper
+Updated scope of white paper. We adopted an approach suggested in the comments by Sam Thompson. This led us to anticipate at least two white papers.
+
+* Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
+
+* Option B) Broader scope whats available, motivation as an outcome, detailed comparison with a subset as second paper
+
+The group tends towards Option B. The revised title will be "Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics"
 
 ---
 
