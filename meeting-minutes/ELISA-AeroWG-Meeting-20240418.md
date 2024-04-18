@@ -24,6 +24,18 @@
 
 ## Attended this meeting
 
+- Olivier Charrier - Wind River
+- Gaston Gonzalez
+- Emmanuel Gravel - Skytrac
+- David Graziano - Collins
+- Matt Kelly - Boeing
+- Merlin Kooshmanian - ESA
+- Ivan Perez - NASA Ames
+- Scott Salmon - Cesium
+- Sam Thompson - Rapita
+- Steve VanderLeest - Boeing
+- Matt Weber - Boeing
+
 
 ## Attended recently in the past
 
@@ -89,8 +101,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Developing a Minimal, Community Linux Platform for Aerospace
 
-- (Developing from notes of ELISA-AeroWG-Meeting-20240306.md)
-  - (Explanation of the results achieved so far)
 - Scope for feature selection
   - Technical scope
     - Software
@@ -98,10 +108,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
         - subsystem by subsystem, by DAL
 		- protocol stacks
       - second, full distribution (kernel, services, BSP/drivers, API, libraries, applications, bootloader, etc.)
-	  - **NEW**: Decision postponed to after system architecture
+	  - Decision postponed to after system architecture
     - Hardware
       - MMU as minimum?, multicore?, availability (physical or simulation at first), validation, crypto, etc.
-	  - **NEW**: Decision postponed after system architecture
+	  - Decision postponed after system architecture
   - Certification scope 
     - Option A: Non-critical - discuss first, DAL-D and lower
       - Decisions about features to include at low DAL do not (necessarily) apply to high DAL
@@ -111,38 +121,17 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
       - Real-time
     - Option D: Security-critical (DO-326A, DO-356A)
       - SAL may not follow DAL, but may actually need to be inverse
-    - **NEW**: Agreed on a broader group: Option A
+    - Agreed on a broader group: Option A
   - Location
     - Air
     - Space
     - Ground equipment - secondary discussion
-	- **NEW**: Agreed on a broader group: Exclude ground equipment in the first phase
+	  - Agreed on a broader group: Exclude ground equipment in the first phase
 - Use Cases
-  - A use case should define a system architecture and function
-	- **NEW**: Agreed on a broader group: Think of something like:
-	  - Option A: Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin light (+ notification item in a log)
-	  - Option B: Sensor=Temperature; Function=Control Temperature; Function=Logging; Actuator=Heating device (+ notification item in a log)
-	  - **NOTE**: Advantage of option A: Clearly Low-DAL, as Option B could be safety critical
-  - Single simple sensor(s)
-    - Voting on architecture [8 votes in total (ESA=1)]:
-	  - Amount of computers
-	    - Option A: Multiple computers in total (w/ functions): 1
-	    - Option B: Single computers in total (w/ functions): 7
-		- **NEW**: Agreed on a broader group: Option B
-      - Amount and type of functions:
-	    - Option A: Multiple computers with single/multiple functions
-	      - (Ignored due to decision above)
-	    - Option B: Single computer with multiple functions of multiple systems: 1
-	    - Option C: Single computer with multiple functions of one system: 1
-	      - Example concept:
-		    - App1: [SENS] -[?]-> [APP_CON] -[UDP/MEM]-> [APP_VOT]
-		    - App2: [SENS] -[?]-> [APP_MON] -[UDP/MEM]-> [APP_VOT]
-		    - App3: [APP_VOT] -[?]-> [ACT]
-	    - Option D: Single computer with single function: 6
-	      - Example concept:
-		  - [SENS] -[ETH_MAC]-> [APP] -[ETH_MAC]-> [ACT]
-		- **NEW**: Agreed on a broader group: Option D
-		- **TODO**: Clarify what about the other 2 votes (A and B), do we exclude people?
+  - confirmed Option A for system architecture, option D for use case. 
+  - Use case now moved to separate document [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+  - Clarified: What about the other 2 votes (A and B), do we exclude people?
+      - Option D is at least reasonable to pursue, perhaps others found another option more interesting, but we agree Option D will be pursued first. One of the votes last week for other options present again today agreed with this statement.
 - Identification of features for use cases
 - Mechanisms to configure features (include/exclude)
   - connection to partitioning
@@ -154,7 +143,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Tools
   - Identify features unique to aerospace, DO-330 qualification 
 
-- **NEW**: Other business:
+---
+
+# Other business
+
   - Do we need to introduce a dictionary? One example of a question that was raised:
     - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
       - 1) Multiple PCI devices SATA, USB, network etc.
@@ -164,22 +156,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ---
 
-# Scope of Survey White Paper
-
-- Explanation of the updated scope of the white paper. Two options for white papers:
-  - Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
-  - Option B) Broader scope whats available, motivation as an outcome, detailed comparison with a subset as second paper
-- **NEW**: Agreed on a broader group: The group tends towards Option B. The revised title will be "Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics"
-
----
-
 # Closing
 
 ## Action Items
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
-
-- **TODO**: We should start a distinct new document for developing the use-case. Reason: The information starts to become cluttered across many documents.
 
 ## Round Table
 
