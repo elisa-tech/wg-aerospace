@@ -83,18 +83,17 @@
 
 ## Published Articles
 
-- HINT: See literature database! Any new papers will be archived there, too.
+See our [Literature Database](../literature-database/literature.bib)
 
 ## Notes other ELISA boards
 
-- Technical Steering Committee (TSC) is considering development of a requirements database for reference by all working groups and to which all of us contribute
+- Technical Steering Committee (TSC) is considering development of a requirements database using the [BASIL](https://github.com/elisa-tech/BASIL)]tool, to provide a common set for reference by all working groups and to which all of us contribute.
 
 ---
 
 # Developing a Minimal, Community Linux Platform for Aerospace
 
-- TBD: Link to other doc
-
+[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
 
 ---
 
@@ -117,5 +116,5 @@ Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
 
-- (Skipped due to time constraints)
+
 
