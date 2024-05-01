@@ -14,8 +14,7 @@
 - Roll Call
 - Brief Notices
 - Announcements
-- Discussion on Features for Aerospace
-- Survey White Paper (if time allows)
+- Space Grade Linux
 - Closing
 
 ---
@@ -24,6 +23,12 @@
 
 ## Attended this meeting
 
+- Merlin Kooshmanian - ESA
+- David Graziano - Collins Aerospace
+- Daniel Riechers - Collins Aerospace
+- Ivan Perez - NASA Ames
+- Steve VanderLeest - Boeing
+- Matt Weber - Boeing
 
 
 ## Attended recently in the past
@@ -88,6 +93,18 @@ See our [Literature Database](../literature-database/literature.bib)
 ## Notes other ELISA boards
 
 - Technical Steering Committee (TSC) is considering development of a requirements database using the [BASIL](https://github.com/elisa-tech/BASIL)]tool, to provide a common set for reference by all working groups and to which all of us contribute.
+  - Beware similar sounding tool names. 
+    - [Basil](https://github.com/elisa-tech/BASIL) is a Software Quality Management Tool that supports Software Specification analysis, testable requirements definition and coverage (originally created by Red Hat, now hosted under ELISA)
+    - [Bazel](https://bazel.build/) is a build system  
+
+---
+# Space Grade Linux
+
+- Steve VanderLeest met with a group driving towards a Space Grade Linux on 30 Apr 2024, which was convened by Kate Stewart. The group is largely driven by US NASA. Steve offered the ELISA Aerospace Working Group as the host for this initiative, with the option to spin out the initiative as an independent project if and when warranted
+- Ivan Perez advocated for their participation in our working group due to the large overlap in interest and the benefit of wider engagement. Noted NASA guidelines for SW devlopment, such as  NPR7150.2, which have parallels to the civilian FAA guidelines, such as DO-178C. Ivan also noted a project called Space ROS (Space Robot Operating System) that seeks to have a space-graded version of the robotics framework ROS. Ivan is one of the maintainers and a member of the SC. These projects are complementary.  Possible use-case to discuss in future is Space ROS built on Space Grade Linux.
+- Next steps are that the informal Space Grade Linux group will meet once more independently to decide whether to fold into our Aerospace Working Group.  Regardless, we will invite them to join and present on their work.
+- Merlin Kooshmanian indicated European discussion and efforts (e.g., ESA) toward Linux in space have also started. At proof of concept stage now, mainly focused on hardware and whether Linux is compatible.
+
 
 ---
 
@@ -99,6 +116,7 @@ See our [Literature Database](../literature-database/literature.bib)
 
 # Other business
 
+- Carried over from last meeting...
   - Do we need to introduce a dictionary? One example of a question that was raised:
     - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
       - 1) Multiple PCI devices SATA, USB, network etc.
