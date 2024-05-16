@@ -61,7 +61,7 @@ Single computer with single function (="APP")
     - scheduling (due to the presence of other functions, including protocol/network stack)
     - memory
 
-### Next forseable steps (TBC at on of the next meetings!)
+### Foreseeable Next Steps (TBC at on of the next meetings!)
 
 - Decide upon "OS"
   - What "Linux"?
