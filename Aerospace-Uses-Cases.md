@@ -32,16 +32,42 @@ Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin li
 
 ### Use Case Description
 
-Single computer with single function
+Single computer with single function (="APP")
 
-[SENS] -[ETH_MAC]-> [APP] -[ETH_MAC]-> [ACT]
+[SENS] <-[ETH_MAC]-> [APP] <-[ETH_MAC]-> [ACT]
 
 - Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
-- This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS.
+- Smart sensor/actor w/ software and stack?
+- How would a system architecure look like to close the signal/application loop? (7 voters in total)
+  - Option A:
+    - Simulate sensor + actuator on the H/W device running the system application (1 application being the cabin application, 2 applications being the simulated sensor + actuator)
+      - A.1 Communication on software level (no physical ethernet cable) > Votes: 1
+      - A.2 Communication on hardware level using several network cards connected through H/W Ethernet (i.e. physical network-cable) > Votes: 1
+    - Thoughts: [Ivan]: Maybe we miss something because its too simplistic
+  - Option B: > Votes: 4
+    - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
+      - Attention: This probably means no real-time OS on sensor / actuator side
+    - Application computer w/ real-time Aerospace Linux running the system/cabin application(s)
+  - Option C:
+    - 3 pieces of H/W: Sensor, actuator + Computing Device
+    - Connected physically via Ethernet through switch or alike > Votes: 0
+  - Comment on votes: (1 non-voter)
+- Comment: This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS. >> But an OS is implied for the Use-Case!
 
-### Analysis
+### Analysis of required (OS) features
 
-- OS provides:
-    - protocol/network stack, drivers
-    - scheduling (in presence of other functions, including protocol/network stack)
+- OS must provide for the application (at least):
+    - protocol/network stack, drivers (e.g. ethernet)
+    - scheduling (due to the presence of other functions, including protocol/network stack)
     - memory
+
+### Next forseable steps (TBC at on of the next meetings!)
+
+- Decide upon "OS"
+  - What "Linux"?
+- Come up with required steps for the "Kernel Config" (Task-Force?)
+- ...
+- Clarify assessment -> What do we want to know / to achieve? --> Link to Space Grade Linux
+- ...
+- Develop required fundamental functions ("OS / service development")
+- Develop system function(s)
