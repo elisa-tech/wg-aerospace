@@ -24,32 +24,32 @@
 
 ## Attended this meeting
 
-
+- Martin Halle - Hamburg University of Technology
+- Merlin Kooshmanian - ESA
+- Ivan Perez - NASA Ames
+- Scott Salmon - Cesium
+- Matt Weber - Boeing
+- Jeannette Nounagnon - Boeing (NEW)
+- Gaston Gonzalez - VENG
 
 ## Attended recently in the past
 
 - Steve VanderLeest - Boeing
 - Olivier Charrier - Wind River
-- Gaston Gonzalez
 - Emmanuel Gravel - Skytrac
 - David Graziano - Collins
-- Martin Halle - Hamburg University of Technology
 - Abdi Kitesa
 - Matt Kelly - Boeing
-- Merlin Kooshmanian - ESA
 - Lenka Koskova - TUL CZ
 - Rajesh Kurapati - KMC
 - Joseph Lee - Skytrac
 - Qasim Majeed - Siemens
 - Gabriele Paoloni - Red Hat
 - Justin Pearson - Lynx Software
-- Ivan Perez - NASA Ames
 - Daniel Riechers - Collins Aerospace
 - Piotr Skrzypek - ESA
-- Scott Salmon - Cesium
 - Sam Thompson - Rapita
 - Steve VanderLeest - Boeing
-- Matt Weber - Boeing
 - Chuck Wolber - Boeing
 - Wanja Zaeske - DLR
 
@@ -76,6 +76,7 @@
 
 ## Upcoming Events
 
+- 22 May [ELISA Seminar - Making Linux Fly: Towards Certified Linux Kernel](https://elisa.tech/event/elisa-seminar-making-linux-fly-towards-certified-linux-kernel/) Online - please register!
 - 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse, France
 - 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
   - will include a workshop on open-source led by Ivan
@@ -92,13 +93,34 @@ See our [Literature Database](../literature-database/literature.bib)
 
 If someone attends from the nascent Space Grade Linux initiative, ask them to introduce the initiative. Discuss peliminary ideas on pros and cons of the ELISA Aerospace Working Group acting as the host for this work, incorporating the work into our ongoing agenda.
 
+- Scot Salmon: Introduction of Space Grade Linux initiative (approx. 15 people)
+  - Reference design for Linux configuration that has been used in space already
+  - Several appropriate space features have been implemented
+  - White paper planned on topics:
+    - Typical question that arise for the use of Linux in space
+    - Reduce the amount of the work to be done
+    - Explain experiences
+  - Working group could act as initiative that provides to share steps
+  - Join forces for this purposes with Space Grade Linux initiative
+  - Help to make a product to be as applicable as possible to a broader range of space applications
+  - Next Meeting: Discuss current state, how to join, what to expect, time-line
+  - Action: Vote for date/time on a further discussion: https://doodle.com/meeting/participate/id/erMpZqEd
+
 ---
 
 # Discussion on Features for Aerospace
 
 Continue discussion series, now in separate document:
-
 [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+
+- Exlaining the current state to new members
+- Focussed on system architecture to answer open questions like wrt smart sensors
+- Came up with a vote for (4 out of 6 voters, no  strong arguments against this decision):
+  - Option B:
+    - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
+      - Attention: This probably means no real-time OS on sensor / actuator side
+    - Application computer w/ real-time Aerospace Linux running the system/cabin application(s)
+- Updated the use-case document accordingly
 
 ---
 
