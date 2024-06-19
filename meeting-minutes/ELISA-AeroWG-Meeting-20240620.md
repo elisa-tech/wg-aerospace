@@ -5,7 +5,7 @@
 
 # Minutes
 
-## 5 June 2024
+## 20 June 2024
 
 ---
 
