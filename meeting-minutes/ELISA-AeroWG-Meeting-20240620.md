@@ -108,6 +108,8 @@ See our [Literature Database](../literature-database/literature.bib)
 
 - Deliverables (Pulling from previous meeting ideas)
 
+- Demo repository
+
 - Assessment items & Criteria
 
 Continue discussion series, now in separate document:
