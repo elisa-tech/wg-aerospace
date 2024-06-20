@@ -65,9 +65,12 @@ Single computer with single function (="APP")
 
 - Decide upon "OS"
   - What "Linux"?
+  - If the use case implied a distro, what would it be based on or would it follow a pattern like carrier grade that standardizes a configuration. (for the few of us on the call)Leaning towards a pattern/standard.  e.g., Yocto/RHEL/Ubuntu using a pattern with artifacts living in core projects.  So maybe for the current aerospace use case we could reuse the Automotive Yocto configuration?
+  - ACTION Need to checkout ref build that automative did for their use case.
 - Come up with required steps for the "Kernel Config" (Task-Force?)
 - ...
 - Clarify assessment -> What do we want to know / to achieve? --> Link to Space Grade Linux
+- Assessment items & Criteria
 - ...
 - Develop required fundamental functions ("OS / service development")
 - Develop system function(s)

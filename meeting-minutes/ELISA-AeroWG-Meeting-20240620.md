@@ -30,22 +30,25 @@
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- David Graziano - Collins
+- Steve VanderLeest - Boeing
+- Merlin Kooshmanian - ESA
+- Anshul Makkar - Infinitedeth
+- Chuck Wolber - Boeing
+- Ivan Perez - NASA Ames
+- Qasim Majeed - Siemens
+- Sam Thompson - Rapita
+- Olivier Charrier - Wind River
 
 ## Attended recently in the past
 
 - Scott Salmon - Cesium
-- Merlin Kooshmanian - ESA
-- Ivan Perez - NASA Ames
-- Qasim Majeed - Siemens
 - Piotr Skrzypek - ESA
 - Matt Kelly - Boeing
 - Jeannette Nounagnon - Boeing (NEW)
 - Gaston Gonzalez - VENG
 - Martin Halle - Hamburg University of Technology
-- Steve VanderLeest - Boeing
-- Olivier Charrier - Wind River
 - Emmanuel Gravel - Skytrac
-- David Graziano - Collins
 - Abdi Kitesa
 - Lenka Koskova - TUL CZ
 - Rajesh Kurapati - KMC
@@ -53,9 +56,7 @@
 - Gabriele Paoloni - Red Hat
 - Justin Pearson - Lynx Software
 - Daniel Riechers - Collins Aerospace
-- Sam Thompson - Rapita
 - Steve VanderLeest - Boeing
-- Chuck Wolber - Boeing
 - Wanja Zaeske - DLR
 
 ---
@@ -83,8 +84,6 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 
 ## Upcoming Events
 
-- 22 May [ELISA Seminar - Making Linux Fly: Towards Certified Linux Kernel - RECORDING](https://www.youtube.com/watch?v=XGuYNjr7fJo)
-- 11-12 June [Embedded Real Time Systems (ERTS)](https://www.erts2024.org/) in Toulouse, France
 - 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
   - will include a workshop on open-source led by Ivan
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
@@ -98,26 +97,65 @@ See our [Literature Database](../literature-database/literature.bib)
 ---
 # Space Grade Linux
 
-- Cadence / Frequency of meetings
+[MW] emailed Michael and Kate to start identifying an agenda / milestones.
 
-- Ideas on future agenda topics
+[SV] impression so far is an organizing state and moving towards a plan.  
+- See if hosting within Aero makes sense and if there is a point where a spinoff.
+  - Delta between air and space might have enough difference
+  - Number of passengers may drive standards convergence  (Sort of the move beyond Part 23 in civil air worthiness)
+
+Future topics - Cadence / Frequency of meetings.  Ideas on future agenda topics
 
 ---
 
 # Discussion on Features for Aerospace
 
-- Deliverables (Pulling from previous meeting ideas)
+- Shared our mandate - "Our mandate is on the ELISA website: The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  From: https://lists.elisa.tech/g/aerospace"
 
-- Demo repository
 
-- Assessment items & Criteria
+- Demo repository (TSC question) - [MW] no discussion, will bring up to TSC
 
-Continue discussion series, now in separate document:
-[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+The conversation today was around deliverables and feedback.
+
+- What is our output of the use case?  In our previous meeting, it was suggested that we define a result we can measure/use.
+- [MW] Our current whitepaper - survey of existing Linux in safety critical use  ([SV] mentioned it is in-progress research)
+  - [SV] trying to identify why it's hard and what prevents use.
+- Output needs to have a tangible reason / visible result.
+  - [SV] Influence direction of tools and long term support
+  - [SV] Focus team on specific topics
+  - [SV] (Int: ELISA) Use cases help drive other working groups work based on the domain need
+  - [CW] (Ext: Inform SPDX-safety) Capture requirements and example approach to safety critical schema for capturing of those.  Evidence and trace.  (Zephyr involved)
+  - [MW] (Ext: Xen / over hypervisor&virt approaches) Set the foundation to drive to mixed criticality
+  - [MW] Deployment of pieces and objectives/standards applicable + justification
+  - [SV] (Ext: Yocto / Linux / toolchain - i.e. components of the design) Influence configuration and structure changes to allow compositions.  Simplification for certification approaches.  E.g. indirect kernel change we depend on
+  - [SV] Defines our groups need as a group
+  - [ST] Other use cases might overlap with other groups  (Example of reliability and wifi fading)
+    - [CW] Interesting use case that ties to a practice that ties to the reliability of a system  (Needs to engage non-interested parties)
+  - [OC] Criteria to measure against other WGs - e.g, pain points conversation for an SWL C/D specific guidance
+    - lifecycle items - requirements / design / objective process items
+    - standard mapping to painpoints
+    - [SV] Existing whitepaper may start to cover some of this
+
+What is the feedback approach / rollout for the use cases?
+- Audience? - ACTION Check with Min/Kate for Automotive's approach for previous cases
+- [IP] Survey to a wider audience when sharing the use case to cover topics like what distro / Linux approach they are using.  Survey how they use it, compose it, and cfg they depend on
+  - Use this to drive our next use case and timeline
+  - ACTION build a list of question ideas on the mailing list
+
+
+**NOTE: Meeting concluded here and the suggestion was our next call will focus on Next steps items within the use case**
+
+Continue the discussion series, now in a separate document:
+[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+
 
 ---
 
 # Other business
+
+- Ulises Vega's request for contribution ideas (DISCUSSED)
+  - Suggestion that was made - "Are you interested in proposing a kernel config based on the ELISA kconfig-safety-check tool’s generation of a safety recommendation (https://github.com/elisa-tech/kconfig-safety-check)? This configuration would target the initial use cases and be something we could start building a demo around. Once the repo is ready, you could pull request it to propose the starting point. https://www.youtube.com/watch?v=tq2hjgCbX2Q   https://www.youtube.com/watch?v=r8sqFSNMkrA "
+- Space Grade Linux action - Contact Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov> to work on agenda and topics  (Matt Weber, emailed Kate and Michael 6/19/2024)  (DISCUSSED)
 
 - Carried over from previous meeting...
   - Do we need to introduce a dictionary? One example of a question that was raised:
@@ -126,7 +164,6 @@ Continue discussion series, now in separate document:
       - 2) PCI devices with multiple functions, root bridge can have multiple functions
       - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
 	- **NEW**: Tend to a common understanding of 3)
-  - Space Grade Linux action - Contact Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov> to work on agenda and topics
 
 
 ---
