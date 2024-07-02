@@ -61,7 +61,35 @@ Single computer with single function (="APP")
     - scheduling (due to the presence of other functions, including protocol/network stack)
     - memory
 
-### Foreseeable Next Steps (TBC at on of the next meetings!)
+
+## Deliverables and feedback.
+
+What is our output of the use case activity?  In our previous meeting, it was suggested that we define a result we can measure/use.
+- Our current whitepaper - survey of existing Linux in safety critical use  (it is in-progress research)
+  - Trying to identify why it's hard and what prevents use.
+- Output needs to have a tangible reason / visible result.
+  - Influence direction of tools and long term support
+  - Focus team on specific topics
+  - (Int: ELISA) Use cases help drive other working groups work based on the domain need
+  - (Ext: Inform SPDX-safety) Capture requirements and example approach to safety critical schema for capturing of those.  Evidence and trace.  (Zephyr involved)
+  - (Ext: Xen / over hypervisor&virt approaches) Set the foundation to drive to mixed criticality
+  - Deployment of pieces and objectives/standards applicable + justification
+  - (Ext: Yocto / Linux / toolchain - i.e. components of the design) Influence configuration and structure changes to allow compositions.  Simplification for certification approaches.  E.g. indirect kernel change we depend on
+  - Defines our groups need as a group
+  - Other use cases might overlap with other groups  (Example of reliability and wifi fading)
+    - Interesting use case that ties to a practice that ties to the reliability of a system  (Needs to engage non-interested parties)
+  - Criteria to measure against other WGs - e.g, pain points conversation for an SWL C/D specific guidance
+    - Lifecycle items - requirements / design / objective process items
+    - Standard mapping to painpoints
+    - Existing whitepaper may start to cover some of this
+
+What is the feedback approach / rollout for the use cases?
+- Audience? - **ACTION** Check with Min/Kate for Automotive's approach for previous cases
+- Survey to a wider audience when sharing the use case to cover topics like what distro / Linux approach they are using.  Survey how they use it, compose it, and cfg they depend on
+  - Use this to drive our next use case and timeline
+  - **ACTION** build a list of question ideas on the mailing list
+
+## Foreseeable Next Steps (TBC at the next meetings!)
 
 - Decide upon "OS"
   - What "Linux"?
