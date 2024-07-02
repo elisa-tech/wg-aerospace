@@ -89,6 +89,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 
 See our [Literature Database](../literature-database/literature.bib)
 
+See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
 ---
