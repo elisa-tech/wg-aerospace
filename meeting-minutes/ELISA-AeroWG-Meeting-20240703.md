@@ -7,7 +7,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Minutes
 
-## 1 July 2024
+## 3 July 2024
 
 ---
 
@@ -96,14 +96,15 @@ See our [Literature Database](../literature-database/literature.bib)
 
 ## Old Business
 
-- Space Grade Linux action - Contact Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov> to work on agenda and topics  (Matt Weber, emailed Kate and Michael 6/19/2024)  (DISCUSSED)
+- Space Grade Linux action - Contacted Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov> to work on agenda and topics
+  - Tentatively planning to have the first Aug WG session Space focused
 
-- Do we need to introduce a dictionary? One example of a question that was raised:
+- Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
   - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
     - 1) Multiple PCI devices SATA, USB, network etc.
     - 2) PCI devices with multiple functions, root bridge can have multiple functions
     - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
-  - **NEW**: Tend to a common understanding of 3)
+  - Tend to a common understanding of 3)
 
 - (ToDo) Check with Min/Kate for Automotive's approach for previous use cases.  "What is the feedback approach / rollout for the use cases?  Audience?"
 
