@@ -26,20 +26,22 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Steve VanderLeest - Boeing
+- Ivan Perez - NASA Ames
+- David Graziano - Collins
+- Piotr Skrzypek - ESA
+- Merlin Kooshmanian - ESA
+- Chuck Wolber - Boeing
+- Manuel Beltran - Boeing
+- Paul Mani - Collins
+- Olivier Charrier - Wind River
 
 ## Attended recently in the past
 
-- David Graziano - Collins
-- Steve VanderLeest - Boeing
-- Merlin Kooshmanian - ESA
 - Anshul Makkar - Infinitedeth
-- Chuck Wolber - Boeing
-- Ivan Perez - NASA Ames
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
-- Olivier Charrier - Wind River
 - Scott Salmon - Cesium
-- Piotr Skrzypek - ESA
 - Matt Kelly - Boeing
 - Jeannette Nounagnon - Boeing (NEW)
 - Gaston Gonzalez - VENG
@@ -52,7 +54,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Gabriele Paoloni - Red Hat
 - Justin Pearson - Lynx Software
 - Daniel Riechers - Collins Aerospace
-- Steve VanderLeest - Boeing
 - Wanja Zaeske - DLR
 
 ---
@@ -85,7 +86,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
 
-## Published Articles
+## Articles / Publications
 
 See our [Literature Database](../literature-database/literature.bib)
 
@@ -106,6 +107,9 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
     - 2) PCI devices with multiple functions, root bridge can have multiple functions
     - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
   - Tend to a common understanding of 3)
+  - [MB] data dict used as a alignment tool between development teams (i.e. header generation).  Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
+  - ACTION: Need to check with Martin. [IP] maybe the goal was term alignment as multiple teams have a different perspective.
+  - ACTION: Move to Use case [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
 - (ToDo) Check with Min/Kate for Automotive's approach for previous use cases.  "What is the feedback approach / rollout for the use cases?  Audience?"
 
@@ -114,6 +118,14 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 ## Linux Features for Safety-Critical Systems (LFSCS)
 - Tiny Kernel and QEMU target - https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240611.md
 - Link to Arch WG minutes & Minimal Application - https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240625.md
+
+[SV] Definitely overlapping goals and a converged focus helps sustain the features needed collectively.
+
+[CW] Application of safety eng against a subset.  
+
+ACTION: How is the topic space being constrained (component/subsystem driven?)
+
+ACTION:  Can LFSCS present on the minimal kernel and emulation?  (Building a conversation towards "Could this be used for targeting our use case?")
 
 
 ## Discussion on Features for Aerospace

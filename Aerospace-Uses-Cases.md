@@ -4,7 +4,7 @@ This document is a work in progress and has not been approved for use outside of
 
 ## Use Case: Cabin Lights
 
-Low DAL (D or lower)
+Low DAL (D or lower) - blackbox level - functionally meets expectations
 
 ### System Requirements
 
@@ -38,13 +38,14 @@ Single computer with single function (="APP")
 
 - Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
 - Smart sensor/actor w/ software and stack?
-- How would a system architecure look like to close the signal/application loop? (7 voters in total)
+- Best effort scheduling of IO processing that's tested for perceived worst case. (No monitor or scheduler based guarantee other then planned scheduler bandwidth/capacity margin)
+- How would a system architecture look like to close the signal/application loop? (7 voters in total)
   - Option A:
     - Simulate sensor + actuator on the H/W device running the system application (1 application being the cabin application, 2 applications being the simulated sensor + actuator)
       - A.1 Communication on software level (no physical ethernet cable) > Votes: 1
       - A.2 Communication on hardware level using several network cards connected through H/W Ethernet (i.e. physical network-cable) > Votes: 1
     - Thoughts: [Ivan]: Maybe we miss something because its too simplistic
-  - Option B: > Votes: 4
+  - Option B: > Votes: 4  (SELECTED)
     - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
       - Attention: This probably means no real-time OS on sensor / actuator side
     - Application computer w/ real-time Aerospace Linux running the system/cabin application(s)
@@ -57,9 +58,20 @@ Single computer with single function (="APP")
 ### Analysis of required (OS) features
 
 - OS must provide for the application (at least):
-    - protocol/network stack, drivers (e.g. ethernet)
+    - network   (ACTION do we do even simpler for levels above this and use UDP here??)
+      -  Ethernet Driver  (if PCI nic, MSI IRQs?)
+      -  MAC subsystem
     - scheduling (due to the presence of other functions, including protocol/network stack)
+      - timers
+      - fair scheduler
     - memory
+      -  userspace (stack/heap) for application use
+      -  io access (userspace accessing IO memory)
+      -  skbufs
+    - driver / system configuration vs hardware (e.g. device tree)
+    - gpio (pin setup)
+    - irqs (pin setup for event wakeup / GPIO subsystem uses to register and get event)
+    - libc
 
 
 ## Deliverables and feedback.
@@ -80,7 +92,7 @@ What is our output of the use case activity?  In our previous meeting, it was su
     - Interesting use case that ties to a practice that ties to the reliability of a system  (Needs to engage non-interested parties)
   - Criteria to measure against other WGs - e.g, pain points conversation for an SWL C/D specific guidance
     - Lifecycle items - requirements / design / objective process items
-    - Standard mapping to painpoints
+    - Standard mapping to pain-points
     - Existing whitepaper may start to cover some of this
 
 What is the feedback approach / rollout for the use cases?
@@ -94,11 +106,11 @@ What is the feedback approach / rollout for the use cases?
 - Decide upon "OS"
   - What "Linux"?
   - If the use case implied a distro, what would it be based on or would it follow a pattern like carrier grade that standardizes a configuration. (for the few of us on the call)Leaning towards a pattern/standard.  e.g., Yocto/RHEL/Ubuntu using a pattern with artifacts living in core projects.  So maybe for the current aerospace use case we could reuse the Automotive Yocto configuration?
-  - ACTION Need to checkout ref build that automative did for their use case.
+  - ACTION Need to checkout ref build that Automotive did for their use case.
 - Come up with required steps for the "Kernel Config" (Task-Force?)
 - ...
 - Clarify assessment -> What do we want to know / to achieve? --> Link to Space Grade Linux
 - Assessment items & Criteria
 - ...
 - Develop required fundamental functions ("OS / service development")
-- Develop system function(s)
+- Develop system function(s) - [MW] Can these map to the other WGs definition of components/functions?
