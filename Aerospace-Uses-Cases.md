@@ -58,20 +58,26 @@ Single computer with single function (="APP")
 ### Analysis of required (OS) features
 
 - OS must provide for the application (at least):
-    - network   (ACTION do we do even simpler for levels above this and use UDP here??)
-      -  Ethernet Driver  (if PCI nic, MSI IRQs?)
+    - Network Stack with UDP IP
+      -  Ethernet Driver
+      -  IRQ subsystem
       -  MAC subsystem
-    - scheduling (due to the presence of other functions, including protocol/network stack)
-      - timers
-      - fair scheduler
-    - memory
-      -  userspace (stack/heap) for application use
-      -  io access (userspace accessing IO memory)
-      -  skbufs
-    - driver / system configuration vs hardware (e.g. device tree)
-    - gpio (pin setup)
-    - irqs (pin setup for event wakeup / GPIO subsystem uses to register and get event)
-    - libc
+      -  DMC subsystem
+    - Scheduling
+      - Needed by network stack, filesystem io and user space
+      - Timers
+      - Fair scheduler
+    - Memory
+      -  Userspace (stack/heap) for application use
+      -  IO access (userspace accessing IO memory)
+      -  Network buffers
+    - System configuration + hardware drive cfg (e.g. device tree)
+    - GPIO (pin setup) - Is needed?
+    - ???Other OS stuff?
+      - stdlib
+- Tools / libraries
+  - C lang Compiler/linker
+  - Device tree compiler
 
 
 ## Deliverables and feedback.
@@ -96,21 +102,27 @@ What is our output of the use case activity?  In our previous meeting, it was su
     - Existing whitepaper may start to cover some of this
 
 What is the feedback approach / rollout for the use cases?
-- Audience? - **ACTION** Check with Min/Kate for Automotive's approach for previous cases
+- Audience? - **ACTION** Check with Min/Kate for Automotive's approach for previous use cases.  "What is the feedback approach / rollout for the use cases?  Audience?"
 - Survey to a wider audience when sharing the use case to cover topics like what distro / Linux approach they are using.  Survey how they use it, compose it, and cfg they depend on
   - Use this to drive our next use case and timeline
-  - **ACTION** build a list of question ideas on the mailing list
+  - **ACTION** Use the mailing list to build a list of questions for a survey.  Questions would cover topics like what distro / Linux approach they are using and how they use it, compose it, and cfg they depend on, etc. - Used to drive our next use case and timeline.
 
 ## Foreseeable Next Steps (TBC at the next meetings!)
 
 - Decide upon "OS"
   - What "Linux"?
   - If the use case implied a distro, what would it be based on or would it follow a pattern like carrier grade that standardizes a configuration. (for the few of us on the call)Leaning towards a pattern/standard.  e.g., Yocto/RHEL/Ubuntu using a pattern with artifacts living in core projects.  So maybe for the current aerospace use case we could reuse the Automotive Yocto configuration?
-  - ACTION Need to checkout ref build that Automotive did for their use case.
+  - **ACTION** Need to checkout ref build that Automotive did for their use case.
 - Come up with required steps for the "Kernel Config" (Task-Force?)
-- ...
-- Clarify assessment -> What do we want to know / to achieve? --> Link to Space Grade Linux
-- Assessment items & Criteria
 - ...
 - Develop required fundamental functions ("OS / service development")
 - Develop system function(s) - [MW] Can these map to the other WGs definition of components/functions?
+
+- Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
+  - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
+    - 1) Multiple PCI devices SATA, USB, network etc.
+    - 2) PCI devices with multiple functions, root bridge can have multiple functions
+    - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+  - Tend to a common understanding of 3)
+  - [MB] data dict used as a alignment tool between development teams (i.e. header generation).  Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
+  - **ACTION**: Need to check with Martin. [IP] maybe the goal was term alignment as multiple teams have a different perspective.
