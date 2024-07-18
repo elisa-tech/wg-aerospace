@@ -126,3 +126,4 @@ What is the feedback approach / rollout for the use cases?
   - Tend to a common understanding of 3)
   - [MB] data dict used as a alignment tool between development teams (i.e. header generation).  Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
   - **ACTION**: Need to check with Martin. [IP] maybe the goal was term alignment as multiple teams have a different perspective.
+  - Brainstorm on additional use cases vs certification profiles
