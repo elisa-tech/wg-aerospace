@@ -26,24 +26,25 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Steve VanderLeest - Boeing
+- Chuck Wolber - Boeing
+- David Graziano - Collins
+- Justin Pearson - Lynx Software
+- Anshul Makkar - Infinitedeth
 
 ## Attended recently in the past
 
-- Steve VanderLeest - Boeing
 - Ivan Perez - NASA Ames
-- David Graziano - Collins
 - Piotr Skrzypek - ESA
 - Merlin Kooshmanian - ESA
-- Chuck Wolber - Boeing
 - Manuel Beltran - Boeing
-- Paul Mani - Collins
+- Paul Mani - Collins India
 - Olivier Charrier - Wind River
-- Anshul Makkar - Infinitedeth
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
 - Scott Salmon - Cesium
 - Matt Kelly - Boeing
-- Jeannette Nounagnon - Boeing (NEW)
+- Jeannette Nounagnon - Boeing (Aurora)
 - Gaston Gonzalez - VENG
 - Martin Halle - Hamburg University of Technology
 - Emmanuel Gravel - Skytrac
@@ -52,8 +53,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Rajesh Kurapati - KMC
 - Joseph Lee - Skytrac
 - Gabriele Paoloni - Red Hat
-- Justin Pearson - Lynx Software
-- Daniel Riechers - Collins Aerospace
+- Daniel Riechers - Collins (Security)
 - Wanja Zaeske - DLR
 
 ---
@@ -85,6 +85,10 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - will include a workshop on open-source led by Ivan
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
+- 16-18 Sept [OSS Europe](https://events.linuxfoundation.org/open-source-summit-europe/)
+- 18-20 Sept [Linux Plumbers](https://lpc.events/)
+  - [Safe Systems with Linux - Micro Conference](https://lpc.events/event/18/contributions/1663/)
+  - [Measuring and Understanding Linux Kernel Tests](https://lpc.events/event/18/contributions/1793/)
 
 ## Articles / Publications
 
@@ -109,6 +113,8 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 - **ACTION**: How is the topic space being organized (e.g., component/subsystem driven)?
 - **ACTION**:  Can LFSCS present on the minimal kernel and emulation?  (Building a conversation towards "Could this be used for targeting our use case?")
+
+Boeing is adding a new LFSCS focal to support architecture and subsystem discussions.
 
 ## Discussion on Features for Aerospace
 
