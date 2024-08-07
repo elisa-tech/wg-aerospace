@@ -117,7 +117,8 @@ What is the feedback approach / rollout for the use cases?
 - ...
 - Develop required fundamental functions ("OS / service development")
 - Develop system function(s) - [MW] Can these map to the other WGs definition of components/functions?
-
+- **NEXT TIME** - System functional tests / measurement (blackbox)
+- 
 - Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
   - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
     - 1) Multiple PCI devices SATA, USB, network etc.
@@ -127,3 +128,8 @@ What is the feedback approach / rollout for the use cases?
   - [MB] data dict used as a alignment tool between development teams (i.e. header generation).  Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
   - **ACTION**: Need to check with Martin. [IP] maybe the goal was term alignment as multiple teams have a different perspective.
   - Brainstorm on additional use cases vs certification profiles
+
+- Other use cases
+  - mixed safety / non
+  - cases that require runtime monitoring - watchdog / crc'n / bit checks / etc
+  - overlay of how containment strategies would apply

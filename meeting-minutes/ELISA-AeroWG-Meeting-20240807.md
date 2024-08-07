@@ -26,13 +26,18 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Steve VanderLeest - Boeing
+- David Graziano - Collins
+- Martin Halle - Hamburg University of Technology
+- Tim Bird - Sony
+- Ramon Roche - LF
+- Chuck Wolber - Boeing
+- Matt Kelly - Boeing
+- Justin Pearson - Lynx Software
+- Jeannette Nounagnon - Boeing (Aurora)
 
 ## Attended recently in the past
 
-- Steve VanderLeest - Boeing
-- Chuck Wolber - Boeing
-- David Graziano - Collins
-- Justin Pearson - Lynx Software
 - Anshul Makkar - Infinitedeth
 - Ivan Perez - NASA Ames
 - Piotr Skrzypek - ESA
@@ -43,10 +48,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
 - Scott Salmon - Cesium
-- Matt Kelly - Boeing
-- Jeannette Nounagnon - Boeing (Aurora)
 - Gaston Gonzalez - VENG
-- Martin Halle - Hamburg University of Technology
 - Emmanuel Gravel - Skytrac
 - Abdi Kitesa
 - Lenka Koskova - TUL CZ
@@ -85,10 +87,23 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - will include a workshop on open-source led by Ivan
 - 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
-- 16-18 Sept [OSS Europe](https://events.linuxfoundation.org/open-source-summit-europe/)
-- 18-20 Sept [Linux Plumbers](https://lpc.events/)
-  - [Safe Systems with Linux - Micro Conference](https://lpc.events/event/18/contributions/1663/)
+  - Call for 2025 papers ~Oct/Nov 2024 (Steve is General Chair for 2025 in Montreal)
+- 3-8 Aug - Small Satellite Conference (https://smallsat.org/)
+- 16-18 Sept [OSS Europe](https://events.linuxfoundation.org/open-source-summit-europe/) - Sessions to be published
+  - [Linux in Space: Fault Detection, Recovery and Fault-Tolerant System Designs - Lenka Kosková Třísková & Lukas Mazl, Technical University of Liberec & Tomas Novotny, VZLU](https://sched.co/1ej1t)
+- 18-20 Sept [Linux Plumbers](https://lpc.events/) - In-person tickets are sold out but virtual still has slots - Sessions to be published
+  - [Safe Systems with Linux - Micro Conference](https://lpc.events/event/18/contributions/1663/) [Topics](https://lpc.events/event/18/sessions/187/#20240920)
+    - Aspects of Dependable Linux Systems
+    - Verifying the Conformance of a VirtIO Driver to the VirtIO Specification
+    - ks-nav
+    - Source-based code coverage of Linux kernel
+    - BASIL development roadmap
+    - Enabling tooling independent exchange of Requirements and other SW Engineering related information with the upcoming SPDX Safety Profile
+    - Throwing Cinderblocks ad Safety Engineering
+    - Improving kernel design documentation and involving experts
   - [Measuring and Understanding Linux Kernel Tests](https://lpc.events/event/18/contributions/1793/)
+
+A past conference was mentioned (May 2024) - [Flight Software Conference](https://flightsoftware.org/workshop/FSW2024)
 
 ## Articles / Publications
 
@@ -103,13 +118,13 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 ## Old Business
 
 ### Space Grade Linux
-- 07/16 - Matt Weber met with Kate Stewart to discuss SMCIT conference and LXF plans for Space Grade work
+- 07/16 - Matt Weber met with Kate Stewart & Ramon Roche to discuss SMCIT conference and LXF plans for Space Grade work
   - (Kate's Action) schedule call with Michael and Ivan to discuss the following:
     - interest survey
     - growing mailing list (inviting IEEE SMCIT)
     - Initial goals
   - future conference tracks for space / aero
-- 07/24 - Matt Weber, Kate Stewart, Ivan Perez, and Michael Monaghan
+- 07/24 - Matt Weber, Kate Stewart, Ramon Roche, Ivan Perez, and Michael Monaghan
   - Michael shared his initial goals for the Goddard research effort
   - interest survey and plan to publish after Aug 9th -- [Survey working doc](https://annuel2.framapad.org/p/xu58a5s8qj-elisa-aerowg-a8x2?lang=en)
   - Matt Weber will invite both mailing lists to next Aero call
@@ -123,10 +138,9 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
   **(Alessandro shared some feedback on the thread linked above.)**
 
+Alessandro has a example of subsystem tracing - https://lists.elisa.tech/g/linux-features/topic/meet_on_aug_6/107661288
 
 ## Discussion on Features for Aerospace
-
-
 
 Continue the discussion series, now in a separate document:
 [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
