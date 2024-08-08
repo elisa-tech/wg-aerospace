@@ -102,6 +102,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
     - Throwing Cinderblocks ad Safety Engineering
     - Improving kernel design documentation and involving experts
   - [Measuring and Understanding Linux Kernel Tests](https://lpc.events/event/18/contributions/1793/)
+  - [Building for Safety in a Security and Feature Focused World](https://lpc.events/event/18/contributions/1745/)
 
 A past conference was mentioned (May 2024) - [Flight Software Conference](https://flightsoftware.org/workshop/FSW2024)
 
