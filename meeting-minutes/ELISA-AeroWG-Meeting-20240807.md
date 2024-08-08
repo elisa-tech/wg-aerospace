@@ -83,9 +83,6 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 
 ## Upcoming Events
 
-- 15-19 July [IEEE Space Mission Challenges for Information Technology](https://smcit-scc.space) in Mountain View, CA, USA
-  - will include a workshop on open-source led by Ivan
-- 29 Jul - 2 Aug [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, NV, USA
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Call for 2025 papers ~Oct/Nov 2024 (Steve is General Chair for 2025 in Montreal)
 - 3-8 Aug - Small Satellite Conference (https://smallsat.org/)
@@ -120,7 +117,7 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ### Space Grade Linux
 - 07/16 - Matt Weber met with Kate Stewart & Ramon Roche to discuss SMCIT conference and LXF plans for Space Grade work
-  - (Kate's Action) schedule call with Michael and Ivan to discuss the following:
+  - (Kate's Action) schedule call with Michael and Ivan to discuss the following:  - DONE
     - interest survey
     - growing mailing list (inviting IEEE SMCIT)
     - Initial goals
