@@ -117,7 +117,7 @@ What is the feedback approach / rollout for the use cases?
 - ...
 - Develop required fundamental functions ("OS / service development")
 - Develop system function(s) - [MW] Can these map to the other WGs definition of components/functions?
-- **NEXT TIME** - System functional tests / measurement (blackbox)
+- **NEXT TIME** - System functional tests / What do we want to measure? (blackbox)
 - 
 - Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
   - What is the understanding of "multiple functions"? -> 3 Answers with 9 people

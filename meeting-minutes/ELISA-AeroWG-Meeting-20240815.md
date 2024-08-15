@@ -26,28 +26,34 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Merlin Kooshmanian - ESA
+- Allen Brown (Odyssey Space Research)
+- Christopher Heistand (Stoke Space)
+- Chuck Wolber - Boeing
+- Martin Halle - Hamburg University of Technology
+- Michael Monaghan (NASA Goddard)
+- Phaedrus Leeds (Aerospace Corp)
+- Ramon Roche (LF)
+- Shefali Sharma
+- Tim Bird - Sony
+- Scott Salmon - Cesium
+- Ivan Perez - NASA Ames
 
 ## Attended recently in the past
 
 - Anshul Makkar - Infinitede
 - Steve VanderLeest - Boeing
 - David Graziano - Collins
-- Martin Halle - Hamburg University of Technology
-- Tim Bird - Sony
 - Ramon Roche - LF
-- Chuck Wolber - Boeing
 - Matt Kelly - Boeing
 - Justin Pearson - Lynx Software
-- Jeannette Nounagnon - Boeing (Aurora)th
-- Ivan Perez - NASA Ames
+- Jeannette Nounagnon - Boeing (Aurora)
 - Piotr Skrzypek - ESA
-- Merlin Kooshmanian - ESA
 - Manuel Beltran - Boeing
 - Paul Mani - Collins India
 - Olivier Charrier - Wind River
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
-- Scott Salmon - Cesium
 - Gaston Gonzalez - VENG
 - Emmanuel Gravel - Skytrac
 - Abdi Kitesa
@@ -99,6 +105,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - [Building for Safety in a Security and Feature Focused World](https://lpc.events/event/18/contributions/1745/)
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Call for 2025 papers ~Oct/Nov 2024 (Steve is General Chair for 2025 in Montreal)
+- 24th-27th March in Seattle, WA - Flight Software Workshop
 
 ## Articles / Publications
 
@@ -114,14 +121,74 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ### Space Grade Linux (SGL)
 
-- Survey feedback was great and a draft will be shared soon for review.
+- [Survey](https://docs.google.com/document/d/1f-UaWE0sWFUFtOmd7Rxkq5cbTTkjK-km-dEtP9DAo94/edit) feedback was great and a draft will be shared soon for review. [Michael is working edits from his site]
+  - Michael suggesting additional audience within NASA for the BASIC survey
+  - Format as survey monkey
+  - Could also target feature surveys later to NASA/ESA
+
+Updates from Michael
+- NASA funded to work on a base Yocto distro this fall
+  - Basic configuration running Core Flight software framework @ Goddard - https://github.com/nasa/cFS
+    - cFS has a contributor model and agreements on Github
+  - Porting some CF apps to support Linux (Apps target workstation to embedded and OS agnostic)
+  - Surveying internal groups for CF expansion (kernel logging, container runtime, update approach, flash mgmt)
+- Get to a base offering
+- Navigating NASA's process to open source (Goddard specific but other locations have had success)
+  - Meeting with Open source technologies officer (Stephen) - alignment on project and streamlining OSS process
+  - Working to understand contribution vs collaboration as NASA
+- Proposal submitted for 2025 related efforts
+- RiscV targeted focus (using simulation/physical hardware)
+- Could tie the SGL reference build into ELISA CICD
+- Michael is going to share survey updates with the group **(ACTION)**
+
+Plans for outreach material
+- Michael's ppt could expand on
+- Blurb to share with other groups - vision? & survey
+- Landing page on ELISA webpage and update conversation to match under https://lists.elisa.tech/g/space-grade-linux **(ACTION)** Kate/Matt/Michael/Ramon - sort out details
+
+Tim attended Linux4Space call - https://gitlab.com/linux4space  (https://linux4space.org/)
+- meta layer for distro (not doing a full distro)
+  - cubesat focused
+  - libcsp - https://github.com/libcsp/libcsp
+
+Libre Space Foundation - https://libre.space/ + https://www.facebook.com/librespacefoundation
+
+Space Operating Linux - https://github.com/SOL-Space-Operating-Linux/meta-sol  (CH mentioned)
+- Ideally pulled into part of SGL
+
+Space-ros - https://github.com/space-ros/space-ros
+
+Fprime - https://nasa.github.io/fprime/
+
+Space hardware
+- Jetson cubesat - https://github.com/antmicro/jetson-orin-baseboard
+  - (https://designer.antmicro.com/welcome)
+  - virtual hardware - https://designer.antmicro.com/projects/cubesat_edge_computing_system
+- Simluation options?  (AeroWG had targeted this first in our use case)
+
+Discussion around benefits of getting layers organized between parts of the stack. (Trying to identify to get feedback on layers as part of the survey.  i.e. which libs and frameworks.)
+
+ESA
+- LEON4(sparc) processor support for Linux with RTpatch - bsp/hw focused
+  - Working towards next gen L5 riscV
+- Ivan is willing to share survey around within the organization
+
+Where / How do we document the best practice for applying a practice and sharing guidance?  reference impl, emulations, etc
+
+Next time
+- Share survey and then send out
+- Review landing page content
 
 ## Discussion on Features for Aerospace
+
+**STOPPED before this topic**
 
 Last meeting we stopped at "use cases" and "System functional tests / measurement (blackbox)".
 
 Continue the discussion series, now in a separate document:
 [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+
+[Collaboration doc](https://annuel2.framapad.org/p/xu58a5s8qj-elisa-aerowg-a8x2?lang=en)
 
 ---
 ---

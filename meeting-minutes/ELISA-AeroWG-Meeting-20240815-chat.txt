@@ -1,0 +1,48 @@
+10:11:55 From Kate Stewart to Everyone:
+	https://docs.google.com/document/d/1f-UaWE0sWFUFtOmd7Rxkq5cbTTkjK-km-dEtP9DAo94/edit
+10:15:13 From Ramon Roche (LF) to Everyone:
+	https://github.com/nasa/cFS
+10:17:22 From Phaedrus Leeds (Aerospace) to Matt Weber (Boeing)(Direct Message):
+	Hi, feel free to put Aerospace Corp next to my name, that’s my employer
+10:20:28 From Matt Weber (Boeing) to Phaedrus Leeds (Aerospace)(Direct Message):
+	Reacted to "Hi, feel free to put..." with 👍
+10:26:16 From Matt Weber (Boeing) to Tim Bird(Direct Message):
+	What were those frameworks/libraries you mentioned for linux4space
+10:33:08 From [ESA] Merlin Kooshmanian to Everyone:
+	Cubesat Space Protocol (CSP) ?
+10:33:16 From [ESA] Merlin Kooshmanian to Everyone:
+	I think it may be that
+10:37:26 From Ivan Perez to Everyone:
+	Sorry for being late.
+10:37:29 From Ivan Perez to Everyone:
+	Other meetings.
+10:38:12 From Ramon Roche (LF) to Everyone:
+	https://libre.space
+10:38:37 From Ivan Perez (NASA ARC) to Everyone:
+	They sponsored a workshop in Europe last year, didn't they?
+10:38:44 From Tim Bird to Matt Weber (Boeing)(Direct Message):
+	Libre Space Foundation: https://libre.space/        + https://www.facebook.com/librespacefoundation
+10:38:58 From Christopher Heistand (Stoke Space) to Everyone:
+	https://github.com/SOL-Space-Operating-Linux/meta-sol
+10:40:06 From Ramon Roche (LF) to Everyone:
+	https://space.ros.org
+10:40:36 From Tim Bird to Matt Weber (Boeing)(Direct Message):
+	https://linux4space.org/
+10:40:42 From Tim Bird to Matt Weber (Boeing)(Direct Message):
+	linux4space repos: https://gitlab.com/linux4space
+10:40:45 From Kate Stewart to Everyone:
+	https://github.com/antmicro/jetson-orin-baseboard
+10:42:23 From Ivan Perez (NASA ARC) to Everyone:
+	I'd recommend: https://github.com/space-ros/space-ros
+10:42:37 From Ivan Perez (NASA ARC) to Everyone:
+	It's where the action happens. The Space ROS website is quite outdated.
+10:42:38 From Kate Stewart to Everyone:
+	https://designer.antmicro.com/welcome
+10:43:42 From Tim Bird to Matt Weber (Boeing)(Direct Message):
+	https://nasa.github.io/fprime/
+10:43:58 From Kate Stewart to Everyone:
+	https://designer.antmicro.com/projects/cubesat_edge_computing_system
+10:58:28 From Christopher Heistand (Stoke Space) to Everyone:
+	Have to drop, thank you all!
+11:00:43 From Ivan Perez (NASA ARC) to Everyone:
+	Apologies, I have to go to another meeting.
