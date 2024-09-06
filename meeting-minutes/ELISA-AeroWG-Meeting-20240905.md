@@ -26,24 +26,26 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- David Graziano - Collins
+- Tim Bird - Sony
+- Merlin Kooshmanian - ESA
+- Rob Woolley (Wind River)
+- Michael Monaghan (NASA Goddard)
+- Ramon Roche (LF)
+- Olivier Charrier - Wind River
 
 ## Attended recently in the past
 
-- Merlin Kooshmanian - ESA
 - Allen Brown (Odyssey Space Research)
 - Christopher Heistand (Stoke Space)
 - Chuck Wolber - Boeing
 - Martin Halle - Hamburg University of Technology
-- Michael Monaghan (NASA Goddard)
 - Phaedrus Leeds (Aerospace Corp)
-- Ramon Roche (LF)
 - Shefali Sharma
-- Tim Bird - Sony
 - Scott Salmon - Cesium
 - Ivan Perez - NASA Ames
 - Anshul Makkar - Infinitede
 - Steve VanderLeest - Boeing
-- David Graziano - Collins
 - Ramon Roche - LF
 - Matt Kelly - Boeing
 - Justin Pearson - Lynx Software
@@ -51,7 +53,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Piotr Skrzypek - ESA
 - Manuel Beltran - Boeing
 - Paul Mani - Collins India
-- Olivier Charrier - Wind River
 - Qasim Majeed - Siemens
 - Sam Thompson - Rapita
 - Gaston Gonzalez - VENG
@@ -120,9 +121,14 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 ## Space Grade Linux (SGL)
 
 - Work through comments on [Survey](https://docs.google.com/document/d/1f-UaWE0sWFUFtOmd7Rxkq5cbTTkjK-km-dEtP9DAo94/edit) and discuss time frame for sending out.
+
+**Note the discussion did not get past the survey review**
+
 - (tentative) Review landing page content
 
 ## Discussion on Features for Aerospace
+
+New CI project for AeroWG with the intent to showcase demos and other workflow examples - https://gitlab.com/elisa-tech/aero-wg-ci
 
 In a prior meeting, we stopped at "use cases" and "System functional tests / measurement (blackbox)".
 
