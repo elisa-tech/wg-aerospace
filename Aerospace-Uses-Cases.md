@@ -79,6 +79,23 @@ Single computer with single function (="APP")
   - C lang Compiler/linker
   - Device tree compiler
 
+## System Test and Measurement
+
+- What do we want to measure? (blackbox)
+  - If we have a env, what do we actually want to measure?
+    - Does it run, timing, performance, err injection
+  - Drives additional drivers / dependencies, i.e. network / file dependencies
+    - on device vs external
+  - NASA has a framework for monitor / measurement practice (eBPF compatible) (copilot)
+    - https://github.com/Copilot-Language/copilot
+  - What is enough? Service history(but how)
+    - Tests of the feature used  (in context of final system)
+      - Resource allocation verification
+      - Feature focused system blackbox coverage (not full code coverage testing)
+    - Review of configuration subset relevant to required feature set
+    - Documentation of the lifecycle
+    - Static analysis (SDLC practice)
+- **NEXT TIME** Key in on what do we want to measure from our use case above.  Ivan offered to look at applying copilot after we have the initial draft of measurement criteria.
 
 ## Deliverables and feedback.
 
@@ -117,8 +134,6 @@ What is the feedback approach / rollout for the use cases?
 - ...
 - Develop required fundamental functions ("OS / service development")
 - Develop system function(s) - [MW] Can these map to the other WGs definition of components/functions?
-- **NEXT TIME** - System functional tests / What do we want to measure? (blackbox)
-- 
 - Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
   - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
     - 1) Multiple PCI devices SATA, USB, network etc.

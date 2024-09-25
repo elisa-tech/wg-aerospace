@@ -26,24 +26,27 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Ramon Roche (LF)
+- Martin Halle - Hamburg University of Technology
+- Michael Monaghan (NASA Goddard)
+- Tomas Novotny (Czech Aerospace Research Centre)
+- Olivier Charrier - Wind River
+- Paul Mani - Collins India
+- Ivan Perez - NASA Ames
+- Qasim Majeed - Siemens
+- David Graziano - Collins
 
 ## Attended recently in the past
 
-- David Graziano - Collins
 - Tim Bird - Sony
 - Merlin Kooshmanian - ESA
 - Rob Woolley (Wind River)
-- Michael Monaghan (NASA Goddard)
-- Ramon Roche (LF)
-- Olivier Charrier - Wind River
 - Allen Brown (Odyssey Space Research)
 - Christopher Heistand (Stoke Space)
 - Chuck Wolber - Boeing
-- Martin Halle - Hamburg University of Technology
 - Phaedrus Leeds (Aerospace Corp)
 - Shefali Sharma
 - Scott Salmon - Cesium
-- Ivan Perez - NASA Ames
 - Anshul Makkar - Infinitede
 - Steve VanderLeest - Boeing
 - Ramon Roche - LF
@@ -52,8 +55,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Jeannette Nounagnon - Boeing (Aurora)
 - Piotr Skrzypek - ESA
 - Manuel Beltran - Boeing
-- Paul Mani - Collins India
-- Qasim Majeed - Siemens
 - Sam Thompson - Rapita
 - Gaston Gonzalez - VENG
 - Emmanuel Gravel - Skytrac
@@ -104,6 +105,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - [Building for Safety in a Security and Feature Focused World](https://lpc.events/event/18/contributions/1745/)
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Call for 2025 papers ~Oct/Nov 2024 (Steve is General Chair for 2025 in Montreal)
+- 10-12 Dec - Hosted by NASA at Goddard Space Flight Center (TBD location to be set)
 - 25th Feb in Karlsruhe, Germany - 7th Workshop on Avionics Systems and Software Engineering (AvioSE)
   - **(NEW) Call for Papers and further information on: https://aviose-workshop.github.io/**
 - 24th-27th March in Seattle, WA - Flight Software Workshop
@@ -120,11 +122,13 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ## Space Grade Linux (SGL)
 
-- (tentative) Discuss remaining Survey details and Review landing page content
+- Survey: [Shape the Future of Linux in Space](https://lists.elisa.tech/g/aerospace/topic/help_shape_the_future_of/108506014)
+- Review landing page content
 
 ## Discussion on Features for Aerospace
 
 New CI project for AeroWG with the intent to showcase demos and other workflow examples - https://gitlab.com/elisa-tech/aero-wg-ci
+  - We looked at the other WG CIs and there was a question about the "Systems WG use case for Zynq, ie is it zephyr combined with linux on R5s or APUs?  (monitor function)" - [MW] passed this on to Sudip Mukherjee who authored the CI pipeline.
 
 In a prior meeting, we stopped at "use cases" and "System functional tests / measurement (blackbox)".
 
