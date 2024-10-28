@@ -8,8 +8,41 @@ Low DAL (D or lower) - blackbox level - functionally meets expectations
 
 ### System Requirements
 
-* The Cabin Lights system shall turn lights on in no less than 500 ms of the light switch turning on
-* The Cabin Lights system shall turn lights off in no less than 500 ms of the light switch turning off
+* The Cabin Lights system shall turn lights on in less than 500 ms of the light switch turning on
+* The Cabin Lights system shall turn lights off in less than 500 ms of the light switch turning off
+
+#### Test 
+
+Items to key on
+  - logging check
+  - ethernet message check - i.e., socket msg in / out analysis using time criteria
+    - how do we test this, is it extra hardware or application running beside a emulation doing pkt analysis
+    - log data and post analysis?
+    - online - build a cicd scenario and get earlier feedback on individual test failure without post-analysis
+
+Test environment
+- No ebpf
+- start with emulation (is there a limitation in timing because of type of emulation?)
+  - qemu can we count cycles to see if we can bound it?  maybe not realtime
+- Architecture of Test Environment:
+  - Emulator (TBD: Docker, QEMU ... ?), running:
+    - [1] [Virtualised Computing Module with environment [SENS_App] [ACT_App]] <-> [ETH]
+    - [2] [ETH] <-> [Virtualised Switch] <-> [ETH]
+    - [3] [ETH] <-> [Virtualised Computing Module with [Cabin Light APP]]
+    - Measure at [ETH] level based on messages and time-stamps?
+    - System under Test: [Virtualised Computing Module with [Cabin Light APP]]
+      - (Runs Linux w/ ELISA kernel configuration.)
+    - Instrumentation with Copilot
+    
+Ivan - creating copilot monitors for requirements above (ACTION)
+- has hooks for actions based on when violations occur.  so we could define cicd and failure logging (they have examples/plugins.)
+
+Test apps around the use case core application
+- Test apps send the message in and receives the message out
+- Copilot runs on separate processors (monitors don't impact UUT) - pkt analysis around emulated use case
+
+
+
 
 ### System Architecture
 
@@ -19,7 +52,7 @@ Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin li
 * Actuator is a light with two states (on/off), when a message is received on Ethernet, it updates its state to match
 * Options for assuring comm
     * send periodic message of current state 
-    * Or?  acknowledge messages from application
+    * Or? acknowledge messages from application
     * Or? poll both sensor and actuator
 * Connectivity is an Ethernet bus (messages can be lost or corrupted)
 * Computing platform running an "cabin lights" application
@@ -88,6 +121,8 @@ Single computer with single function (="APP")
     - on device vs external
   - NASA has a framework for monitor / measurement practice (eBPF compatible) (copilot)
     - https://github.com/Copilot-Language/copilot
+    - Hard realtime C99 compat
+    - Formal proof of code meets spec
   - What is enough? Service history(but how)
     - Tests of the feature used  (in context of final system)
       - Resource allocation verification
@@ -96,6 +131,8 @@ Single computer with single function (="APP")
     - Documentation of the lifecycle
     - Static analysis (SDLC practice)
 - **NEXT TIME** Key in on what do we want to measure from our use case above.  Ivan offered to look at applying copilot after we have the initial draft of measurement criteria.
+
+Copilot - framework has hooks to tie different parts together
 
 ## Deliverables and feedback.
 
