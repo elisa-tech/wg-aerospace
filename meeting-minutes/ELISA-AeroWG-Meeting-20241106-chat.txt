@@ -1,0 +1,53 @@
+09:09:50 From Martin Halle to Everyone:
+	Update: The deadline for the AvioSE'25 workshop has been extend to Nov 11, 2024.
+09:20:51 From Andrew Wilson (L3Harris) to Everyone:
+	WSL example?
+09:25:49 From Michael Monaghan (NASA Goddard) to Everyone:
+	I believe there is support for containerized windows processes in docker now.
+09:26:36 From Michael Monaghan (NASA Goddard) to Everyone:
+	Haven't played around with it myself, but I've seen references to it in Docker's go source. https://learn.microsoft.com/en-us/virtualization/windowscontainers/manage-docker/manage-windows-dockerfile
+09:26:54 From Matt Weber (Boeing) to Everyone:
+	docker pull registry.gitlab.com/buildroot.org/buildroot/base:20230207.1123
+09:27:25 From Michael Monaghan (NASA Goddard) to Everyone:
+	I think it is as simple as using docker run, then supplying a windows image mcr.microsoft.com/windows/servercore:ltsc2019
+09:30:42 From Matt Weber (Boeing) to Everyone:
+	https://mensuel.framapad.org/p/elisa-aerowg
+09:34:41 From Michael Monaghan (NASA Goddard) to Everyone:
+	https://carrv.github.io/2023/papers/CARRV2023_paper_5_Cao.pdf
+09:37:15 From Andrew Wilson (L3Harris) to Everyone:
+	Versal AIE simulation?
+09:39:23 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	https://docs.amd.com/r/2022.1-English/ug1076-ai-engine-environment/AI-Engine-SystemC-Simulator
+09:42:08 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	It’s been a while, but this might be related to Qemu CAS? http://cps.kaist.ac.kr/papers/16RTSSWIP_cycle.pdf
+09:43:40 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	I recently found this article , seems interesting: https://renode.readthedocs.io/en/latest/tutorials/co-simulating-custom-hdl.html
+09:44:22 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	limited to VHDL?
+09:44:31 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	oh
+09:47:37 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	For Microchip PolarFire Soc, emulating Linux on Renode should be possible but never tried (will try soon?) https://ww1.microchip.com/downloads/aemdocuments/documents/fpga/ProductDocuments/SupportingCollateral/renode_webinar_16.pdf
+09:48:14 From Ramon to Everyone:
+	Folks I need to drop but it was nice hearing from everyone, please reach out if you need our help. Have a good rest of your week.
+09:48:22 From Martin Halle to Everyone:
+	Still trying with Docker: I am getting this message now:	2024-11-06 16:47:01 Fatal error: you must specify '--save', '--no-save' or '--vanilla'	...when trying to run the container.	Need to find out where this is coming form.	(But at least I am a few steps further…)
+09:48:50 From Michael Monaghan (NASA Goddard) to Everyone:
+	Reacted to "Folks I need to dr..." with 👍
+09:51:47 From Michael Monaghan (NASA Goddard) to Everyone:
+	Replying to "Still trying with ..."
+	
+	You might need a `-i` in your run command.
+09:53:22 From Matt Weber (Boeing) to Everyone:
+	Replying to "Still trying with Do..."
+	
+	-it  (maybe t and we might need to specify a shell
+09:56:08 From Martin Halle to Everyone:
+	Replying to "Still trying with Do..."
+	
+	...OK, I think I need to switch to a console. I tried to simply press the "Run"-button in Docker for Windows. This seems to issue a false command then, obviously. Thanks for the hint!
+09:58:38 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	Trade study paper: 
+	https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=6013&context=smallsat
+10:00:35 From Dongshik Won (TelePIX/KAIST) to Everyone:
+	thank you all

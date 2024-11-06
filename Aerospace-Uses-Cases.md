@@ -36,6 +36,11 @@ Test environment
     
 Ivan - creating copilot monitors for requirements above (ACTION)
 - has hooks for actions based on when violations occur.  so we could define cicd and failure logging (they have examples/plugins.)
+- [MW] How do we add this to the build?
+  - Dependencies to sort out
+    - https://github.com/tobsan/meta-haskell
+    - https://wiki.alpinelinux.org/wiki/Porting_GHC_to_Alpine
+  - https://github.com/Copilot-Language/copilot/blob/master/copilot/README.md
 
 Test apps around the use case core application
 - Test apps send the message in and receives the message out
