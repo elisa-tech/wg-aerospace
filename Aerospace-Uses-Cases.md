@@ -46,6 +46,10 @@ Test apps around the use case core application
 - Test apps send the message in and receives the message out
 - Copilot runs on separate processors (monitors don't impact UUT) - pkt analysis around emulated use case
 
+Emulation How-To
+- How to approach Windows development of the emulation  + OS build
+  - [CI Readme](https://gitlab.com/elisa-tech/aero-wg-ci/-/blob/main/README.md?ref_type=heads) shows locally running the example CI build.
+- **TODO** Add diagram of the components and where test copilot "hooks in" based on use case notes
 
 
 
@@ -190,3 +194,33 @@ What is the feedback approach / rollout for the use cases?
   - mixed safety / non
   - cases that require runtime monitoring - watchdog / crc'n / bit checks / etc
   - overlay of how containment strategies would apply
+
+
+## References
+
+### Space Frameworks comparison
+- JPL - Fprime
+- Goddard - CFS (C-based with cert artifacts)
+- Refs:
+  - https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=6013&context=smallsat
+  - https://s3vi.ndc.nasa.gov/ssri-kb/static/resources/CL18-2993.pdf
+  - https://hackmd.io/@jonathanmichel/Hyu3Azl_P
+  - https://www.scielo.br/j/jatm/a/ZNY8mTKcbh8MT5xvbvyytqG/?format=pdf
+
+
+### Emulation
+
+QEMU CAS
+- https://carrv.github.io/2023/papers/CARRV2023_paper_5_Cao.pdf
+- http://cps.kaist.ac.kr/papers/16RTSSWIP_cycle.pdf
+
+
+SystemC example
+- https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421112/Co-simulation
+- [Versal AIE](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/AI-Engine-Simulation)
+
+
+Renode
+- https://renode.io/ - board level simulation, accuracy?
+- https://renode.readthedocs.io/en/latest/tutorials/co-simulating-custom-hdl.html
+- For Microchip PolarFire Soc, emulating Linux on Renode should be possible - https://ww1.microchip.com/downloads/aemdocuments/documents/fpga/ProductDocuments/SupportingCollateral/renode_webinar_16.pdf

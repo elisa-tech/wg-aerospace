@@ -7,7 +7,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Minutes
 
-## 06 November 2024
+## 21 November 2024
 
 ---
 
@@ -26,6 +26,9 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+
+## Attended recently in the past
+
 - Chuck Wolber - Boeing
 - Andrew Wilson (L3Harris)
 - Manuel Beltran - Boeing
@@ -38,9 +41,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Michael Monaghan (NASA Goddard)
 - Brennan Stewart (NASA)
 - Tony James (Red Hat)
-
-## Attended recently in the past
-
 - Christopher Heistand (Stoke Space)
 - David Graziano - Collins
 - Olivier Charrier - Wind River
@@ -105,21 +105,16 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - For wider listening some talks may be shared as webinars.
   - Share presented slides later for the ELISA result database.
   - Michael asked about if there will be a slack/chat for the event (Ramon checking)
-- 25th Feb in Karlsruhe, Germany - 7th Workshop on Avionics Systems and Software Engineering (AvioSE)
-  - **(NEW) Call for Papers and further information on: https://aviose-workshop.github.io/**
-  - Deadline extend to Nov 11, 2024.
+- 25th Feb in Karlsruhe, Germany - 7th Workshop on Avionics Systems and Software Engineering (AvioSE) (https://aviose-workshop.github.io/)
 - 24th-27th March in Seattle, WA - Flight Software Workshop (https://flightsoftware.org/workshop/FSW2025)
-  - Presentation only - submissions start ~Oct 14th (**Due Nov 15th**)
-  - This workshop drove some of the Space Grade Linux topics
+  - This workshop drove some previous Space Grade Linux topics
   - Lessons learned / BOF-like with presentation
   - Registration/abstracts open - 200 slots
   - Christopher Heistand is chairing
-    - [MW]  **Ask Michael about proposing some talks.  Status of RT primer with stats?? Maybe a combo of space and non-space perspective?**  Chat with Kate?
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA)
-  - Workshops (deadline for submissions Fall 2024) and papers
-  - **Do we want to propose a topic?  Or a Space workshop at the event with ELISA topics?(ELISA was a sponsor in prior 2 yrs)**
-    - Maybe just automotive?  [MW] asking Kate/Min if there are plans for next year already and if we could present a similar talk from FSW.
-- Aug - SmallSat - Call for paper is open - https://www.smallsat.org/downloads/call-for-papers.pdf
+  - Matt Weber and Michael Monaghan submitted an abstract to present an ELISA talk on "Making Penguins Fly"
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/)
+  **- Deadline for proposal submissions Dec 13th**
+- Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
 - DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
 
 ## Articles / Publications
@@ -138,47 +133,29 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ## Discussion on Features for Aerospace
 
+Next use case (Space focused?)
+  - What are the dependencies for running frameworks (CFS, etc) on top?
+  - Impacts to criticality/rigor
+  - Any feedback from the survey that could help inform this?
+
+
+<br>
+
 The use case discussion is focusing on testing.  
-- Here's the previous progress - https://github.com/elisa-tech/wg-aerospace/commit/693faa39ac5d45073989c94877391f5742fb3c0f#diff-49514acd2e9fa371ee74afa185098ec9d80ca9305dabc98fa5fe00d79c3619d5
 - We are seeking volunteers to write the test apps and stage an emulation environment based on the discussion.  Contact Matt Weber if interested.
+- Moved the notes on emulation approaches to a ref section in use case document
 - (Ivan) I have the Copilot code ready. It's very simple.
   - From the point of view of connecting it to the rest of the testing infrastructure, all I need is:
     - A boolean (global variable) that indicates if the light switch is on or off.
     - A boolean (global variable) that indicates if the lights are on.
   - I can also connect it if you give me a function that allows me to "sense" if the light switch is on/off, and whether the lights are on/off. There are other ways to connect it (e.g., SW bus, etc.).
 
-- Emulation
-  - How to approach Windows development of the emulation  + OS build ([Matt] adding a readme to the CI example and link to the CI from the use case doc)
-  - [Matt] Add diagram of the components and where test copilot "hooks in" based on use case notes
-  - [Michael]  Has anyone worked with QEMU CAS?
-    - https://carrv.github.io/2023/papers/CARRV2023_paper_5_Cao.pdf
-    - ? http://cps.kaist.ac.kr/papers/16RTSSWIP_cycle.pdf
-  - [Matt]  SystemC example - https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421112/Co-simulation
-  - [Versal AIE](https://docs.amd.com/r/en-US/ug1273-versal-acap-design/AI-Engine-Simulation)
-  - https://renode.io/ - board level simulation, accuracy?
-    - https://renode.readthedocs.io/en/latest/tutorials/co-simulating-custom-hdl.html
-    - [Dongshik] For Microchip PolarFire Soc, emulating Linux on Renode should be possible but never tried (will try soon?) https://ww1.microchip.com/downloads/aemdocuments/documents/fpga/ProductDocuments/SupportingCollateral/renode_webinar_16.pdf
 
   Refs:
   - [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
     - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
     - [Collaboration doc](https://mensuel.framapad.org/p/elisa-aerowg) (used during our WG calls and sync'd with Aerospace-Uses-Cases.md)
 
-
-Linux Architecture [Matt]
-- Proposing we start to outline the components of the kernel in a document such that we can talk about them when doing use cases.
-- Could do this purely in the SystemsWG call or start an initial proposal here based on our current use case "OS dependencies"
-
-Minimal kernel/build [Manuel]
-- What are the dependencies for running frameworks (CFS, etc) on top?
-- Impacts to criticality/rigor
-- [Matt] Could start those use cases and understand impacts of the dependencies
-
-Space Frameworks comparison/trades? [Manuel]
-- https://digitalcommons.usu.edu/cgi/viewcontent.cgi?article=6013&context=smallsat
-  - JPL - Fprime
-  - Goddard - CFS (C-based with cert artifacts)
-- FSW had a presentation - Michael checking (Ivan has mentioned this in the past)
 
 
 ---
