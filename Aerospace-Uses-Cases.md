@@ -26,14 +26,104 @@ Test environment
   - qemu can we count cycles to see if we can bound it?  maybe not realtime
 - Architecture of Test Environment:
   - Emulator (TBD: Docker, QEMU ... ?), running:
-    - [1] [Virtualised Computing Module with environment [SENS_App] [ACT_App]] <-> [ETH]
-    - [2] [ETH] <-> [Virtualised Switch] <-> [ETH]
-    - [3] [ETH] <-> [Virtualised Computing Module with [Cabin Light APP]]
-    - Measure at [ETH] level based on messages and time-stamps?
-    - System under Test: [Virtualised Computing Module with [Cabin Light APP]]
-      - (Runs Linux w/ ELISA kernel configuration.)
-    - Instrumentation with Copilot
-    
+    - **Concept 1** (To view these diagrams, make sure your vscode has the Markdown Preview Mermaid Ext - `bierner.markdown-mermaid`)
+    ```mermaid
+    sequenceDiagram
+        participant Sensor as Switch <br> (CoPilot App)
+        participant App as Cabin Lights Application
+        participant Actuator as Cabin Light <br> (CoPilot App)
+        participant Log as Logging Function
+
+        Sensor->>App: Send Switch State (On/Off) <br> (Ethernet)
+        App->>App: Wake up on message
+        App->>App: Create message with new light state
+        App->>Actuator: Send message <br> (Ethernet)
+        Actuator->>Actuator: Update state to match message
+        App->>Log: Log event (Light State Change) <br> (Syslog)
+        App->>App: Yield and wait for next message
+
+        Note over App: Connectivity via Ethernet bus
+    ```
+
+    ```mermaid
+    %%{init: {'theme': 'default'}}%%
+    graph TD
+        subgraph QEMU_Environment_Unit_Under_Test
+            direction TB
+            App[2.Cabin Lights Application] 
+            Log[Logging Function]
+        end
+
+        subgraph Sensor_Actuator_Testbed
+            direction TB
+            Sensor[1.Switch -CoPilot App-]
+            Actuator[3.Cabin Light -CoPilot App-]
+        end
+
+        App -->|Interacts with| Log
+        Sensor -->|Sends State Msg| App
+        App -->|Control Msg| Actuator
+        Actuator -->|Checks for event| Log
+
+        style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
+        style Sensor_Actuator_Testbed fill:#bbf,stroke:#333,stroke-width:2px;
+    ```
+    - **Concept 2**
+    ```mermaid
+    sequenceDiagram
+        participant Sensor as Switch
+        participant SensorEth as Switch Ethernet Bridge <br> (CoPilot Tap)
+        participant App as Cabin Lights Application
+        participant ActuatorEth as Actuator Ethernet Bridge <br> (CoPilot Tap)
+        participant Actuator as Cabin Light
+        participant Log as Logging Function
+        participant CheckLog as CoPilot Log <br> Monitor
+
+        Sensor->>SensorEth: Send Switch State (On/Off)
+        SensorEth->>App: Send Switch State (On/Off)
+        App->>App: Wake up on message
+        App->>App: Create message with new light state
+        App->>ActuatorEth: Send message
+        ActuatorEth->>Actuator: Send message
+        Actuator->>Actuator: Update state to match message
+        App->>Log: Log event (Light State Change) <br> (Syslog)
+        CheckLog->>Log: Monitor events
+        CheckLog->>CheckLog: Wait for events
+        App->>App: Yield and wait for next message
+    ```
+
+    ```mermaid
+    %%{init: {'theme': 'default'}}%%
+    graph TD
+        Actuator_Bridge
+        Switch_Bridge
+        subgraph QEMU_Environment_Unit_Under_Test
+            direction TB
+            App[2.Cabin Lights Application] 
+            Log[Logging Function]
+        end
+
+        subgraph Sensor_Actuator_Testbed
+            direction TB
+            Sensor[1.Switch App]
+            Actuator[3.Cabin Light]
+            Copilot[CoPilot Tap]
+            CopilotLog[CoPilot Log Monitor]
+        end
+
+        App -->|Interacts with| Log
+        Sensor -->|Sends State Msg| Switch_Bridge
+        Copilot -->|Monitor| Switch_Bridge
+        Switch_Bridge -->|Sends State Msg| App
+        App -->|Control Msg| Actuator_Bridge
+        Actuator_Bridge -->|Control Msg| Actuator
+        Copilot -->|Monitor| Actuator_Bridge
+        CopilotLog -->|Checks for event| Log
+
+        style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
+        style Sensor_Actuator_Testbed fill:#bbf,stroke:#333,stroke-width:2px;
+    ```
+
 Ivan - creating copilot monitors for requirements above (ACTION)
 - has hooks for actions based on when violations occur.  so we could define cicd and failure logging (they have examples/plugins.)
 - [MW] How do we add this to the build?
@@ -49,7 +139,22 @@ Test apps around the use case core application
 Emulation How-To
 - How to approach Windows development of the emulation  + OS build
   - [CI Readme](https://gitlab.com/elisa-tech/aero-wg-ci/-/blob/main/README.md?ref_type=heads) shows locally running the example CI build.
-- **TODO** Add diagram of the components and where test copilot "hooks in" based on use case notes
+- Brainstorming on how to compose the emulation / networking
+  - Build the UUT environment in the buildroot docker image
+    - Results in a minimal kernel, rootfs and SDK toolchain to build apps
+      - Builds the Cabin Lights  (CLA)
+      - Provides syslog daemon configured to send logs out to a UDP destination (blindly that Copilot can tap on the Actuator Bridge)
+  - Testbed
+    - Are there existing CoPilot docker containers with all the dependencies so we can build the test apps and any coPilot monitor/tap app?
+  - Runtime
+    - Run in the CoPilot container with NET_ADMIN rights to make TAPS
+    - Build two bridges, tap those bridges for QEMU access and assume some IP configuration (or do we want to just use Eth frames?)
+    - QEMU launch the UUT
+      - Bind the taps and configure the CLA to have ports on the right switches
+    - Start the test apps bound to the right bridge interfaces / IPs
+    - Start the coPilot app last or have it do all this staging before telling the Switch app to toggle.
+
+
 
 
 
