@@ -1,0 +1,64 @@
+10:01:05 From Ivan Perez to Everyone:
+	Just a sec. I need to re-connect my audio.
+10:03:59 From Matt Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md
+10:07:01 From Martin Halle to Matt Weber (Boeing)(direct message):
+	One question from my side maybe for today (feeling a Little dumb :-)): But how to get the Preview Mermaid Extension to work online (in the browser), or do I need a local installation?
+10:07:28 From Ramon Roche (LF) to Everyone:
+	https://elisa.tech/space-grade-linux-sig/
+10:08:14 From Matt Weber (Boeing) to Martin Halle(direct message):
+	Oh the mermaid should automatically work when viewing online.  Or at least that's what I've seen
+10:08:41 From Martin Halle to Matt Weber (Boeing)(direct message):
+	Nope, I see an error in red: "Unable to render rich Display"
+10:10:27 From Ramon Roche (LF) to Everyone:
+	https://www.chathamhouse.org/about-us/chatham-house-rule
+10:12:24 From Christopher Heistand to Everyone:
+	https://join.slack.com/t/fsw-workshop/shared_invite/zt-2v2ya53td-fx_B_c2N_AkR~qKM8pcPEQ
+10:13:00 From Chuck Wolber to Everyone:
+	Another good description of Chatham House Rules can be found here.
+	
+	https://en.wikipedia.org/wiki/Chatham_House_Rule
+10:13:40 From Christopher Heistand to Everyone:
+	just made a #space-grade-linux channel
+10:15:56 From Ramon Roche (LF) to Everyone:
+	https://elisa.tech/event/elisa-workshop-at-nasa-goddard-space-grade-linux/
+10:17:57 From Ivan Perez to Everyone:
+	https://2025.smcit-scc.space/track/smc-it-scc-2025-workshops
+10:18:15 From Ivan Perez to Everyone:
+	https://2025.smcit-scc.space/track/smc-it-scc-2025-papers
+10:41:41 From Ivan Perez to Everyone:
+	https://www.polysat.org/
+10:42:02 From Ivan Perez to Everyone:
+	From: https://digitalcommons.calpoly.edu/cgi/viewcontent.cgi?article=1720&context=eesp
+	
+	"the PolySat software architecture runs entirely on a custom Linux operating system"
+10:43:09 From Christopher Heistand to Everyone:
+	https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 		https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
+10:49:15 From Christopher Heistand to Everyone:
+	Stoke is resurrecting this one (since I started this a while ago): https://github.com/SOL-Space-Operating-Linux/meta-sol
+10:50:33 From Christopher Heistand to Everyone:
+	(MIT License) https://github.com/SOL-Space-Operating-Linux/Documentation/blob/master/LICENSE
+10:54:44 From Ramon Roche (LF) to Everyone:
+	https://lfx.linuxfoundation.org/tools/easycla/
+10:57:00 From Gary Crum (Voyager) to Everyone:
+	w.r.t. PolySat.  I've worked with them in the past on IPEX.  If Dr John Bellardo is still involved he would be very interested in this.
+10:57:42 From Ramon Roche (LF) to Everyone:
+	Gary can you please send an intro?
+10:58:18 From Ivan Perez (NASA ARC) to Everyone:
+	Reacted to "w.r.t. PolySat.  I..." with 👍
+11:00:12 From Chuck Wolber to Everyone:
+	I have to drop. Great hanging out with everyone!
+11:00:21 From Ramon Roche (LF) to Everyone:
+	Reacted to "I have to drop. Grea..." with 👍
+11:00:29 From Ramon Roche (LF) to Everyone:
+	Reacted to "I have to drop. Grea..." with 👋
+11:00:30 From Ramon Roche (LF) to Everyone:
+	Removed a 👍 reaction from "I have to drop. Grea..."
+11:00:40 From Gary Crum (Voyager) to Everyone:
+	Reacted to "Gary can you pleas..." with 👍
+11:01:18 From Martin Halle to Everyone:
+	Can you send this around as PDF? As you know for me at least, I don't see the Images... :-/
+11:02:46 From Ramon Roche (LF) to Everyone:
+	Reacted to "w.r.t. PolySat.  I'v..." with 👍
+11:04:51 From Michael Monaghan (NASA Goddard) to Everyone:
+	Reacted to "just made a #space..." with 👍
