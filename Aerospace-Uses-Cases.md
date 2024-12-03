@@ -124,8 +124,12 @@ Test environment
         style Sensor_Actuator_Testbed fill:#bbf,stroke:#333,stroke-width:2px;
     ```
 
-Ivan - creating copilot monitors for requirements above (ACTION)
-- has hooks for actions based on when violations occur.  so we could define cicd and failure logging (they have examples/plugins.)
+Ivan - creating copilot monitors for requirements above
+- Copilot is relatively simple.
+  - From the point of view of connecting it to the rest of the testing infrastructure, all it needs is:
+    - A boolean (global variable) that indicates if the light switch is on or off.
+    - A boolean (global variable) that indicates if the lights are on.
+  - It can also connect in if a function is provided that allows CoPilot to "sense" if the light switch is on/off, and whether the lights are on/off. There are other ways to connect it (e.g., SW bus, etc.).
 - [MW] How do we add this to the build?
   - Dependencies to sort out
     - https://github.com/tobsan/meta-haskell
@@ -329,3 +333,20 @@ Renode
 - https://renode.io/ - board level simulation, accuracy?
 - https://renode.readthedocs.io/en/latest/tutorials/co-simulating-custom-hdl.html
 - For Microchip PolarFire Soc, emulating Linux on Renode should be possible - https://ww1.microchip.com/downloads/aemdocuments/documents/fpga/ProductDocuments/SupportingCollateral/renode_webinar_16.pdf
+
+### New Use Cases
+
+#### Space focused
+- What are the dependencies for running frameworks (CFS, etc) on top?
+  - Using CFS dockerfile as setup instructions for the userspace part plus look at what is required in minimal kernel
+- Would this apply to cubesats?  (Could start here and grow towards larger example?)
+  - Could be used for incubating university projects (Michael)
+- Impacts to criticality/rigor (what standards would apply in a cubesat case? Class C? )
+  - Criticality & cost factors into Class
+- Any feedback from the survey that could help inform this?
+- https://www.polysat.org/
+  - From: https://digitalcommons.calpoly.edu/cgi/viewcontent.cgi?article=1720&context=eesp
+  - "the PolySat software architecture runs entirely on a custom Linux operating system"
+  - Maybe a group for user feedback for what we define (design, prototype)
+- https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 
+- https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
