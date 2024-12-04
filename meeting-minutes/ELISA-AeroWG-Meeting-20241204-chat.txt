@@ -1,0 +1,36 @@
+08:58:27 From Matt Weber (Boeing) to Everyone:
+	Agenda / collaboration doc - https://mensuel.framapad.org/p/elisa-aerowg
+09:00:34 From Matt Weber (Boeing) to Everyone:
+	Agenda / collaboration doc - https://mensuel.framapad.org/p/elisa-aerowg
+09:04:05 From Christopher Heistand to Everyone:
+	also virtual for me
+09:04:22 From Matt Weber (Boeing) to Everyone:
+	Agenda / collaboration doc - https://mensuel.framapad.org/p/elisa-aerowg
+09:07:14 From Manuel Beltran (Boeing) to Everyone:
+	@Ivan Perez Please invite Manuel Beltran to participate in upcoming workshop
+09:08:04 From Alexey Simonov to Everyone:
+	Ivan, I am interested to be involved with our work on space-ros
+09:24:46 From Walt Miner to Everyone:
+	AGL is using Discord. Developers with issues can talk in real time,
+09:25:29 From Walt Miner to Everyone:
+	Longer term issues can be documented in Jira
+09:25:48 From Tim Bird to Everyone:
+	Does AGL use email?
+09:26:12 From Walt Miner to Everyone:
+	yes, but not for patches
+09:26:19 From Walt Miner to Everyone:
+	patches are via gerrit
+09:30:48 From Matt Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md
+09:32:38 From Paul Mani to Everyone:
+	Sorry. I need to drop off for another meeting that overlaps with this one.
+09:41:38 From Christopher Heistand to Everyone:
+	have to drop, hope to see yall (virtually) next week
+09:49:15 From Alexey Simonov to Everyone:
+	have to drop, until next time
+09:54:40 From Tim Bird to Everyone:
+	sorry - have to prep for another meeting, see you in Maryland
+09:59:18 From Ivan Perez to Everyone:
+	NPR7150.2
+10:04:45 From Wanja Zaeske to Everyone:
+	I have to drop, take care!

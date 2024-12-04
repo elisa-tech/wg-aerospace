@@ -26,29 +26,33 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Piotr Skrzypek - ESA
+- Tim Bird - Sony
+- Manuel Beltran - Boeing
+- Christopher Heistand (Stoke Space)
+- Wanja Zaeske - DLR
+- Ivan Perez - NASA Ames
+- Walt Miner - Linux Foundation
+- David Graziano - Collins
+- Andrew Wilson (L3Harris)
+- Paul Mani - Collins India
+- Shefali Sharma
+- Alexey Simonov
 
 ## Attended recently in the past
 
-- Christopher Heistand (Stoke Space)
 - Sam Thompson - Rapita
 - Chuck Wolber - Boeing
 - Dongshik Won (TelePIX/KAIST)
 - Martin Halle - Hamburg University of Technology
-- Ivan Perez - NASA Ames
 - Tomas Novotny (Czech Aerospace Research Centre)
 - Gary Crum (Voyager)
 - Ramon Roche - LF
-- Manuel Beltran - Boeing
 - Michael Monaghan (NASA Goddard)
-- Andrew Wilson (L3Harris)
-- Shefali Sharma
-- Tim Bird - Sony
 - Ramon Roche (LF)
 - Brennan Stewart (NASA)
 - Tony James (Red Hat)
-- David Graziano - Collins
 - Olivier Charrier - Wind River
-- Paul Mani - Collins India
 - Allen Brown (Odyssey Space Research)
 - Qasim Majeed - Siemens
 - Merlin Kooshmanian - ESA
@@ -60,7 +64,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Matt Kelly - Boeing
 - Justin Pearson - Lynx Software
 - Jeannette Nounagnon - Boeing (Aurora)
-- Piotr Skrzypek - ESA
 - Gaston Gonzalez - VENG
 - Emmanuel Gravel - Skytrac
 - Abdi Kitesa
@@ -69,7 +72,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Joseph Lee - Skytrac
 - Gabriele Paoloni - Red Hat
 - Daniel Riechers - Collins (Security)
-- Wanja Zaeske - DLR
 
 ---
 
@@ -99,6 +101,7 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 - 10-12 Dec - Hosted by NASA at Goddard Space Flight Center
   - Location: Goddard Space Flight Center https://maps.app.goo.gl/NoVcCPoSEk38ardU6  (Registration Closed)
   - Schedule: https://elisa.tech/event/elisa-workshop-at-at-nasa-goddard-space-grade-linux/
+  - ACTION - share links post conference to slides / videos(if recorded)
 - 25th Feb in Karlsruhe, Germany - 7th Workshop on Avionics Systems and Software Engineering (AvioSE) (https://aviose-workshop.github.io/)
 - 24th-27th March in Seattle, WA - Flight Software Workshop (https://flightsoftware.org/workshop/FSW2025)
   - This workshop drove some previous Space Grade Linux topics
@@ -106,14 +109,16 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - Registration/abstracts open - 200 slots
   - Christopher Heistand is chairing
   - Matt Weber and Michael Monaghan submitted an abstract to present an ELISA talk on "Making Penguins Fly"
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/)
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
   - https://2025.smcit-scc.space/track/smc-it-scc-2025-workshops
   - https://2025.smcit-scc.space/track/smc-it-scc-2025-papers
-  - Open source for space workshop (Ivan organizing)
-    - Willing to co-chair with others
-    - Located @ California Science Center in LA  (close to USC)
-    - Does the WG want to be part of this workshop or create our own?
   **- Deadline for workshop proposal submissions Dec 13th & Feb 3rd for papers**
+  - Open source for space workshop (Ivan organizing)
+    - Willing to co-chair with others.  Looking to collaborate on topics, moderation and planning
+    - Located @ California Science Center in LA  (close to USC)
+  - Does the WG want to be part of this workshop or create our own?
+    - Certification for space topic?
+    - Jan submission
 - Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
 - DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
 
@@ -129,8 +134,8 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ## Meetings
 
-*	(Per TSC) Please note that all ELISA meetings from December 23-January 3 will be cancelled.
-*	(Per TSC) Starting from January 6th, we will use the LFX Meeting for all ELISA meetings. For a sneak peak of what that may look like please go to the ELISA public meeting calendar here https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project. Currently we have the Safety Architecture meeting scheduled on the calendar and we will migrate all meetings to LFX Meeting during the December holiday break so they're ready to roll out in January. The meeting joining links will change and more details to receive a direct calendar invite will be shared as migration completes.
+- (Per TSC) Please note that all ELISA meetings from December 23-January 3 will be cancelled.
+- (Per TSC) Starting from January 6th, we will use the LFX Meeting for all ELISA meetings. For a sneak peak of what that may look like please go to the ELISA public meeting calendar here https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project. Currently we have the Safety Architecture meeting scheduled on the calendar and we will migrate all meetings to LFX Meeting during the December holiday break so they're ready to roll out in January. The meeting joining links will change and more details to receive a direct calendar invite will be shared as migration completes.
 
 ## Space Grade Linux SIG  - collaboration and codebase?
 
@@ -144,7 +149,13 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
     - ACTION - Matt to follow up with Michael, Kate and Ramon to see if this is a SIG topic we breakout for.
       - [Matt] **Email sent to Kate, Ramon, Min, Martin and Michael**
       - [Matt] **I'd encourage those in person at the Workshop to discuss this topic**
-  - **What do people think about breaking out Space topics in another call?**
+  - **What do people think about breaking out Space topics in another call?** (Ideas below)
+    - every two weeks at set time (vs offset to drive attendance)
+    - calls grouped with specific tech side focus / aerospace requirements
+    - establish a slack/Discord to start the out of band topics / development (would need to see where this applies and what topics work with this medium)
+    - github / gitlab where do we centralize chats/discussions/issues/code dev/CICD/etc
+    - allows longer threads and discussion to be managed (helps time zone disconnects)
+    - AGL, most start with email and move over to Discord
 
 ## Discussion on Features for Aerospace
 
@@ -171,4 +182,3 @@ Open Actions
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-
