@@ -25,116 +25,98 @@ Test environment
 - start with emulation (is there a limitation in timing because of type of emulation?)
   - qemu can we count cycles to see if we can bound it?  maybe not realtime
 - Architecture of Test Environment:
-  - Emulator (TBD: Docker, QEMU ... ?), running:
-    - **Concept 1** (To view these diagrams, make sure your vscode has the Markdown Preview Mermaid Ext - `bierner.markdown-mermaid`)
-    ```mermaid
-    sequenceDiagram
-        participant Sensor as Switch <br> (CoPilot App)
-        participant App as Cabin Lights Application
-        participant Actuator as Cabin Light <br> (CoPilot App)
-        participant Log as Logging Function
-
-        Sensor->>App: Send Switch State (On/Off) <br> (Ethernet)
-        App->>App: Wake up on message
-        App->>App: Create message with new light state
-        App->>Actuator: Send message <br> (Ethernet)
-        Actuator->>Actuator: Update state to match message
-        App->>Log: Log event (Light State Change) <br> (Syslog)
-        App->>App: Yield and wait for next message
-
-        Note over App: Connectivity via Ethernet bus
-    ```
+  - Sim/Emulator (Combo of Containers and QEMU)
+  - Here's the components involved and a sequence diagram of dataflow
+  - (To view these diagrams, make sure your vscode has the Markdown Preview Mermaid Ext - `bierner.markdown-mermaid` or view on Github)
 
     ```mermaid
     %%{init: {'theme': 'default'}}%%
     graph TD
         subgraph QEMU_Environment_Unit_Under_Test
             direction TB
+        Ethernet_Bridge
             App[2.Cabin Lights Application] 
             Log[Logging Function]
+            Sensor[1.Switch App]
+            Actuator[3.Cabin Light]
+
+        subgraph Monitor
+            direction TB
+            Copilot[CoPilot]
         end
 
-        subgraph Sensor_Actuator_Testbed
-            direction TB
-            Sensor[1.Switch -CoPilot App-]
-            Actuator[3.Cabin Light -CoPilot App-]
         end
+
+
 
         App -->|Interacts with| Log
-        Sensor -->|Sends State Msg| App
-        App -->|Control Msg| Actuator
-        Actuator -->|Checks for event| Log
+        Sensor -->|Sends State Msg| Ethernet_Bridge
+        Copilot -->|Sniffer| Ethernet_Bridge
+        Ethernet_Bridge -->|Sends State Msg| App
+        App -->|Control Msg| Ethernet_Bridge
+        Ethernet_Bridge -->|Control Msg| Actuator
+        Copilot -->|Log tail| Log
 
         style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
-        style Sensor_Actuator_Testbed fill:#bbf,stroke:#333,stroke-width:2px;
+        style Monitor fill:#bbf,stroke:#333,stroke-width:2px;
     ```
-    - **Concept 2**
+
     ```mermaid
     sequenceDiagram
         participant Sensor as Switch
-        participant SensorEth as Switch Ethernet Bridge <br> (CoPilot Tap)
+        participant Ethernet as Switch Ethernet Bridge
         participant App as Cabin Lights Application
-        participant ActuatorEth as Actuator Ethernet Bridge <br> (CoPilot Tap)
         participant Actuator as Cabin Light
-        participant Log as Logging Function
+        participant Log as Logging Function <br> (Syslog)
         participant CheckLog as CoPilot Log <br> Monitor
+        participant CheckEth as CoPilot Ethernet <br> Monitor
 
-        Sensor->>SensorEth: Send Switch State (On/Off)
-        SensorEth->>App: Send Switch State (On/Off)
+        CheckLog->>Log: Monitor events
+        CheckLog->>CheckLog: Wait for new logs
+        CheckEth->>Ethernet: Monitor for packets
+        CheckEth->>CheckEth: Wait for new packets
+        Sensor->>Log: Log event (Switch State Change)
+        Log-->>CheckLog: Trigger
+        Sensor->>Ethernet: Send Switch State (On/Off)
+        Ethernet-->>CheckEth: Capture
+        Ethernet->>App: Send Switch State (On/Off)
         App->>App: Wake up on message
         App->>App: Create message with new light state
-        App->>ActuatorEth: Send message
-        ActuatorEth->>Actuator: Send message
-        Actuator->>Actuator: Update state to match message
-        App->>Log: Log event (Light State Change) <br> (Syslog)
-        CheckLog->>Log: Monitor events
-        CheckLog->>CheckLog: Wait for events
+        App->>Log: Log event (Switch State Change)
+        Log-->>CheckLog: Trigger
+        App->>Ethernet: Send message
+        Ethernet-->>CheckEth: Capture
+        Ethernet->>Actuator: Send message
         App->>App: Yield and wait for next message
+        Actuator->>Actuator: Update state to match message
+        Actuator->>Log: Log event (Light State Change)
+        Log-->>CheckLog: Trigger
+        Actuator->>Actuator: Yield and wait for next message
     ```
 
-    ```mermaid
-    %%{init: {'theme': 'default'}}%%
-    graph TD
-        Actuator_Bridge
-        Switch_Bridge
-        subgraph QEMU_Environment_Unit_Under_Test
-            direction TB
-            App[2.Cabin Lights Application] 
-            Log[Logging Function]
-        end
-
-        subgraph Sensor_Actuator_Testbed
-            direction TB
-            Sensor[1.Switch App]
-            Actuator[3.Cabin Light]
-            Copilot[CoPilot Tap]
-            CopilotLog[CoPilot Log Monitor]
-        end
-
-        App -->|Interacts with| Log
-        Sensor -->|Sends State Msg| Switch_Bridge
-        Copilot -->|Monitor| Switch_Bridge
-        Switch_Bridge -->|Sends State Msg| App
-        App -->|Control Msg| Actuator_Bridge
-        Actuator_Bridge -->|Control Msg| Actuator
-        Copilot -->|Monitor| Actuator_Bridge
-        CopilotLog -->|Checks for event| Log
-
-        style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
-        style Sensor_Actuator_Testbed fill:#bbf,stroke:#333,stroke-width:2px;
-    ```
-
-Ivan - creating copilot monitors for requirements above
-- Copilot is relatively simple.
-  - From the point of view of connecting it to the rest of the testing infrastructure, all it needs is:
-    - A boolean (global variable) that indicates if the light switch is on or off.
-    - A boolean (global variable) that indicates if the lights are on.
-  - It can also connect in if a function is provided that allows CoPilot to "sense" if the light switch is on/off, and whether the lights are on/off. There are other ways to connect it (e.g., SW bus, etc.).
-- [MW] How do we add this to the build?
-  - Dependencies to sort out
-    - https://github.com/tobsan/meta-haskell
-    - https://wiki.alpinelinux.org/wiki/Porting_GHC_to_Alpine
-  - https://github.com/Copilot-Language/copilot/blob/master/copilot/README.md
+Copilot - [a runtime verification framework for hard real-time systems](https://github.com/Copilot-Language/copilot/blob/master/copilot/README.md)
+- From the point of view of connecting it to the rest of the testing infrastructure, all it needs is:
+  - A boolean (global variable) that indicates if the light switch is on or off.
+  - A boolean (global variable) that indicates if the lights are on.
+- It can also connect in if a function is provided that allows CoPilot to "sense" if the light switch is on/off, and whether the lights are on/off. There are other ways to connect it (e.g., SW bus, etc.).
+- Framework is split into portions that monitor and those that drive/stimulate test
+  - Allows driving scenarios but not necessary monitoring unless needed.
+- Can be used for
+  - fault violations (operationally can use as a monitor with remedy actions)
+    - drive simulink behaviors
+    - this was the original purpose
+  - trace/debug
+  - test is a newer use case
+- How does it work?  (Build workflow)
+  - The practice is to generate C99 code on a development machine
+  - Users build the C code with their application toolchain (native or cross)
+  - Most pkg managers already have the framework available e.g., on Ubuntu23 `sudo apt-get install libghc-copilot-dev`
+  - How does DO-330 qual impact copilot (Wanja mentioned)
+    - **Action** - Should consider this in outbrief of the test demo
+    - **Action** - Some interest in a DO-178C comparison to NPR7150.2 [Manuel]
+    - NPR7150.2 Addition D - Class C and above today
+    - Domain Specific Language (DSL) to LLVM interpreted representation - formal proof (independence was used to develop)
+    - rigorous dev process
 
 Test apps around the use case core application
 - Test apps send the message in and receives the message out
