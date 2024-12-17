@@ -141,6 +141,7 @@ The use case discussion is focusing on testing.
 Open Actions
 - Call between Ivan, Martin and I on testing (framework and prototyping the parts together) is tenatively scheduled for Jan 17th 10am CST.
 - We are seeking volunteers to write the test apps and stage an emulation environment based on the discussion.  Contact Matt Weber if interested.
+- [Diagrams under testing](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test) are updated, do they represent the test scenario?
 
   Refs:
   - [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
