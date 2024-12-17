@@ -1,0 +1,17 @@
+stages:
+  - demos
+
+minimal-linux-kernel:
+  stage: demos
+  #image: registry.gitlab.com/elisa-tech/docker-image/elisa:medical
+  image: $CI_REGISTRY/buildroot.org/buildroot/base:20230207.1123
+  tags:
+    - elisa
+  script:
+    - . ./demos/MinimalKernel/build.sh
+    - timeout 10 qemu-system-aarch64 -M virt -cpu cortex-a57 -smp 4 -nographic -kernel ${CI_PROJECT_DIR}/buildroot/output/images/Image -initrd ${CI_PROJECT_DIR}/buildroot/output/images/rootfs.cpio.gz -append "root=/dev/ram0 init=/bin/dash console=ttyAMA0" || true
+  artifacts:
+    expire_in: 1 day
+    when: always
+    paths:
+      - buildroot/br.log
