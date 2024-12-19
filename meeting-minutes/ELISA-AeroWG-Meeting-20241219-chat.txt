@@ -1,0 +1,112 @@
+09:59:59 From Matt Weber (Boeing) to Everyone:
+	https://mensuel.framapad.org/p/elisa-aerowg
+10:02:24 From Matt Weber (Boeing) to Everyone:
+	Could everyone jump into the doc and add your attendance?  Thanks!
+10:02:28 From Matt Weber (Boeing) to Everyone:
+	https://mensuel.framapad.org/p/elisa-aerowg
+10:02:51 From Olivier Charrier to Everyone:
+	Reacted to "https://mensuel.fram..." with 👍
+10:03:22 From Ramón Roche to Everyone:
+	Reacted to "https://mensuel.fram..." with 👍
+10:05:55 From Matt Weber (Boeing) to Everyone:
+	https://mensuel.framapad.org/p/elisa-aerowg
+10:08:11 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	https://smcit-scc.space
+	
+	Mon 3 Feb 2025 Research Papers Deadline for full papers (SMC-IT and SCC) and SCC presentation-only abstracts
+10:08:45 From Andrew Wilson (FPGA Zealot) to Everyone:
+	RISC-V in Space Conference in April
+10:10:10 From Christopher Heistand to Everyone:
+	January 13, 2025	Abstract Acceptance Notification		February 24, 2025	Presentation Submission Deadline
+10:11:13 From Matt Weber (Boeing) to Everyone:
+	https://mensuel.framapad.org/p/elisa-aerowg
+10:12:02 From Michael Monaghan (NASA Goddard) to Everyone:
+	Reacted to "RISC-V in Space Co..." with 👍
+10:14:58 From Andrew Wilson (FPGA Zealot) to Everyone:
+	Links?
+10:15:06 From Andrew Wilson (FPGA Zealot) to Everyone:
+	for the meetings?
+10:15:24 From Andrew Wilson (FPGA Zealot) to Everyone:
+	found it in doc
+10:15:32 From Andrew Wilson (FPGA Zealot) to Everyone:
+	https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project
+10:16:12 From Matt Weber (Boeing) to Everyone:
+	https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project.
+10:17:23 From Matt Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/blob/main/docs/20240418_ELISA_AeroWG_Whitepaper.pdf
+10:17:35 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	The last change was April 2024
+10:19:36 From Matt Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test
+10:25:15 From Andrew Wilson (FPGA Zealot) to Everyone:
+	FPGA based simulation/emulation?
+10:25:54 From Andrew Wilson (FPGA Zealot) to Everyone:
+	The beagleV-Fire would be great
+10:25:55 From Christopher Heistand to Everyone:
+	https://www.cubesatshop.com/product/pumpkin-cubesat-kits/
+10:26:01 From Andrew Wilson (FPGA Zealot) to Everyone:
+	PolarFire FPGA with RISC-V Linux
+10:28:50 From Andrew Wilson (FPGA Zealot) to Everyone:
+	The Microchip Pic64 is probably the best target for HPSC RISC-V
+10:31:40 From Matt Weber (Boeing) to Everyone:
+	We're at line ~ 178 	https://mensuel.framapad.org/p/elisa-aerowg
+10:32:03 From Carole Garrison to Everyone:
+	I had a talk with HQ and they were looking into it. Nothing official just fyi
+10:32:14 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Reacted to "I had a talk with ..." with 👍
+10:32:31 From Carole Garrison to Everyone:
+	Reacted to "I had a talk with HQ…" with 👍
+10:32:33 From Carole Garrison to Everyone:
+	Removed a 👍 reaction from "I had a talk with HQ…"
+10:38:12 From Ramón Roche to Everyone:
+	https://linuxfoundation.research.net/r/space-grade-linux
+10:38:40 From Ramón Roche to Everyone:
+	https://docs.google.com/presentation/d/16-if-cPPnd47iphI6hK-9DVCrYPNjfg4RNI9AxSmlPQ/edit?usp=sharing
+10:44:03 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Simulation systems: Gazebo, Isaac SIM, Trick
+10:47:44 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	ivan.perezdominguez@nasa.gov
+10:48:07 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Survey on Robotics and Flight
+	Software Frameworks for the Lunar
+	Surface
+10:48:18 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Part of LuCCI
+10:48:40 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Part of Lunar Command and Control Interoperability Project
+10:50:04 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	NPR7150.2 Compliance in Space ROS
+10:52:27 From Tim Bird to Everyone:
+	https://scholarlypublications.universiteitleiden.nl/handle/1887/82454
+10:55:22 From Andrew Wilson (FPGA Zealot) to Everyone:
+	go MRAM for bootup firmware!
+11:04:47 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Can we launch a blender?
+11:05:06 From Matt Weber (Boeing) to Everyone:
+	Reacted to "Can we launch a blen..." with 😂
+11:06:26 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Cal Poly
+11:07:02 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	Cal Poly was actually launching the Cubesats, IIRC. This was 2017-2019
+11:07:05 From Andrew Wilson (FPGA Zealot) to Everyone:
+	Space SDR example?
+11:10:18 From Martin Halle to Everyone:
+	I have to drop out to catch my kids (its late over here in Europe). I wish you all a merry x-mas and looking forward to see you again in 2025! :-)
+11:10:25 From Matt Weber (Boeing) to Everyone:
+	Reacted to "I have to drop out t..." with 👍
+11:10:29 From Andrew Wilson (FPGA Zealot) to Everyone:
+	Reacted to "I have to drop out t..." with 👍
+11:10:31 From Ramón Roche (LF) to Everyone:
+	Happy holidays Martin, thanks for joining
+11:10:39 From Martin Halle to Everyone:
+	Reacted to "Happy holidays Marti..." with 👍
+11:11:12 From Ivan Perez (KBR @ NASA ARC) to Everyone:
+	To Michael's point, I know we have missions flying containers.
+11:11:30 From Andrew Wilson (FPGA Zealot) to Everyone:
+	Are they using HW hypervisors?
+11:11:49 From Ramón Roche (LF) to Everyone:
+	Some of these requirements are being captured in the survey
+11:12:22 From Andrew Wilson (FPGA Zealot) to Everyone:
+	I found fault injection a great way to get the point across.  Show how the system fails, how often.
+11:14:10 From Andrew Wilson (FPGA Zealot) to Everyone:
+	Need to have example images for "all" the systems... ease of bringup

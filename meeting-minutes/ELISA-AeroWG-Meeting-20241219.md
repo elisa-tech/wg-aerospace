@@ -26,33 +26,34 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Attended this meeting
 
 - Matt Weber - Boeing
+- Tim Bird - Sony
+- Ivan Perez - NASA Ames
+- Chuck Wolber - Boeing
+- Ramon Roche - LF
+- Olivier Charrier - Wind River
+- Martin Halle - Hamburg University of Technology
+- Sam Thompson - Rapita Systems
+- Carole Garrison - NASA Langley
+- Michael Monaghan - NASA Goddard
+- Christopher Heistand (Stoke Space)
+- Sascha Wise (Elodin)
+- Andrew Wilson (L3Harris, BYU, FPGA Zealot)
 
 ## Attended recently in the past
 
 - Piotr Skrzypek - ESA
-- Tim Bird - Sony
 - Manuel Beltran - Boeing
-- Christopher Heistand (Stoke Space)
 - Wanja Zaeske - DLR
-- Ivan Perez - NASA Ames
 - Walt Miner - Linux Foundation
 - David Graziano - Collins
-- Andrew Wilson (L3Harris)
 - Paul Mani - Collins India
 - Shefali Sharma
 - Alexey Simonov
-- Sam Thompson - Rapita
-- Chuck Wolber - Boeing
 - Dongshik Won (TelePIX/KAIST)
-- Martin Halle - Hamburg University of Technology
 - Tomas Novotny (Czech Aerospace Research Centre)
 - Gary Crum (Voyager)
-- Ramon Roche - LF
-- Michael Monaghan (NASA Goddard)
-- Ramon Roche (LF)
 - Brennan Stewart (NASA)
 - Tony James (Red Hat)
-- Olivier Charrier - Wind River
 - Allen Brown (Odyssey Space Research)
 - Qasim Majeed - Siemens
 - Merlin Kooshmanian - ESA
@@ -63,7 +64,6 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Steve VanderLeest - Boeing
 - Matt Kelly - Boeing
 - Justin Pearson - Lynx Software
-- Jeannette Nounagnon - Boeing (Aurora)
 - Gaston Gonzalez - VENG
 - Emmanuel Gravel - Skytrac
 - Abdi Kitesa
@@ -105,6 +105,11 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
   - Registration/abstracts open - 200 slots
   - Christopher Heistand is chairing
   - Matt Weber and Michael Monaghan submitted an abstract to present an ELISA talk on "Making Penguins Fly"
+- June 23-25 - Open Source Summit North America (including Embedded Linux Conference)
+  - in Denver, CO
+  - event web site: https://events.linuxfoundation.org/open-source-summit-north-america/
+  - CFP: should open soon (not available yet)
+  - will there be an ELISA track?
 - July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
   - https://2025.smcit-scc.space/track/smc-it-scc-2025-workshops
   - https://2025.smcit-scc.space/track/smc-it-scc-2025-papers
@@ -117,6 +122,12 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
     - Jan submission
 - Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
 - DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
+- 23-25th June: Open Source Summit North America in Denver CO
+- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference https://events.linuxfoundation.org/open-source-summit-europe/
+- April 2-3: RISC-V in Space Conference, Gothenburg https://indico.esa.int/event/562/overview
+- Submission Deadline Feb 7, 2025, 11:59 PM
+- Dec 11-13: Linux Plumbers Conference 2025, in Tokyo
+- ?? NASA SPARK submissions
 
 ## Articles / Publications
 
@@ -131,15 +142,24 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 ## Meetings
 
 - (Matt W)  For 2025, I've requested we keep our current schedule of two calls a month, but instead of different start times, they are now sync'd to both be at 4pm UTC (10am CST).  I also requested that the first call is Aerospace focused and the second Space.  This is welcome to feedback!
+- Co-lead for space - Thank you Ramon & Ivan for doing this!
 - (Per TSC) Please note that all ELISA meetings from December 23-January 3 will be cancelled.
 - (Per TSC) Starting from January 6th, we will use the LFX Meeting for all ELISA meetings. For a sneak peak of what that may look like please go to the ELISA public meeting calendar here https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project.  The meeting joining links will change and more details to receive a direct calendar invite will be shared as migration completes.
 
+**Our next call will be on Jan 16th and have a Space Grade Linux focus.  Make sure to go sign up on https://zoom-lfx.platform.linuxfoundation.org/meetings/elisa-project for both Aerospace and Space meetings!  For Space, go to Jan 16th, click on the entry and then click Register to get an email with the invite.  For Aerospace, go to Feb 5th, click on the entry and then click Register to get an email with the invite.**
+
 ## Discussion on Features for Aerospace
+
+**Next/future Agenda topic**
+- Restart "Survey State of Art" paper?  (Ivan and Martin briefly discussed today)
+  - Maybe a SIG outside of main call?  Start with main talk, breakdown into SIGs?
+  - Restructure/ breakout discussions
+  - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/20240418_ELISA_AeroWG_Whitepaper.pdf
 
 The use case discussion is focusing on testing.  
 
 Open Actions
-- Call between Ivan, Martin and I on testing (framework and prototyping the parts together) is tenatively scheduled for Jan 17th 10am CST.
+- Call between Ivan, Martin and I on testing (framework and prototyping the parts together) is tentatively scheduled for Jan 17th 10am CST.
 - We are seeking volunteers to write the test apps and stage an emulation environment based on the discussion.  Contact Matt Weber if interested.
 - [Diagrams under testing](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test) are updated, do they represent the test scenario?
 
@@ -151,9 +171,51 @@ Open Actions
 ## Space Grade Linux
 
 - Workshop feedback
+  - AGL - Walts discussion on what worked / not - FTEs didnt' work, LXF had to fund the effort with AGL members funding.
+  - Cubesat kit reference (Sascha) for use as a demo like AGL does with their "Green Machine"
+    - Pumpkin cubesat hardware - kit with one running linux https://www.cubesatshop.com/product/pumpkin-cubesat-kits/
+    - beagleV-Fire ($150) would be an interesting target (Microchip Polarfire SoC, Flash-based FPGA)
+    - HPC target - The Microchip Pic64 ($20,000) is probably the best target for HPSC RISC-V
+  - Survey - 24 responses, presented during workshop
+    - https://linuxfoundation.research.net/r/space-grade-linux
+    - https://docs.google.com/presentation/d/16-if-cPPnd47iphI6hK-9DVCrYPNjfg4RNI9AxSmlPQ/edit?usp=sharing
+  - Space ROS - willing to setup Docker image composing together w/SGL
+    - End to end space focused robotics deployment
+    - Simulations of missions (community contributions) - interesting combinations of data sources to drive
+      - SPARK project funded a crowdsourced contribution call for these simulations
+        - Companies / individuals / first time contributors
+      - Simulation systems: Gazebo, Isaac SIM, Trick
+  - Decoder of industry standards / cert methods to what usually falls under which ranges of features/capability
+    - Ivan shared -Survey on Robotics and Flight Software Frameworks for the Lunar Surface (LuCCI project)
+      - Part of Lunar Command and Control Interoperability Project
+      - Email Ivan for access ivan.perezdominguez(at)nasa.gov
+    - NPR7150.2 Compliance in Space ROS
+      - Email Ivan for access ivan.perezdominguez(at)nasa.gov
+  - Semiconductor faults talk - side conversation on why cubesats with COTS hardware don't have more faults - Tim found - https://scholarlypublications.universiteitleiden.nl/handle/1887/82454
+    - Andrew might have a future talk on approaches for increasing reliability
+    - go MRAM for bootup firmware!  :-)
+    - maybe a CREAME96 demo for understanding orbits and shielding
 - Jan Meeting
   - Agenda topics
-  - Setting vision statement / goals?
+    - Setting vision statement / goals?
+      - Revisit survey to understand our users
+      - Identify who wants to work on it (in what capacity)
+      - Review AGL lessons learned
+    - Location of slides/video from workshop
+    - Codebase contrib figured out (Kate has some ideas on license and CLA)
+      - NASA side working on how to facilitate collaboration / release of material (Michael working through @ GODDARD)
+        - AMES has a workflow and licensing that has worked in the past
+      - Community establishment, does NASA sponsor or is it under the LXF umbrella
+    - Code base - ?clone AGL configs - **Action: Michael to investigate**
+    - HW requirements for a demo (Could we find a group building a cubesat that we could collaborate with?  Student groups?)
+      - Balloon launches / sounding rockets
+      - USU students GAP: https://www.usu.edu/physics/gas/
+      - Corp users that have missions and can align vs. grass roots with more research/foundation push
+      - Cal Poly has some minimizing SWAP cases - launching the Cubesats, IIRC. This was 2017-2019
+      - Space SDR example?
+      - OS follows the kits and seems like something that isn't needing to be solved.  What do we need to make them care about?
+    - How does the technology / route SGL takes translate to product use?  
+
 - Collaboration environment/tools
   - Questions were sent to TSC to ask about preferred tooling / environments
   - Worked through using ELISA project environment and automation to see if that can be leveraged.  (Github driving Gitlab CICD.)
