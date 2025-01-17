@@ -1,45 +1,21 @@
 # Light Sensor Use Case Demo using the Copilot Framework
 
-## Instructions
+This demo composes the deployment and sequences found in the [Light Sensor use case](../../Aerospace-Uses-Cases.md).
 
-1) Debian or Ubuntu Docker env
+Goals of this demo:
+- Clear tool setup
+- Examples tailoring configuration
+- Examples observing demo properties
+- Discussion on how to tailor/capture specific attributes of the system for other use cases
 
-```
-docker run -it ubuntu:22.04
-```
+## Getting Started
 
-2) Install copilot
+The [Environment Setup](./EnvSetup.md) is a dependency for the demo examples.  It will has notes on tool setup and how to retrieve the Docker image.
 
-```
-# Notes from https://github.com/Copilot-Language/copilot?tab=readme-ov-file#other-linux-distributions
+The [Basic Demo](./BasicDemo.md) provides a native test app and Copilot walk through that uses simple applications with some sample data observations.  It also shows how to modify the specification and observe the impact.
 
-sudo apt update
-sudo apt-get install -y ghc cabal-install      #  install a Haskell compiler (GHC)
-cabal update
-cabal v2-install --lib copilot              #  install Copilot from Hackage
-ghci <<< 'import Language.Copilot'          #  test that Copilot is available - success is - ghci> ghci> Leaving GHCi.
-```
+The [Embedded Demo](./EmbeddedDemo.md) provides a test app and Copilot walk through that uses cross-compiled applications running in emulation with a more complex system observing the sample data observations.  It also shows how to modify the emulated system, specification and observe the impact.
 
-3) Clone use case codebase
+## Contributing
 
-Proposing to stage this work in `https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot`.
-
-```
-git clone https://github.com/elisa-tech/wg-aerospace.git
-```
-
-
-4) Build Copilot compile monitor
-
-5) Build / stage test apps
-
-6) Launch sequence
-   1) Start copilot log and Ethernet monitor (bound to localhost)
-   2) Bind light app to localhost
-   3) Bind light server to localhost
-   4) Run client with arg to change state (run x3 to cycle through all transitions - on off on)
-
-
-## Observations
-
-TBD
+TBD, declare license and DCO plan for developer agreement
