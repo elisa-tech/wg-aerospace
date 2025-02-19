@@ -19,7 +19,12 @@ Next, in the terminal, try to run `docker --version`.  If the command fails to b
 The last step is to retrieve the Docker image which has been prebuilt with all the necessary tools to experience the demo scenarios.  The following command should be executed in the terminal to pull the image and drop you at a prompt inside the environment.  You can call this command again in the future and it will reuse the cached image (if a newer isn't available.)
 
 ```
-docker run -it registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
+docker run -it \
+  -e HOST_UID="$(id -u)" \
+  -e HOST_GID="$(id -g)" \
+  -v ~/.ssh:/home/user/.ssh \
+  -v ~/.gitconfig:/home/user/.gitconfig \
+  -v $HOME:/wip registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
 ```
 
 Note, this image is setup with `sudo` and the user should be able to `sudo apt update` and install any missing dependencies.
