@@ -27,6 +27,8 @@ docker run -it \
   -v $HOME:/wip registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
 ```
 
+If you see a warning that `groupadd: GID '1000' already exists`, drop the HOST_UID and GID `-e` options above because your ids already match the container.
+
 Note, this image is setup with `sudo` and the user should be able to `sudo apt update` and install any missing dependencies.
 
 ## References
