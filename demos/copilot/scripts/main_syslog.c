@@ -9,7 +9,9 @@
 
 #include "elisa-v2.h"
 
+#ifndef LOG_PATH
 #define LOG_PATH "/var/log/syslog"
+#endif
 #define LIGHTS_ON_STRING  "lights: on"
 #define LIGHTS_OFF_STRING "lights: off"
 #define SWITCH_ON_STRING  "switch: on"
