@@ -14,17 +14,20 @@ The first step is to get a shell.
 - Linux Desktop, `ctrl-shift 't'` should open a window.
 - Windows, `Press Win + R, type cmd or powershell, and hit Enter.`  Then `wsl.exe -d Ubuntu`.  If the Ubuntu distro isn't found, see [WSL setup](https://documentation.ubuntu.com/wsl/en/latest/guides/install-ubuntu-wsl2/).
 
-Next, in the terminal, try to run `docker --version`.  If the command fails to be found, follow the [install instructions](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
+Next, in the terminal, try to run `docker --version`.  If the command fails to be found, follow the [install instructions](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). Note if your `sudo docker run hello-world` fails to run after following those instructions, do these additional steps.
+
+1) ` sudo usermod -aG docker $USER`
+2) # Start new shell or type `bash` in your current to start a new
+3) ` sudo docker run hello-world`
+
 
 The last step is to retrieve the Docker image which has been prebuilt with all the necessary tools to experience the demo scenarios.  The following command should be executed in the terminal to pull the image and drop you at a prompt inside the environment.  You can call this command again in the future and it will reuse the cached image (if a newer isn't available.)
 
 ```
 docker run -it \
-  -e HOST_UID="$(id -u)" \
-  -e HOST_GID="$(id -g)" \
   -v ~/.ssh:/home/user/.ssh \
   -v ~/.gitconfig:/home/user/.gitconfig \
-  -v $HOME:/wip registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
+  registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
 ```
 
 If you see a warning that `groupadd: GID '1000' already exists`, drop the HOST_UID and GID `-e` options above because your ids already match the container.
