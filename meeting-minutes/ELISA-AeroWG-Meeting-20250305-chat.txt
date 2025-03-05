@@ -1,0 +1,59 @@
+10:00:38 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:02:50 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:03:35 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:04:21 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	I'm in two virtual meetings at once and may have to step out if called to the other meeting.
+	
+10:04:28 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:07:25 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	I won't travel to that workshop. Too far for me, to complicated with our rules.
+	
+10:07:50 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	By the way, the deadline to submit papers for SMC-IT/SCC was extended by 1mo.
+	Dongshik Won (KAIST):👍
+	
+10:07:55 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	See smcit-scc.space
+	
+10:16:05 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:20:39 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	There are some hot mics
+	
+10:27:20 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	I can & want to contribute. (Already contributed in the past.)
+	
+10:28:26 From Dongshik Won (KAIST) to Everyone:
+	I can and I am willing to actively contribute to the paper. it’s my active research/development area of mine.
+	
+10:31:09 From Tim Bird (Sony Group Corporation) to Everyone:
+	I just accepted the overleaf invitation.  I would like to help out, and I'll try to read over the existing paper in the next few weeks.
+	Matthew Weber (Boeing):👍
+	
+10:41:37 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	Proposed title: Survey on State-of-the-Art Open-Source Systems in Aerospace.
+	
+10:51:21 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	Sorry, I need to jump to the other meeting. brb
+	
+10:55:02 From Ivan Perez / KBR @ NASA ARC to Everyone:
+	back
+	
+11:00:04 From Manuel Beltran - Boeing to Everyone:
+	Dropping for another meeting
+	
+11:03:41 From Matthew Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/pulls
+	
+11:06:21 From Dongshik Won (KAIST) to Everyone:
+	thanks everyone
+	
