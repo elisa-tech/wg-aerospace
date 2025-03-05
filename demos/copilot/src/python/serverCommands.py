@@ -1,7 +1,8 @@
+# SPDX-License-Identifier: MIT
 from enum import Enum
 from abc import ABC, abstractmethod
 import json
-
+import struct
 class ServerCommands(Enum):
     """List of the different possible Server Commands """
     TURN_OFF_DEVICE = 0
@@ -95,3 +96,28 @@ class ServerCommandLightText(ServerCommandBase):
             # This means that this is a light command
             returnValue = ServerCommandLightText(Devices.LIGHT, ServerCommands.TURN_OFF_DEVICE if command[1] == ServerCommandLightText.OffCommand else ServerCommands.TURN_ON_DEVICE) 
         return returnValue
+
+class ServerCommandLightRaw(ServerCommandBase):
+    """Class to handle server messages in a raw binary format
+       that consists of two bytes - First byte for Device ID and second byte for Server Command """
+
+    def __init__(self, deviceID, command):
+        """ """
+        self.Command = command
+        self.DeviceID = Devices.LIGHT
+    
+    def Serialize(self):
+        """ Serialize the server command into a custom binary format."""
+        command = struct.pack('>bb',self.DeviceID.value, self.Command.value)
+        return command
+
+    @staticmethod
+    def DeSerialize(data):
+        """ Unpack binary data into a server command object"""
+        returnValue = None
+        if len(data) == 2:
+            # This means that this is a light command
+            (devId, cmd) = struct.unpack('>bb',data)
+            returnValue = ServerCommandLightRaw(Devices(devId), ServerCommands(cmd))
+
+        return returnValue        
