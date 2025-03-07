@@ -20,11 +20,13 @@ RUN apt-get update && \
       git \
       git-lfs \
       less \
+      locales \
       screen \
       sudo \
       qemu-system-arm \
       qemu-system-misc \
       qemu-system-x86 \
+      tmux \
       vim \
       wget \
       && \
@@ -54,21 +56,9 @@ RUN add-apt-repository ppa:hvr/ghc && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
-ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH
-
-WORKDIR /root/test
-
-# Install Copilot
-ENV PATH=$PATH:$HOME/.cabal/bin/
-RUN cabal v2-update
-RUN cabal v2-install --lib \
-    copilot-4.2 \
-    copilot-c99-4.2 \
-    copilot-interpreter-4.2 \
-    copilot-language-4.2 \
-    copilot-libraries-4.2 \
-    copilot-theorem-4.2
-RUN rmdir dist
+# To be able to generate a toolchain with locales, enable one UTF-8 locale
+RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
+    /usr/sbin/locale-gen
 
 # Stage default user
 RUN useradd -ms /bin/bash user
@@ -81,4 +71,20 @@ COPY entry.sh /entry.sh
 RUN chmod 777 /entry.sh && chown root:root /entry.sh
 USER user
 WORKDIR /home/user
+
+# Install Copilot
+ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH
+#ENV PATH=$PATH:$HOME/.cabal/bin/
+RUN cabal v2-update
+RUN cabal v2-install --lib \
+    copilot-4.2 \
+    copilot-c99-4.2 \
+    copilot-interpreter-4.2 \
+    copilot-language-4.2 \
+    copilot-libraries-4.2 \
+    copilot-theorem-4.2
+
+# Doesn't error but we can at least see it works
+#RUN ghci <<< 'import Language.Copilot'
+
 ENTRYPOINT ["/entry.sh"]
