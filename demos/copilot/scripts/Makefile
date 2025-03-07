@@ -1,0 +1,33 @@
+# License: SPDX-License-Identifier: MIT
+
+.PHONY: default clean
+
+default: main_syslog main_syslog_local
+
+elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
+	cabal v1-sandbox init
+	cabal v1-install copilot-4.2
+	cabal v1-exec -- runhaskell Main.hs
+
+main_syslog: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
+	gcc main_syslog.c elisa-v2.c -o $@
+
+main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
+	gcc -DLOG_PATH='"log_file"' -DNOTAIL main_syslog.c elisa-v2.c -o $@
+
+clean:
+	rm -f main_syslog elisa-v2.c elisa-v2.h elisa-v2_types.h
+
+run: main_syslog_local
+	# Start a new tmux session
+	tmux new-session -d -s my_session
+
+	# Split the window into 3 panes
+	tmux split-window -h
+	tmux split-window -v
+
+	# Run commands in each pane
+	tmux send-keys -t my_session:0.0 "bash -i <<< './main_syslog_local ; exec </dev/tty'" C-m
+
+	# Attach to the tmux session
+	tmux attach-session -t my_session
