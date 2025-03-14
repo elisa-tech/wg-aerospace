@@ -2,7 +2,7 @@
 
 .PHONY: default clean prep run
 
-default: main_syslog main_syslog_local
+default: main_syslog main_syslog_local main_syslog_time
 
 prep:
 	cabal update
@@ -11,14 +11,20 @@ prep:
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
 	runhaskell Main.hs
 
+elisa-time.c elisa-time.h elisa-time_types.h: MainSyslogClock.hs Auxiliary.hs
+	runhaskell MainSyslogClock.hs
+
 main_syslog: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 	gcc main_syslog.c elisa-v2.c -o $@
 
 main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 	gcc -DLOG_PATH='"log_file"' -DNOTAIL main_syslog.c elisa-v2.c -o $@
 
+main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
+	gcc -DLOG_PATH='"syslog_file"' -DNOTAIL main_syslog_time.c elisa-time.c -o $@
+
 clean:
-	rm -f main_syslog main_syslog_local elisa-v2.c elisa-v2.h elisa-v2_types.h
+	rm -f main_syslog main_syslog_local elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
 
 run: main_syslog_local
 	# Start a new tmux session

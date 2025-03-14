@@ -30,11 +30,21 @@ ago n s = replicate (fromIntegral n) False ++ s
 timeSinceLastTime :: Stream Bool -> Stream Int64
 timeSinceLastTime input = clock - lastTime input
 
+-- | Number of steps since the last time a stream was True.
+timeSinceLastTime' :: Stream Bool -> Stream Int64
+timeSinceLastTime' input = externalClock - lastTime' input
+
 -- | Last time that some input stream when from False to True.
 lastTime :: Stream Bool -> Stream Int64
 lastTime input = g
   where
     g = if input then clock else ([0] ++ g)
+
+-- | Last time that some input stream when from False to True.
+lastTime' :: Stream Bool -> Stream Int64
+lastTime' input = g
+  where
+    g = if input then externalClock else ([0] ++ g)
 
 -- | External clock, provided by the C program.
 externalClock :: Stream Int64
