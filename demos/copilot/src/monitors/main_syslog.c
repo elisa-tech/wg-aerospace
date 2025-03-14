@@ -29,6 +29,7 @@ bool lightSwitch = false;
 void violation1 () {
   syslog(LOG_ERR, "Monitor violation: light switch didn't turn on on time.");
   printf("Monitor violation: light switch didn't turn on on time.\n");
+  exit(1);
 }
 
 /*
@@ -37,6 +38,7 @@ void violation1 () {
 void violation2 () {
   syslog(LOG_ERR, "Monitor violation: light switch didn't turn off on time.");
   printf("Monitor violation: light switch didn't turn off on time.\n");
+  exit(1);
 }
 
 // Main function
