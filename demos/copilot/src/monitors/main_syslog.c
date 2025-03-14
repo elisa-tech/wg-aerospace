@@ -49,7 +49,9 @@ int main() {
         perror("Error opening log file");
         exit(EXIT_FAILURE);
     }
+#ifndef NOTAIL
     fseek(file, 0, SEEK_END);
+#endif
 
     // Open the syslog for publishing notifications
     openlog("Copilot", LOG_PID | LOG_CONS, LOG_USER);
@@ -66,9 +68,11 @@ int main() {
                lightSwitch = true;
             if (strstr(text, SWITCH_OFF_STRING) != NULL)
                lightSwitch = false;
+#ifndef NOTAIL
         } else {
           sleep (1);
           clearerr(file);
+#endif
         }
 
         // Re-evaluate the monitors
