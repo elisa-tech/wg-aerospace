@@ -1,7 +1,7 @@
-# SPDX-License-Identifier: MIT
 import logging
 import logging.handlers
 import appConfiguration
+import time  # Import time module for epoch time
 
 class Logger:
     """ This class wraps the python logger and allows for the logger to be configured as required for the application."""
@@ -19,14 +19,19 @@ class Logger:
 
         # Create a syslog handler
         if appConfiguration.LoggingConfiguration.SYSLOG_LOGGING_ENABLED == True:
-            syslogHandler = logging.handlers.SysLogHandler(address = '/dev/log')
+            syslogHandler = logging.handlers.SysLogHandler(address='/dev/log')
             syslogHandler.setLevel(logging.INFO)
             self.logger.addHandler(syslogHandler)
         
         # Create a file handler
         if appConfiguration.LoggingConfiguration.LOG_FILE_LOGGING_ENABLED == True:
-            fileHandler = logging.FileHandler('lightApp.log')
+            fileHandler = logging.FileHandler(appConfiguration.LoggingConfiguration.APP_LOG_FILE)
             fileHandler.setLevel(logging.INFO)
+            
+            # Add a formatter with epoch time in nano seconds
+            fileFormatter = logging.Formatter('%(created)f - %(message)s')
+            fileHandler.setFormatter(fileFormatter)
+            
             self.logger.addHandler(fileHandler)
         
         # Create a console handler
