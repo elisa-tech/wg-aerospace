@@ -35,7 +35,10 @@ run: main_syslog_local
 	tmux split-window -v
 
 	# Run commands in each pane
+	tmux send-keys -t my_session:0.1 "python3 ../python/lightServer.py" C-m
+	sleep 1
 	tmux send-keys -t my_session:0.0 "bash -i <<< './main_syslog_local ; exec </dev/tty'" C-m
+	tmux send-keys -t my_session:0.2 "python3 ../python/switch.py"
 
 	# Attach to the tmux session
 	tmux attach-session -t my_session
