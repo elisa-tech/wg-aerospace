@@ -29,7 +29,7 @@ class Logger:
             fileHandler.setLevel(logging.INFO)
             
             # Add a formatter with epoch time in nano seconds
-            fileFormatter = logging.Formatter('%(created)f - %(message)s')
+            fileFormatter = logging.Formatter('[%(created)f] %(message)s')
             fileHandler.setFormatter(fileFormatter)
             
             self.logger.addHandler(fileHandler)
