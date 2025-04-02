@@ -10,9 +10,9 @@ Compatible with Docker release/API v27+ in the following Operating Environments.
 
 ## Start Here
 
-The first step is to get a shell/terminal.  
+The first step is to get a shell/terminal.
 - Linux Desktop, `ctrl-shift 't'` should open a window.
-- Windows, `Press Win + R, type cmd or powershell, and hit Enter.`  Then list WSL distros with `wsl.exe -l`. 
+- Windows, `Press Win + R, type cmd or powershell, and hit Enter.`  Then list WSL distros with `wsl.exe -l`.
   - If a `Ubuntu*` is found, execute `wsl.exe -d <Ubuntu name from list>` to get a bash shell.
   - If the Ubuntu distro isn't found or the list fails to display
     - (Powershell) Enable WSL - `wsl --install -d Ubuntu-24.04` and reboot.  Then try the above commands again to list the WSL distros & launch Ubuntu.
@@ -25,7 +25,27 @@ Next, in the shell started above
 - Clone use case codebase `git clone https://github.com/elisa-tech/wg-aerospace.git` and `cd wg-aerospace`.
 - Navigate to `./demos/env`, run our [environment setup script](../env/setup-env.sh) as a normal user with sudoers rights `./setup-env.sh`. If this script failed with a "Sudo is disabled on that computer" error.  For Windows 11 WSL, to enable Sudo, navigate to Settings > System > For Developers and toggle on the Enable sudo option.
 
-The last step is to switch to the specific demo folder and follow the instructions.
+The last step is to switch to the specific demo folder and follow the instructions following these commands in a shell:
+- `cd demos/copilot/src/monitors`
+- `make prep`
+- `cabal update`
+  - Which downloads the latest package list from hackage.haskell.org and should result in:
+  - "Package list of hackage.haskell.org has been updated."
+- `cabal v2-install --lib copilot copilot-core copilot-c99 copilot-language copilot-theorem copilot-libraries copilot-interpreter copilot-prettyprinter`
+  - Which should result in:
+  - "Up to date"
+- `make`
+- `make run`
+- This will open a window in a TMUX environment with 3 sub-windows:
+  - The monitoring application
+  - The light server application
+  - The switch application
+- In the latter, the command to run is already prepared as:
+  - `python3 ../python/switch.py`
+  - ....which can be run to start the demo
+- To exit the TMUX environment:
+  - Press `CTRL+B`
+  - type `kill-session`
 
 ## References
 
