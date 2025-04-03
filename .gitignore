@@ -1,1 +1,15 @@
 .DS_Store
+elisa-v2.c
+elisa-time.c
+elisa-v2.h
+elisa-v2_types.h
+elisa-time.h
+elisa-time_types.h
+log_file
+main_syslog
+main_syslog_local
+main_syslog_time
+*.pyc
+syslog_file
+log_file
+*.swp
