@@ -47,6 +47,7 @@ switchTurnedOff = risingEdge switchOff
 -- and the lights have been off for more than that time.
 monitor1 :: Stream Bool
 monitor1 = lightsOff
+        && switchOn
         && timeSinceLastTime' switchTurnedOn > limit
         && timeSinceLastTime' lightsTurnedOn > limit
 
@@ -56,6 +57,7 @@ monitor1 = lightsOff
 -- EC: the light switch turns off and, for 500 ms, the lights remain on.
 monitor2 :: Stream Bool
 monitor2 = lightsOn
+        && switchOff
         && timeSinceLastTime' switchTurnedOff > limit
         && timeSinceLastTime' lightsTurnedOff > limit
 
