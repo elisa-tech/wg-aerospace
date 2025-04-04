@@ -38,7 +38,12 @@ def TurnLightOff():
 
 if __name__ == "__main__":
     
-    TurnLightOff()
-    # Wait for a 500ms before attempting to turn the switch off
-    time.sleep(.5)
-    TurnLightOn()
+    while True:
+        
+        TurnLightOff()
+        # Wait for a 1 sec before attempting to turn the switch on
+        time.sleep(1)
+
+        TurnLightOn()
+        # Wait for a 1 sec before attempting to turn the switch off
+        time.sleep(1)
