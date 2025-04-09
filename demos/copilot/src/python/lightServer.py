@@ -10,6 +10,7 @@ import appConfiguration
 import lightControl
 import random
 import argparse
+import re
 
 ServerCommand = appConfiguration.ServerConfiguration.ServerCommandSerializer
 
@@ -50,6 +51,25 @@ class LightServerDelay(object):
         with self.LockObj:
             self.DelayControlSetting = ServerDelayType.FIXED
             self.DelayFixedMs = delayTimeMs
+    
+    def IncreaseFixedDelay(self):
+        """ Add 100ms to delay time"""
+        self.logger.info(f"Increasing delay time by 100 ms")        
+        if self.DelayControlSetting == ServerDelayType.FIXED:
+            with self.LockObj:
+                self.DelayControlSetting = ServerDelayType.FIXED
+                # we don't want to allow delay less than 100ms                
+                self.DelayFixedMs = self.DelayFixedMs + 100
+    
+    def DecreaseFixedDelay(self):
+        """ Reduce delay time by 100ms"""
+        self.logger.info(f"Reducing delay time by 100 ms")
+        if self.DelayControlSetting == ServerDelayType.FIXED:
+            with self.LockObj:
+                self.DelayControlSetting = ServerDelayType.FIXED
+                # we don't want to ensure that delay is not less than 100ms
+                if self.DelayFixedMs - 100 > 100: 
+                    self.DelayFixedMs = self.DelayFixedMs - 100
 
     def SetDelayRandom(self, delayTimeLowerLimitMs, delayTimeUpperLimitMs):
         """ Turn off Delay"""
@@ -131,7 +151,36 @@ class ServerMain:
         self.DelayController = delayController
         self.LightServer = LightServer(delayController)
         self.logger = logger.Logger().GetLogger()
-    
+
+    def _parseCommand(self, inputLine):
+        """ """
+        fixedCommandPattern = r'^fixed +(\d+)'
+        randomCommandPattern = r'^random +(\d+) +(\d+)'
+        higherPattern = r'^higher *'
+        lowerPattern = r'^lower *'
+
+        fixedCommandMatch = re.match(fixedCommandPattern,inputLine)
+        randomCommandMatch = re.match(randomCommandPattern,inputLine)
+        higherCommandMatch = re.match(higherPattern,inputLine)
+        lowerCommandMatch = re.match(lowerPattern,inputLine)
+
+        if fixedCommandMatch:
+            self.DelayController.SetDelayFixed(int(fixedCommandMatch[1]))
+        elif randomCommandMatch:
+            self.DelayController.SetDelayRandom(int(randomCommandMatch[1]), int(randomCommandMatch[2]))
+        elif higherCommandMatch:
+            if self.DelayController.DelayControlSetting == ServerDelayType.FIXED:
+                self.DelayController.IncreaseFixedDelay()
+            else:
+                print("higher command is only applicable in fixed delay mode ")
+        elif lowerCommandMatch:
+            if self.DelayController.DelayControlSetting == ServerDelayType.FIXED:
+                self.DelayController.DecreaseFixedDelay()                
+            else:
+                print("lower command is only applicable in fixed delay mode ")
+        else:
+            print("Invalid Command")
+        
     def SignalHandler(self, signum, frame):
         """ """
         self.logger.info(f"\nReceived signal {signum}. Shutting down the server")
@@ -149,8 +198,11 @@ class ServerMain:
         self.LightServer.start()
         
         try:
+            print("Enter Commands (--fixed <delay>, --random <low> <high>, --higher or --lower).")
             while self.LightServer.is_alive():
-                time.sleep(1)
+                commandText = input()
+                command = self._parseCommand(commandText)
+
         except Exception as e:
             self.logger.critical(f"Unexpected Error: {e}. Shutting Down Server")
             
