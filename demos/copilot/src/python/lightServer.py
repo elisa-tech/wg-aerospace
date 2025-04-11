@@ -198,7 +198,7 @@ class ServerMain:
         self.LightServer.start()
         
         try:
-            print("Enter Commands (--fixed <delay>, --random <low> <high>, --higher or --lower).")
+            print("Enter Commands (fixed <delay>, random <low> <high>, higher or lower).")
             while self.LightServer.is_alive():
                 commandText = input()
                 command = self._parseCommand(commandText)
