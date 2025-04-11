@@ -27,6 +27,8 @@ make run
   - The monitoring application
   - The light server application
   - The switch application
+  - It should look like this:
+  - ![TMUX environment of Basic Demo](images/tmux.png)
 - In the latter, the command to run is already prepared as:
   - `python3 ../python/switch.py`
   - ....which can be run to start the demo
