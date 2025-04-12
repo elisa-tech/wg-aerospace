@@ -15,7 +15,7 @@ class LoggingConfiguration:
     SYSLOG_LOGGING_ENABLED = False
     SYSLOG_FILE_PATH = '/dev/log'
     LOG_FILE_LOGGING_ENABLED = True
-    APP_LOG_FILE = 'log_file'
+    APP_LOG_FILE = 'syslog_file'
     CONSOLE_LOGGING_ENABLED = False
 
 
