@@ -42,10 +42,13 @@ run: main_syslog_local
 		&& tmux new-session -d -s my_session \
 		&& tmux split-window -h \
 		&& tmux split-window -v \
-		&& tmux send-keys -t my_session:0.1 \"python3 ../python/lightServer.py\" C-m \
+		&& tmux select-pane -L \
+		&& tmux split-window -v \
+		&& tmux send-keys -t my_session:0.1 \"tail -f syslog_file\" C-m \
+		&& tmux send-keys -t my_session:0.2 \"python3 ../python/lightServer.py\" C-m \
 		&& sleep 1 \
 		&& tmux send-keys -t my_session:0.0 \"bash -i <<< './main_syslog_local ; exec </dev/tty'\" C-m \
-		&& tmux send-keys -t my_session:0.2 \"python3 ../python/switch.py\" \
+		&& tmux send-keys -t my_session:0.3 \"python3 ../python/switch.py\" \
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
