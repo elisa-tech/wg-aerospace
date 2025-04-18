@@ -11,7 +11,7 @@ prep:
 	docker pull $(CONTAINER_IMG)
 
 dev:
-	docker run -it $(CONTAINER_ARGS) $(CONTAINER_IMG) 
+	docker run -it $(CONTAINER_ARGS) $(CONTAINER_IMG)
 
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
 	docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/monitors && /opt/ghc/8.6.5/bin/runhaskell Main.hs"
@@ -29,9 +29,9 @@ main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.
 	docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/monitors && gcc -DLOG_PATH='\"syslog_file\"' -DNOTAIL main_syslog_time.c elisa-time.c -o $@"
 
 clean:
-	rm -f main_syslog main_syslog_local elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
+	rm -f main_syslog main_syslog_local main_syslog_time elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
 
-run: main_syslog_local
+run: main_syslog_time
 	# Start a new tmux session
 	# Split the window into 3 panes
 	# Run commands in each pane
@@ -47,7 +47,7 @@ run: main_syslog_local
 		&& tmux send-keys -t my_session:0.1 \"tail -f syslog_file\" C-m \
 		&& tmux send-keys -t my_session:0.2 \"python3 ../python/lightServer.py\" C-m \
 		&& sleep 1 \
-		&& tmux send-keys -t my_session:0.0 \"bash -i <<< './main_syslog_local ; exec </dev/tty'\" C-m \
+		&& tmux send-keys -t my_session:0.0 \"bash -i <<< './main_syslog_time; exec </dev/tty'\" C-m \
 		&& tmux send-keys -t my_session:0.3 \"python3 ../python/switch.py\" \
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
