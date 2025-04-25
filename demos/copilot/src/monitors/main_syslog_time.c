@@ -28,11 +28,6 @@
 #define SWITCH_OFF_STRING "switch: off"
 
 /*
- * Minimum time delta between events.
- */
-const int64_t MIN_DELTA = 1;
-
-/*
  * Clock used by the monitors.
  */
 int64_t external_clock = 0;
@@ -69,8 +64,6 @@ void violation2 () {
 void update_time(int64_t new_time) {
   if (new_time > external_clock) {
     external_clock = new_time;
-  } else {
-    external_clock += MIN_DELTA;
   }
 }
 
@@ -108,12 +101,11 @@ int main() {
                lightSwitch = false;
             if (sscanf(text, "[%lf]", &lineTime) == 1) {
                update_time((int64_t)(lineTime*1000));
-            } else {
-               gettimeofday(&tv, NULL);
-               milliseconds = (int64_t)(tv.tv_sec) * 1000 +
-                              (int64_t)(tv.tv_usec) / 1000;
-               update_time(milliseconds);
             }
+
+            // Re-evaluate monitors only when new data is received.
+            step();
+
 #ifndef NOTAIL
         } else {
           sleep (1);
@@ -121,8 +113,6 @@ int main() {
 #endif
         }
 
-        // Re-evaluate the monitors
-        step();
     }
 
     // Close the syslog for reading and writing. Presumably, this is never
