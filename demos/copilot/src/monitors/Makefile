@@ -26,7 +26,7 @@ main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 	docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/monitors && gcc -DLOG_PATH='\"log_file\"' -DNOTAIL main_syslog.c elisa-v2.c -o $@"
 
 main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/monitors && gcc -DLOG_PATH='\"syslog_file\"' -DNOTAIL main_syslog_time.c elisa-time.c -o $@"
+	docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/monitors && gcc -DLOG_PATH='\"syslog_file\"' main_syslog_time.c elisa-time.c -o $@"
 
 clean:
 	rm -f main_syslog main_syslog_local main_syslog_time elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
