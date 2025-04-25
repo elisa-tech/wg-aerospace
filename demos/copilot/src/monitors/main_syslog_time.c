@@ -107,7 +107,7 @@ int main() {
             if (strstr(text, SWITCH_OFF_STRING) != NULL)
                lightSwitch = false;
             if (sscanf(text, "[%lf]", &lineTime) == 1) {
-               update_time((int64_t)(lineTime));
+               update_time((int64_t)(lineTime*1000));
             } else {
                gettimeofday(&tv, NULL);
                milliseconds = (int64_t)(tv.tv_sec) * 1000 +
