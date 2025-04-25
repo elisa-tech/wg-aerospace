@@ -20,9 +20,15 @@ default: main_syslog main_syslog_local main_syslog_time
 prep:
 	docker pull $(CONTAINER_IMG)
 
+env-debug:
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc --version'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell --version'
+
 dev:
 	$(RUN_IT_PREFIX)
 
+# To debug haskell dependencies, add a -v before any *.hs
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell Main.hs'
 
