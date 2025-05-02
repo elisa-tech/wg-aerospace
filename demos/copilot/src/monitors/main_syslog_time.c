@@ -68,13 +68,20 @@ void update_time(int64_t new_time) {
 }
 
 // Main function
-int main() {
+int main(int argc, char *argv[]) {
     // Used if we need to get the system clock;
     struct timeval tv;
     int64_t milliseconds;
 
+    // Determine which file to use. If one is passed as argument, use that,
+    // otherwise use LOG_PATH
+    char* file_path = LOG_PATH;
+    if (argc > 1) {
+      file_path = argv[1];
+    }
+
     // Open the syslog for reading and move to the end
-    FILE *file = fopen(LOG_PATH, "r");
+    FILE *file = fopen(file_path, "r");
     if (!file) {
         perror("Error opening log file");
         exit(EXIT_FAILURE);
@@ -106,11 +113,15 @@ int main() {
             // Re-evaluate monitors only when new data is received.
             step();
 
-#ifndef NOTAIL
         } else {
+
+#if defined(CLOSE_AT_END)
+          break;
+#elif !(defined(NOTAIL))
           sleep (1);
           clearerr(file);
 #endif
+
         }
 
     }

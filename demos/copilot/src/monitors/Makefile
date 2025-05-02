@@ -44,8 +44,11 @@ main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 
+main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
+
 clean:
-	rm -f main_syslog main_syslog_local main_syslog_time elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
+	rm -f main_syslog main_syslog_local main_syslog_time main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
 
 run: main_syslog_time
 	# Start a new tmux session
@@ -67,3 +70,19 @@ run: main_syslog_time
 		&& tmux send-keys -t my_session:0.3 \"python3 ../python/switch.py\" \
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
+
+test: SHELL:=/bin/bash
+test: main_syslog_test
+	COUNTER=0; \
+	for i in tests/*; do \
+	  ./main_syslog_test $$i > /dev/null 2>/dev/null ; \
+	  RES=$$? ; \
+          if [[ "$$i" == *"good" && "$$RES" == "0" ]] ; then \
+	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
+          elif [[ "$$i" == *"bad" && "$$RES" == "1" ]] ; then \
+	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
+          else \
+	    tput setaf 1; echo -en "Test $$COUNTER:  $$i  [Failed]" ; tput sgr0; echo "" ; \
+	  fi ;\
+          COUNTER=$$((COUNTER + 1)); \
+        done | column -t -c0
