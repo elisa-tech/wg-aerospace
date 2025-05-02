@@ -1,0 +1,18 @@
+[55.0] Ignore
+[1744985869.800388] Setting delay to default(100 ms)
+[1744985869.800653] Starting Light Server...
+[1744986026.746426] Setting delay to fixed - 200 ms
+[1744986027.407439] switch: off
+[1744986027.608877] lights: off
+[1744986028.408795] switch: on
+[1744986028.610135] lights: on
+[1744986029.409877] switch: off
+[1744986029.610508] lights: off
+[1744986029.668105] Setting delay to fixed - 600 ms
+[1744986030.411147] switch: on
+[1744986031.012360] lights: on
+[1744986031.412405] switch: off
+[1744986032.018392] lights: off
+[1744986032.413753] switch: on
+[1744986033.024252] lights: on
+[1744986033.415084] switch: off
