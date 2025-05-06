@@ -6,13 +6,14 @@
 Assuming the code base was previously cloned during [Environment Setup](../copilot/EnvSetup.md) as follows.
 
 ```
+cd ~
 git clone https://github.com/elisa-tech/wg-aerospace.git
 ```
 
 Build the demo
 
 ```
-cd wg-aerospace/demos/copilot/src/monitors
+cd ~/wg-aerospace/demos/copilot/src/monitors
 make prep  # Retrieves the container with tooling
 make       # Runs Haskell & Builds demo applications
 ```
