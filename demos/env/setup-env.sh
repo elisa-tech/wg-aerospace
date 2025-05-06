@@ -56,17 +56,3 @@ if ! command -v /usr/bin/docker &> /dev/null; then
         exit 1
     }
 fi
-
-echo "Pulling demo container..."
-{
-    docker pull registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
-} || {
-    echo "Failed to pull demo container"
-    exit 1
-}
-
-echo "Running Hello-world Docker Image..."
-sudo docker run hello-world || {
-    echo "Failed to run Hello-world Docker Image"
-    exit 1
-}
