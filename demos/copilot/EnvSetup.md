@@ -24,7 +24,8 @@ The first step is to get a shell/terminal.
 Next, in the shell started above
 - Change directory to your home `cd ~`
 - Clone use case codebase `git clone https://github.com/elisa-tech/wg-aerospace.git` and `cd wg-aerospace`.
-- Navigate to `./demos/env`, run our [environment setup script](../env/setup-env.sh) as a normal user with sudoers rights `./setup-env.sh`. If this script failed with a "Sudo is disabled on that computer" error.  For Windows 11 WSL, to enable Sudo, navigate to Settings > System > For Developers and toggle on the Enable sudo option.
+- Navigate to `./demos/env`, run our [environment setup script](../env/setup-env.sh) as a normal user with sudoers rights `bash ./setup-env.sh`. If this script failed with a "Sudo is disabled on that computer" error.  For Windows 11 WSL, to enable Sudo, navigate to Settings > System > For Developers and toggle on the Enable sudo option.
+- Start a new shell so that your user gains Docker rights (e.g., could just type `bash` enter).  Then run a test container `docker run hello-world`
 
 The last step is to try out the [Basic Demo](../copilot/BasicDemo.md) using this new environment.
 
