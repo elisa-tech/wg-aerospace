@@ -71,18 +71,5 @@ run: main_syslog_time
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
-test: SHELL:=/bin/bash
 test: main_syslog_test
-	COUNTER=0; \
-	for i in tests/*; do \
-	  ./main_syslog_test $$i > /dev/null 2>/dev/null ; \
-	  RES=$$? ; \
-          if [[ "$$i" == *"good" && "$$RES" == "0" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          elif [[ "$$i" == *"bad" && "$$RES" == "1" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          else \
-	    tput setaf 1; echo -en "Test $$COUNTER:  $$i  [Failed]" ; tput sgr0; echo "" ; \
-	  fi ;\
-          COUNTER=$$((COUNTER + 1)); \
-        done | column -t -c0
+	./test.sh
