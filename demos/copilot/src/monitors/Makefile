@@ -11,7 +11,7 @@ CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) expor
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
-.PHONY: default clean prep runs
+.PHONY: default clean prep runs test test_monitors
 
 default: main_syslog main_syslog_local main_syslog_time
 
@@ -71,18 +71,7 @@ run: main_syslog_time
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
-test: SHELL:=/bin/bash
-test: main_syslog_test
-	COUNTER=0; \
-	for i in tests/*; do \
-	  ./main_syslog_test $$i > /dev/null 2>/dev/null ; \
-	  RES=$$? ; \
-          if [[ "$$i" == *"good" && "$$RES" == "0" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          elif [[ "$$i" == *"bad" && "$$RES" == "1" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          else \
-	    tput setaf 1; echo -en "Test $$COUNTER:  $$i  [Failed]" ; tput sgr0; echo "" ; \
-	  fi ;\
-          COUNTER=$$((COUNTER + 1)); \
-        done | column -t -c0
+test: test_monitors
+
+test_monitors: main_syslog_test
+	./test.sh
