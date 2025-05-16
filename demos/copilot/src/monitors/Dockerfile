@@ -27,6 +27,7 @@ RUN apt-get update && \
       qemu-system-misc \
       qemu-system-x86 \
       tmux \
+      unzip \
       vim \
       wget \
       && \
