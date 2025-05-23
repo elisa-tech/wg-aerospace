@@ -74,7 +74,7 @@ fi
 
 
 # Define the output report file
-REPORT_FILE="test-results-system.xml"
+REPORT_FILE="../../../test-results/test-results-system.xml"
 
 # Clear the report file if it exists
 > "$REPORT_FILE"
