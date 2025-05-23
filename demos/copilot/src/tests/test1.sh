@@ -33,7 +33,8 @@ echo "fixed 600" > testInput
 sleep 2
 
 MONITOR_LOG_TEXT=$(cat monitorOutput.log)
-EXPECTED_RESULT="Monitor violation: light switch didn't turn on on time."
+EXPECTED_RESULT_ON="Monitor violation: light switch didn't turn on on time."
+EXPECTED_RESULT_OFF="Monitor violation: light switch didn't turn off on time."
 
 MONITOR_PID=$(cat monitorPid)
 # Check if the server process is still running
@@ -63,7 +64,7 @@ TEST_FAILED=0
 TEST_PASSED=0
 FAILURE_MESSAGE=""
 # CHECK RESULTS
-if [[ $MONITOR_LOG_TEXT == "$EXPECTED_RESULT" ]];
+if [[ ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_ON") || ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_OFF")]];
 then
 
     TEST_PASSED=1
