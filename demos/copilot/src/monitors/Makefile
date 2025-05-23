@@ -2,6 +2,7 @@
 
 CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
+CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
 # Determine the docker run prefix based on no executing on a xfs filesystem (issue with ownership and encryption)
 RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG))
@@ -75,3 +76,7 @@ test: test_monitors
 
 test_monitors: main_syslog_test
 	./test.sh
+		
+systemtest: main_syslog_time
+	docker run --rm -it $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/copilot/src/monitors \
+		&& ../tests/test1.sh"
