@@ -28,11 +28,6 @@
 #define SWITCH_OFF_STRING "switch: off"
 
 /*
- * Minimum time delta between events.
- */
-const int64_t MIN_DELTA = 1;
-
-/*
  * Clock used by the monitors.
  */
 int64_t external_clock = 0;
@@ -69,19 +64,24 @@ void violation2 () {
 void update_time(int64_t new_time) {
   if (new_time > external_clock) {
     external_clock = new_time;
-  } else {
-    external_clock += MIN_DELTA;
   }
 }
 
 // Main function
-int main() {
+int main(int argc, char *argv[]) {
     // Used if we need to get the system clock;
     struct timeval tv;
     int64_t milliseconds;
 
+    // Determine which file to use. If one is passed as argument, use that,
+    // otherwise use LOG_PATH
+    char* file_path = LOG_PATH;
+    if (argc > 1) {
+      file_path = argv[1];
+    }
+
     // Open the syslog for reading and move to the end
-    FILE *file = fopen(LOG_PATH, "r");
+    FILE *file = fopen(file_path, "r");
     if (!file) {
         perror("Error opening log file");
         exit(EXIT_FAILURE);
@@ -107,22 +107,23 @@ int main() {
             if (strstr(text, SWITCH_OFF_STRING) != NULL)
                lightSwitch = false;
             if (sscanf(text, "[%lf]", &lineTime) == 1) {
-               update_time((int64_t)(lineTime));
-            } else {
-               gettimeofday(&tv, NULL);
-               milliseconds = (int64_t)(tv.tv_sec) * 1000 +
-                              (int64_t)(tv.tv_usec) / 1000;
-               update_time(milliseconds);
+               update_time((int64_t)(lineTime*1000));
             }
-#ifndef NOTAIL
+
+            // Re-evaluate monitors only when new data is received.
+            step();
+
         } else {
+
+#if defined(CLOSE_AT_END)
+          break;
+#elif !(defined(NOTAIL))
           sleep (1);
           clearerr(file);
 #endif
+
         }
 
-        // Re-evaluate the monitors
-        step();
     }
 
     // Close the syslog for reading and writing. Presumably, this is never

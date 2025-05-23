@@ -43,21 +43,24 @@ switchTurnedOff = risingEdge switchOff
 --
 -- EC: the light switch turns on and, for 500 ms, the lights remain off.
 --
--- EC (refined): If the lights are off, the switch was turned on 500 ms ago
--- and the lights have been off for more than that time.
+-- EC (refined): If the lights are either still off or just turned on, the
+-- switch is on, and it was turned on more than 500 ms ago.
 monitor1 :: Stream Bool
-monitor1 = lightsOff
+monitor1 = (lightsOff || lightsTurnedOn)
+        && switchOn
         && timeSinceLastTime' switchTurnedOn > limit
-        && timeSinceLastTime' lightsTurnedOn > limit
 
 -- | SR2: The Cabin Lights system shall turn lights off in less than 500 ms of
 --        the light switch turning off.
 --
 -- EC: the light switch turns off and, for 500 ms, the lights remain on.
+--
+-- EC (refined): If the lights are either still on or just turned off, the
+-- switch is off, and it was turned off more than 500 ms ago.
 monitor2 :: Stream Bool
-monitor2 = lightsOn
+monitor2 = (lightsOn || lightsTurnedOff)
+        && switchOff
         && timeSinceLastTime' switchTurnedOff > limit
-        && timeSinceLastTime' lightsTurnedOff > limit
 
 -- | Constant limit: amount of steps betwen the light switch turning on and
 -- the light turning on.

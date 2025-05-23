@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - '*'  # This will trigger the workflow on all branches
+  pull_request:
+    branches:
+      - '*'  # This will trigger the workflow on pull requests to all branches
+
+jobs:
+  clone-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prep
+        run: |
+          cd demos/copilot/src/monitors
+          make prep
+          make env-debug
+
+      - name: Build
+        run: |
+              cd ${{ github.workspace }}
+              cd demos/copilot/src/monitors
+              make
+              file main_syslog_time # Verify built file exists
+
+      - name: Test
+        run: |
+              echo "Testing..."
+
+      # Docs - https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#github-action-to-publish-test-results
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            demos/test-results/**/*.xml
+            demos/test-results/**/*.trx
+            demos/test-results/**/*.json
