@@ -31,7 +31,10 @@ jobs:
 
       - name: Test
         run: |
-              echo "Testing..."
+              cd ${{ github.workspace }}
+              cd demos/copilot/src/monitors
+              make
+              make test
 
       # Docs - https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#github-action-to-publish-test-results
       - name: Publish Test Results
