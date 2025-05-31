@@ -6,6 +6,7 @@ CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" 
 
 # Determine the docker run prefix based on no executing on a xfs filesystem (issue with ownership and encryption)
 RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG))
+RUN_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG))
 RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG))
 DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors &&)
 CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
@@ -72,11 +73,11 @@ run: main_syslog_time
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
-test: test_monitors
+test: test_monitors systemtest
 
 test_monitors: main_syslog_test
 	./test.sh
 		
 systemtest: main_syslog_time
-	docker run --rm -it $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG) sh -c "cd /demo/copilot/src/monitors \
+	$(RUN_PREFIX_TEST) sh -c "cd /demo/copilot/src/monitors \
 		&& ../tests/test1.sh"
