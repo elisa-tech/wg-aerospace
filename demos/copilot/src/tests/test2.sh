@@ -79,13 +79,6 @@ fi ;
 echo "    </testcase>" >> "$REPORT_FILE"
 
 
-# Close the test suite
-echo "  </testsuite>" >> "$REPORT_FILE"
-echo "</testsuites>" >> "$REPORT_FILE"
-
-# Notify the user
-echo "JUnit Report generated: $REPORT_FILE"
-
 if [ "${TEST_PASSED}" == "0" ]; then
   exit 1;
 fi
