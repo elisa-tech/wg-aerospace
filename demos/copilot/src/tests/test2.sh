@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # License: SPDX-License-Identifier: MIT
-#
+
 # This script is used to test the lightServer and main_syslog programs
 # It creates a FIFO named testInput, starts the lightServer and main_syslog programs, and sends a message to the lightServer
 # Usage: ./test1.sh
@@ -30,24 +30,27 @@ echo $! > switchPid
 # wait for a little while to ensure that the monitor is running 
 sleep 2 
 
-# Now change the behavior of the lightServer by sending a message to it such that it takes more than
-# 500ms to respond. This should cause the monitor to detect and report a violation
-echo "fixed 600" > testInput
+# Now change the behavior of the lightServer by sending a message to it such that it takes less than
+# 500ms to respond. The monitor should not detect any violation
+echo "fixed 400" > testInput
 sleep 2
 
-MONITOR_LOG_TEXT=$(cat monitorOutput.log)
-EXPECTED_RESULT_ON="Monitor violation: light switch didn't turn on on time."
-EXPECTED_RESULT_OFF="Monitor violation: light switch didn't turn off on time."
-
 MONITOR_PID=$(cat monitorPid)
+TEST_FAILED=0
+TEST_PASSED=0
+FAILURE_MESSAGE=""
+
 # Check if the server process is still running
 if kill -0 "$MONITOR_PID" > /dev/null 2>&1
 then
+    # This means the monitor did not detect a violation and is still running.
     kill -SIGUSR1 $(cat monitorPid) 
     wait $(cat monitorPid)
+    TEST_PASSED=1
 else
-    # This means the test most most likely passed. Capture the exit code of the monitor
-    MONITOR_EXIT_CODE=$?
+    # This means the test failed. Monitor should not have detected a violation
+    TEST_FAILED=1
+    FAILURE_MESSAGE="Monitor exited unexpectedly. It should not have detected a violation."
 fi
 
 # Clean up
@@ -63,31 +66,25 @@ rm switchPid
 rm serverPid
 rm testInput
 
-TEST_FAILED=0
-TEST_PASSED=0
-FAILURE_MESSAGE=""
-# CHECK RESULTS
-if [[ ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_ON") || ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_OFF")]];
-then
-
-    TEST_PASSED=1
-else
-    FAILURE_MESSAGE="Test failed: Monitor didn't detect violation"
-    TEST_FAILED=1
-fi
-
-
 # Define the output report file
 REPORT_FILE="../../../test-results/test-results-system.xml"
 
-
-echo "    <testcase name=\"Monitor Detects Violation\" time=\"$(date +%s.%N)\">" >> "$REPORT_FILE"
+# First test case
+echo "    <testcase name=\"Monitor Does not detect violation\" time=\"$(date +%s.%N)\">" >> "$REPORT_FILE"
 if [[ "${TEST_PASSED}" == "0" ]] ; then
-    echo "      <failure message=\"${FAILURE_MESSAGE}\">Test failed: Monitor didn't detect violation</failure>" >> "$REPORT_FILE"
+    echo "      <failure message=\"${FAILURE_MESSAGE}\">Test failed: Monitor did not exit as expected</failure>" >> "$REPORT_FILE"
 else
-    echo "      <system-out>Test passed: Monitor detected violation</system-out>" >> "$REPORT_FILE"
+    echo "      <system-out>Test passed: Monitor did not detect violation.</system-out>" >> "$REPORT_FILE"
 fi ;
 echo "    </testcase>" >> "$REPORT_FILE"
+
+
+# Close the test suite
+echo "  </testsuite>" >> "$REPORT_FILE"
+echo "</testsuites>" >> "$REPORT_FILE"
+
+# Notify the user
+echo "JUnit Report generated: $REPORT_FILE"
 
 if [ "${TEST_PASSED}" == "0" ]; then
   exit 1;
