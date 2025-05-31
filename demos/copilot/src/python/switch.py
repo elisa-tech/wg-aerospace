@@ -56,3 +56,4 @@ if __name__ == "__main__":
         TurnLightOn()
         # Wait for a 1 sec before attempting to turn the switch off
         time.sleep(1)
+
