@@ -80,4 +80,4 @@ test_monitors: main_syslog_test
 		
 systemtest: main_syslog_time
 	$(RUN_PREFIX_TEST) sh -c "cd /demo/copilot/src/monitors \
-		&& ../tests/test1.sh"
+		&& ../tests/runtests.sh"
