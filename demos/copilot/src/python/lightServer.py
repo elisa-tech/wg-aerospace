@@ -194,7 +194,8 @@ class ServerMain:
         # register the signal handler
         signal.signal(signal.SIGINT, self.SignalHandler)
         signal.signal(signal.SIGTERM, self.SignalHandler)
-        
+        signal.signal(signal.SIGUSR1, self.SignalHandler)
+
         self.LightServer.start()
         
         try:
