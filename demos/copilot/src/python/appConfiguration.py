@@ -19,3 +19,4 @@ class LoggingConfiguration:
     CONSOLE_LOGGING_ENABLED = False
 
 
+

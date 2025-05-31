@@ -9,6 +9,7 @@ REPORT_FILE="../../../test-results/test-results-system.xml"
 
 # Clear the report file if it exists
 > "$REPORT_FILE"
+
 # Start the JUnit XML structure
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" >> "$REPORT_FILE"
 echo "<testsuites>" >> "$REPORT_FILE"
