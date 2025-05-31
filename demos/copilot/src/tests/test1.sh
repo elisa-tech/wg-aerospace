@@ -16,16 +16,16 @@ touch log_file syslog_file
 # The testInput FIFO is piped to stdin of the lightServer program. This allows the test script 
 # change the behavor of the lightServer while it isrunning
 tail -f testInput | python3 ../python/lightServer.py &
-echo $! > serverPid 
+echo "$!" > serverPid 
 
 # Launch the copilot monitor program
 ./main_syslog_time > monitorOutput.log 2>&1 &
-echo $! > monitorPid
+echo "$!" > monitorPid
 
 
 # Launch the switch program to toggle the switch on and off continuously
 python3 ../python/switch.py &
-echo $! > switchPid 
+echo "$!" > switchPid 
 
 # wait for a little while to ensure that the monitor is running 
 sleep 2 
@@ -43,18 +43,18 @@ MONITOR_PID=$(cat monitorPid)
 # Check if the server process is still running
 if kill -0 "$MONITOR_PID" > /dev/null 2>&1
 then
-    kill -SIGUSR1 $(cat monitorPid) 
-    wait $(cat monitorPid)
+    kill -SIGUSR1 "$MONITOR_PID" 
+    wait "$MONITOR_PID"
 else
     # This means the test most most likely passed. Capture the exit code of the monitor
     MONITOR_EXIT_CODE=$?
 fi
 
 # Clean up
-kill -SIGUSR1 $(cat switchPid) 
-wait $(cat switchPid)
-kill -SIGUSR1 $(cat serverPid)
-wait $(cat serverPid)
+kill -SIGUSR1 "$(cat switchPid)" 
+wait "$(cat switchPid)"
+kill -SIGUSR1 "$(cat serverPid)"
+wait "$(cat serverPid)"
 
 echo "Killed all processes"
 echo "Cleaning up"
@@ -89,6 +89,6 @@ else
 fi ;
 echo "    </testcase>" >> "$REPORT_FILE"
 
-if [ "${TEST_PASSED}" == "0" ]; then
-  exit 1;
+if [[ "$TEST_PASSED" == "0" ]]; then
+    exit 1
 fi
