@@ -1,0 +1,27 @@
+name: LaTeX
+
+on:
+  push:
+    branches:
+      - '*'  # This will trigger the workflow on all branches
+  pull_request:
+    branches:
+      - '*'  # This will trigger the workflow on pull requests to all branches
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      - name: Compile LaTeX Survey document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: "00_main.tex"
+          working_directory: docs/survey/
+          work_in_root_file_dir: true
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v4
+        with:
+          name: PDF
+          path: docs/survey/00_main.pdf

@@ -1,0 +1,52 @@
+\section{Comparison, Pros and Cons}
+\label{comparison-pros-and-cons}
+
+\subsection{Assessment Criteria}
+% If we're going to make a comparison, we need first to agree on some criteria for this comparison. I've put what I think are some of the key things in here, happy to take contributions/suggestions
+
+\subsubsection{Availability of partitioning/timing determinism features}
+
+Some RTOSes will provide software-based partitioning mechanisms which can be used to partition resources and promote timing determinism. Some of these (e.g. Deos has a memory pooling feature which allows cache lines to be reserved for certain tasks) are applicable to virtually all embedded computing platforms, while others (e.g. Green Hills Integrity has an interconnect bandwidth limiter) are only applicable to multicore systems.
+
+For any safety-critical RTOS, the availability of robust mechanisms that enhance determinism can be a powerful tool for eking the best throughput from a platform; therefore this is an important comparison criteria.
+
+\subsubsection{Available Capabilities}
+% This is a very general category. Maybe we want to pull more specific things out here?
+
+Availability of RTOS features is another key metric for comparison. Some OSes (e.g. most Linux distributions) will come with large repositories of packages giving a vast array of functionality. At the other end of the scale, some RTOSes have the bare minimum hardware support to provide a minimal partitioned runtime environment -- a simpler software ecosystem will typically lend itself to easier/faster/cheaper certification.
+
+Clearly there is a trade-off to be made here between a simple system that is more easily certified and a more complex system that provides many (possibly useful, or even essential) features.
+
+\subsubsection{Hardware Support}
+
+Some RTOSes are very tightly coupled to a single architecture, while others will support being built/executed on a range of different architectures. Moreover, some RTOSes will come with wide-ranging driver support for a number of types of peripheral, while others will leave provision of drivers to the end user.
+
+This can have a significant impact on the usability of RTOSes (and indeed the skillset requires to effectively develop applications on), so should be considered a key comparison criterion.
+
+\subsubsection{Software Development Tools}
+
+Engineers working on software will usually spend a lot more time using the development tools provided with an RTOS than they will spend working directly on the RTOS. That is, it doesn't matter how highly-polished an RTOS itself is if the tooling ecosystem is hopelessly immature and buggy -- a poor ecosystem will result in frustrated developers and wasted time.
+
+The software development tools in this context will include the build system, the configuration system, the debugging tools (if any), and frequently an IDE that integrates everything together. In many cases, it is simply not possible to use the RTOS without the included tooling. Therefore, the included tooling should be evaluated at the same time as the RTOS itself.
+
+\subsubsection{Technical Support}
+
+When purchasing licences to a commercial RTOS, it is common practice to also purchase some number of support hours from the vendor. Depending on the vendor, this may be a positive experience, or the support may be found inadequate, slow, or otherwise displeasing. For an open-source OS, it is certainly possible to make use of it without any support contract in place, though for some open-source OSes there are vendors who provide technical support on a commercial basis.
+
+In order to make effective use of limited engineering time, timely and high-quality support can be a significant differentiator for any RTOS, open-source or not.
+
+% It may be challenging to assess the quality of support from various RTOS vendors in this forum, so maybe we want the criteria to simply be about whether there is support available.
+
+\subsubsection{Certification Support/Certifiability}
+
+Fundamentally, if an RTOS is to be usable in a safety-critical context in the aerospace industry, it needs to at the very least be certifiable. Commercial RTOS vendors will typically sell 'cert packs', which contain all the necessary certification material for their RTOS. Typically, this will only support certain configurations or types of deployment of that OS, and may preclude the use of certain features.
+
+The availability of such certification support material can represent a very significant saving of time on the part of the certification applicant, at the expense of the cost of the certification pack (which is typically not cheap).
+
+For a meaningful comparison between RTOSes, therefore, the availability of a certification pack of some kind (or at least, materials that support a certification effort) is a crucial metric of comparison.
+
+% There are probably other useful metrics that we could use to compare. Suggestions?
+
+\subsection{Comparison}
+
+% It's not clear to me what the best means of performing this comparison would be. Potentially a large table with criteria and RTOSes?

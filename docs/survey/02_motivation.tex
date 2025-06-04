@@ -1,0 +1,21 @@
+\section{Motivation}
+\label{sec:motivation}
+% Responsibility: Steve VanderLeest, Matt Kelly
+
+Our motivation in this survey paper is driven by a desire to share in the benefits of the Linux operating system. Linux is widely available and easily adopted because of its open source licensing. This in turn has driven a global collaboration of developers that results in innovation, injection of modern software technologies, broad review, and quick response to issues (including security vulnerabilities). The available workforce with expertise in Linux far exceeds any other pool of operating system developers.
+
+Linux is frequently used as the testbed for investigation, even for avionics topics. Researchers frequently cite the ease of use and availability to test out new concepts while acknowledging that the results must then be translated to another safety-critical operating system. The ubiquitous use of Linux even for this research would greatly benefit if the same operating system used for the research could be used in operation and production.
+
+However, adoption of Linux for safety-critical domains such as aerospace is a daunting challenge. We thus are further motivated in this paper to (1) identify the state-of-the-art so the industry can build on it and (2) identify gaps so the industry can address them.
+
+Before proceeding to the main topic, for context we note closed-source solutions and then briefly identify challenges to using open source.
+
+\subsection{Benefits Using Open Source in Safety-Critical Aerospace}
+
+\subsection{Challenges to Using Open Source in Safety-Critical Aerospace}
+
+At the other end of the cost scale, there are several open-source RTOSes, (see Section \ref{sec:open-source-non-linux}) that aim to provide similar functionality, with varying levels of success. There are several issues facing the deployment of these open-source projects in an aerospace context. The first challenges is providing adequate assurance evidence for software largely out of the control of the certification applicants or their suppliers. While a commercial RTOS vendor can amortize the cost of preparing a certification package across many expected sales, a user of an open-source RTOS will typically be compelled to bear the cost of these activities alone.
+
+A second challenge facing open-source RTOSes is the absence of an ecosystem, both of engineers with specific expertise in that RTOS and in terms of compatible tooling. This is where Linux-based operating systems could have a significant positive impact: there is already a large community of experts available, and there is a vast ecosystem of compatible tooling. That is not to say that there are not still significant issues preventing widespread adoption of Linux-based RTOSes for highly-critical systems.
+
+The primary aim of this paper is to assess the gap between where Linux is now and where Linux needs to be to become a viable choice for hosting aerospace systems at DO-178C Software Level C and above, in the context of the current state-of-the-art. 

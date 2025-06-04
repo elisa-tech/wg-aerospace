@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%
+% General Remarks %
+%%%%%%%%%%%%%%%%%%%
+
+%% Comment (Samuel Thompson): It is not clear to me what the scope of this document is. On the one hand, the title suggests that the scope is 'Linux operating systems', which I'd interpret would include only OSes that use the Linux kernel. However, at least some of the RTOSes which have corresponding sections are definitely unrelated to the Linux kernel.
+% In terms of making this an interesting paper, could I propose the following:
+%
+% * Section evaluating where the commercial goalposts are -- where the state of the art for commercial RTOSes is.
+% * Section evaluating open-source RTOS solutions targeting the safety-critical domain.
+% * Section evaluating the state of the Linux kernel in relation to other currently-available options and in relation to the requirements of a DO-178C/ED-12C DAL C+ deployment.
+
+%% Discussion 2024-03
+% Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
+% Option B) Broader scope whats available, motivation as an outcome, detailed comparison with a subset as second paper
+% -> Group tends towards Option B
+% -> This way, not only will the paper have some significant interest as a review of the state of the art, it will also hopefully feed directly into the work of the WG by highlighting the gaps that need to be filled.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ToDos with responsible %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ToDo !ALWAYS!: Check further ToDos in currently operated chapter!
+
+%% ToDo (Emmanueal Gravel): Add ARINC 653 closed-source RTOS, a "recent" one I've been made aware of from a company out of Montreal, called M-RTOS: https://www.mss.ca/m-rtos/
+
+%% ToDo (Ramon Roche): Propose a updates to Nuttx
+
+%% ToDo (Wanja Zaeske):
+% First sentence speaks of "OSes", second of "OS", I would go for just "OSes" in both
+% "real-time commercial OSes" sounds weird to me, would it be better to have "commercial real-time OSes"?
+% Contextual, this leaves a big question mark in my head. The big 5 (PikeOS, VxWorks, Lynx 178 OS, DEOS, Integrity) RTOS do all implement partitioning, so they are all are either an OS or a Hypervisor which can host multiple partitions.
+% Do we want one Linux kernel to be in a partition, or to host multiple partitions? In particular the ARINC 653 implementation of partitioning basically maps partitions to what in Linux is a process, and processes what in Linux is a thread. So, saying Linux hosting multiple partitions is not super far fetched, API and capability wise. Of course that puts a lot on the table regarding assurance.
+% On the one hand we have to face partitioning eventually. On the other hand, already bringing Linux up without asking it to partition is a really nice achievement. Thus I'm unsure about the last sentence in the abstract, as it triggers this partitioning discussion. Is the time ripe to start this discussion, and if not, can we really contain the discussion (without being forced to decide on the whether to partition within Linux or not do so)?
+
+%% ToDo (Ivan Perez): ROS (Robot Operating System), esp. Space-ROS (tailored for Space operations)
+% Chapter: Open source options
+% Sub-Chapter: Open source linux options
+
+%% ToDo (Matt Kelly): Glossary must be setup such that all terms we use are understandable from all point of views.
+
+%%% ToDo (Matt Kelly): Adding some potentially relevant papers
+%% ARINC653 on top of Linux
+% Resource partitioning for Integrated Modular Avionics: comparative study of implementation alternatives (https://onlinelibrary.wiley.com/doi/abs/10.1002/spe.2210)
+% Portable and Configurable Implementation of ARINC-653 Temporal Partitioning for Small Civilian UAVs (https://ieeexplore.ieee.org/document/8853231)
+% Linux-based memory efficient ARINC 653 partition scheduler (https://ieeexplore.ieee.org/document/7005306)
+%
+%% Avionics Linux
+% LINUX: A MULTI-PURPOSE EXECUTIVE SUPPORT FOR CIVIL AVIONICS APPLICATIONS? (https://link.springer.com/chapter/10.1007/978-1-4020-8157-6_72)
+%
+%% SpaceX use of Linux on Dragon
+% Challenges Using Linux as a Real-Time Operating System (https://ntrs.nasa.gov/citations/20200002390)
+% TBA Paper
+% Reddit AMA --
+%
+%% FAA COTS Reuse Issue Papers
+% DOT/FAA/AR-01/26 - COMMERCIAL OFF-THE-SHELF (COTS) AVIONICS SOFTWARE STUDY (https://www.faa.gov/sites/faa.gov/files/aircraft/air_cert/design_approvals/air_software/AR-01-26_COTS.pdf)
+% DOT/FAA/AR-02/118 - STUDY OF COMMERCIAL OFF-THE-SHELF (COTS) REAL-TIME OPERATING SYSTEMS (RTOS) IN AVIATION APPLICATIONS (https://www.faa.gov/sites/faa.gov/files/aircraft/air_cert/design_approvals/air_software/AR-02-118_COTS.pdf)
+% DOT/FAA/AR-03/77 - Commercial Off-The-Shelf Real-Time Operating System and Architectural Considerations (https://www.faa.gov/sites/faa.gov/files/aircraft/air_cert/design_approvals/air_software/03-77_COTS_RTOS.pdf)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ToDos without responsible %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ToDo: What about VxWorks, Lynx, PikeOS (keep it short!)?
+% OS provider as a company (S/W company)
+% Exlcude: OSes coming from a particular H/W company (like module supplier)
+% Scope: Already used in (Aero)Space
+
+%% ToDo: What about containers?
+% Considered for non-safety critical applications?
+% Where to add? Expand partitoned-systems- or non-safety-critical capter?
+
+%% ToDo: Investigate:
+% https://www.linkedin.com/in/chuckwolber/
+% https://www.cip-project.org/faq "more than 5 years"
+% https://www.cip-project.org/blog/2025/01/13/kernel-6-12-will-have-10-years-support-via-cip-are-all-your-maintenance-problems-solved  "Kernel 6.12 will have 10 years support via CIP"
+
+%% ToDo: Further Interesting Projects To Consider
+% AMOBA Project
+% https://ieeexplore.ieee.org/abstract/document/4702767
+
