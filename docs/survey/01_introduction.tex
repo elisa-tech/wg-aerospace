@@ -1,0 +1,24 @@
+\section{Introduction}
+\label{introduction}
+
+This paper surveys the use of open source operating systems in aerospace, with a particular focus on Linux, historically and up to the state-of-the-art. 
+
+For systems using Linux, our scope includes utilization of Linux in systems that also include other open-source or closed-source system software, as long as Linux is also used. Our scope covers both: air and space and both: flight- and ground support systems. We limit our consideration to systems that may consider regulated standards (e.g DO-178C/DO-278C, ED-12C/ED-109A, NASA NPR 7150.2, MIL-STD0882). If a standard is applicable, each standard brings language around "levels" or "classes" used to categorize a product, sometimes driven by hazard/risk analysis. We consider systems not only where Linux itself is supporting safety-critical functions but also where it is present, but not in a safety-critical aspect. For example, the provision of an ARINC 653 environment can isolate a partition containing Linux at a lower criticality level from other partitions at higher criticality levels.
+
+The Aerospace Working Group (AWG) \cite{elisaaero2025} under the ELISA\footnote{ELISA stands for: Enabling Linux in Safety Critical Applications} foundation \cite{elisa2025} develops use cases to inform and influence Linux architecture and related tools and works to derive technical requirements for avionics operating systems. It seeks to enhance and expand avionics software life-cycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. One of AWG's special interests is to provide a common platform / kernel to support such developments.
+
+The AWG has a special interest group called Space Grade Linux (SGL) \cite{sgl2025}. SGL's goal is to advance space technology innovation and competitiveness by developing a common Linux distribution that can be used in space applications, e.g., deep space, long lifespan missions. The nature of not only flight- but also space-missions brings many challenges, from development to deployment. SGL seeks to create an ecosystem of supported platforms and an open source community to drive collaboration.
+
+Starting with commercial (closed-source) RTOS and what they deliver in terms of regulated environments, safety criticality and real-time, the main contribution addressed by the groups is what open-source solutions exist that open up for a more common and extensible platform. Linux as an open-source operating system has evolved over the years towards real-time schedulers, strengthened security, safety and a stream-lined and a stringent development process. Therefore, it seems a feasible candidate for a regulated environment, at least for low-DAL applications as it may allow easier accessibility, a more open, large community, wider compatibility, preclude prototyping, a larger scale of collaborative development (independence factor of quality and always more output over time), source access for security as well as bug-fix and further supporting options.
+
+% ToDo (Martin): Outline of the paper is missing - maybe later, if we setup the further sections?
+The outline of the paper is as follows: Section XXX will (...)
+
+% ToDo (All): Agree on content? All on board? Space + Aerospace + Use-cases?
+
+% ToDo (Rob): Economics: Different distro, kernel... -> Declaring certain sets of requirements and specific versions, may lead to reduced cost -> long-term support for "ELISA-Aero-Linux"
+
+% ToDo (Matt): This is a paper for operating system "use" in systems. Need to look at how we outline a featureset to measure systems/missions against vs making it systems-focused.
+
+% ToDo (???): Maybe seperate section or sub-section of Introduction to decode classes from/to aerospace/space in a section on its one?
+% ToDo (???): Where to put? Out of classes and standards how can (or can't) ELISA Environment map to use-cases?

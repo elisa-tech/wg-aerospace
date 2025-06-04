@@ -1,0 +1,35 @@
+\section{Open Source Non-Linux RTOS in Aerospace}
+\label{sec:open-source-non-linux}
+% Contributed by / responsibility: Martin
+
+This section gives an overview about non-Linux RTOS that are also relevant to the topic in general as they could provide potential features in the UAV / aerospace domain already since they are used for such or different purposes.
+
+\subsection{JetOS}
+% Contributed by / responsibility: Martin
+Two promising OS RTOSs claim to be fully compatible with ARINC 653: JetOS \cite{jetos2016} and POK \cite{pok2013}, which are being developed in Russia and France respectively. JetOS is a real-time operating system for avionics applications, which originates from the open source project POK. JetOS is being developed at ISPRAS (Ivannikov Institute for System Programming of the Russian Academy of Sciences) in the scope of the research and development project. It is released under the GPLv3 license. The source code is publicly available on GitHub. JetOS is intended primarily for onboard equipment based on the integrated modular avionics. This RTOS can be run on PowerPC and x86 CPU architectures. Configuration of the system is stored in XML documents. This approach eliminated the necessity of the AADL (Architecture Analysis and Design Language) configuration tool Ocarina, which is supported by the POK RTOS. % It's a necessary part of ARINC 653 that configuration is via XML files... (Martin: Is that really the case? Reference?)
+
+\subsection{POK}
+% Contributed by / responsibility: Martin
+POK \cite{pok2013} is a real-time embedded operating system intended for use in safety-critical systems. POK is released under the BSD license and has been used in several research projects, one of which is JetOS mentioned previously. The source code is publicly available on GitHub. POK supports several architectures, among which are x86, PowerPC, Sparc/LEON. POK has two layers: Kernel and partition. Kernel-layer services are executed at high-privileged level (kernel mode). Whereas partition-level services, which support applications execution, are executed at low-privileged level (user mode). POK uses the AADL tool-suite Ocarina to specify system architecture and to define its properties, and to generate the configuration and runtime code.
+Unfortunately neither JetOS nor POK seem to have a developer-community support. In case of POK community support is done through GitHub. But it showed itself to be unreliable. JetOS has no community support at all. Furthermore JetOS does not have suﬃcient documentation.
+
+\subsection{FreeRTOS}
+% Contributed by / responsibility: Martin
+FreeRTOS \cite{freertos2023} is an open-source real-time kernel designed specifically for micro-controllers and small microprocessors. Apart from a kernel FreeRTOS also includes a growing set of IoT libraries suitable for use across all industry sectors. The key features of FreeRTOS are reliability, accessibility and ease of use. FreeRTOS is owned, developed and maintained by Real Time Engineers Ltd. and is distributed freely under the MIT open source license. It has been ported to several diﬀerent architectures, including ARM, Intel x86 and PowerPC, etc. FreeRTOS has a migration path to another real-time operating system - SafeRTOS \cite{safertos2023}, which includes certifications for the medical, automotive and industrial sectors. FreeRTOS kernel consists of only a few source files, which must be included in the application project. Its API is designed to be simple and intuitive and it partially supports POSIX through POSIX threading wrapper. FreeRTOS is fully supported and exhaustively documented. FreeRTOS has no memory protection in general, but it provides oﬃcial Memory Protection Unit (MPU) support on ARMv7-M and ARMv8-M cores. To protect critical regions FreeRTOS uses recursive mutexes with priority inheritance.
+
+\subsection{Zephyr} % Contributed by / responsibility: Martin
+Zephyr \cite{zephyr2023} is a scalable, real-time operating system for embedded devices. It is developed with safety and security in mind. Zephyr is available through the Apache 2.0 open source license, which means it can be used in commercial and non-commercial solutions. Zephyr supports multiple architectures, including x86. Community support is provided via mailing lists and Slack. The users of Zephyr are provided with an exhaustive documentation and multiple demo code examples to start with.
+
+\subsection{RTEMS}
+% Contributed by / responsibility: Martin
+RTEMS (Real-Time Executive for Multiprocessor Systems, \cite{rtems2023}) is an open-source real-time operating system targeted towards deeply embedded systems. It is competitive with proprietary products and is used in space flight, medical, networking and many more embedded systems with strict timeliness requirements. In addition to the native API RTEMS also supports open standard application programming interfaces (API) such as POSIX. Among processor architectures supported by RTEMS are ARM, PowerPC, Intel, SPARC, MIPS, and more. RTEMS is distributed under a modified GNU General Public License (GPL), which means the source code is available for use, tailoring and redistribution. RTEMS provides an exhaustive documentation and has a supportive user community. There exist several projects, the goal of which was to run RTEMS on ARINC 653 compliant POK. The both projects implemented the concept of paravirtualization with POK being a hypervisor and RTEMS - a guest operating system. According to the final reports of both projects there were still some problems, though some parts of the projects were successfully completed. Another attempt to make RTEMS compliant with ARINC 653 was made in scope of an ESA (European Space Agency) project named AIR \cite{air2007}. Its final report  provides a detailed analysis of the AIR design solutions. It presents the workflow of implementation of APEX services on top of RTEMS API and defines the issues for further full implementation of APEX.
+
+\subsection{NuttX}
+% Contributed by / responsibility: Martin
+% Refinement requested: Ramon
+NuttX \cite{nuttx2023} is a real-time operating system with an emphasis on standards compliance. The primary governing standards are POSIX and ANSI standards. Additionally standard Unix APIs and APIs of other common RTOSs (such as VxWorks) are adopted in order to provide functionality not available under POSIX and ANSI standards. To the supported platforms among others belong x86 and MIPS. NuttX is released under non-restrictive Apache license. NuttX is supplied with a well documented user guide. Community support is provided via mailing lists.
+
+\sdubsection{chibios}
+% Contributed by / responsibility: Emmanuel Gravel, Ivan Perez
+Used in ArduPilot: https://www.chibios.org/dokuwiki/doku.php
+NASA Langley has used ArduPilot

@@ -1,0 +1,104 @@
+\section{Linux in Safety Critical Systems}
+\label{sec:open-source-linux}
+
+This section reviews research into Linux supporting safety-critical functions directly, requiring high levels of assurance for the operating system.
+
+There are few research papers that address Linux for aerospace. For example, a 2023 paper \cite{vanderleest2023avionics} reports that scholarly papers with both the words "Linux" and "DO-178C" only appear 529 times in Google Scholar and not at all in IEEE Xplore.
+
+\subsection{Paper Studies}
+
+This section surveys research that analyzes Linux for use in aerospace supporting safety-critical functionality. However, the papers in this study do not cite actual operational examples.
+
+A 2004 Presentation by Airbus regarding Linux for civil aviation \cite{goiffon2004} identifies key challenges to making Linux ready for certification (at the time, DO-178B). However, they noted the heavily process-oriented standard might not sufficiently recognize the reliability of the modular architecture, the cooperative development model with centralized version management, and extensive product reviews and testing by peers. They foresaw that the way forward would require reverse-engineering of code, validation against standards and for robustness, analysis of Worst-Case Execution Time (WCET) and stack usage, development of a configuration to provide static allocation but dynamic control of resources, and use of robust spatial and temporal partitioning.
+
+Research by Han and Jin \cite{han2012} investigated implementation of the ARINC 653 partitioning standard within the Linux kernel. They found that performance was sufficient for typical real-time needs in aerospace. However, they did not analyze certification considerations. A 2018 study \cite{liu2018} also investigated real-time performance of Linux, considering three different real-time approaches that augment Linux using a set of patches: Preempt\_RT, Xenomai, and RTAI. They concluded that real-time performance was sufficient for aerospace needs, though they pointed to different use-cases appropriate for each patch.
+
+A 2013 prototype project to extend Linux with real-time and safety properties \cite{cotroneo2013fault} claimed that their FIN.X-RTOS was compliant with DO-178B Software Level D and they next hope to work toward Level C. While work seems to have continued on the product, the focus has turned to security and no more recent work has been published on their pursuit of Software Level C for safety.
+
+\subsection{Operational Studies}
+
+The papers surveyed in this section cite use of Linux for safety-critical functions of operational missions.
+
+A survey of Linux in space \cite{leppinen2017} covers both general purpose computing as well as real-time implementations of Linux in operational space vehicles. The summarize the factors driving use of Linux as increasing complexity of requirements, increasing computing power reducing the need for specialized software, and availability of skilled labor familiar with Linux-based development. At the same time, the paper recognizes  challenges to adoption of Linux: 1) requirement for processors with a Memory Management Unit (MMU), 2) the quality assurance of code through verification and validation required for code that might not be needed but is included implicitly through use of software packages, and 3) need for real-time performance. 
+
+In 2003 Boeing noted the use of Linux in an Electronic Flight Bag \cite{allen2003efb} certified under DO-178B, but did not specify to what software level. In a later article \cite{allen2008electronic} they note ruggedized Class 2 units are available through their subsidiary, Jeppesen.
+
+While there are several known uses of Linux in operation at Software Level D, only one published instance is known for Level C, reported by Avionics International \cite{adams2015}. They note an Electronic Flight Bag implementation developed by Astronautics.
+
+%%% !FUTURE WORK!
+\subsection{Safety-Critical Linux in Other Industries}
+% Not sure if we want to expand our scope this far, but for now we track non-aerospace (but still safety-critical) Linux
+% Decision 2024-03: We are gonna move this to a later paper
+
+The research literature also contains some mentions of Linux in other safety-critical industries.
+
+Procopio \cite{procopio2020safety} considers Linux for use up to Safety Integrity Level (SIL) 2 in IEC 61508 (industrial) systems. SIL 4 is the highest criticality.
+
+\subsection{Linux in Aerospace}
+This section surveys systems that use Linux in aerospace. It is organized into two subsections. The first reviews  work to use Linux in safety-critical functions. The second subsection reviews safety-critical systems that use Linux, but not for safety-critical aspects.
+
+This paper does not cover use of Linux as the basis of development tools or as a development environment. We also do not cover early prototyping of flight software that uses Linux at first but then moves to a different operating system in order to flight certify. We focus only on Linux running on computational platforms onboard a flying aircraft.
+
+TBD:  Kernel Level Arinc653 partitioning in Linux \cite{han2012} and then Covers problems with Linux for avionics in related works \cite{bloom2020}.
+
+% IP (Ivan Perez): There have been several examples of Linux being used in aerospace, including NASA / JPL's Mars Helicopter, and SpaceX's use of Linux as an RTOS in their Falcon launch vehicles and Dragon capsules. NASA has run experiments using TTEthernet on RT-Linux. I will add some text on all of that.
+
+NASA has conducted multiple flight tests using Linux.
+%
+The Ascent Abort 2 (AA-2) Simulation used three redundant Linux computers
+communicating over TTEthernet at 200Hz, and carried out flight tests in 2015 at
+NASA Johnson Space Center.
+%
+The Orion Exploration Missions 1 and 2's Camera Controller Units of the Crew Module run Ubuntu Linux~\cite{lorraine2018orion}.
+%
+The Space and Missile Systems Center's Space Test Program Satellite-4 (STPSat-4)
+was a small satellite launched from the ISS in 2020 that served as a testbed for
+payloads developed by developed by the Air Force, the Navy, DoD and academic
+institutions.
+%
+STPSAT-4 reported ran Suse Linux for command and data handling, payload data
+handling, recording, file downlink and on-board autonomy functions~\cite{prokop2015aes}.
+
+The Ingenuity Mars Helicopter, a 1.8kg rotocopter sent by NASA JPL to Mars as a
+payload on the Perseverance Rover, contained two processors, including a
+Linux-based Snapdragon processor~\cite{canham2022}.
+%
+Throughout the duration of this mission, the helicopter completed 72 flights on
+the surface of Mars.
+%
+The Linux-based processor performed control and data handling functions as part
+of the guidance, navigation and control (GNC) of the aircraft.
+%
+Images were captured at 30 FPS, and used for analysis by the GNC algorithm,
+running at at 500 FPS.
+
+SpaceX has reported that it runs Linux on Falcon launch vehicles, Dragon
+capsules, and Starlink satellites~\cite{spacexama2020}.
+%
+The company has publicly stated that they maintain a copy of the kernel with the
+\texttt{PREEMPT\_RT} patch applied to get better real-time performance, and their
+work is not based on an existing Linux distribution.
+%
+Each Starlink launch of 60 satellites carries with it 4000 linux computers (for
+a measure of relative size, the number of operational Starlink satellites as of
+the time of this writing exceeds 5400 satellites).
+
+\subsection{Linux in Integrated but Partitioned Systems}
+ % Contributed by / responsibility: Steve VL
+
+In the last decade there have been a number of attempts to use partitioning to incorporate the broad functionality and commonly understood interfaces of Linux into aerospace. Partitioning isolates the Linux operating system and its applications, avoiding the high cost of certifying that partition to high levels.
+
+Obermaisser \cite{obermaisser2008temporal} discusses isolation of a real-time variant of Linux using time triggering, though they only obliquely cite ARINC 653 as a partitioning mechanism. A 2009 paper\cite{craveiro2009}, a project sponsored by the European Space Agency examined the ability of ARINC 653 systems to isolate heterogeneous operating systems, separating the broad functionality of Linux from the safety-critical functionality supported by an assured real-time operating system in another partition. They customized a distribution of Linux, called Bullet Linux, to provide key features while using a smaller system library.
+
+One approach is to use an open source approach to partitioning. VanderLeest \cite{vanderleest2010arinc} presented an initial prototype of an ARINC 653 hypervisor based on open source Xen, with Linux as a guest operating system in a partition. The paper provides an analysis of sharing resources (CPU, memory, and I/O) between partitions. Cofer \cite{cofer2022cyberassured} describes a prototype using the seL4 microkernel that separates Linux into a guest virtual machine for use on a Unmanned Air Vehicle.
+
+Another approach is to use a closed source approach to partitioning. Several proprietary vendors offer a partitioning approach (typically ARINC 653), including \cite{lim2021autonomous} using Qplus-AIR.
+
+The security community has used a similar concept to isolate Linux using a small, assured hypervisor or microkernel. A team at Carnegie Mellon\cite{de2019mixed} termed this "disjoint-trust computing". 
+
+\subsection{Linux in Aerospace Separated from Safety-Critical}
+
+This section reviews research into Linux supporting non-safety-critical functions within an aerospace system that also supports safety-critical functionality. Thus, high levels of assurance for Linux are not required, provided it can be isolated. We organize the literature into two subsections. The first reviews Linux used on a computing device that does not have any safety-critical function. The second reviews Linux used on a computing device that has safety-critical functionality, but where Linux is isolated.
+
+\subsubsection{Linux in Federated Systems}
+Traditional avionics systems segregated functionality into separate computing platforms, sometimes known as Line Replaceabable Units. Thus the safety-critical software ran on one computer but non-safety-critical on another. Examples of this approach are found in Macfas \cite{macias2013open}, where PikeOS is used on a Leon3 processor for safety-critical functions and Linux is used on an ARM9 processor for non-safety-critical functions and in Torens \cite{torens2014certification}. a study of Autonomous Unmanned Aircraft where the flight control function is performed by an Intel P4 processor running the QNX operating system and the image processing function is performed by a different Intel P4 processor running Linux.
