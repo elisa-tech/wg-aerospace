@@ -22,6 +22,16 @@ default: main_syslog main_syslog_local main_syslog_time
 prep:
 	docker pull $(CONTAINER_IMG)
 
+prep_cross: prep prep_cross_clean
+	@if [ ! -f "archive.tar" ]; then \
+		wget "https://gitlab.com/api/v4/projects/61362364/packages/generic/minimal-linux-debug/1.0.0/archive.tar" -O archive.tar; \
+	fi
+	tar xf archive.tar
+	tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz && rm -f aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz
+
+prep_cross_clean:
+	sudo rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio
+
 env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc --version'
@@ -46,11 +56,25 @@ main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 
+main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh && cd .. && /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
+	sudo rm -rf extracted_cpio && mkdir -p extracted_cpio && sudo gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed
+	sudo cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio
+	sudo cp -rf  ../python ../tests  ./extracted_cpio/root/
+	sudo mkdir ./extracted_cpio/root/monitors
+	sudo cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time
+	sudo chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time
+	sh -c 'cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
+
+main_syslog_time_cross_run: main_syslog_time_cross
+	qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"
+
 main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
 
 clean:
-	rm -f main_syslog main_syslog_local main_syslog_time main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
+	sudo rm -rf main_syslog main_syslog_local main_syslog_time main_syslog_time_cross \
+	       main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
 
 run: main_syslog_time
 	# Start a new tmux session
