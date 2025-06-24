@@ -36,7 +36,7 @@ def TurnLightOff():
     SendUdpPacket(sres, Ip, Port)
     switchLogger.info(SWITCH_OFF_LOG_MESSAGE)
 
-def SignalHandler(self, signum):
+def SignalHandler(signum, frame):
     """ """
     global STOP_SWITCH
     switchLogger.info(f"Received signal {signum}. Shutting down the switch")
