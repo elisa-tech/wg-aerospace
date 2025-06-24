@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # License: SPDX-License-Identifier: MIT
 
@@ -43,7 +43,7 @@ FAILURE_MESSAGE=""
 # Check if the server process is still running
 if kill -0 "$MONITOR_PID" > /dev/null 2>&1; then
     # This means the monitor did not detect a violation and is still running.
-    kill -SIGUSR1 "$MONITOR_PID" 
+    kill -s USR1 "$MONITOR_PID" 
     wait "$MONITOR_PID"
     TEST_PASSED=1
 else
@@ -53,10 +53,14 @@ else
 fi
 
 # Clean up
-kill -SIGUSR1 "$(cat switchPid)" 
-wait "$(cat switchPid)"
-kill -SIGUSR1 "$(cat serverPid)"
-wait "$(cat serverPid)"
+SERVER_PID=$(cat serverPid)                                                                                                      
+kill -s USR1 "$(cat switchPid)"                                                                                                  
+wait "$(cat switchPid)"                                                                                                          
+kill -s USR1 "$(cat serverPid)"                                                                                                  
+sleep .5                                                                                                                         
+if kill -0 "$SERVER_PID" > /dev/null 2>&1; then                                                                                  
+    wait "$SERVER_PID"                                                                                                           
+fi 
 
 echo "Killed all processes"
 echo "Cleaning up"
@@ -66,11 +70,11 @@ rm serverPid
 rm testInput
 
 # Define the output report file
-REPORT_FILE="../../../test-results/test-results-system.xml"
+REPORT_FILE="test-results-system.xml"
 
 # First test case
 echo "    <testcase name=\"Monitor Does not detect violation\" time=\"$(date +%s.%N)\">" >> "$REPORT_FILE"
-if [[ "${TEST_PASSED}" == "0" ]] ; then
+if [ "${TEST_PASSED}" = "0" ] ; then
     echo "      <failure message=\"${FAILURE_MESSAGE}\">Test failed: Monitor did not exit as expected</failure>" >> "$REPORT_FILE"
 else
     echo "      <system-out>Test passed: Monitor did not detect violation.</system-out>" >> "$REPORT_FILE"
@@ -78,6 +82,6 @@ fi ;
 echo "    </testcase>" >> "$REPORT_FILE"
 
 
-if [[ "$TEST_PASSED" == "0" ]]; then
+if [ "$TEST_PASSED" = "0" ]; then
   exit 1;
 fi
