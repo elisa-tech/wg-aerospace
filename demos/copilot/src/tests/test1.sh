@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # License: SPDX-License-Identifier: MIT
 #
@@ -41,20 +41,23 @@ EXPECTED_RESULT_OFF="Monitor violation: light switch didn't turn off on time."
 
 MONITOR_PID=$(cat monitorPid)
 # Check if the server process is still running
-if kill -0 "$MONITOR_PID" > /dev/null 2>&1
-then
-    kill -SIGUSR1 "$MONITOR_PID" 
+if kill -0 "$MONITOR_PID" > /dev/null 2>&1; then
+    kill -s USR1 "$MONITOR_PID"
     wait "$MONITOR_PID"
 else
-    # This means the test most most likely passed. Capture the exit code of the monitor
+    # This means the test most likely passed. Capture the exit code of the monitor
     MONITOR_EXIT_CODE=$?
 fi
 
 # Clean up
-kill -SIGUSR1 "$(cat switchPid)" 
-wait "$(cat switchPid)"
-kill -SIGUSR1 "$(cat serverPid)"
-wait "$(cat serverPid)"
+SERVER_PID=$(cat serverPid)                                                                                                      
+kill -s USR1 "$(cat switchPid)"                                                                                                  
+wait "$(cat switchPid)"                                                                                                          
+kill -s USR1 "$(cat serverPid)"                                                                                                  
+sleep .5                                                                                                                         
+if kill -0 "$SERVER_PID" > /dev/null 2>&1; then                                                                                  
+    wait "$SERVER_PID"                                                                                                           
+fi 
 
 echo "Killed all processes"
 echo "Cleaning up"
@@ -67,28 +70,24 @@ TEST_FAILED=0
 TEST_PASSED=0
 FAILURE_MESSAGE=""
 # CHECK RESULTS
-if [[ ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_ON") || ($MONITOR_LOG_TEXT == "$EXPECTED_RESULT_OFF")]];
-then
-
+if [ "$MONITOR_LOG_TEXT" = "$EXPECTED_RESULT_ON" ] || [ "$MONITOR_LOG_TEXT" = "$EXPECTED_RESULT_OFF" ]; then
     TEST_PASSED=1
 else
     FAILURE_MESSAGE="Test failed: Monitor didn't detect violation"
     TEST_FAILED=1
 fi
 
-
 # Define the output report file
-REPORT_FILE="../../../test-results/test-results-system.xml"
-
+REPORT_FILE="test-results-system.xml"
 
 echo "    <testcase name=\"Monitor Detects Violation\" time=\"$(date +%s.%N)\">" >> "$REPORT_FILE"
-if [[ "${TEST_PASSED}" == "0" ]] ; then
+if [ "$TEST_PASSED" = "0" ]; then
     echo "      <failure message=\"${FAILURE_MESSAGE}\">Test failed: Monitor didn't detect violation</failure>" >> "$REPORT_FILE"
 else
     echo "      <system-out>Test passed: Monitor detected violation</system-out>" >> "$REPORT_FILE"
-fi ;
+fi
 echo "    </testcase>" >> "$REPORT_FILE"
 
-if [[ "$TEST_PASSED" == "0" ]]; then
+if [ "$TEST_PASSED" = "0" ]; then
     exit 1
 fi

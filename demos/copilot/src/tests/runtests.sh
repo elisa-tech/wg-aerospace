@@ -1,11 +1,15 @@
-#!/usr/bin/env bash
+#!/bin/sh
+
+# License: SPDX-License-Identifier: MIT
 
 # Initialize counters
 TOTAL_TESTS=0
 FAILED_TESTS=0
 
+SCRIPT_DIR=$(dirname $(realpath "$0"))
+
 # Define the output report file
-REPORT_FILE="../../../test-results/test-results-system.xml"
+REPORT_FILE="test-results-system.xml"
 
 # Clear the report file if it exists
 > "$REPORT_FILE"
@@ -18,11 +22,11 @@ echo "  <testsuite name=\"Light System Test\" tests=\"0\" failures=\"0\" errors=
 
 # Run all shell scripts in the current folder that start with "test"
 for test_script in ../tests/test*.sh; do
-    if [[ -x "$test_script" ]]; then
+    if [ -x "$test_script" ]; then
         TOTAL_TESTS=$((TOTAL_TESTS + 1))
         echo "Running $test_script..."
         "$test_script"
-        if [[ $? -ne 0 ]]; then
+        if [ $? -ne 0 ]; then
             FAILED_TESTS=$((FAILED_TESTS + 1))
             echo "Test $test_script failed."
         else
@@ -43,3 +47,10 @@ echo "</testsuites>" >> "$REPORT_FILE"
 
 # Notify the user
 echo "JUnit Report generated: $REPORT_FILE"
+
+if [ -d "$SCRIPT_DIR/../../../test-results/" ]; then
+    mv "$REPORT_FILE" "$SCRIPT_DIR/../../../test-results/"
+    echo "JUnit Report moved to: $SCRIPT_DIR/../../../test-results/"
+else
+    echo "Test results directory not found. Leaving report in current directory."
+fi
