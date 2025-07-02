@@ -1,0 +1,35 @@
+09:58:59 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:00:46 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:02:10 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:03:48 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:04:55 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:31:57 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+10:32:21 From Matthew Weber (Boeing) to Everyone:
+	- Springer CEAS Aeronautical Journal (https://link.springer.com/journal/13272)
+  - Has a special avionics track
+- AIAA Journal: AIAAJ for Aeronautics (https://arc.aiaa.org/loi/aiaaj)
+- SAE International Journal of Aerospace (https://www.sae.org/publications/collections/content/E-JOURNAL-01/)
+- Avionics International / Avionics Today (https://www.aviationtoday.com/)
+  - Less scientific, more industrial-oriented
+	
+10:45:22 From Rob Woolley (Wind River Systems, Inc.) to Everyone:
+	Sorry, had an interruption at the door. Back now.
+	
+10:57:05 From Michael Epley (Red Hat) to Everyone:
+	https://en.wikipedia.org/wiki/PhoneSat
+	
+11:00:23 From Michael Epley (Red Hat) to Everyone:
+	see also https://www.eoportal.org/satellite-missions/phonesat-1-2
+	
