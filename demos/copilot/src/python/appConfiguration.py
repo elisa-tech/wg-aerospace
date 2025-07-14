@@ -3,6 +3,7 @@ from serverCommands import *
 
 class ServerConfiguration:
     """ """
+    ETHERNET_INTERFACE = 'lo'
     # IP address and port the Light Server needs to bind to
     SERVER_ADDRESS_PORT = ('127.0.0.1',10000)
     # Serializer class(Defined in ServerCommands.py) that needs to be used to encode and decode server messages
