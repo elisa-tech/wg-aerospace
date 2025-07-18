@@ -103,5 +103,5 @@ test_monitors: main_syslog_test
 	./test.sh
 		
 systemtest: main_syslog_time
-	$(RUN_PREFIX_TEST) sh -c "cd /demo/copilot/src/monitors \
+	$(RUN_PREFIX_TEST) sudo sh -c "cd /demo/copilot/src/monitors \
 		&& ../tests/runtests.sh"
