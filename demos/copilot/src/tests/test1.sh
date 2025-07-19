@@ -4,7 +4,6 @@
 #
 # This script is used to test the lightServer and main_syslog programs
 # It creates a FIFO named testInput, starts the lightServer and main_syslog programs, and sends a message to the lightServer
-# Usage: ./test1.sh
 
 # Create a FIFO named testInput 
 mkfifo testInput 

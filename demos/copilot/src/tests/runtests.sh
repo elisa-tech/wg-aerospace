@@ -1,6 +1,9 @@
 #!/bin/sh
 
 # License: SPDX-License-Identifier: MIT
+# This script is used to run all tests in the current folder that start with "test"
+# It will generate a JUnit XML report of the test results.
+# This script will need to be run with elevated privileges because some tests may require root access.
 
 # Initialize counters
 TOTAL_TESTS=0
