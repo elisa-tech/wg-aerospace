@@ -4,7 +4,7 @@
 #
 # This script is used to test the the raw socket implementation of the lightServer and main_syslog programs
 # It creates a FIFO named testInput, starts the lightServer and main_syslog programs, and sends a message to the lightServer
-# Usage: ./test1.sh
+# Note: This script requires root privileges to run due to raw socket usage.
 
 # Create a FIFO named testInput 
 mkfifo testInput 
