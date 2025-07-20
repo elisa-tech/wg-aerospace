@@ -14,8 +14,6 @@ STOP_SWITCH = False
 
 Interface =  'lo'
 
-DestMac = b'\x00\x00\x00\x00\x00\x00'
-SrcMac = b'\x00\x00\x00\x00\x00\x00'
 
 switchLogger = logger.Logger().GetLogger()
 
@@ -23,9 +21,9 @@ def SendRawPacket(message):
     """Sends a Raw packet to the Light Server."""
 
     eth_type = 0x88B5
-    sock = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.htons(eth_type))
+    sock = socket.socket(socket.AF_PACKET, socket.SOCK_DGRAM, socket.htons(eth_type))
     sock.bind((Interface, 0))
-    ethernet_frame = DestMac + SrcMac + struct.pack('!H', eth_type) + message
+    ethernet_frame =  message
     sock.send(ethernet_frame)
 
     sock.close()
