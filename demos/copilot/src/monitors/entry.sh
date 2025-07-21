@@ -22,6 +22,7 @@ if [[ ! -z "$HOST_UID" ]]; then
                 /home/user/.profile \
                 /home/$NON_ROOT_USER/
         sudo chown $NON_ROOT_USER:$NON_ROOT_USER /home/$NON_ROOT_USER/ -R
+        sudo sh -c 'echo "mappedUser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user'
         echo "UID/GID mapped to host user."
     fi
 else
