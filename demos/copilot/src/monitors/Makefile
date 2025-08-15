@@ -28,6 +28,7 @@ prep_cross: prep prep_cross_clean
 	fi
 	tar xf archive.tar
 	tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz && rm -f aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh'
 
 prep_cross_clean:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio'
@@ -57,7 +58,7 @@ main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 
 main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh && cd .. && /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && rm -rf extracted_cpio && mkdir -p extracted_cpio && gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed && cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio || true'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cp -rf  ../python ../tests  ./extracted_cpio/root/'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && mkdir ./extracted_cpio/root/monitors && cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time && 	chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time'
