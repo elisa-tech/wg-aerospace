@@ -6,6 +6,10 @@ For more information, contact the working group chair, [Matthew Weber](mailto:ma
 
 * [Meeting Minutes](meeting-minutes)
 
-# External Links
+## Demostrations and Reference Designs
+
+To get started, checkout the [readme](demos/Readme.md).
+
+## External Links
 * [ELISA Home](https://elisa.tech/)
 * [ELISA Aerospace on GitHub](https://github.com/elisa-tech/wg-aerospace)
