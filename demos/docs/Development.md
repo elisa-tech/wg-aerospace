@@ -51,8 +51,8 @@ The following instructions assume that you've completed the [Environment Setup](
 The [Makefile](../copilot/src/monitors/Makefile) has a streamlined example of doing a build and running one of the use case's test suites within the emulation.  This is the sequence to go through those steps.
 
 ```
-make clean
-make preo_cross_clean
+make clean                          # Removes built apps, objects and generated files
+make prep_cross_clean               # Removes cross environment images and toolchain
 make prep_cross                     # Gets the latest pre-built Linux images and cross toolchain
 make main_syslog_time_cross         # Builds application under test
 make main_syslog_time_cross_run     # Run the QEMU emulation with images containing "main_syslog_time_cross" artifacts
@@ -65,23 +65,28 @@ At this point you're within the QEMU emulation.  Run the following to execute th
 cd monitors/ && ../tests/runtests.sh
 ```
 
+To verify you're in the QEMU emulation, you can check the `/etc/os-release` which will state it's a "Buildroot" image.
+
 To exit QEMU - `ctrl-a x`.  This puts you back in your Linux environment outside of the `container` and `emulation`.
 
-#### Manually pulling the pieces together and running the emulation
+#### Manually pull the pieces together and running the emulation
 
-1) To grab the latest pre-built images, before running 'make dev' to get into the container, run the following.
+This section assumes you've at least followed the ["Setup the development shell cross compiling"](#setup-the-development-shell-cross-compiling-emulated-target-apps) steps and are currently in a shell started by `make dev`.
 
-   ```bash
-   make prep_cross
-   ```
-2) 
-<stuff here>
-To verify you're in the QEMU emulation, you can check the `/etc/os-release` which will state it's a "Buildroot" image.
-<stuff here>
+The following uses makefile targets from [Makefile](../copilot/src/monitors/Makefile) as examples.  The examples need to not have the "Run" and "Command" prefix set.  (TBD improve the Makefile for direct use inside the `make dev` environment.)
 
-| ????Repackaging additional CPIO content
-
+1) `main_syslog_time_cross` target shows the steps you could repeat inside the `make dev` environment to build the application locally.  It includes a step to package the application into the cpio emulation filesystem.  The [modifying a rootfs](ModifyRootfsCpio.md) document has more details on adding other content to the CPIO.
+2) `main_syslog_time_cross_run` to see how to run the qemu emulation.
 
 ### Make targets and how to iterate/clean
 
 #### Get new emulated environment tools and archive
+
+This section covers how to update to a new emulated environment and SDK/toolchain.  It forces all the artifacts to be retrieved and reconfigured.
+
+```bash
+make prep_cross_clean
+rm -f archive.tar # tmp, need this MR to merge to fix cleanup
+make prep_cross
+# At this point `make dev` could be used for development with the new toolchain
+```

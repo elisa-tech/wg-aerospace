@@ -31,7 +31,7 @@ prep_cross: prep prep_cross_clean
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh'
 
 prep_cross_clean:
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio archive.tar'
 
 env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
