@@ -71,6 +71,8 @@ main_syslog_time_cross_run: main_syslog_time_cross
 main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
 
+clean_cross: prep_cross_clean clean prep_cross  main_syslog_time_cross main_syslog_time_cross_run
+
 clean:
 	rm -rf main_syslog main_syslog_local main_syslog_time main_syslog_time_cross \
 	       main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
