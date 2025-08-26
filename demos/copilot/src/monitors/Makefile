@@ -24,7 +24,7 @@ prep:
 
 prep_cross: prep prep_cross_clean
 	@if [ ! -f "archive.tar" ]; then \
-		wget "https://gitlab.com/api/v4/projects/61362364/packages/generic/minimal-linux-debug/1.0.0/archive.tar" -O archive.tar; \
+		wget "https://gitlab.com/api/v4/projects/71533173/packages/generic/min-kernel-debug/1.0.0/archive.tar" -O archive.tar; \
 	fi
 	tar xf archive.tar
 	tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz && rm -f aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz
