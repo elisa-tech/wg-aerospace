@@ -231,7 +231,13 @@ Located in [GitHub Discussions](https://github.com/elisa-tech/wg-aerospace/discu
 
 ## Round Table
 
+- See if we can make note of event recordings for past events (vs just dropping the event item without making it a resource.)
 
+- A question was posed "How can an attendee engage, where is the focus?  What should an attendee expect to gain from participating?"
+  - Use cases
+  - Market dynamics
+  - OS / customization need
+  - TBD what events are important
 
 
 See https://github.com/elisa-tech/wg-aerospace/tree/main/meeting-minutes  for the latest meeting minutes.
