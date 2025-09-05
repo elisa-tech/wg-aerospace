@@ -1,5 +1,50 @@
 # Use case call Minutes
 
+
+## 20250905
+
+**Actions**
+
+We did not take any actions around finishing out the use case doc (yet) - https://github.com/elisa-tech/wg-aerospace/pull/92
+
+- Matt
+  - Merge https://github.com/elisa-tech/wg-aerospace/pull/72
+  - Create cFS build document from https://github.com/elisa-tech/wg-aerospace/issues/52  (Salim to review and use for sample app)
+- Salim
+  - Get sample application working in emulation  - cmd from gnd to sample app in emulation (network stack based)
+    - Done criteria - manual sequence we could later make into a test case and example
+- Paul - has a PR waiting with emulation wrapper once 72 merges
+- Paul / Ivan - what is the next step on the Raw socket - https://github.com/elisa-tech/wg-aerospace/pull/68?
+  - At least a rebase after 72 merges
+  - I think doc updates are being handled by Martin's action from a few weeks back on adding the Embedded demo material (doesn't look like we have a ticket for it - https://github.com/elisa-tech/wg-aerospace/issues/33#issuecomment-2992113155)
+
+**Discussion topics**
+
+Goals of cFS demo
+- Understand the minimal system components required
+  - Ivan mentioned, cFS depends on <stdint.h>,<stdbool.h>,<string.h>,<stdlib.h>,<math.h>
+  - Progress towards a Minimal kernel and libc from current emulation build
+- Demo Apps 2.0
+  - Converstion to C as part of cFS (copilot can generate part of the outline of the apps)
+  - Switch app (e.g. how we control and configure what is observed)
+    - Still want to support configuration input values
+    - Get configuration from a virtual serial from outside emulation to drive config to switchapp (mimic's a comm link)
+    - Switch app is a cFS app and uses serial info to drive cFS controls
+  - Copilot runs as app monitoring commands/telemetry instead of logs
+- Tests
+  - Trying to mimic the output/inputs so testing approach doesn't change much
+
+Steps
+1) Get sample application working in emulation  - cmd from gnd to sample app in emulation (network stack based)
+2) Add Cabin Light instead of Sample App (driven by gnd command example)
+3) Add Copilot to detect events, commands and monitor
+4) Add Cabin Lights Application to drive Cabin Light by the Switch App
+5) Move from networking to serial for gnd command
+6) Update test cases
+
+
+---
+
 ## 20250829
 
 **Actions**
