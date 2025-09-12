@@ -1,5 +1,69 @@
 # Use case call Minutes
 
+## 20250912
+
+**Attendance**
+
+Matt Weber (Boeing)
+Paul Mani (Collins)
+Martin Halle (Hamburg University of Technology)
+Brian Wood  (Boeing)
+Ivan Perez (KBR @ NASA Ames Research)
+Rob Woolley (Wind River Systems, Inc.)
+Salim Jalaleddine (Boeing)
+Shefali Sharma
+Wanja Zaeske (DLR)
+
+**Actions**
+
+- Paul
+  - Debugging test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+
+- Salim
+  - Get sample application working in emulation  - cmd from gnd to sample app in emulation (network stack based)
+    - Done criteria - manual sequence we could later make into a test case and example
+  - Additional ACTION: Create cFS build document from https://github.com/elisa-tech/wg-aerospace/issues/52
+
+- Martin
+  - Embedded demo documentation updates
+
+- Matt
+  - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+
+**Discussion topics**
+
+- Paul / Ivan - what is the next step on the Raw socket - https://github.com/elisa-tech/wg-aerospace/pull/68?
+  - At least a rebase after 72 merges
+  - I think doc updates are being handled by Martin's action from a few weeks back on adding the Embedded demo material (doesn't look like we have a ticket for it - https://github.com/elisa-tech/wg-aerospace/issues/33#issuecomment-2992113155)
+
+- Salim
+  - Progressing towards a build and currently building and running on QEMU
+
+- Wanja - feedback on getting started / trying instructions
+  - vendor free list of dependencies
+    - two layers
+      - higher level using dockerfile based environment
+      - No container, makefile based with all dependencies setup on host
+  - sudo-less (both setup and container) (maybe rootless solves part of it - https://github.com/elisa-tech/wg-aerospace/discussions/80)
+  - https://github.com/pengutronix/genimage
+  - The wrapper may have a corner case with the emulation output having mixed kernel output and print of the test report
+    - Suggested serial port to command and get data so it's dedicated
+    - Initially could set log level to prevent console output
+  - 3 topics ongoing - can we make these more distinct activities?
+    - app on linux relevant to use cases
+    - testing harness (unit / remote) - (Needs more attention?  Existing work / projects that could more generically to it)
+      - Can existing solutions handle this, large assumptions but makes our example simplier?
+      - https://labgrid.readthedocs.io/en/latest/index.html - embedded board control python library with a focus on testing, development and general automation. It includes a remote control layer to control boards connected to other hosts.
+      - Noted some interest in this
+    - bring infra for configuration / system image generation
+      - Can existing solutions handle this, large assumptions but makes our example simplier?
+      - Interested in system generation / image creation portion
+
+- Future conflicts
+  - DASC Next week Sept 19th
+  - Ivan out for Sept 19th,  26th
+  - German holiday on Oct 3rd
+
 
 ## 20250905
 
