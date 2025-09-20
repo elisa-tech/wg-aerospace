@@ -19,3 +19,4 @@ demos/copilot/src/monitors/archive.tar
 demos/copilot/src/monitors/extracted_cpio/
 demos/copilot/src/monitors/main_syslog_time_cross
 demos/copilot/src/monitors/rootfs.cpio*
+demos/copilot/src/elisa_emulation
