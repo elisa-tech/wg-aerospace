@@ -38,118 +38,43 @@ The following instructions assume that you've completed the [Development Setup](
     git submodule update
    ```
 
-#### Apply necessary patches prior to building cFS
-1. Copy template sample defs and makefile from cfe directory to cFS main directory
+#### Copy templates and apply necessary patches prior to building cFS
+1) Copy template sample defs and makefile from cfe directory to cFS main directory
    ```
    cp -r cfe/cmake/sample_defs .
    cp cfe/cmake/Makefile.sample Makefile
    ```
+2) Run prebuild patch for cFS build `bash /demo/apply_cfs_prebuild_patch.sh`
 
-Work in progress:
+### Building cFS and loading to CPIO
 
-cp sample_defs/toolchain-arm-cortexa8_neon-linux-gnueabi.cmake sample_defs/toolchain-arm-linux-gnu.cmake -a
-
-vi sample_defs/toolchain-arm-linux-gnu.cmake
-
-SET(CMAKE_C_COMPILER                    "/demo/elisa_emulation/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc")
-SET(CMAKE_CXX_COMPILER                  "/demo/elisa_emulation/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-g++")
-
-
-SET(CMAKE_FIND_ROOT_PATH                "/demo/elisa_emulation/aarch64-buildroot-linux-musl_sdk-buildroot/aarch64-buildroot-linux-musl/sysroot")
-
-vi sample_defs/targets.cmake
-
-SET(cpu1_SYSTEM arm-linux-gnu)
-
-cd osal/src/os/posix/inc/
-
-vi os-posix.h
-
-remove line #include <sys/signal.h>
-
-cd /demo/elisa_emulation/cFS/psp
-
-vi CMakeLists.txt
-
-add execinfo in target_link_libraries
-
+1) Run the following commands to build cFS
+```
 make SIMULATION=arm-linux-gnu O=build-elisa prep
-
 make SIMULATION=arm-linux-gnu O=build-elisa
+```
 
-cd $ELISA_DEMO
+#### Loading cFS build to CPIO
+2) Move to the directory that contains the ELISA simulation `cd $ELISA_DEMO`
 
-mkdir -p extracted_cpio && sudo gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed
+3) Run the post build script which will extract the root fs, copy the cFS build to the root fs, and load the app library files/cFS tables `bash /demo/post_cfs_build.sh`
 
-sudo cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio
+4) If wanting to use cmdUtil tool in the QEMU environment, cmdUtil will have to be recompiled with aarch64 and loaded onto the root filesystem. Execute the following script to do this `bash /demo/build_cmdUtil.sh`
 
-sudo cp -r cFS/build-elisa/ extracted_cpio/usr/
+### Running cFS on QEMU
+1) Repackage extracted_cpio into compressed CPIO archive to be used as image for QEMU `sh -c 'cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'`
 
-sudo mv extracted_cpio/usr/build-elisa/ extracted_cpio/usr/cfs_build
+2) Run QEMU to emulate ARM 64-bit virtual machine ('ctrl-a x' to stop QEMU) `qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"`
 
-sudo mkdir extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/sample_defs/cpu1_cfe_es_startup.scr extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo mv extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf/cpu1_cfe_es_startup.scr extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf/cfe_es_startup.scr
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/cfe_assert/cfe_assert.so extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/ci_lab/ci_lab.so extrac
-ted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/to_lab/to_lab.so extrac
-ted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/sample_app/sample_app.so extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/sample_lib/sample_lib.so extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/arm-linux-gnu/default_cpu1/apps/sch_lab/sch_lab.so extr
-acted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/tables/staging/cpu1/cf/to_lab_sub.tbl extracted_cpio/us
-r/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/tables/staging/cpu1/cf/sample_app_tbl.tbl extracted_cpi
-o/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-sudo cp cFS/build-elisa/tables/staging/cpu1/cf/sch_lab_table.tbl extracted_cpio
-/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/cf
-
-cd cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil/
-
-vi Makefile
-
-Set the full path to your cross-compiler
-CROSS_COMPILER := /demo/elisa_emulation/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc
-
-all:
-        $(CROSS_COMPILER) -o cmdUtil SendUdp.c cmdUtil.c
-
-debug:
-        $(CROSS_COMPILER) -o cmdUtil -DDEBUG -g SendUdp.c cmdUtil.c
-
-thirtytwo:
-        $(CROSS_COMPILER) -o cmdUtil -DDEBUG -g -m32 SendUdp.c cmdUtil.c
-
-make
-
-cd $ELISA_DEMO/
-
-sudo cp cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil/cmdUtil extracted_cpio/us
-r/cfs_build/arm-linux-gnu/default_cpu1/cpu1
-
-sh -c 'cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
-
-qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"    # 'ctrl-a x' to stop QEMU
-
+3) Once in QEMU, move to the following directory containing the executable:
 cd ../usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/
 
-./core-cpu1 > cfs.log 2>&1 &
+4) Run cFS `./core-cpu1`
 
-tail -f cfs.log
+#### Sending command to sample app
 
-ps aux | grep core-cpu1
+5) To send a command within QEMU using cmdUtil, run cFS as a background process and redirect output to cfs.log `./core-cpu1 > cfs.log 2>&1 &`
 
-./cmdUtil --host=localhost --port=1234 --pktid=0x1882 --cmdcode=0
+6) To check cfs output run `tail -f cfs.log` (to get out of viewer press CTRL+C)
+
+7) Run the following command to send a NO-OP command to Sample App `./cmdUtil --host=localhost --port=1234 --pktid=0x1882 --cmdcode=0`
