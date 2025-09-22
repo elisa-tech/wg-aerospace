@@ -63,7 +63,7 @@ main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cp -rf  ../python ../tests  ./extracted_cpio/root/'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && mkdir ./extracted_cpio/root/monitors && cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time && 	chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time'
 	# Could add other content to the `./extracted_cpio` at this point before making the new image in the next line
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cd extracted_cpio && sudo chown root:root . -R && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
 
 main_syslog_time_cross_run: main_syslog_time_cross
 	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"'
