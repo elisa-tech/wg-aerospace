@@ -1,5 +1,48 @@
 # Use case call Minutes
 
+## 20250919
+
+**Attendance**
+
+Matt Weber (Boeing)
+Brian Wood  (Boeing)
+Rob Woolley (Wind River Systems, Inc.)
+Salim Jalaleddine (Boeing)
+
+**Actions**
+
+- Carry over actions
+  - Martin
+    - Embedded demo documentation updates
+  - Paul
+    - Debugging test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+
+- Matt
+  - Figure out emulation CI failure that Paul is seeing in - https://github.com/elisa-tech/wg-aerospace/pull/95
+  - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+  - Get example of qemu serial for Salim to use to drive example cmd msgs
+
+Salim
+- Getting cFS demo doc/steps into a PR - https://github.com/elisa-tech/wg-aerospace/pull/98
+
+**Discussion topics**
+
+- Test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+
+- Demo simple cFS app
+
+- Rob
+  - Described approaches to Yocto inclusion of cFS - Multi receipe vs.?????
+  - Current meta-sgl work
+    - 1. BSPs building with Kas
+    - 2. Getting automated CI setup
+    - 3. Starting to fold in spaceros, cfs, fprime
+  - Use case testing of simple app could be a pattern used for a sgl CI test case (Matt suggested)
+
+- Maybe could leverage test framework approaches meta-sgl takes if it's more streamlined then ours?
+
+---
+
 ## 20250912
 
 **Attendance**
