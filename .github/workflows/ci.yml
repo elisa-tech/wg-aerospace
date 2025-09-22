@@ -37,19 +37,13 @@ jobs:
               make main_syslog_time_cross
               file main_syslog_time_cross # Verify built file exists
 
-      - name: Test Cross Target (pass)
+      - name: Test Cross Target
         run: |
               cd ${{ github.workspace }}
               cd demos/copilot/src/monitors
               file main_syslog_time_cross # Verify built file exists
+              # Internal wrapper script for CI run is set to 30sec timeout so this should force a fail set to 20s
               timeout 20 make main_syslog_time_cross_run_ci
-
-      - name: Test Cross Target (fail)
-        run: |
-              cd ${{ github.workspace }}
-              cd demos/copilot/src/monitors
-              file main_syslog_time_cross # Verify built file exists
-              timeout 20 make main_syslog_time_cross_run_ci || true
 
       - name: Test
         run: |

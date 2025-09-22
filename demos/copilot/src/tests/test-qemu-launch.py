@@ -52,7 +52,7 @@ def run_qemu_with_watch(str_to_exit_on, timeout, commands):
             sys.exit(1)
 
 if __name__ == '__main__':
-    str_to_exit_on = "Welcome to Buldroot"
+    str_to_exit_on = "Welcome to Buildroot"
     timeout = 30  # Timeout in seconds
     commands = ""  # List of commands to send to QEMU console
     run_qemu_with_watch(str_to_exit_on, timeout, commands)
