@@ -68,6 +68,9 @@ main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_
 main_syslog_time_cross_run: main_syslog_time_cross
 	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"'
 
+main_syslog_time_cross_run_ci: main_syslog_time_cross
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"'
+
 main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
 

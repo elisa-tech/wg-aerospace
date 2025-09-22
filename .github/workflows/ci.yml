@@ -37,12 +37,14 @@ jobs:
               cd demos/copilot/src/monitors
               make main_syslog_time_cross
               file main_syslog_time_cross # Verify built file exists
-              timeout 5 make main_syslog_time_cross_run || true
+              timeout 5 make main_syslog_time_cross_run_ci || true
 
       - name: Run Cross Target
         run: |
               cd ${{ github.workspace }}
               cd demos/copilot/src/monitors
+              sudo apt update
+              sudo apt install -y qemu-system-aarch64
               qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"
 
       - name: Test
