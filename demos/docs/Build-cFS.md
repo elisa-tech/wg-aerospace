@@ -8,24 +8,16 @@ The following instructions assume that you've completed the [Development Setup](
 ### Setup for cloning of cFS bundle
 
 1) Navigate to your clone of this project and [cd demos/copilot/src/monitors/](../copilot/src/monitors/).
-2) Execute the following to get a `development environment shell` within our container.
+2) Execute the following to get a `development environment shell` within our container with minimal kernel and toolchain set up for cross-compiling:
 
    ```bash
+   make prep_cross
    make dev
    ```
 3) At this point you're in the docker container with all the tools to do testing and rebuild of the demos.
 4) Install required packages inside the container `sudo apt update && sudo apt install -y  vim git file wget make cmake` 
 5) If you wish to have the cFS build to persist on the docker container, cd to `/demo/` and set the variable `ELISA_DEMO=$(pwd)/elisa_emulation`
 6) Make the directory where cFS will be cloned into `mkdir -p $ELISA_DEMO && cd $ELISA_DEMO`
-
-#### Setup the minimal kernel and toolchain for cross-compiling
-
-1) Download minimal linux debug archive `[ ! -e "archive.tar" ] && wget "https://gitlab.com/api/v4/projects/61362364/packages/generic/minimal-linux-debug/1.0.0/archive.tar" -O archive.tar`
-2) Extract contents of archive `tar xf archive.tar`
-3) Extract the SDK tarball inside the archive `tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz`
-4) Enter the SDK directory `cd aarch64-buildroot-linux-musl_sdk-buildroot`
-5) Now run script to relocate SDK paths (only needed once unless folder is moved) `./relocate-sdk.sh`  
-> Do **not** run `. environment-setup` as it breaks the CFS build process.
 
 ### Clone cFS directory and apply patches prior to building
 
