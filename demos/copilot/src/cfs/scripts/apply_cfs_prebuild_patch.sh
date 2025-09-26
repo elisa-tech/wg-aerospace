@@ -3,7 +3,7 @@
 set -e
 
 BASE_DIR="/demo/elisa_emulation/cFS"
-SDK_DIR="/demo/elisa_emulation/aarch64-buildroot-linux-musl_sdk-buildroot"
+SDK_DIR="/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot"
 
 echo "Starting patch script..."
 
