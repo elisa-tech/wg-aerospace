@@ -1,5 +1,61 @@
 # Use case call Minutes
 
+- Future call, record the demos with zoom? Next time.
+
+## 20250926
+
+**Attendance**
+
+Matt Weber (Boeing)
+Shefali Sharma
+Salim Jalaleddine (Boeing)
+Martin Halle (Hamburg University of Technology)
+
+**Actions**
+
+- Carry over actions
+  - Martin
+    - Embedded demo documentation updates
+  - Paul
+    - Debugging test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+
+- Matt
+  - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+  - Get example of qemu serial for Salim to use to drive example cmd msgs
+  - Get example of qemu serial to Paul for capturing of test output vs current stdout for emulated test wrapper (may wait until we have some of the cfs example work already using serial)
+
+- Salim
+  - Getting cFS demo doc/steps into a PR - https://github.com/elisa-tech/wg-aerospace/pull/98
+
+**Discussion topics**
+
+- Salim presented the simple cFS demo and PR feedback is pending (ready next week for testing) - https://github.com/elisa-tech/wg-aerospace/pull/98
+
+- Matt
+  - Figured out emulation failure and sent Paul notes on his PR.
+  - Merged a emulation test PR that verfies our images boot correctly - https://github.com/elisa-tech/wg-aerospace/pull/99
+
+- Wanja feedback from Martin at DASC
+  - Wants to target hardware and moving from wrapped emulation in our current environment makes this transition hard
+  - Making our composition simiplier may fit better into his research (e.g., support a mixed based environment)
+  - Matt suggested to Martin to mention to him that we should make this a agenda topic for the next AeroWG call
+    - It may drive a new use case we could capture to drive the demo/dev work
+    - It might also be a collaboration with SGL as maybe the workflows and automation they're establishing can provide this type of environment.
+
+- Propsal for workshop
+  - Research questions and papers - please join or upvote the ideas (Martin submitting)
+    - slide on overview
+    - break each out with qrcode
+  - Walk through our use cases and general sense of rigor/level (Matt submitting)
+  - Recorded use case demos video (Matt submitting)
+
+- DASC (Martin) - More general call conversation
+  - AI use case
+    - validaing AI with AI talk
+  - Maybe first spot to publish papers
+
+---
+
 ## 20250919
 
 **Attendance**
