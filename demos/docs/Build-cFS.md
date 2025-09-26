@@ -30,36 +30,31 @@ The following instructions assume that you've completed the [Development Setup](
     git submodule update
    ```
 
-#### Copy templates and apply necessary patches prior to building cFS
-1) Copy template sample defs and makefile from cfe directory to cFS main directory
-   ```
-   cp -r cfe/cmake/sample_defs .
-   cp cfe/cmake/Makefile.sample Makefile
-   ```
-2) Run prebuild patch for cFS build `bash /demo/apply_cfs_prebuild_patch.sh`
-
-### Building cFS and loading to CPIO
-
-1) Run the following commands to build cFS
-```
-make SIMULATION=arm-linux-gnu O=build-elisa prep
-make SIMULATION=arm-linux-gnu O=build-elisa
-```
+### Apply necessary patch with cFS prebuilt and load cFS build to QEMU emulation
+1) Run the following command to apply the patch with prebuilt cFS `git am /path/to/elisa-customization.patch`
 
 #### Loading cFS build to CPIO
 2) Move to the directory that contains the ELISA simulation `cd $ELISA_DEMO`
 
-3) Run the post build script which will extract the root fs, copy the cFS build to the root fs, and load the app library files/cFS tables `bash /demo/post_cfs_build.sh`
+3) Run the load cfs script which will extract the root fs from monitors directory, copy the cFS build to the extracted root fs, and additionally load the app library files/cFS tables to the cf directory `bash /demo/cfs/scripts/load_cfs.sh`
 
-4) If wanting to use cmdUtil tool in the QEMU environment, cmdUtil will have to be recompiled with aarch64 and loaded onto the root filesystem. Execute the following script to do this `bash /demo/build_cmdUtil.sh`
+4) If wanting to use cmdUtil tool in the QEMU environment, cmdUtil will have to be recompiled with aarch64 (makefile already patched) and loaded onto the root filesystem.
+
+5) Run make in the cmdUtil directory
+```
+cd /demo/elisa_emulation/cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil
+make
+```
+
+6) And copy the built cmdUtil binary to the extracted rootfs `sudo cp cmdUtil /demo/elisa_emulation/extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1`
 
 ### Running cFS on QEMU
 1) Repackage extracted_cpio into compressed CPIO archive to be used as image for QEMU `sh -c 'cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'`
 
-2) Run QEMU to emulate ARM 64-bit virtual machine ('ctrl-a x' to stop QEMU) `qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"`
+2) Run QEMU to emulate ARM 64-bit virtual machine ('ctrl-a x' to stop QEMU) `qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel /demo/monitors/Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"`
 
 3) Once in QEMU, move to the following directory containing the executable:
-cd ../usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/
+`cd ../usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/`
 
 4) Run cFS `./core-cpu1`
 
