@@ -9,6 +9,9 @@ echo "Starting patch script..."
 
 cd "$BASE_DIR"
 
+cp -r cfe/cmake/sample_defs .
+cp cfe/cmake/Makefile.sample Makefile
+
 # 1. Copy toolchain file
 echo "Copying toolchain file..."
 cp -a sample_defs/toolchain-arm-cortexa8_neon-linux-gnueabi.cmake sample_defs/toolchain-arm-linux-gnu.cmake
