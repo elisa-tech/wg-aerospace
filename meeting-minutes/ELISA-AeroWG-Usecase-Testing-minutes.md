@@ -2,6 +2,9 @@
 
 - Future call, record the demos with zoom? Next time.
 
+- Ivan - I did build fuzz tests for a cFS deployment this week; I can tell you a bit about it next week in case we want to do something similar for our demo.
+
+
 ## 20250926
 
 **Attendance**
