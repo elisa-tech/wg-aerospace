@@ -2,8 +2,52 @@
 
 - Future call, record the demos with zoom? Next time.
 
-- Ivan - I did build fuzz tests for a cFS deployment this week; I can tell you a bit about it next week in case we want to do something similar for our demo.
+- Discuss Fuzzing test case for Light switch example
 
+## 20251003
+
+**Attendance**
+
+Matt Weber (Boeing)
+Ivan Perez (KBR @ NASA Ames Research)
+Salim Jalaleddine (Boeing)
+Brian Wood  (Boeing)
+
+**Actions**
+
+- Carry over actions
+  - Martin
+    - Embedded demo documentation updates
+  - Paul
+    - Debugging test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+
+- Matt
+  - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+  - Get example of qemu serial for Salim to use to drive example cmd msgs
+  - Get example of qemu serial to Paul for capturing of test output vs current stdout for emulated test wrapper (may wait until we have some of the cfs example work already using serial)
+
+**Discussion topics**
+
+Next step with getting a monitored event to work - building on simple cFS app
+
+- Ivan
+  - NASA/ogma to generate CFS applications - https://github.com/nasa/ogma/blob/develop/.github/workflows/repo-ghc-8.6-cabal-2.4-cfs.yml#L49
+  - Database to code generator
+  - Picture to monitor generation
+  - Merged Salim's PR and ready to add step to show Ogma example
+
+Fuzzing tests for a cFS deployment this week
+
+- Is this something we want to demo?  Random data injection / millions of test cases - could do a cabin lights cycle through states?  how do you get full coverage?
+- Moon collaborative robots/equipment scenario (cFS/ROS/multi-platform)
+- unit tests to start but evolved to seed a random testing of data structures e.g., cFS data structure to json, is it correct.
+- Ogma can generate most of the content / comparison
+- QuickCheck (Haskell checker)
+  - https://dl.acm.org/doi/abs/10.1145/351240.351266
+  - https://dl.acm.org/doi/abs/10.1145/3110246  (Could pre-record a trace of what we want to drive in the system.  Then add random behaviors/msg against that.)
+
+
+--
 
 ## 20250926
 
