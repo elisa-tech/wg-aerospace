@@ -55,5 +55,9 @@ if [ -d "$SCRIPT_DIR/../../../test-results/" ]; then
     mv "$REPORT_FILE" "$SCRIPT_DIR/../../../test-results/"
     echo "JUnit Report moved to: $SCRIPT_DIR/../../../test-results/"
 else
-    echo "Test results directory not found. Leaving report in current directory."
+    echo "Test results directory not found. Writing results to console"
+    cat "$REPORT_FILE"
 fi
+
+echo "Tests Completed Successfully."
+
