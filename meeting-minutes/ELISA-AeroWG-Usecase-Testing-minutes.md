@@ -2,7 +2,38 @@
 
 - Future call, record the demos with zoom? Next time.
 
-- Discuss Fuzzing test case for Light switch example
+## 20251010
+
+Matt Weber (Boeing)
+Ivan Perez (KBR @ NASA Ames Research)
+Salim Jalaleddine (Boeing)
+Brian Wood  (Boeing)
+Shefali Sharma
+
+**Actions**
+
+- Carry over actions
+  - Martin
+    - Embedded demo documentation updates
+  - Paul
+    - Debugging test execution wrapper - https://github.com/elisa-tech/wg-aerospace/pull/95
+  - Matt
+    - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+  - Ivan - continue on ogma example for monitoring simple app (manual example)
+
+- Matt - plans to review Paul's MR to see if there is anything needed to merge
+
+**Discussion topics**
+
+- Ivan updating ogma templates for copilot version updates (improvement to ogma project)
+  - Flexibility in how ogma select the template to use
+  - Did a walk through of the template approach
+
+- Matt
+  - Briefly touched on technology transition - distro vs requirements vs our own
+    - Some conclusion that we can adapt how we do work but focus on transitioning a cFS example with minimal environment to meta-SGL
+
+---
 
 ## 20251003
 
@@ -25,6 +56,8 @@ Brian Wood  (Boeing)
   - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
   - Get example of qemu serial for Salim to use to drive example cmd msgs
   - Get example of qemu serial to Paul for capturing of test output vs current stdout for emulated test wrapper (may wait until we have some of the cfs example work already using serial)
+
+- Ivan looking at building a ogma example
 
 **Discussion topics**
 
