@@ -65,8 +65,16 @@ main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_
 	# Could add other content to the `./extracted_cpio` at this point before making the new image in the next line
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cd extracted_cpio && sudo chown root:root . -R && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
 
+# To use the serial port this emulation sets up
+# 1) Execute the below make target to start the container
+# 2) In a new shell, run the following to attach to that container
+#          docker exec -it   $(docker ps | grep copilot | grep -o '^[^ ]*') /bin/bash
+# 3) Run the following once attached to listen on the emulation's virtual serial port
+#          sudo apt update && sudo apt install -y socat netcat && nc localhost 45450
+# 4) In the emulation, login and run the following to send example message to Netcat that's listening
+#          echo "Hi" > /dev/ttyS0
 main_syslog_time_cross_run: main_syslog_time_cross
-	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"'
+	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -chardev socket,id=ttyS0,host=localhost,port=45450,server,nowait -device pci-serial,chardev=ttyS0 -append "root=/dev/ram0 console=ttyAMA0"'
 
 main_syslog_time_cross_run_ci: main_syslog_time_cross
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && python3 ../tests/test-qemu-launch.py'
