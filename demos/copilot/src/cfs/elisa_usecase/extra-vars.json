@@ -1,0 +1,5 @@
+{ "app_name_lc": "sample_app"
+, "app_name_uc": "SAMPLE_APP"
+, "app_name_cc": "SampleApp"
+, "impl_extra_header": "#include \"extra.h\""
+}
