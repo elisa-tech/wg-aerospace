@@ -46,6 +46,9 @@ APPS=(
   "sample_app"
   "sample_lib"
   "sch_lab"
+  "copilot_app"
+  "lights_app"
+  "switch_app"
 )
 
 for app in "${APPS[@]}"; do
@@ -57,6 +60,9 @@ echo "Copying table files..."
 TABLES=(
   "to_lab_sub.tbl"
   "sample_app_tbl.tbl"
+  "copilot_app_tbl.tbl"
+  "lights_app_tbl.tbl"
+  "switch_app_tbl.tbl"
   "sch_lab_table.tbl"
 )
 
