@@ -1,0 +1,16 @@
+{
+  "CFSExample": {
+    "internal_variables": [],
+    "external_variables": [
+      {"name": "lights", "type": "Bool", "meaning": "InputBool"},
+      {"name": "lightSwitch", "type": "Bool", "meaning": "InputBool"}
+    ],
+    "properties": [
+      {
+        "id":      "TestOgma",
+        "formula": "lights == lightSwitch",
+        "text":    "lights on if and only if lightSwitch is on"
+      }
+    ]
+  }
+}

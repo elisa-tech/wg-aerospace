@@ -24,6 +24,12 @@ sed -i 's|SET(CMAKE_FIND_ROOT_PATH.*|SET(CMAKE_FIND_ROOT_PATH                "'"
 # 3. Patch sample_defs/targets.cmake
 echo "Patching sample_defs/targets.cmake..."
 sed -i 's|SET(cpu1_SYSTEM.*|SET(cpu1_SYSTEM arm-linux-gnu)|' sample_defs/targets.cmake
+sed -i 's|\(SET(cpu1_APPLIST[^)]\+\)|\1 copilot_app lights_app switch_app|' sample_defs/targets.cmake
+sed -e '|^!|i\
+CFE_APP, copilot_app, COPILOT_APP_Main,   COPILOT_APP,  50,   16384, 0x0, 0;\
+CFE_APP, lights_app,  LIGHTS_APP_Main,    LIGHTS_APP,   50,   16384, 0x0, 0;\
+CFE_APP, switch_app,  SWITCH_APP_Main,    SWITCH_APP,   50,   16384, 0x0, 0;
+' cpu1_cfe_es_startup.scr
 
 # 4. Remove line '#include <sys/signal.h>' from os-posix.h
 OS_POSIX_H="$BASE_DIR/osal/src/os/posix/inc/os-posix.h"
