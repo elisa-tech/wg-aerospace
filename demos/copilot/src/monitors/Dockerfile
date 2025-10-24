@@ -85,6 +85,9 @@ RUN cabal v2-install --lib \
     copilot-libraries-4.2 \
     copilot-theorem-4.2
 
+# Install Ogma
+RUN cabal v2-install ogma-cli:ogma
+
 # Doesn't error but we can at least see it works
 #RUN ghci <<< 'import Language.Copilot'
 

@@ -1,0 +1,70 @@
+# Building cFS
+
+## Overview
+
+The following instructions assume that you've completed the [Development Setup](./Development.md).
+
+
+### Setup for cloning of cFS bundle
+
+1) Navigate to your clone of this project and [cd demos/copilot/src/monitors/](../copilot/src/monitors/).
+2) Execute the following to get a `development environment shell` within our container with minimal kernel and toolchain set up for cross-compiling:
+
+   ```bash
+   make prep_cross
+   make dev
+   ```
+3) At this point you're in the docker container with all the tools to do testing and rebuild of the demos.
+4) Install required packages inside the container `sudo apt update && sudo apt install -y  vim git file wget make cmake` 
+5) If you wish to have the cFS build to persist on the docker container, cd to `/demo/` and set the variable `ELISA_DEMO=$(pwd)/elisa_emulation`
+6) Make the directory where cFS will be cloned into `mkdir -p $ELISA_DEMO && cd $ELISA_DEMO`
+
+### Clone cFS directory
+
+1) Enter directory where cFS will be cloned `cd $ELISA_DEMO`
+2) Clone cFS from github: 
+   ```
+    git clone https://github.com/nasa/cFS.git
+   ```
+
+### Apply necessary patch with cFS prebuilt and load cFS build to QEMU emulation
+1) From cFS cloned repo, run the following command to apply the patch with prebuilt cFS `git am /demo/elisa_emulation/elisa-customization.patch`
+2) Update submodules
+```
+    git submodule init
+    git submodule update
+```
+
+#### Loading cFS build to CPIO
+2) Move to the directory that contains the ELISA simulation `cd $ELISA_DEMO`
+
+3) Run the load cfs script which will extract the root fs from monitors directory, copy the cFS build to the extracted root fs, and additionally load the app library files/cFS tables to the cf directory `bash /demo/cfs/scripts/load_cfs.sh`
+
+4) If wanting to use cmdUtil tool in the QEMU environment, cmdUtil will have to be recompiled with aarch64 (makefile already patched) and loaded onto the root filesystem.
+
+5) Run make in the cmdUtil directory
+```
+cd /demo/elisa_emulation/cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil
+make
+```
+
+6) And copy the built cmdUtil binary to the extracted rootfs `sudo cp cmdUtil /demo/elisa_emulation/extracted_cpio/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1`
+
+### Running cFS on QEMU
+1) Move to the directory that contains the ELISA simulation `cd $ELISA_DEMO`
+2) Repackage extracted_cpio into compressed CPIO archive to be used as image for QEMU `sh -c 'cd extracted_cpio && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'`
+
+3) Run QEMU to emulate ARM 64-bit virtual machine ('ctrl-a x' to stop QEMU) `qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel /demo/monitors/Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"`
+
+4) Once in QEMU, move to the following directory containing the executable:
+`cd ../usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1/`
+
+5) Run cFS `./core-cpu1`
+
+#### Sending command to sample app
+
+6) To send a command within QEMU using cmdUtil, run cFS as a background process and redirect output to cfs.log `./core-cpu1 > cfs.log 2>&1 &`
+
+7) To check cfs output run `tail -f cfs.log` (to get out of viewer press CTRL+C)
+
+8) Run the following command to send a NO-OP command to Sample App `./cmdUtil --host=localhost --port=1234 --pktid=0x1882 --cmdcode=0`

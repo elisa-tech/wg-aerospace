@@ -2,16 +2,18 @@
 
 CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
+CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
 # Determine the docker run prefix based on no executing on a xfs filesystem (issue with ownership and encryption)
 RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG))
+RUN_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG))
 RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG))
 DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors &&)
 CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
-.PHONY: default clean prep runs
+.PHONY: default clean prep runs test test_monitors
 
 default: main_syslog main_syslog_local main_syslog_time
 
@@ -19,6 +21,17 @@ default: main_syslog main_syslog_local main_syslog_time
 # See CoPilot docs for manually configuring an environment which supports haskell.
 prep:
 	docker pull $(CONTAINER_IMG)
+
+prep_cross: prep prep_cross_clean
+	@if [ ! -f "archive.tar" ]; then \
+		wget "https://gitlab.com/api/v4/projects/71533173/packages/generic/min-kernel-debug/1.0.0/archive.tar" -O archive.tar; \
+	fi
+	tar xf archive.tar
+	tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz && rm -f aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh'
+
+prep_cross_clean:
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio archive.tar'
 
 env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
@@ -44,11 +57,36 @@ main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
 main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 
+main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf extracted_cpio && mkdir -p extracted_cpio && gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed && cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio || true'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cp -rf  ../python ../tests  ./extracted_cpio/root/'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && mkdir ./extracted_cpio/root/monitors && cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time && 	chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time'
+	# Could add other content to the `./extracted_cpio` at this point before making the new image in the next line
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cd extracted_cpio && sudo chown root:root . -R && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
+
+# To use the serial port this emulation sets up
+# 1) Execute the below make target to start the container
+# 2) In a new shell, run the following to attach to that container
+#          docker exec -it   $(docker ps | grep copilot | grep -o '^[^ ]*') /bin/bash
+# 3) Run the following once attached to listen on the emulation's virtual serial port
+#          sudo apt update && sudo apt install -y socat netcat && nc localhost 45450
+# 4) In the emulation, login and run the following to send example message to Netcat that's listening
+#          echo "Hi" > /dev/ttyS0
+main_syslog_time_cross_run: main_syslog_time_cross
+	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -chardev socket,id=ttyS0,host=localhost,port=45450,server,nowait -device pci-serial,chardev=ttyS0 -append "root=/dev/ram0 console=ttyAMA0"'
+
+main_syslog_time_cross_run_ci: main_syslog_time_cross
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && python3 ../tests/test-qemu-launch.py'
+
 main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
 
+clean_cross: prep_cross_clean clean prep_cross  main_syslog_time_cross main_syslog_time_cross_run
+
 clean:
-	rm -f main_syslog main_syslog_local main_syslog_time main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
+	rm -rf main_syslog main_syslog_local main_syslog_time main_syslog_time_cross \
+	       main_syslog_test elisa-v2.c elisa-v2.h elisa-v2_types.h elisa-time.*
 
 run: main_syslog_time
 	# Start a new tmux session
@@ -71,18 +109,11 @@ run: main_syslog_time
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
-test: SHELL:=/bin/bash
-test: main_syslog_test
-	COUNTER=0; \
-	for i in tests/*; do \
-	  ./main_syslog_test $$i > /dev/null 2>/dev/null ; \
-	  RES=$$? ; \
-          if [[ "$$i" == *"good" && "$$RES" == "0" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          elif [[ "$$i" == *"bad" && "$$RES" == "1" ]] ; then \
-	    tput setaf 2; echo -en "Test $$COUNTER:  $$i  [Passed]" ; tput sgr0; echo "" ; \
-          else \
-	    tput setaf 1; echo -en "Test $$COUNTER:  $$i  [Failed]" ; tput sgr0; echo "" ; \
-	  fi ;\
-          COUNTER=$$((COUNTER + 1)); \
-        done | column -t -c0
+test: test_monitors systemtest
+
+test_monitors: main_syslog_test
+	./test.sh
+		
+systemtest: main_syslog_time
+	$(RUN_PREFIX_TEST) sudo sh -c "cd /demo/copilot/src/monitors \
+		&& ../tests/runtests.sh"

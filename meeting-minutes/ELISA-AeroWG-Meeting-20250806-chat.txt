@@ -1,0 +1,37 @@
+08:00:32 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+08:01:45 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+08:03:46 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+08:07:56 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	Alexey Simonov:👍
+	
+08:12:05 From Philip Balister (OpenEmbedded) to Everyone:
+	is there a link to f'?
+	
+08:12:56 From Vikash Kodati to Everyone:
+	Hi, I’m transcribing this call with my Tactiq AI Extension: https://tactiq.io/r/transcribing
+	
+08:14:47 From Philip Balister (OpenEmbedded) to Everyone:
+	https://github.com/nasa/fprime , right?
+	
+08:21:12 From Vikash Kodati to Everyone:
+	I think it is from me ... I can switch it off and join. back, if that is not intended
+	
+08:23:15 From Matthew Weber (Boeing) to Everyone:
+	https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ
+	
+08:31:12 From Tim Bird (Sony Group Corporation) to Everyone:
+	https://elinux.org/Space_Research 
+	
+08:42:04 From Tim Bird (Sony Group Corporation) to Everyone:
+	I've got to drop a bit early today.  See you next time!
+	
+08:49:52 From Philip Balister (OpenEmbedded) to Everyone:
+	I need to run. The next sgl call is during my travel to Amsterdam
+	
