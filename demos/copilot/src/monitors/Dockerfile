@@ -67,7 +67,7 @@ RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
 RUN useradd -ms /bin/bash user
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
-RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.local/bin/:$PATH' >> /home/user/.bashrc && \
+RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH' >> /home/user/.bashrc && \
     chown -R user:user /home/user
 # Transparent uid:gid setup for manual container use
 COPY entry.sh /entry.sh
@@ -76,7 +76,7 @@ USER user
 WORKDIR /home/user
 
 # Install Copilot
-ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.local/bin/:$PATH
+ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH
 RUN cabal v2-update
 RUN cabal v2-install --lib \
     copilot-4.5.1 \
@@ -95,6 +95,6 @@ RUN cd && \
     rm -rf ogma
 
 # Check that tools seem to run
-RUN ghci --version && ogma --version
+RUN ghci --version && ogma --help
 
 ENTRYPOINT ["/entry.sh"]
