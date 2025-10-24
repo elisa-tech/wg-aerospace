@@ -38,10 +38,12 @@ RUN apt-get update && \
 # Install Copilot dependencies
 RUN apt-get update && \
     apt-get install -y \
-      pkg-config \
-      libz-dev \
       alex \
       happy \
+      libbz2-dev \
+      libexpat-dev \
+      libz-dev \
+      pkg-config \
       software-properties-common \
       && \
     apt-get -y autoremove && \
@@ -65,7 +67,7 @@ RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
 RUN useradd -ms /bin/bash user
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
-RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH' >> /home/user/.bashrc && \
+RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.local/bin/:$PATH' >> /home/user/.bashrc && \
     chown -R user:user /home/user
 # Transparent uid:gid setup for manual container use
 COPY entry.sh /entry.sh
@@ -74,21 +76,25 @@ USER user
 WORKDIR /home/user
 
 # Install Copilot
-ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH
-#ENV PATH=$PATH:$HOME/.cabal/bin/
+ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.local/bin/:$PATH
 RUN cabal v2-update
 RUN cabal v2-install --lib \
-    copilot-4.2 \
-    copilot-c99-4.2 \
-    copilot-interpreter-4.2 \
-    copilot-language-4.2 \
-    copilot-libraries-4.2 \
-    copilot-theorem-4.2
+    copilot-4.5.1 \
+    copilot-c99-4.5.1 \
+    copilot-interpreter-4.5.1 \
+    copilot-language-4.5.1 \
+    copilot-libraries-4.5.1 \
+    copilot-theorem-4.5.1
 
 # Install Ogma
-RUN cabal v2-install ogma-cli:ogma
+RUN cd && \
+    git clone https://github.com/nasa/ogma.git && \
+    cd ogma && \
+    cabal v2-install ogma-cli:ogma && \
+    cd && \
+    rm -rf ogma
 
-# Doesn't error but we can at least see it works
-#RUN ghci <<< 'import Language.Copilot'
+# Check that tools seem to run
+RUN ghci --version && ogma --version
 
 ENTRYPOINT ["/entry.sh"]
