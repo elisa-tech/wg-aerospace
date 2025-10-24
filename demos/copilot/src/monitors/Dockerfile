@@ -63,6 +63,25 @@ RUN add-apt-repository ppa:hvr/ghc && \
 RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     /usr/sbin/locale-gen
 
+# Pass environment variables during build
+ARG CI_COMMIT_SHA="Local"
+ARG CI_PIPELINE_URL="Local"
+ARG DOCKERFILE_AUTHOR="Local"
+ARG DOCKERFILE_DATE="Local"
+ARG DOCKERFILE_COMMIT="Local"
+
+# Create some version metadata in "/.VERSION"
+RUN echo "Creation Date: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > /.VERSION && \
+    echo "CI COMMIT:     ${CI_COMMIT_SHA}"          >> /.VERSION && \
+    echo "CI Pipeline:   ${CI_PIPELINE_URL}"        >> /.VERSION && \
+    echo "CI Env Kernel: $(uname -a)"               >> /.VERSION && \
+    echo "Dockerfile:"                              >> /.VERSION && \
+    echo "  URL:    https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/monitors/Dockerfile" >> /.VERSION && \
+    echo "  Author: ${DOCKERFILE_AUTHOR}"  >> /.VERSION && \
+    echo "  Date:   ${DOCKERFILE_DATE}"    >> /.VERSION && \
+    echo "  COMMIT: ${DOCKERFILE_COMMIT}"  >> /.VERSION && \
+    cat /.VERSION
+
 # Stage default user
 RUN useradd -ms /bin/bash user
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \

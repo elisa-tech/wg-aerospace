@@ -39,7 +39,7 @@ env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell --version'
 
 dev:
-	$(RUN_IT_PREFIX)
+	$(RUN_IT_PREFIX) sh -c 'cat /.VERSION && bash'
 
 # To debug haskell dependencies, add a -v before any *.hs
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
