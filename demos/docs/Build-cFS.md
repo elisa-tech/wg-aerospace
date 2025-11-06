@@ -22,10 +22,11 @@ The following instructions assume that you've completed the [Development Setup](
 ### Clone cFS directory
 
 1) Enter directory where cFS will be cloned `cd $ELISA_DEMO`
-2) Clone cFS from github with submodules: 
+2) Clone cFS from github with submodules (patch is for cFS commit 9c786d2536821aae608560e0d75835e3637b499d): 
    ```
     git clone https://github.com/nasa/cFS.git
     cd cFS
+    git checkout 9c786d2536821aae608560e0d75835e3637b499d
     git submodule init
     git submodule update
    ```
@@ -33,10 +34,10 @@ The following instructions assume that you've completed the [Development Setup](
 ### Apply necessary patch, build cFS, and load cFS build to QEMU emulation
 1) Move to parent directory of cFS cloned repo to apply patch `cd $ELISA_DEMO`
 
-2) From the parent directory of the cFS cloned repo, run the following command to apply the patch on cFS `patch -p1 < ../elisa_custom-cfs.patch`
+2) From the parent directory of the cFS cloned repo, run the following command to apply the patch on cFS `patch -p1 < elisa-custom-cfs.patch`
 
 #### Build cFS
-3) Move back to cFS directory to build cFS `cd cFS`
+3) Move back to cFS directory to build cFS `cd $ELISA_DEMO/cFS`
 
 4) Build cFS with following commands
 ```
