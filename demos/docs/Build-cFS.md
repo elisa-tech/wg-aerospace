@@ -30,6 +30,11 @@ The following instructions assume that you've completed the [Development Setup](
     git submodule init
     git submodule update
    ```
+3) Copy sample_defs and Makefile to cFS main directory
+   ```
+   cp -r cfe/cmake/sample_defs .
+   cp cfe/cmake/Makefile.sample Makefile
+   ```
 
 ### Apply necessary patch, build cFS, and load cFS build to QEMU emulation
 1) Move to parent directory of cFS cloned repo to apply patch `cd $ELISA_DEMO`
