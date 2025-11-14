@@ -1,7 +1,15 @@
-#define SAMPLE_TOPIC_ID 0x1878
-#define SAMPLE_MID CFE_PLATFORM_CMD_TOPICID_TO_MIDV(SAMPLE_TOPIC_ID)
+#define LIGHTS_COMMAND_TOPIC_ID 0x1878
+#define LIGHTS_COMMAND CFE_PLATFORM_CMD_TOPICID_TO_MIDV(LIGHT_COMMAND_TOPIC_ID)
 
-typedef struct sample_msg {
+#define LIGHTS_STATUS_TOPIC_ID 0x1978
+#define LIGHTS_STATUS CFE_PLATFORM_CMD_TOPICID_TO_MIDV(LIGHT_STATUS_TOPIC_ID)
+
+typedef struct light_cmd_t {
    CFE_MSG_CommandHeader_t CmdHeader;
-   int32_t payload;
-} sample_msg_t;
+   bool payload;
+} light_cmd_t;
+
+typedef struct light_status_t {
+   CFE_MSG_TelemetryHeader_t TlmHeader;
+   bool payload;
+} light_status_t;

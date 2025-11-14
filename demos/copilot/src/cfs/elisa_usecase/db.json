@@ -1,9 +1,18 @@
 { "inputs":
-     [ { "name": "input_value"
-       , "type": "int32_t"
+     [ { "name": "lights"
+       , "type": "bool"
        , "connections":
            [ { "scope": "cfs"
-             , "topic": "SAMPLE_MID"
+             , "topic": "LIGHTS_COMMAND"
+             , "field": "payload"
+             }
+           ]
+       }
+     , { "name": "lightSwitch"
+       , "type": "bool"
+       , "connections":
+           [ { "scope": "cfs"
+             , "topic": "LIGHTS_STATUS"
              , "field": "payload"
              }
            ]
@@ -11,16 +20,26 @@
      ]
 , "topics":
      [ { "scope": "cfs"
-       , "topic": "SAMPLE_MID"
-       , "type":  "sample_msg_t"
+       , "topic": "LIGHTS_COMMAND"
+       , "type":  "lights_cmd_t"
+       }
+     , { "scope": "cfs"
+       , "topic": "LIGHTS_STATUS"
+       , "type":  "lights_status_t"
        }
      ]
 , "types": [
        { "fromScope": "cfs"
-       , "fromType":  "sample_msg_t"
+       , "fromType":  "lights_cmd_t"
        , "fromField": "payload"
        , "toScope":   "C"
-       , "toType":    "int32_t"
+       , "toType":    "bool"
+       }
+     , { "fromScope": "cfs"
+       , "fromType":  "lights_status_t"
+       , "fromField": "payload"
+       , "toScope":   "C"
+       , "toType":    "bool"
        }
      ]
 }

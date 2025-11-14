@@ -2,13 +2,14 @@
   "CFSExample": {
     "internal_variables": [],
     "external_variables": [
-      {"name": "input_value", "type": "Int32", "meaning": "InputI32"}
+      {"name": "lights", "type": "Bool", "meaning": "InputBool"},
+      {"name": "lightSwitch", "type": "Bool", "meaning": "InputBool"}
     ],
     "properties": [
       {
         "id":      "TestOgma",
-        "formula": "input_value <= 0",
-        "text":    "input_value shall always be lower than or equal to zero"
+        "formula": "lights == lightSwitch",
+        "text":    "lights on if and only if lightSwitch is on"
       }
     ]
   }
