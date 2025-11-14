@@ -147,7 +147,8 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ### Recently Past Deadlines/Events
 
 - **(Nov 4-5)** OSS Korea -> [Link](https://elisa.tech/event/open-source-summit-seoul-south-korea-2025/)
-  - "Intro and Consideration of Temporal Partitioning in Avionics"
+  - [DO-330 Qualification of Enhanced LLVM Structural Coverage Tool - Minji Park & Seojin Kim](https://www.youtube.com/watch?v=0JQLazypIHQ)
+  - [Introduction and Consideration of Temporal Partitioning in Avionics With Open... - H. Kim & G. Kwon](https://www.youtube.com/watch?v=B9nwghDGDeI)
 
 # Resources
 
