@@ -1,9 +1,81 @@
 # Use case call Minutes
 
-- **Parking lot:**
-  - Make outline for what we want to record for the workshop
-  - Record the demos with zoom for workshop
-  - Figure out distro / definition of environment and who owns / progress it
+**Parking lot:**
+  - Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
+
+  - Dec 5th call - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
+
+**Holiday / Vacations**
+- Matt out Nov 21st and 28th
+
+
+## 20251114
+
+**Attendance**
+
+- Paul Mani (Collins)
+- Rob Woolley (Wind River)
+- Martin Halle (Hamburg University of Technology)
+- Salim Jalaleddine (Boeing)
+- Ivan Perez (KBR @ NASA Ames Research)
+
+**Discussion topics**
+
+- PRs
+  - [Enhance Use-Case doc](https://github.com/elisa-tech/wg-aerospace/pull/106/)
+  - [Split out product profiles](https://github.com/elisa-tech/wg-aerospace/pull/107)
+    - shared product profiles
+    - discussion around adding NASA "class" product examples
+  - (Pending) Embedded demo updates (Martin)
+  - (Pending) cFS lights demo (Ivan)
+  - (Pending) Workshop slides - Matt&Martin
+- Ivan shared
+  - cFS demo / Ogma
+    - Integration of switch and light app (Lights on! w/ fixed delay)
+  - release of copilot but no impact to demos (fpga backend changes)
+  - ogma will be released ~wk that we'd want to pull in
+- Discussed Workshop slides
+
+## 20251107
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Paul Mani (Collins)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Salim Jalaleddine (Boeing)
+- David Graziano (Collins Aero)
+- Shefali Sharma
+
+**Discussion topics**
+
+Ivan
+- talking through Ogma generated apps and message formats for demo
+- switch app - "a physical switch"
+  - sends a msg id + payload of on/off
+  - a notion of time, either cFS header driven or added to the payload
+- lights app - "changes physical device state"
+  - publishes a state change - another msg id + payload of on/off
+  - a notion of time, either cFS header driven or added to the payload
+
+- Writing a paper around this - FSW - add a discussion item for another paper?
+  - QEMU / environement / examples / concepts / current state / experience report and vision
+
+Matt
+- Action to add cFS demo to slides
+- next week workshop slides
+
+Martin
+- Update Use-Case doc : See PR106
+- Update Embedded Demo doc : Open
+- next week workshop slides
+
+---
+
+## 20251031
+
+The group met and progress was shared on previous actions.
 
 ## 20251024
 
