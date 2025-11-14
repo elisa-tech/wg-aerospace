@@ -6,16 +6,72 @@ This document is a work in progress and has not been approved for use outside of
 
 Low DAL (D or lower) - blackbox level - functionally meets expectations
 
+### System Architecture
+
+Hardware:
+* Switch (Sensor)
+  * Switch has two values (on/off)
+* Cabin light (Actuator)
+  * Cabin light has two states (on/off), when a message is received on Ethernet, it updates its state to match
+* Computing device (platform) running the Apps
+* Connectivity is an Ethernet bus (messages can be lost or corrupted)
+  * Options for assuring communication
+    * Send periodic message of current state 
+    * Or? acknowledge messages from application
+    * Or? poll both sensor and actuator
+
+Software Functions ("Apps"):
+* Switch App
+* Cabin Lights App
+  * Application is waiting on the switch socket for a message, wakes up when message available
+  * When awoken, 
+    * application creates a message with new light state and sends on the light socket
+    * log the event
+    * yield?, goes back to waiting on switch socket
+* Logging App
+* Monitoring App (CoPilot based)
+  * Continously monitors correct functionality (e.g. stay witihn time limits)
+
+* Options/Scenarios to consider and enhance on
+  * "One Device": Switch and Cabin light connected to a single device, Apps are hosted on the same device
+  * "Two Devices": Switch and Cabin light are connected on 2 devices, connected via network, Apps are hosted on throse 2 devices respectively, too
+  * "Three/More Devices": Switch and Cabin light arte connected on 2 devices, Monitoring App hosted on another one, all connectd through a network
+
 ### System Requirements
 
 * The Cabin Lights system shall turn lights on in less than 500 ms of the light switch turning on
 * The Cabin Lights system shall turn lights off in less than 500 ms of the light switch turning off
 
+### Use Case Description for scenario "One Device"
+
+Single computer with single function (="APP")
+
+[SENS] <-[ETH_MAC]-> [APP] <-[ETH_MAC]-> [ACT]
+
+- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
+- Smart sensor/actor w/ software and stack?
+- Best effort scheduling of IO processing that's tested for perceived worst case. (No monitor or scheduler based guarantee other then planned scheduler bandwidth/capacity margin)
+- How would a system architecture look like to close the signal/application loop? (7 voters in total)
+  - Option A:
+    - Simulate sensor + actuator on the H/W device running the system application (1 application being the cabin application, 2 applications being the simulated sensor + actuator)
+      - A.1 Communication on software level (no physical ethernet cable) > Votes: 1
+      - A.2 Communication on hardware level using several network cards connected through H/W Ethernet (i.e. physical network-cable) > Votes: 1
+    - Thoughts: [Ivan]: Maybe we miss something because its too simplistic
+  - Option B: > Votes: 4  (SELECTED)
+    - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
+      - Attention: This probably means no real-time OS on sensor / actuator side
+    - Application computer w/ real-time Aerospace Linux running the system/cabin application(s)
+  - Option C:
+    - 3 pieces of H/W: Sensor, actuator + Computing Device
+    - Connected physically via Ethernet through switch or alike > Votes: 0
+  - Comment on votes: (1 non-voter)
+- Comment: This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS. >> But an OS is implied for the Use-Case!
+
 #### Test 
 
 Items to key on
-  - logging check
-  - ethernet message check - i.e., socket msg in / out analysis using time criteria
+  - Logging check
+  - Ethernet message check - i.e., socket msg in / out analysis using time criteria
     - how do we test this, is it extra hardware or application running beside a emulation doing pkt analysis
     - log data and post analysis?
     - online - build a cicd scenario and get earlier feedback on individual test failure without post-analysis
@@ -25,7 +81,7 @@ Test environment
 - start with emulation (is there a limitation in timing because of type of emulation?)
   - qemu can we count cycles to see if we can bound it?  maybe not realtime
 - Architecture of Test Environment:
-  - Sim/Emulator (Combo of Containers and QEMU)
+  - Sim/Emulator (Combo of containers and QEMU)
   - Here's the components involved and a sequence diagram of dataflow
   - (To view these diagrams, make sure your vscode has the Markdown Preview Mermaid Ext - `bierner.markdown-mermaid` or view on Github)
 
@@ -35,8 +91,8 @@ Test environment
         subgraph QEMU_Environment_Unit_Under_Test
             direction TB
         Ethernet_Bridge
-            App[2.Cabin Lights Application] 
-            Log[Logging Function]
+            App[2.Cabin Lights App] 
+            Log[Logging App]
             Sensor[1.Switch App]
             Actuator[3.Cabin Light]
 
@@ -65,9 +121,9 @@ Test environment
     sequenceDiagram
         participant Sensor as Switch
         participant Ethernet as Switch Ethernet Bridge
-        participant App as Cabin Lights Application
+        participant App as Cabin Lights App
         participant Actuator as Cabin Light
-        participant Log as Logging Function <br> (Syslog)
+        participant Log as Logging App <br> (Syslog)
         participant CheckLog as CoPilot Log <br> Monitor
         participant CheckEth as CoPilot Ethernet <br> Monitor
 
@@ -139,54 +195,6 @@ Emulation How-To
       - Bind the taps and configure the CLA to have ports on the right switches
     - Start the test apps bound to the right bridge interfaces / IPs
     - Start the coPilot app last or have it do all this staging before telling the Switch app to toggle.
-
-
-
-
-
-### System Architecture
-
-Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin light (+ notification item in a log)
-
-* Sensor is a switch with two values (on/off)
-* Actuator is a light with two states (on/off), when a message is received on Ethernet, it updates its state to match
-* Options for assuring comm
-    * send periodic message of current state 
-    * Or? acknowledge messages from application
-    * Or? poll both sensor and actuator
-* Connectivity is an Ethernet bus (messages can be lost or corrupted)
-* Computing platform running an "cabin lights" application
-    * Cabin Lights Application
-        * Application is waiting on the switch socket for a message, wakes up when message available
-        * When awoken, 
-        * application creates a message with new light state and sends on the light socket
-        * log the event
-        * yield?, goes back to waiting on switch socket
-
-### Use Case Description
-
-Single computer with single function (="APP")
-
-[SENS] <-[ETH_MAC]-> [APP] <-[ETH_MAC]-> [ACT]
-
-- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
-- Smart sensor/actor w/ software and stack?
-- Best effort scheduling of IO processing that's tested for perceived worst case. (No monitor or scheduler based guarantee other then planned scheduler bandwidth/capacity margin)
-- How would a system architecture look like to close the signal/application loop? (7 voters in total)
-  - Option A:
-    - Simulate sensor + actuator on the H/W device running the system application (1 application being the cabin application, 2 applications being the simulated sensor + actuator)
-      - A.1 Communication on software level (no physical ethernet cable) > Votes: 1
-      - A.2 Communication on hardware level using several network cards connected through H/W Ethernet (i.e. physical network-cable) > Votes: 1
-    - Thoughts: [Ivan]: Maybe we miss something because its too simplistic
-  - Option B: > Votes: 4  (SELECTED)
-    - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
-      - Attention: This probably means no real-time OS on sensor / actuator side
-    - Application computer w/ real-time Aerospace Linux running the system/cabin application(s)
-  - Option C:
-    - 3 pieces of H/W: Sensor, actuator + Computing Device
-    - Connected physically via Ethernet through switch or alike > Votes: 0
-  - Comment on votes: (1 non-voter)
-- Comment: This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS. >> But an OS is implied for the Use-Case!
 
 ### Analysis of required (OS) features
 
@@ -285,7 +293,6 @@ What is the feedback approach / rollout for the use cases?
   - mixed safety / non
   - cases that require runtime monitoring - watchdog / crc'n / bit checks / etc
   - overlay of how containment strategies would apply
-
 
 ## References
 
