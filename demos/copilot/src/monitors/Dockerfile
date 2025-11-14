@@ -38,10 +38,12 @@ RUN apt-get update && \
 # Install Copilot dependencies
 RUN apt-get update && \
     apt-get install -y \
-      pkg-config \
-      libz-dev \
       alex \
       happy \
+      libbz2-dev \
+      libexpat-dev \
+      libz-dev \
+      pkg-config \
       software-properties-common \
       && \
     apt-get -y autoremove && \
@@ -61,11 +63,30 @@ RUN add-apt-repository ppa:hvr/ghc && \
 RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     /usr/sbin/locale-gen
 
+# Pass environment variables during build
+ARG CI_COMMIT_SHA="Local"
+ARG CI_PIPELINE_URL="Local"
+ARG DOCKERFILE_AUTHOR="Local"
+ARG DOCKERFILE_DATE="Local"
+ARG DOCKERFILE_COMMIT="Local"
+
+# Create some version metadata in "/.VERSION"
+RUN echo "Creation Date: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > /.VERSION && \
+    echo "CI COMMIT:     ${CI_COMMIT_SHA}"          >> /.VERSION && \
+    echo "CI Pipeline:   ${CI_PIPELINE_URL}"        >> /.VERSION && \
+    echo "CI Env Kernel: $(uname -a)"               >> /.VERSION && \
+    echo "Dockerfile:"                              >> /.VERSION && \
+    echo "  URL:    https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/monitors/Dockerfile" >> /.VERSION && \
+    echo "  Author: ${DOCKERFILE_AUTHOR}"  >> /.VERSION && \
+    echo "  Date:   ${DOCKERFILE_DATE}"    >> /.VERSION && \
+    echo "  COMMIT: ${DOCKERFILE_COMMIT}"  >> /.VERSION && \
+    cat /.VERSION
+
 # Stage default user
 RUN useradd -ms /bin/bash user
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
-RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH' >> /home/user/.bashrc && \
+RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH' >> /home/user/.bashrc && \
     chown -R user:user /home/user
 # Transparent uid:gid setup for manual container use
 COPY entry.sh /entry.sh
@@ -74,21 +95,25 @@ USER user
 WORKDIR /home/user
 
 # Install Copilot
-ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:$PATH
-#ENV PATH=$PATH:$HOME/.cabal/bin/
+ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH
 RUN cabal v2-update
 RUN cabal v2-install --lib \
-    copilot-4.2 \
-    copilot-c99-4.2 \
-    copilot-interpreter-4.2 \
-    copilot-language-4.2 \
-    copilot-libraries-4.2 \
-    copilot-theorem-4.2
+    copilot-4.5.1 \
+    copilot-c99-4.5.1 \
+    copilot-interpreter-4.5.1 \
+    copilot-language-4.5.1 \
+    copilot-libraries-4.5.1 \
+    copilot-theorem-4.5.1
 
 # Install Ogma
-RUN cabal v2-install ogma-cli:ogma
+RUN cd && \
+    git clone https://github.com/nasa/ogma.git && \
+    cd ogma && \
+    cabal v2-install ogma-cli:ogma && \
+    cd && \
+    rm -rf ogma
 
-# Doesn't error but we can at least see it works
-#RUN ghci <<< 'import Language.Copilot'
+# Check that tools seem to run
+RUN ghci --version && ogma --help
 
 ENTRYPOINT ["/entry.sh"]

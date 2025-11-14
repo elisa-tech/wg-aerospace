@@ -9,7 +9,10 @@ RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(C
 RUN_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG))
 RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG))
 DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors &&)
+DEMO_CHDIR_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/copilot/src/monitors &&)
+
 CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
+CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
@@ -39,7 +42,7 @@ env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell --version'
 
 dev:
-	$(RUN_IT_PREFIX)
+	$(RUN_IT_PREFIX) sh -c 'cat /.VERSION && bash'
 
 # To debug haskell dependencies, add a -v before any *.hs
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
@@ -109,7 +112,7 @@ run: main_syslog_time
 		&& tmux attach-session -t my_session"
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
-test: test_monitors systemtest
+test: test_monitors systemtest main_syslog_time_cross_test
 
 test_monitors: main_syslog_test
 	./test.sh
@@ -117,3 +120,6 @@ test_monitors: main_syslog_test
 systemtest: main_syslog_time
 	$(RUN_PREFIX_TEST) sudo sh -c "cd /demo/copilot/src/monitors \
 		&& ../tests/runtests.sh"
+
+main_syslog_time_cross_test: main_syslog_time_cross
+	$(RUN_PREFIX_TEST) sh -c '$(CMD_PREFIX_TEST) python3 ../tests/wrap-qemu.py'

@@ -1,14 +1,90 @@
 # Use case call Minutes
 
-- Future call, record the demos with zoom? Next time.
+- **Parking lot:**
+  - Make outline for what we want to record for the workshop
+  - Record the demos with zoom for workshop
+  - Figure out distro / definition of environment and who owns / progress it
+
+## 20251024
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Paul Mani (Collins)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Salim Jalaleddine (Boeing)
+
+**Actions**
+
+- Martin
+  - Embedded demo documentation updates
+
+- Emulation test wrapper PR - https://github.com/elisa-tech/wg-aerospace/pull/95
+  - Paul plans to cleanup prints and look at some restructuring before merge
+
+- Ivan - continue on ogma example for monitoring simple app (manual example)
+
+- Matt
+  - [DONE](https://github.com/elisa-tech/wg-aerospace/commit/b1fbbc47b8fdfb67deedb5f024474e9e1e64d4a7) Get our license files checked in based on SGL
+    - The specific license choice was entertained in a combined Aero+SGL call with no feedback specific to Aerospace.  SGL has already adopted.
+    - Using https://github.com/elisa-tech/meta-sgl as the ref files to PR in
+  - [DONE](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/monitors/Dockerfile#L108) Container update for ogma-cli:ogma - https://github.com/nasa/ogma/?tab=readme-ov-file#compilation
+    - **ANNOUNCEMENT** Image is pushed, update by doing a `make prep` and then `make dev` to get into the container to try the `ogma` command.  The container prompt after `make dev` should now provide some version info to help us troubleshoot when things aren't working.
+  - Review notes and put updates to proposal for review next week - https://github.com/elisa-tech/wg-aerospace/pull/92
+
+- Salim / Matt work on adjust compile patch approach so we don't check in the pre-built but have instructions in the docs to build after the patch step
+
+**Discussion topics**
+
+- Discuss having Systems WG create a reference system (Kate/Min suggested)
+  - Kate proposed - a thought activity for ELISA to compare to Medical & Auto
+  - This group suggested, "invite some of the Sys people to our call to talk about it"
+    - **ACTION** Next AeroWG call, share what they are doing today / what is a System look like?
+    - Draft talking points / questions
+      - How would we transition the work if start a collaboration with this group?
+      - Ownership of a definition shifts?
+      - What would Sys produce that we could use?
+      - How would we manage having another WG call?
+
+- Ivan ran through an overview of ogma for Martin and Paul
+  - https://github.com/nasa/ogma
+  - Next step - going through the app, cleaning up ?tests?
+
+- Martin shared feedback from Wanja - Sending email with more details
+
+---
+
+## 20251017
+
+- Discussed OGMA template.  Ivan has captured the template [here](https://github.com/nasa/ogma/tree/develop-update-cfs-template/updated_template/%7B%7Bapp_name_lc%7D%7D).
+
+- Calling Ogma with the following invocation generates an app that is the same as the sample app (under the directory output, the location can be adjusted), so it should just work in the emulator with the setup that Salim prepared.
+
+```code
+./.cabal-sandbox/bin/ogma cfs --condition-expr 'true'   --template-vars vars.json --app-template-dir updated_template --app-target-dir output
+
+
+The contents of vars.json is:
+
+$ cat vars.json  
+{ "app_name_lc": "sample_app" 
+, "app_name_uc": "SAMPLE_APP" 
+, "app_name_cc": "SampleApp" 
+}
+```
+
+- **Next step:**  Now we need to remove the specificity of that app (anything that we don't want, like the dependency on sample_lib, or perhaps the unit tests) and add the hook to the monitors.
+
+---
 
 ## 20251010
 
-Matt Weber (Boeing)
-Ivan Perez (KBR @ NASA Ames Research)
-Salim Jalaleddine (Boeing)
-Brian Wood  (Boeing)
-Shefali Sharma
+- Matt Weber (Boeing)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Salim Jalaleddine (Boeing)
+- Brian Wood  (Boeing)
+- Shefali Sharma
 
 **Actions**
 
@@ -39,10 +115,10 @@ Shefali Sharma
 
 **Attendance**
 
-Matt Weber (Boeing)
-Ivan Perez (KBR @ NASA Ames Research)
-Salim Jalaleddine (Boeing)
-Brian Wood  (Boeing)
+- Matt Weber (Boeing)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Salim Jalaleddine (Boeing)
+- Brian Wood  (Boeing)
 
 **Actions**
 
@@ -86,10 +162,10 @@ Fuzzing tests for a cFS deployment this week
 
 **Attendance**
 
-Matt Weber (Boeing)
-Shefali Sharma
-Salim Jalaleddine (Boeing)
-Martin Halle (Hamburg University of Technology)
+- Matt Weber (Boeing)
+- Shefali Sharma
+- Salim Jalaleddine (Boeing)
+- Martin Halle (Hamburg University of Technology)
 
 **Actions**
 
@@ -140,10 +216,10 @@ Martin Halle (Hamburg University of Technology)
 
 **Attendance**
 
-Matt Weber (Boeing)
-Brian Wood  (Boeing)
-Rob Woolley (Wind River Systems, Inc.)
-Salim Jalaleddine (Boeing)
+- Matt Weber (Boeing)
+- Brian Wood  (Boeing)
+- Rob Woolley (Wind River Systems, Inc.)
+- Salim Jalaleddine (Boeing)
 
 **Actions**
 
@@ -183,15 +259,15 @@ Salim
 
 **Attendance**
 
-Matt Weber (Boeing)
-Paul Mani (Collins)
-Martin Halle (Hamburg University of Technology)
-Brian Wood  (Boeing)
-Ivan Perez (KBR @ NASA Ames Research)
-Rob Woolley (Wind River Systems, Inc.)
-Salim Jalaleddine (Boeing)
-Shefali Sharma
-Wanja Zaeske (DLR)
+- Matt Weber (Boeing)
+- Paul Mani (Collins)
+- Martin Halle (Hamburg University of Technology)
+- Brian Wood  (Boeing)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Rob Woolley (Wind River Systems, Inc.)
+- Salim Jalaleddine (Boeing)
+- Shefali Sharma
+- Wanja Zaeske (DLR)
 
 **Actions**
 

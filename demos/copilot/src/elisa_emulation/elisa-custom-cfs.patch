@@ -1,0 +1,90 @@
+diff -ruN ./cFS-clean/osal/src/os/posix/inc/os-posix.h ./cFS/osal/src/os/posix/inc/os-posix.h
+--- ./cFS-clean/osal/src/os/posix/inc/os-posix.h	2025-11-07 17:07:10.239458517 +0000
++++ ./cFS/osal/src/os/posix/inc/os-posix.h	2025-11-07 17:03:07.676411991 +0000
+@@ -45,7 +45,6 @@
+ #include <fcntl.h>
+ #include <semaphore.h>
+ #include <sys/types.h>
+-#include <sys/signal.h>
+ 
+ /*
+  * Use the global definitions from the shared layer
+diff -ruN ./cFS-clean/psp/CMakeLists.txt ./cFS/psp/CMakeLists.txt
+--- ./cFS-clean/psp/CMakeLists.txt	2025-11-07 17:07:10.283458422 +0000
++++ ./cFS/psp/CMakeLists.txt	2025-11-07 17:03:07.684411956 +0000
+@@ -62,6 +62,7 @@
+ )
+ target_link_libraries(psp-${CFE_PSP_TARGETNAME} PRIVATE
+     psp_module_api
++    execinfo
+ )
+ 
+ target_include_directories(psp-${CFE_PSP_TARGETNAME} INTERFACE
+diff -ruN ./cFS-clean/sample_defs/targets.cmake ./cFS/sample_defs/targets.cmake
+--- ./cFS-clean/sample_defs/targets.cmake	2025-11-07 17:07:37.927388668 +0000
++++ ./cFS/sample_defs/targets.cmake	2025-11-07 17:03:07.676411991 +0000
+@@ -104,7 +104,7 @@
+ SET(cpu1_PROCESSORID 1)
+ SET(cpu1_APPLIST ci_lab to_lab sch_lab)
+ SET(cpu1_FILELIST cfe_es_startup.scr)
+-SET(cpu1_SYSTEM i686-linux-gnu)
++SET(cpu1_SYSTEM arm-linux-gnu)
+ 
+ # CPU2 example.  This is not built by default anymore but
+ # serves as an example of how one would configure multiple cpus.
+diff -ruN ./cFS-clean/sample_defs/toolchain-arm-linux-gnu.cmake ./cFS/sample_defs/toolchain-arm-linux-gnu.cmake
+--- ./cFS-clean/sample_defs/toolchain-arm-linux-gnu.cmake	1970-01-01 00:00:00.000000000 +0000
++++ ./cFS/sample_defs/toolchain-arm-linux-gnu.cmake	2025-11-07 17:03:07.676411991 +0000
+@@ -0,0 +1,33 @@
++# This example toolchain file describes the cross compiler to use for
++# the target architecture indicated in the configuration file.
++
++# In this sample application, the cross toolchain is configured to
++# use a cross compiler for the TI AM3359 processor which is used on
++# the "beaglebone black" development board (this is an ARM Cortex-A8
++# processor).  The GCC toolchain is named accordingly and assumed
++# to be installed in "/opt/x-tools".
++
++# Basic cross system configuration
++SET(CMAKE_SYSTEM_NAME			Linux)
++SET(CMAKE_SYSTEM_VERSION		1)
++SET(CMAKE_SYSTEM_PROCESSOR		arm)
++
++# adjust these settings to where the cross compiler actually resides
++SET(CMAKE_C_COMPILER                    "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc")
++SET(CMAKE_CXX_COMPILER                  "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-g++")
++
++# where is the target environment
++SET(CMAKE_FIND_ROOT_PATH                "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/aarch64-buildroot-linux-musl/sysroot")
++
++# search for programs in the build host directories
++SET(CMAKE_FIND_ROOT_PATH                "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/aarch64-buildroot-linux-musl/sysroot")
++
++# for libraries and headers in the target directories
++SET(CMAKE_FIND_ROOT_PATH                "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/aarch64-buildroot-linux-musl/sysroot")
++SET(CMAKE_FIND_ROOT_PATH                "/demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/aarch64-buildroot-linux-musl/sysroot")
++
++# these settings are specific to cFE/OSAL and determines which 
++# abstraction layers are built when using this toolchain
++# Note that "pc-linux" works fine even though this is not technically a "pc"
++SET(CFE_SYSTEM_PSPNAME      "pc-linux")
++SET(OSAL_SYSTEM_OSTYPE      "posix")
+diff -ruN ./cFS-clean/tools/cFS-GroundSystem/Subsystems/cmdUtil/Makefile ./cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil/Makefile
+--- ./cFS-clean/tools/cFS-GroundSystem/Subsystems/cmdUtil/Makefile	2025-11-07 17:07:10.327458327 +0000
++++ ./cFS/tools/cFS-GroundSystem/Subsystems/cmdUtil/Makefile	2025-11-07 17:03:28.252320357 +0000
+@@ -1,9 +1,11 @@
++# Set the full path to your cross-compiler
++CROSS_COMPILER := /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc
++
+ all:
+-	gcc -o cmdUtil SendUdp.c cmdUtil.c
++	$(CROSS_COMPILER) -o cmdUtil SendUdp.c cmdUtil.c
+ 
+ debug:
+-	gcc -o cmdUtil -DDEBUG -g SendUdp.c cmdUtil.c
++	$(CROSS_COMPILER) -o cmdUtil -DDEBUG -g SendUdp.c cmdUtil.c
+ 
+ thirtytwo:
+-	gcc -o cmdUtil -DDEBUG -g -m32 SendUdp.c cmdUtil.c
+-
++	$(CROSS_COMPILER) -o cmdUtil -DDEBUG -g -m32 SendUdp.c cmdUtil.c
