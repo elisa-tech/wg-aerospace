@@ -15,7 +15,7 @@ echo "Uncompressing rootfs.cpio.gz..."
 sudo gunzip -c "$ROOTFS_CPIO_GZ" > "/demo/monitors/rootfs.cpio_uncompressed"
 
 echo "Extracting rootfs.cpio_uncompressed into $EXTRACTED_CPIO_DIR..."
-sudo cpio -i -R +0:+0 -n -F "/demo/monitors/rootfs.cpio_uncompressed" --make-directories --preserve-modification-time --no-absolute-filenames --directory="$EXTRACTED_CPIO_DIR"
+sudo cpio -i -R +0:+0 -n -F "/demo/monitors/rootfs.cpio_uncompressed" --make-directories --preserve-modification-time --no-absolute-filenames --directory="$EXTRACTED_CPIO_DIR" || true
 
 # 2. Copy cFS build output into extracted_cpio/usr/
 echo "Copying cFS build output to extracted_cpio/usr/ ..."
