@@ -171,4 +171,7 @@ void GROUND_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr)
     lights_message.payload = msg->payload;
 
     CFE_SB_TransmitMsg((CFE_MSG_Message_t *)&lights_message, true);
+
+    CFE_EVS_SendEvent(SWITCH_APP_LIGHTS_CHANGE_EID, CFE_EVS_EventType_INFORMATION,
+                      "SWITCH: requested to change light status to %d", (int32_t)msg->payload);
 }
