@@ -192,5 +192,5 @@ void LIGHTS_APP_ProcessLightsAdjustCommand(const CFE_SB_Buffer_t *SBBufPtr)
     delay.tv_nsec = msg->delay;
 
     CFE_EVS_SendEvent(LIGHTS_APP_NEW_DELAY_EID, CFE_EVS_EventType_INFORMATION,
-                      "LIGHTS: updated delay to %d nanosec", delay.tv_nsec);
+                      "LIGHTS: updated delay to %ld nanosec", delay.tv_nsec);
 }
