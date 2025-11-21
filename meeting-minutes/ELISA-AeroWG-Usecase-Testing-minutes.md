@@ -8,6 +8,45 @@
 **Holiday / Vacations**
 - Matt out Nov 21st and 28th
 
+## 20251121
+
+**Attendance**
+
+- Paul Mani (Collins)
+- Rob Woolley (Wind River)
+- Martin Halle (Hamburg University of Technology)
+- Salim Jalaleddine (Boeing)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Naga (Times / Lynx)
+
+**Discussion topics**
+
+- PRs
+  - Merged: [Enhance Use-Case doc](https://github.com/elisa-tech/wg-aerospace/pull/106/)
+  - On-going: [Split out product profiles](https://github.com/elisa-tech/wg-aerospace/pull/107)
+    - shared product profiles
+    - discussion around adding NASA "class" product examples
+    - Suggestions: Merge and update later (and done by Ivan).
+  - (Pending) Embedded demo updates (Martin), consider content of: https://github.com/elisa-tech/wg-aerospace/issues/33
+  - cFS lights demo (Ivan)
+    - refering to: demos/copilot, based on dev-newtemplate branch
+    - Two apps: lights app, switch app
+    - OGMA template to generate applications was updated
+    - added elisa_use_case scripts
+    - OGMA script generates application, generate apps, interfaces, test-cases and scitps etc.
+    - Demoing to setup the CPU archictecture pending (hasn't been tried to run in the emulator yet)
+    - Automated process based on the setup
+    - lights app receives 2 commands now: Command to switch and to adjust the delay
+    - Default 400 ms delay, can be increased by this new command (e.g. to change the behaviour)
+    - time-stamps need to be communicated to the monitors
+    - Task to all: Please try!
+    - Re-issue in the next meeting (Matt):
+      - Open issue: Sample app from cFS is Apache license - how to cope with it? Clarify before applying PR.
+      - Auto-generate code based on a tmeplate w/o Apache content/license?
+- Workshop report (to be continued)
+  - Discussion on papers
+  - Discussion on target platforms
+  - Relation to SGL group discussions: https://hackmd.io/nx1iVbKxTB2f_0c05dbUxw
 
 ## 20251114
 
