@@ -18,11 +18,11 @@
 
 /*
 ** Purpose:
-** Coverage Unit Test cases for the SAMPLE Application
+** Coverage Unit Test cases for the {{app_name_short}} Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the SAMPLE application.
+** paths through all functions defined in the {{app_name_short}} application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that
@@ -63,7 +63,7 @@ void Test_{{app_name_uc}}_TaskPipe(void)
     UT_CheckEvent_t   EventTest;
 
     memset(&TestMsg, 0, sizeof(TestMsg));
-    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_MID_ERR_EID, "SAMPLE: invalid command packet,MID = 0x%x");
+    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_MID_ERR_EID, "{{app_name_short}}: invalid command packet,MID = 0x%x");
 
     /*
      * The CFE_MSG_GetMsgId() stub uses a data buffer to hold the

@@ -30,7 +30,7 @@
 
 -->
 <PackageFile xmlns="http://www.ccsds.org/schema/sois/seds">
-  <Package name="<%app_name_uc%>" shortDescription="Sample Application Package">
+  <Package name="<%app_name_uc%>" shortDescription="<%app_name_txt%> Application Package">
 
     <DataTypeSet>
 
@@ -44,7 +44,7 @@
         </EntryList>
       </ContainerDataType>
 
-      <ContainerDataType name="HkTlm_Payload" shortDescription="Sample App Housekeeping Content">
+      <ContainerDataType name="HkTlm_Payload" shortDescription="<%app_name_txt%> App Housekeeping Content">
         <EntryList>
           <Entry name="CommandCounter" type="BASE_TYPES/uint8" />
           <Entry name="CommandErrorCounter" type="BASE_TYPES/uint8" />

@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the {{app_name_txt}} App.
  */
 
 /*
@@ -81,7 +81,7 @@ bool {{app_name_uc}}_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t Exp
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* SAMPLE ground commands                                                     */
+/* {{app_name_short}} ground commands                                                     */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
@@ -91,7 +91,7 @@ void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
     CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
 
     /*
-    ** Process SAMPLE app ground commands
+    ** Process {{app_name_short}} app ground commands
     */
     switch (CommandCode)
     {
@@ -134,7 +134,7 @@ void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
 /*  Purpose:                                                                  */
-/*     This routine will process any packet that is received on the SAMPLE    */
+/*     This routine will process any packet that is received on the {{app_name_short}}    */
 /*     command pipe.                                                          */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
@@ -162,7 +162,7 @@ void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
         {{/msgCases}}
         default:
             CFE_EVS_SendEvent({{app_name_uc}}_MID_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
+                              "{{app_name_short}}: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
             break;
     }
 }

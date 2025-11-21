@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the {{app_name_txt}} App.
  */
 
 /*
@@ -35,9 +35,9 @@
 #include "{{app_name_lc}}_eds_dictionary.h"
 
 /*
- * Define a lookup table for SAMPLE app command codes
+ * Define a lookup table for {{app_name_short}} app command codes
  */
-static const EdsDispatchTable_{{app_name_uc}}_Application_CFE_SB_Telecommand_t SAMPLE_TC_DISPATCH_TABLE = {
+static const EdsDispatchTable_{{app_name_uc}}_Application_CFE_SB_Telecommand_t {{app_name_short}}_TC_DISPATCH_TABLE = {
     .CMD     = {.NoopCmd_indication          = {{app_name_uc}}_NoopCmd,
             .ResetCountersCmd_indication = {{app_name_uc}}_ResetCountersCmd,
             .ProcessCmd_indication       = {{app_name_uc}}_ProcessCmd,
@@ -47,7 +47,7 @@ static const EdsDispatchTable_{{app_name_uc}}_Application_CFE_SB_Telecommand_t S
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
 /*  Purpose:                                                                  */
-/*     This routine will process any packet that is received on the SAMPLE    */
+/*     This routine will process any packet that is received on the {{app_name_short}}    */
 /*     command pipe.                                                          */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
@@ -58,7 +58,7 @@ void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
     CFE_MSG_Size_t    MsgSize;
     CFE_MSG_FcnCode_t MsgFc;
 
-    Status = EdsDispatch_{{app_name_uc}}_Application_Telecommand(SBBufPtr, &SAMPLE_TC_DISPATCH_TABLE);
+    Status = EdsDispatch_{{app_name_uc}}_Application_Telecommand(SBBufPtr, &{{app_name_short}}_TC_DISPATCH_TABLE);
 
     if (Status != CFE_SUCCESS)
     {
@@ -70,7 +70,7 @@ void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
         if (Status == CFE_STATUS_UNKNOWN_MSG_ID)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_MID_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
+                              "{{app_name_short}}: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
         }
         else if (Status == CFE_STATUS_WRONG_MSG_LENGTH)
         {
@@ -81,7 +81,7 @@ void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
         else
         {
             CFE_EVS_SendEvent({{app_name_uc}}_CC_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: Invalid ground command code: CC = %d", (int)MsgFc);
+                              "{{app_name_short}}: Invalid ground command code: CC = %d", (int)MsgFc);
         }
     }
 }

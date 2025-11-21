@@ -19,7 +19,7 @@
 /**
  * @file
  *
- *  The Sample App header file containing version information
+ *  The {{app_name_txt}} App header file containing version information
  */
 
 #ifndef {{app_name_uc}}_VERSION_H
@@ -65,9 +65,9 @@
 
 /**
  * @brief Max Version String length.
- * 
+ *
  * Maximum length that an OSAL version string can be.
- * 
+ *
  */
 #define {{app_name_uc}}_CFG_MAX_VERSION_STR_LEN 256
 

@@ -20,11 +20,11 @@
 ** File: coveragetest_{{app_name_lc}}.c
 **
 ** Purpose:
-** Coverage Unit Test cases for the SAMPLE Application
+** Coverage Unit Test cases for the {{app_name_short}} Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the SAMPLE application.
+** paths through all functions defined in the {{app_name_short}} application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that
@@ -113,7 +113,7 @@ void Test_{{app_name_uc}}_ResetCountersCmd(void)
 
     memset(&TestMsg, 0, sizeof(TestMsg));
 
-    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_RESET_INF_EID, "SAMPLE: RESET command");
+    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_RESET_INF_EID, "{{app_name_short}}: RESET command");
 
     UtAssert_INT32_EQ({{app_name_uc}}_ResetCountersCmd(&TestMsg), CFE_SUCCESS);
 

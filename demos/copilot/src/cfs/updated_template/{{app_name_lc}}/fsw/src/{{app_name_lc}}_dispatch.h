@@ -19,7 +19,7 @@
 /**
  * @file
  *
- * Main header file for the SAMPLE application
+ * Main header file for the {{app_name_short}} application
  */
 
 #ifndef {{app_name_uc}}_DISPATCH_H

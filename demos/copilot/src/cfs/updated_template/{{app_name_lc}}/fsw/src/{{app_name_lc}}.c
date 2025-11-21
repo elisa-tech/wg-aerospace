@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the {{app_name_txt}} App.
  */
 
 /*
@@ -73,7 +73,7 @@ void {{app_name_uc}}_Main(void)
     }
 
     /*
-    ** Sample App Runloop
+    ** {{app_name_txt}} App Runloop
     */
     while (CFE_ES_RunLoop(&{{app_name_uc}}_Data.RunStatus) == true)
     {
@@ -97,7 +97,7 @@ void {{app_name_uc}}_Main(void)
         else
         {
             CFE_EVS_SendEvent({{app_name_uc}}_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE APP: SB Pipe Read Error, App Will Exit");
+                              "{{app_name_short}} APP: SB Pipe Read Error, App Will Exit");
 
             {{app_name_uc}}_Data.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }
@@ -132,7 +132,7 @@ CFE_Status_t {{app_name_uc}}_Init(void)
     status = CFE_EVS_Register(NULL, 0, CFE_EVS_EventFilter_BINARY);
     if (status != CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Error Registering Events, RC = 0x%08lX\n", (unsigned long)status);
+        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Error Registering Events, RC = 0x%08lX\n", (unsigned long)status);
     }
     else
     {
@@ -149,7 +149,7 @@ CFE_Status_t {{app_name_uc}}_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_CR_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error creating SB Command Pipe, RC = 0x%08lX", (unsigned long)status);
+                              "{{app_name_txt}} App: Error creating SB Command Pipe, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -162,7 +162,7 @@ CFE_Status_t {{app_name_uc}}_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_SUB_HK_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to HK request, RC = 0x%08lX", (unsigned long)status);
+                              "{{app_name_txt}} App: Error Subscribing to HK request, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -175,7 +175,7 @@ CFE_Status_t {{app_name_uc}}_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
+                              "{{app_name_txt}} App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -189,7 +189,7 @@ CFE_Status_t {{app_name_uc}}_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
+                              "{{app_name_txt}} App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -204,17 +204,17 @@ CFE_Status_t {{app_name_uc}}_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent({{app_name_uc}}_TABLE_REG_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Registering Example Table, RC = 0x%08lX", (unsigned long)status);
+                              "{{app_name_txt}} App: Error Registering Example Table, RC = 0x%08lX", (unsigned long)status);
         }
         else
         {
             status = CFE_TBL_Load({{app_name_uc}}_Data.TblHandles[0], CFE_TBL_SRC_FILE, {{app_name_uc}}_TABLE_FILE);
         }
 
-        CFE_Config_GetVersionString(VersionString, {{app_name_uc}}_CFG_MAX_VERSION_STR_LEN, "Sample App", {{app_name_uc}}_VERSION,
+        CFE_Config_GetVersionString(VersionString, {{app_name_uc}}_CFG_MAX_VERSION_STR_LEN, "{{app_name_txt}} App", {{app_name_uc}}_VERSION,
                                     {{app_name_uc}}_BUILD_CODENAME, {{app_name_uc}}_LAST_OFFICIAL);
 
-        CFE_EVS_SendEvent({{app_name_uc}}_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "Sample App Initialized.%s",
+        CFE_EVS_SendEvent({{app_name_uc}}_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "{{app_name_txt}} App Initialized.%s",
                           VersionString);
     }
 

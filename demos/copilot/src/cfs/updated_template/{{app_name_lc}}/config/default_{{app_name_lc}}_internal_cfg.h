@@ -34,7 +34,7 @@
 
 /***********************************************************************/
 #define {{app_name_uc}}_PIPE_DEPTH 32 /* Depth of the Command Pipe for Application */
-#define {{app_name_uc}}_PIPE_NAME  "{{app_name_uc}}_CMD_PIPE"
+#define {{app_name_uc}}_PIPE_NAME  "{{app_name_short}}_CMD_PIPE"
 
 #define {{app_name_uc}}_NUMBER_OF_TABLES 1 /* Number of Example Table(s) */
 

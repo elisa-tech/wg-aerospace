@@ -33,7 +33,7 @@
  ************************************************************************/
 
 /*
-** Sample App command codes
+** {{app_name_txt}} App command codes
 */
 #define {{app_name_uc}}_NOOP_CC           0
 #define {{app_name_uc}}_RESET_COUNTERS_CC 1

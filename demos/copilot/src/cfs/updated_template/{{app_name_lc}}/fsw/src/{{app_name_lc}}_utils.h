@@ -18,7 +18,7 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App utility functions
+ *   This file contains the prototypes for the {{app_name_txt}} App utility functions
  */
 
 #ifndef {{app_name_uc}}_UTILS_H

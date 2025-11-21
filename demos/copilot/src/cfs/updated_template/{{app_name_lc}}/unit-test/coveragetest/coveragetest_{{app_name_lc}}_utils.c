@@ -20,11 +20,11 @@
 ** File: coveragetest_{{app_name_lc}}.c
 **
 ** Purpose:
-** Coverage Unit Test cases for the Sample Application
+** Coverage Unit Test cases for the {{app_name_txt}} Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the Sample application.
+** paths through all functions defined in the {{app_name_txt}} application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that

@@ -19,7 +19,7 @@
 /**
  * @file
  *
- * Define Sample App Events IDs
+ * Define {{app_name_txt}} App Events IDs
  */
 
 #ifndef {{app_name_uc}}_EVENTS_H

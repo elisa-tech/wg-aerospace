@@ -68,7 +68,7 @@ typedef struct
 
 /*************************************************************************/
 /*
-** Type definition (Sample App housekeeping)
+** Type definition ({{app_name_txt}} App housekeeping)
 */
 
 typedef struct

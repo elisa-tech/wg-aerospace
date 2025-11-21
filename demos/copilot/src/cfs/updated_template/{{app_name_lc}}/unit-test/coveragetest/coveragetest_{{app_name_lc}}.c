@@ -20,11 +20,11 @@
 ** File: coveragetest_{{app_name_lc}}.c
 **
 ** Purpose:
-** Coverage Unit Test cases for the Sample Application
+** Coverage Unit Test cases for the {{app_name_txt}} Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the Sample application.
+** paths through all functions defined in the {{app_name_txt}} application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that
@@ -126,7 +126,7 @@ void Test_{{app_name_uc}}_Main(void)
      */
     UT_SetDeferredRetcode(UT_KEY(CFE_ES_RunLoop), 1, true);
     UT_SetDeferredRetcode(UT_KEY(CFE_SB_ReceiveBuffer), 1, CFE_SB_PIPE_RD_ERR);
-    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_PIPE_ERR_EID, "SAMPLE APP: SB Pipe Read Error, App Will Exit");
+    UT_CHECKEVENT_SETUP(&EventTest, {{app_name_uc}}_PIPE_ERR_EID, "{{app_name_short}} APP: SB Pipe Read Error, App Will Exit");
 
     /*
      * Invoke again

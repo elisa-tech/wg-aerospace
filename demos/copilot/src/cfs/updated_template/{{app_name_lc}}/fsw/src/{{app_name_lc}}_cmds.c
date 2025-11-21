@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App Ground Command-handling functions
+ *   This file contains the source code for the {{app_name_txt}} App Ground Command-handling functions
  */
 
 /*
@@ -73,14 +73,14 @@ CFE_Status_t {{app_name_uc}}_SendHkCmd(const {{app_name_uc}}_SendHkCmd_t *Msg)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* SAMPLE NOOP commands                                                       */
+/* {{app_name_short}} NOOP commands                                                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 CFE_Status_t {{app_name_uc}}_NoopCmd(const {{app_name_uc}}_NoopCmd_t *Msg)
 {
     {{app_name_uc}}_Data.CmdCounter++;
 
-    CFE_EVS_SendEvent({{app_name_uc}}_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: NOOP command %s",
+    CFE_EVS_SendEvent({{app_name_uc}}_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: NOOP command %s",
                       {{app_name_uc}}_VERSION);
 
     return CFE_SUCCESS;
@@ -98,7 +98,7 @@ CFE_Status_t {{app_name_uc}}_ResetCountersCmd(const {{app_name_uc}}_ResetCounter
     {{app_name_uc}}_Data.CmdCounter = 0;
     {{app_name_uc}}_Data.ErrCounter = 0;
 
-    CFE_EVS_SendEvent({{app_name_uc}}_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: RESET command");
+    CFE_EVS_SendEvent({{app_name_uc}}_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: RESET command");
 
     return CFE_SUCCESS;
 }
@@ -116,24 +116,24 @@ CFE_Status_t {{app_name_uc}}_ProcessCmd(const {{app_name_uc}}_ProcessCmd_t *Msg)
     {{app_name_uc}}_ExampleTable_t *TblPtr;
     const char *               TableName = "{{app_name_uc}}.ExampleTable";
 
-    /* Sample Use of Example Table */
+    /* {{app_name_txt}} Use of Example Table */
     {{app_name_uc}}_Data.CmdCounter++;
     Status = CFE_TBL_GetAddress(&TblAddr, {{app_name_uc}}_Data.TblHandles[0]);
     if (Status < CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Fail to get table address: 0x%08lx", (unsigned long)Status);
+        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Fail to get table address: 0x%08lx", (unsigned long)Status);
     }
     else
     {
         TblPtr = TblAddr;
-        CFE_ES_WriteToSysLog("Sample App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
+        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
 
         {{app_name_uc}}_GetCrc(TableName);
 
         Status = CFE_TBL_ReleaseAddress({{app_name_uc}}_Data.TblHandles[0]);
         if (Status != CFE_SUCCESS)
         {
-            CFE_ES_WriteToSysLog("Sample App: Fail to release table address: 0x%08lx", (unsigned long)Status);
+            CFE_ES_WriteToSysLog("{{app_name_txt}} App: Fail to release table address: 0x%08lx", (unsigned long)Status);
         }
         else
         {

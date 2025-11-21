@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App utility functions
+ *   This file contains the source code for the {{app_name_txt}} App utility functions
  */
 
 /*
@@ -40,7 +40,7 @@ CFE_Status_t {{app_name_uc}}_TblValidationFunc(void *TblData)
     {{app_name_uc}}_ExampleTable_t *TblDataPtr = ({{app_name_uc}}_ExampleTable_t *)TblData;
 
     /*
-    ** Sample Example Table Validation
+    ** {{app_name_txt}} Example Table Validation
     */
     if (TblDataPtr->Int1 > {{app_name_uc}}_TBL_ELEMENT_1_MAX)
     {
@@ -65,11 +65,11 @@ void {{app_name_uc}}_GetCrc(const char *TableName)
     status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
     if (status != CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Error Getting Example Table Info");
+        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Error Getting Example Table Info");
     }
     else
     {
         Crc = TblInfoPtr.Crc;
-        CFE_ES_WriteToSysLog("Sample App: CRC: 0x%08lX\n\n", (unsigned long)Crc);
+        CFE_ES_WriteToSysLog("{{app_name_txt}} App: CRC: 0x%08lX\n\n", (unsigned long)Crc);
     }
 }

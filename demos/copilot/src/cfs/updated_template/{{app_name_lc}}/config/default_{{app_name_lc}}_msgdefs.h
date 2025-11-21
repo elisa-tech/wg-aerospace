@@ -38,7 +38,7 @@ typedef struct {{app_name_uc}}_DisplayParam_Payload
 
 /*************************************************************************/
 /*
-** Type definition (Sample App housekeeping)
+** Type definition ({{app_name_txt}} App housekeeping)
 */
 
 typedef struct {{app_name_uc}}_HkTlm_Payload

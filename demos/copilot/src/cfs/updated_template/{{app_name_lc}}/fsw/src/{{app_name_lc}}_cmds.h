@@ -18,7 +18,7 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App Ground Command-handling functions
+ *   This file contains the prototypes for the {{app_name_txt}} App Ground Command-handling functions
  */
 
 #ifndef {{app_name_uc}}_CMDS_H
