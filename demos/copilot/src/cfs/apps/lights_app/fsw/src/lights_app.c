@@ -188,6 +188,19 @@ CFE_Status_t LIGHTS_APP_Init(void)
     if (status == CFE_SUCCESS)
     {
         /*
+        ** Subscribe to sources of monitored properties
+        */
+        status = CFE_SB_Subscribe(CFE_SB_ValueToMsgId(LIGHTS_ADJUST_COMMAND), LIGHTS_APP_Data.CommandPipe);
+        if (status != CFE_SUCCESS)
+        {
+            CFE_EVS_SendEvent(LIGHTS_APP_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
+                              "Lights App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
+        }
+    }
+
+    if (status == CFE_SUCCESS)
+    {
+        /*
         ** Register Example Table(s)
         */
         status = CFE_TBL_Register(&LIGHTS_APP_Data.TblHandles[0], "ExampleTable", sizeof(LIGHTS_APP_ExampleTable_t),

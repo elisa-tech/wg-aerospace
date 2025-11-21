@@ -151,6 +151,10 @@ void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
             LIGHTS_APP_ProcessLightsCommand(SBBufPtr);
             break;
 
+        case LIGHTS_ADJUST_COMMAND:
+            LIGHTS_APP_ProcessLightsAdjustCommand(SBBufPtr);
+            break;
+
         default:
             CFE_EVS_SendEvent(LIGHTS_APP_MID_ERR_EID, CFE_EVS_EventType_ERROR,
                               "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
@@ -175,4 +179,18 @@ void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr)
     lights_message.payload = msg->payload;
 
     CFE_SB_TransmitMsg((CFE_MSG_Message_t *)&lights_message, true);
+}
+
+/**
+ * Adjust delay introduced before actually adjusting the lights.
+ */
+void LIGHTS_APP_ProcessLightsAdjustCommand(const CFE_SB_Buffer_t *SBBufPtr)
+{
+    lights_adjust_cmd_t* msg;
+    msg = (lights_adjust_cmd_t*) (&SBBufPtr->Msg);
+
+    delay.tv_nsec = msg->delay;
+
+    CFE_EVS_SendEvent(LIGHTS_APP_NEW_DELAY_EID, CFE_EVS_EventType_INFORMATION,
+                      "LIGHTS: updated delay to %d nanosec", delay.tv_nsec);
 }
