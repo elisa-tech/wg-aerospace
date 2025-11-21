@@ -163,8 +163,8 @@ void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
 }
 
 /**
-* Make received data available to Copilot and run monitors.
-*/
+ * Make received data available to Copilot and run monitors.
+ */
 void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr)
 {
     nanosleep(&delay, NULL);   // Wait fixed time to send message
