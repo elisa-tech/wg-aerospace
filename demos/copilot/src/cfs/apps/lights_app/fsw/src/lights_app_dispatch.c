@@ -33,11 +33,9 @@
 #include "lights_app_msg.h"
 #include "extra.h"
 
-struct timespec delay;
+struct timespec delay = {0, 400000000}; // 400 ms.
 
 lights_status_t lights_message;
-
-
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
@@ -165,8 +163,6 @@ void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
 */
 void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr)
 {
-    delay.tv_sec  = 0;
-    delay.tv_nsec = 400000000; // 400 ms delay
     nanosleep(&delay, NULL);   // Wait fixed time to send message
 
     lights_cmd_t* msg;
