@@ -18,7 +18,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the Lights App.
  */
 
 /*
@@ -66,7 +66,7 @@ void LIGHTS_APP_Main(void)
     }
 
     /*
-    ** Sample App Runloop
+    ** Lights App Runloop
     */
     while (CFE_ES_RunLoop(&LIGHTS_APP_Data.RunStatus) == true)
     {
@@ -125,7 +125,7 @@ CFE_Status_t LIGHTS_APP_Init(void)
     status = CFE_EVS_Register(NULL, 0, CFE_EVS_EventFilter_BINARY);
     if (status != CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Error Registering Events, RC = 0x%08lX\n", (unsigned long)status);
+        CFE_ES_WriteToSysLog("Lights App: Error Registering Events, RC = 0x%08lX\n", (unsigned long)status);
     }
     else
     {
@@ -142,7 +142,7 @@ CFE_Status_t LIGHTS_APP_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent(LIGHTS_APP_CR_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error creating SB Command Pipe, RC = 0x%08lX", (unsigned long)status);
+                              "Lights App: Error creating SB Command Pipe, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -155,7 +155,7 @@ CFE_Status_t LIGHTS_APP_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent(LIGHTS_APP_SUB_HK_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to HK request, RC = 0x%08lX", (unsigned long)status);
+                              "Lights App: Error Subscribing to HK request, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -168,7 +168,7 @@ CFE_Status_t LIGHTS_APP_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent(LIGHTS_APP_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
+                              "Lights App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -181,7 +181,7 @@ CFE_Status_t LIGHTS_APP_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent(LIGHTS_APP_SUB_CMD_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
+                              "Lights App: Error Subscribing to Commands, RC = 0x%08lX", (unsigned long)status);
         }
     }
 
@@ -195,17 +195,17 @@ CFE_Status_t LIGHTS_APP_Init(void)
         if (status != CFE_SUCCESS)
         {
             CFE_EVS_SendEvent(LIGHTS_APP_TABLE_REG_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "Sample App: Error Registering Example Table, RC = 0x%08lX", (unsigned long)status);
+                              "Lights App: Error Registering Example Table, RC = 0x%08lX", (unsigned long)status);
         }
         else
         {
             status = CFE_TBL_Load(LIGHTS_APP_Data.TblHandles[0], CFE_TBL_SRC_FILE, LIGHTS_APP_TABLE_FILE);
         }
 
-        CFE_Config_GetVersionString(VersionString, LIGHTS_APP_CFG_MAX_VERSION_STR_LEN, "Sample App", LIGHTS_APP_VERSION,
+        CFE_Config_GetVersionString(VersionString, LIGHTS_APP_CFG_MAX_VERSION_STR_LEN, "Lights App", LIGHTS_APP_VERSION,
                                     LIGHTS_APP_BUILD_CODENAME, LIGHTS_APP_LAST_OFFICIAL);
 
-        CFE_EVS_SendEvent(LIGHTS_APP_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "Sample App Initialized.%s",
+        CFE_EVS_SendEvent(LIGHTS_APP_INIT_INF_EID, CFE_EVS_EventType_INFORMATION, "Lights App Initialized.%s",
                           VersionString);
     }
 
