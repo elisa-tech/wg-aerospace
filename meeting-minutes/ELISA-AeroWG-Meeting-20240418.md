@@ -129,7 +129,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 	  - Agreed on a broader group: Exclude ground equipment in the first phase
 - Use Cases
   - confirmed Option A for system architecture, option D for use case. 
-  - Use case now moved to separate document [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+  - Use case now moved to separate document [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
   - Clarified: What about the other 2 votes (A and B), do we exclude people?
       - Option D is at least reasonable to pursue, perhaps others found another option more interesting, but we agree Option D will be pursued first. One of the votes last week for other options present again today agreed with this statement.
 - Identification of features for use cases

@@ -146,7 +146,7 @@ What is the feedback approach / rollout for the use cases?
 **NOTE: Meeting concluded here and the suggestion was our next call will focus on Next steps items within the use case**
 
 Continue the discussion series, now in a separate document:
-[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+[Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
 
 ---

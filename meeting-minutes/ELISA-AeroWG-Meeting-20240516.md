@@ -111,7 +111,7 @@ If someone attends from the nascent Space Grade Linux initiative, ask them to in
 # Discussion on Features for Aerospace
 
 Continue discussion series, now in separate document:
-[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+[Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
 
 - Exlaining the current state to new members
 - Focussed on system architecture to answer open questions like wrt smart sensors

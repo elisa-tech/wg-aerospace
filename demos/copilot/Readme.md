@@ -1,6 +1,6 @@
 # Light Sensor Use Case Demo using the Copilot Framework
 
-This demo composes the deployment and sequences found in the [Light Sensor use case](../../Aerospace-Uses-Cases.md).
+This demo composes the deployment and sequences found in the [Light Sensor use case](../../docs/Aerospace-Uses-Cases.md).
 
 ## Getting Started
 

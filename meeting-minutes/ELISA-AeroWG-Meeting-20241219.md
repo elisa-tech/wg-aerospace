@@ -161,11 +161,11 @@ The use case discussion is focusing on testing.
 Open Actions
 - Call between Ivan, Martin and I on testing (framework and prototyping the parts together) is tentatively scheduled for Jan 17th 10am CST.
 - We are seeking volunteers to write the test apps and stage an emulation environment based on the discussion.  Contact Matt Weber if interested.
-- [Diagrams under testing](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test) are updated, do they represent the test scenario?
+- [Diagrams under testing](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#test) are updated, do they represent the test scenario?
 
   Refs:
-  - [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
-    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+  - [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
+    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
     - [Collaboration doc](https://mensuel.framapad.org/p/elisa-aerowg) (used during our WG calls and sync'd with Aerospace-Uses-Cases.md)
 
 ## Space Grade Linux

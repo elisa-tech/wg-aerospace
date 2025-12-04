@@ -1,7 +1,7 @@
 10:01:05 From Ivan Perez to Everyone:
 	Just a sec. I need to re-connect my audio.
 10:03:59 From Matt Weber (Boeing) to Everyone:
-	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md
+	https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md
 10:07:01 From Martin Halle to Matt Weber (Boeing)(direct message):
 	One question from my side maybe for today (feeling a Little dumb :-)): But how to get the Preview Mermaid Extension to work online (in the browser), or do I need a local installation?
 10:07:28 From Ramon Roche (LF) to Everyone:

@@ -226,9 +226,9 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
       -	PR with start of instructions outline - https://github.com/elisa-tech/wg-aerospace/pull/12
     -	Martin - try the instructions after Matt pushes updates and plans to checkout Ivan's example PR
 - Refs:
-  - [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
-    - [Diagrams about testing](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test)
-    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+  - [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
+    - [Diagrams about testing](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#test)
+    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
 
 ## Future topics
