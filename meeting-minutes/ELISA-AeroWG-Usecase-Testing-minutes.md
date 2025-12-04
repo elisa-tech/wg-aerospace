@@ -532,7 +532,7 @@ Steps
 **Actions**
 
 - Ivan
-  - Opening a new PR marking up https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md for a cFS light add use case
+  - Opening a new PR marking up https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md for a cFS light add use case
   -	Trying the raw socket monitor PR with Paul’s raw update (https://github.com/elisa-tech/wg-aerospace/pull/67)
 - Martin
   -	PR for Embedded demo - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/EmbeddedDemo.md

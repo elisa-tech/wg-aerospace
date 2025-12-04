@@ -195,8 +195,8 @@ The use case discussion is focusing on testing.
 
 
   Refs:
-  - [Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
-    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
+  - [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
+    - [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
     - [Collaboration doc](https://mensuel.framapad.org/p/elisa-aerowg) (used during our WG calls and sync'd with Aerospace-Uses-Cases.md)
 
 
