@@ -110,7 +110,7 @@ See our [Literature Database](../literature-database/literature.bib)
 
 # Developing a Minimal, Community Linux Platform for Aerospace
 
-[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+[Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
 
 ---
 

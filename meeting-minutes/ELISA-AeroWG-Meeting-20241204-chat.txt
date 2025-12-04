@@ -21,7 +21,7 @@
 09:26:19 From Walt Miner to Everyone:
 	patches are via gerrit
 09:30:48 From Matt Weber (Boeing) to Everyone:
-	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md
+	https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md
 09:32:38 From Paul Mani to Everyone:
 	Sorry. I need to drop off for another meeting that overlaps with this one.
 09:41:38 From Christopher Heistand to Everyone:

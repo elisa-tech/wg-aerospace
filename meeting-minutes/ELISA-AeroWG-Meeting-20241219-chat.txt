@@ -37,7 +37,7 @@
 10:17:35 From Ivan Perez (KBR @ NASA ARC) to Everyone:
 	The last change was April 2024
 10:19:36 From Matt Weber (Boeing) to Everyone:
-	https://github.com/elisa-tech/wg-aerospace/blob/main/Aerospace-Uses-Cases.md#test
+	https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#test
 10:25:15 From Andrew Wilson (FPGA Zealot) to Everyone:
 	FPGA based simulation/emulation?
 10:25:54 From Andrew Wilson (FPGA Zealot) to Everyone:

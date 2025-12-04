@@ -111,7 +111,7 @@ See our [Literature Database](../literature-database/literature.bib)
 # Discussion on Features for Aerospace
 
 Continue discussion series, now in separate document:
-[Aerospace-Uses-Cases](../Aerospace-Uses-Cases.md)
+[Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
 
 The conversation was around the Next Steps section of the document. (A short 20min conversation)
 
