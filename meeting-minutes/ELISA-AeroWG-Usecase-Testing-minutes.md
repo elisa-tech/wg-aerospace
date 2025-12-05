@@ -19,6 +19,7 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 - Shefali Sharma
 - Ivan Perez (KBR @ NASA Ames Research)
 - Martin Halle (Hamburg University of Technology)
+- Rob Woolley (Wind River)
 
 **Discussion topics**
 
