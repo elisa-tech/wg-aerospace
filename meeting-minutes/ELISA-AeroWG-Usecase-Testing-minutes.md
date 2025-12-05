@@ -1,12 +1,62 @@
 # Use case call Minutes
 
-**Parking lot:**
-  - Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
+Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688254268?password=d7353f64-663f-4b53-8a8f-1e7b2ab7aa05
 
-  - Dec 5th call - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
+**Parking lot:**
+- Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
+- Dec 5th call - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
 
 **Holiday / Vacations**
-- Matt out Nov 21st and 28th
+- No meeting Dec 26th and Jan 2nd
+
+## 20251205
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Salim Jalaleddine (Boeing)
+- Leonida Kosmidis (Barcelona Supercomputing Center)
+- Shefali Sharma
+- Ivan Perez (KBR @ NASA Ames Research)
+- Martin Halle (Hamburg University of Technology)
+
+**Discussion topics**
+
+- [cFS app demo PR](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - (Native) Impl the diagram set of applications
+  - Verified message flow and monitor behavior
+  - Has example of adjusting the delay from switch app
+  - Todo
+    - Monitoring apps updated to use cpu clock to understand thresholds
+      - Options of Global clock vs providing initial time
+    - Port to emulated - ACTION: Salim's going to check it out
+    - Switch application might be something ogma could generate
+  - Need to consider QEMU time granularity and how we're measuring
+    - e.g. time elapsing vs performance of main system
+    - Ground station currently doesn't understand time
+    - ACTION: https://youtu.be/IuE99fzAC00?si=DOzjgl9kEQxHZSli
+      - Matt to ask around in our sim team
+      - Rob willing to collaborate, Matt volunteered to help
+  - ACTION:(Matt) Ivan asked, how do we navigate Apache licensed code - cFS sample app and ogma code.
+
+- Workshop links
+  - [Resource directory and YouTube channel link](https://elisa.tech/workshop-series/)
+  - Similar mixed criticality with xen concepts kicking off in 2026 - https://directory.elisa.tech/workshops/2025-11-Munich/2-4-Naoto_Yamaguchi_-_AGL_SDV_SoDeV_Insights.pdf
+  - [AeroWG talk on use cases](https://directory.elisa.tech/workshops/2025-11-Munich/2-9-Matt_Webber_-_Industry_Safety_Levels_vs_Aerospace_Use_Cases.pdf)
+
+---
+
+## 20251128
+
+**Attendance**
+
+No call.
+
+**Discussion topics**
+
+- Ivan shared via email the [cFS app demo PR](https://github.com/elisa-tech/wg-aerospace/pull/109)
+
+---
 
 ## 20251121
 
@@ -52,6 +102,7 @@
 
 **Attendance**
 
+- Matt Weber (Boeing)
 - Paul Mani (Collins)
 - Rob Woolley (Wind River)
 - Martin Halle (Hamburg University of Technology)
