@@ -13,22 +13,26 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 # Minutes
 
 - Automotive Grade Linux SoDev architecture - https://www.automotivelinux.org/announcements/sodev/
+  - Could outline a comparison with safety levels?
+  - Redraw the picture from our view?
+  - Retarget a existing demo to the framework
+  - Could start from systemsWG view - https://github.com/elisa-tech/wg-systems/tree/main/Documentation/xen-demo-zcu102
+  - ACTION:  Matt to share a outline on mailing list to drive some discussion in Jan call
 
 ## Requirements for OS used in Use-Cases
 
 - Questions that formed the brainstorming around the product profiles
   - How do we want to splitup the problem to define charter / scope of the requirement set?
   - What are the aspects which justify capturing this as different?
-- Brainstorming from Nov call - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md
 
-## Do we want to add a product profile example similar to SoDev?
+[Product Profile template](../docs/product-profiles.md#template---name-of-notional-system)
 
 ## Interest in ISO26262 vs DO-330 tool certification (presentation in Jan / Feb)?
 
-
-
-## Tasks until next meeting:
-
+Feedback
+- It would have ties to paper development
+- What about Space certifications/tools?
+- ACTION: Matt will reach out to those that offered to discuss
 
 ---
 
@@ -36,8 +40,18 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Attended this meeting
 
+- Matt Weber - Boeing
+- Martin Halle - Hamburg University of Technology
+- Daniel Witte - Astro Mechanica
+- Alexey Simonov - TII, UAE
+- Michael Mahoney - Wind River
+- Manuel Beltran - Boeing
+- Naga - Timesys/Lynx
+- Paul Mani - Collins India
+- Rob Woolley (Wind River)
+- Shefali Sharma
 
-## Attended recently in the past
+## Attended recently in the past (do not delete)
 
 - Abdi Kitesa
 - Alexey Simonov - TII, UAE
@@ -49,6 +63,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Chuck Wolber - Boeing
 - Cyril Jean - Microchip Technology Inc.
 - Daniel Riechers - Collins (Security)
+- Daniel Witte - Astro Mechanica
 - David Graziano - Collins (Security)
 - Douglas Landgraf - Red Hat
 - Emmanuel Gravel - Skytrac
@@ -64,6 +79,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Manuel Beltran - Boeing
 - Martin Halle - Hamburg University of Technology
 - Matt Kelly - Boeing
+- Matt Weber - Boeing
 - Michael Epley - Redhat
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
