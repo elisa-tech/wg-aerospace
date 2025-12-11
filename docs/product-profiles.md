@@ -2,9 +2,10 @@
 
 The following tables are proposed to frame up how a respective set of aerospace/space products might be compared.  The goal is to try to understand what the scope of a requirement set might look like to establish something like the Carrier Grade Linux model.  That model focused on maturing the capability toward the specific aspects of a targeted industry.
 
-## Software Level A/B/C
+## DO-178C Products
+### Software Level A/B/C
 
-### Flight control system
+#### Flight control system
 
 | Product Aspect(s) | Details | Notes |
 | --- | --- | --- |
@@ -27,9 +28,9 @@ The following tables are proposed to frame up how a respective set of aerospace/
 | CPU cores:          | 1 | |
 | Tool Qualification: | Likely | Special development environment and compilers |
 
-## Software Level D
+### Software Level D
 
-### Information Management
+#### Information Management
 
 | Product Aspect(s) | Details | Notes |
 | --- | --- | --- |
@@ -52,9 +53,9 @@ The following tables are proposed to frame up how a respective set of aerospace/
 | CPU cores:          | 4+ | |
 | Tool Qualification: | None | Development practice most likely at least archives tools and identifies their use. Not restrictive. |
 
-## Software Level E
+### Software Level E
 
-### Cabin Entertainment System
+#### Cabin Entertainment System
 
 | Product Aspect(s) | Details | Notes |
 | --- | --- | --- |
@@ -76,3 +77,35 @@ The following tables are proposed to frame up how a respective set of aerospace/
 | CPU frequency:      | > ~1Ghz | (not a performance comparison) |
 | CPU cores:          | 4+ | |
 | Tool Qualification: | None | Development practice most likely at least archives tools and identifies their use. Not restrictive. |
+
+
+## Template - "name of notional system"
+
+Below is an example table of product "aspects" and examples of what "details" might be considered when defining a new "product profile."
+
+| Product Aspect(s) | Details | Notes |
+| --- | --- | --- |
+| Operational duration:  |  | |
+| Userdata update cycle: | rate / scale | |
+| Platform update cycle: | rate / scale | |
+| Software Level:     | A/B/C/D/E | |
+| Security:           | e.g., Security Assurance Level (SAL)- DO-326/365a, layered, hw based, lifecycle rigor X | Clarification of constraints |
+| App Capability:     | e.g., POSIX Apps, ARINC Apps, Web Apps, Applets, Bare metal, Scripting (Interpeter) | |
+| System Constraints: | e.g., deterministic, simple, radiation hardened, reliability | |
+| Architecture Constraints: | e.g., Redundancy, dissimilarity, monitoring, real-time | Could drive additional HW / specific configurations within a system.  Real-time needs details on scheduler and expected behavior of events(low/med/hard) |
+| Protocols:          | Networking RFCs, ARINC, Streaming video encodings,  | |
+| IO:                 | e.g., ARINC (429/717/664/825...), MIL (1553...), IEEE/SAE (TSN 802.1DP...), serial, CAN bus, Ethernet, PCIe, USB, Spacewire | |
+| Dataload/fieldload: | e.g., ARINC-based mediaset via ARINC615a dataloader, ARINC615-3, Commercial OTA, Floppy disk | |
+| OS standards:       | e.g., ARINC653 modular partitioned operating system, Tailored / customized "carrier grade", Firmware vs. OS, SELinux, POSIX, Engine-like environments (eBPF, WASM, Container engine), Orchestration(kubernetes)  | |
+| OS footprint:       | Small | below 200k SLOC |
+| OS Scheduling:      | E.g. scheduler used (real-time?), ARINC653 Apps/tasks, processes, threads, MMU-isolated, namespaced |  |
+| Boot-up time:       | within <x> seconds / <x> milli-seconds | Frame this as (warm vs. cold start) |
+| Fault handling:     | e.g., detection, remediation, tree showing domains/isolation/cascading, BITE, logging, reporting upstream, FMEA | Development analysis / design / operational |
+| Languages:          | C, ADA | (Future) RUST |
+| Storage:            | 512MB - low GB | |
+| Memory:             | 512MB - low GB | |
+| Memory allocation:  | static / dynamic | Impacted by system state? When allowed to allocation, can you free, etc? |
+| Worst Case Execution Time (WCET):               | Knowledge about WCET for OS / user-code functions, known max. induced interferrence (e.g., on multi-core) | |
+| CPU Performance:    | MHz/FLOPS/DMIPS/Optimization level | |
+| CPU Cores:          | <count> | |
+| Tool Qualification: | NA/Possible | (To what level / background details) |

@@ -35,6 +35,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Chuck Wolber - Boeing
 - Cyril Jean - Microchip Technology Inc.
 - Daniel Riechers - Collins (Security)
+- Daniel Witte - Astro Mechanica
 - David Graziano - Collins (Security)
 - Douglas Landgraf - Red Hat
 - Emmanuel Gravel - Skytrac
@@ -50,6 +51,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Manuel Beltran - Boeing
 - Martin Halle - Hamburg University of Technology
 - Matt Kelly - Boeing
+- Matt Weber - Boeing
 - Michael Epley - Redhat
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA

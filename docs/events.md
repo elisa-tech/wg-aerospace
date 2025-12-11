@@ -5,15 +5,17 @@
 - **Dec 11-13** : Linux Plumbers Conference 2025, in Tokyo -> [Link](https://lpc.events/)
   - Free Virtual LIVE stream during the event or $50 for interactive
   - Safe Systems with Linux MC -> [List of Topics](https://lpc.events/event/19/contributions/?config=0edacdbc-94ad-4caf-ac7a-352f9bebdb35)
-  - Presentation: "Measuring Test Coverage of Kernel Object Code"
+  - Adding Testable Code Specs to Linux kernel - https://lpc.events/event/19/contributions/2085/ - [**RECORDING**](https://youtu.be/OUv_U0rBAIY?t=23807)
+  - KUnit Testing Insufficiencies - https://lpc.events/event/19/contributions/2041/ - [**STREAM later today**](https://www.youtube.com/live/rpImLE6JMlY)
+  - Schedule with live streams - https://lpc.events/event/19/timetable/#all
 - **Jan 27-29** Core Flight System Symposium LMI Headquarters, in Tysons, VA
   - Registration - https://etd.gsfc.nasa.gov/capabilities/core-flight-system/events/2026-symposium-register/
   - ****ACTION: Possibly similar topics with FSW? (Ivan/Matt?)**
 - **Feb 25** AvioSE 2026, Bern -> [link](https://aviose-workshop.github.io/)
-  - Call for papers until: Dec 01, 2025
+  - Call for papers until: Dec 08, 2025 (EXTENDED)
   - Co-located with Systems Engineering Workshop: [link](https://se2026.inf.unibe.ch/en/workshops/aviose/)
 - **Mar 23-26** Flight Software Workshop, Laurel, MD [link](https://flightsoftware.org/)
-  - **Submission Deadline December 15 - EXTENDED!!!!**
+  - Submission deadline: December 15 (EXTENDED)
   - A Use case and safety levels abstract was submitted by Matt W.
 - **Sept 13-17** ICAS (International Council of Aeronautical Sciences) Congress in Sydney,Australia -> [Link](https://icas2026.com/)
   - **ACTION: ABSTRACTS DUE Jan 10th** - https://icas2026.com/program/abstracts/
