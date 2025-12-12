@@ -5,6 +5,12 @@ if [[ "$EUID" -eq 0 ]]; then
   echo "This script does not require running with 'sudo'."
   exit 1
 fi
+# Check if the script is running on amd64 architecture
+if [[ "$(uname -m)" != "x86_64" ]]; then
+    echo "This script requires an amd64 architecture."
+    echo " NOTE, this is because the container env and toolchain are build for x86_64 hosts."
+    exit 1
+fi
 
 # Check if sudo works
 if ! sudo -n true 2> /dev/null; then
