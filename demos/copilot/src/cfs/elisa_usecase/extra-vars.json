@@ -1,0 +1,7 @@
+{ "app_name_lc":     "copilot_app"
+, "app_name_uc":     "COPILOT_APP"
+, "app_name_cc":     "CopilotApp"
+, "app_name_txt":    "Copilot"
+, "app_name_short":  "COPILOT"
+, "impl_extra_header": "#include \"extra.h\""
+}
