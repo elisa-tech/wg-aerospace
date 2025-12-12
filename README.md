@@ -8,10 +8,9 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 For more information, contact the working group chair, [Matthew Weber](mailto:matthew.l.weber3@boeing.com) or co-chair [Martin Halle](mailto:martin.halle@tuhh.de).
 
-* [Upcoming Events](docs/events.md)
+Further information on specific topics can be found here:
 * [Meeting Minutes](meeting-minutes)
-* [Use Cases](docs/Aerospace-Uses-Cases.md)
-* [Resources](docs/resources.md)
+* [Document / resource register](docs/register.md)
 
 ## Schedule
 

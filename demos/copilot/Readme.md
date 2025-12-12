@@ -4,7 +4,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Light Sensor Use Case Demo using the Copilot Framework
 
-This demo composes the deployment and sequences found in the [Light Sensor use case](../../docs/Aerospace-Uses-Cases.md).
+This demo composes the deployment and sequences found in the [Light Sensor use case](../../docs/Aerospace-Uses-Cases.md). It makes use of the the [Copilot runtime verification framework](https://github.com/Copilot-Language/copilot) for hard real-time systems.
 
 ## Getting Started
 
