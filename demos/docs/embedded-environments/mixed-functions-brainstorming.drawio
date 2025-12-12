@@ -1,0 +1,130 @@
+<mxfile host="65bd71144e">
+    <diagram name="default" id="Hq0f0pT_j-WBso3MN7AL">
+        <mxGraphModel dx="958" dy="750" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-0"/>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-1" parent="LB0d6yww-TTIQR0R4Ior-0"/>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-2" value="Legend" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=4;fontSize=12;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="700" y="120" width="150" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-3" value="Physical / Virtual Hardware Environment" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;fontStyle=0;fontSize=14;strokeColor=#2D7600;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="40" y="470" width="620" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-4" value="Type 1 Hypervisor (e.g. Xen)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;fontStyle=0;fontSize=14;strokeColor=#006EAF;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="40" y="430" width="620" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-5" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom !0&lt;/font&gt;&lt;div style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(63, 63, 63);&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;Linux&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="40" y="170" width="110" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-6" value="Control Domain" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontStyle=0;fontSize=12;strokeColor=#d6b656;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="40" y="120" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-7" value="Application Domain(s)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="300" y="120" width="360" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-8" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom D&lt;/font&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Linux&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="170" y="170" width="110" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-9" value="Driver/Hardware Domain" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontStyle=0;fontSize=12;strokeColor=#6c8ebf;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="170" y="120" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-11" value="Kernel/Runtime" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="40" y="340" width="110" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-12" value="VM Management &amp;amp; Monitoring" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontStyle=0;fontSize=12;strokeColor=#006EAF;fontColor=#ffffff;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="50" y="220" width="90" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-13" value="&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Dom U&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: rgb(255, 255, 255);&quot;&gt;Linux&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="300" y="170" width="110" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-14" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom U&lt;/font&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Linux&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="420" y="170" width="130" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-15" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom U&lt;/font&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Baremetal ?&lt;br&gt;a RTOS? thinos?&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Zephyr / RTEMS&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="590" y="170" width="80" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-16" value="Kernel" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="170" y="230" width="110" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-17" value="VirtIO Backend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;fontStyle=0;fontSize=12;strokeColor=#006EAF;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="190" y="360" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-18" value="Ethernet" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;fontStyle=0;fontSize=12;strokeColor=#666666;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="190" y="330" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-19" value="Kernel" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="300" y="300" width="110" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-20" value="VirtIO Frontend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;fontStyle=0;fontSize=12;strokeColor=#006EAF;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="320" y="360" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-21" value="Ethernet" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;fontStyle=0;fontSize=12;strokeColor=#666666;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="320" y="330" width="70" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-22" value="Xen Feature" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;fontStyle=0;fontSize=12;strokeColor=#006EAF;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="710" y="150" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-23" value="IO interface" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eeeeee;fontStyle=0;fontSize=12;strokeColor=#36393d;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="710" y="180" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-24" value="OS / Runtime" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="710" y="210" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-25" value="Kernel" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="420" y="320" width="130" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-26" value="Runtime" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontStyle=0;fontSize=12;strokeColor=#d79b00;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="590" y="350" width="80" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-27" value="Light Switch" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="315" y="260" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-28" value="Application" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="710" y="240" width="130" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-29" value="Light Server" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="315" y="240" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-30" value="cFS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;rotation=-90;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="380" y="260.63" width="117.5" height="18.75" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-31" value="Light" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="315" y="220" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-32" value="Light Switch&lt;div&gt;Ground&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=9;strokeColor=#82b366;rotation=0;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="620" y="300" width="50" height="35" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-33" value="Comm App" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=10;strokeColor=#82b366;rotation=0;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="447.5" y="290" width="62.81" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-34" value="Comm Driver" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=8;strokeColor=#82b366;rotation=0;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="590" y="335" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-35" value="Light Switch Vehicle" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=8;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="447.5" y="260" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-36" value="Light Server" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="447.5" y="240" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-37" value="Light" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="447.5" y="220" width="80" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-38" value="Shared Memory" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;fontStyle=0;fontSize=12;strokeColor=#006EAF;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="520" y="310" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-39" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom U&lt;/font&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;RTEMS?&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;color: rgb(63, 63, 63); scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251);&quot;&gt;&lt;span style=&quot;background-color: transparent;&quot;&gt;Zephyr&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="580" y="540" width="80" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="LB0d6yww-TTIQR0R4Ior-40" value="cFS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontStyle=0;fontSize=12;strokeColor=#82b366;rotation=-90;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="540" y="650.63" width="117.5" height="18.75" as="geometry"/>
+                </mxCell>
+                <mxCell id="FDrh0wur0VKddwQHzEGT-0" value="Domain&lt;div&gt;- Partition&lt;/div&gt;&lt;div&gt;- Virtual Machine&lt;/div&gt;&lt;div&gt;&lt;br&gt;VirtIO&lt;/div&gt;&lt;div&gt;- Paravirtualized&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Application(s)&lt;/div&gt;&lt;div&gt;- Task(s)&lt;/div&gt;&lt;div&gt;- Process(s)&lt;/div&gt;&lt;div&gt;- Thread(s)&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" parent="LB0d6yww-TTIQR0R4Ior-1" vertex="1">
+                    <mxGeometry x="720" y="310" width="160" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="0" value="&lt;font style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(255, 255, 255);&quot;&gt;Dom U&lt;/font&gt;&lt;div style=&quot;scrollbar-color: rgb(226, 226, 226) rgb(251, 251, 251); color: rgb(63, 63, 63);&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;dissimilar same SoC???&amp;nbsp; A vs R core on ARM multi-cluster same processor (big / little?)&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#808080;fontColor=#FFFFFF;fontStyle=0;fontSize=14;align=center;verticalAlign=top;" vertex="1" parent="LB0d6yww-TTIQR0R4Ior-1">
+                    <mxGeometry x="380" y="550" width="80" height="240" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
