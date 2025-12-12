@@ -9,6 +9,42 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 **Holiday / Vacations**
 - No meeting Dec 26th and Jan 2nd
 
+## 20251212
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Salim Jalaleddine (Boeing)
+- Leonida Kosmidis (Barcelona Supercomputing Center)
+- Ivan Perez (KBR @ NASA Ames Research)
+- Nagamahesh Gamidi
+- Martin Halle (Hamburg University of Technology)
+- Rob Woolley (Wind River)
+- Michael Mahoney (Wind River)
+
+**Discussion topics**
+
+- [cFS app demo PR](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Live debug of Port to emulated
+  - **ACTION:**(Matt) Ivan asked, how do we navigate Apache licensed code - cFS sample app and ogma code.
+
+- Brainstormed on Xen deployment concepts
+  - PR for comments on diagrams - https://github.com/elisa-tech/wg-aerospace/pull/113/files
+    - [Rendered view](https://github.com/elisa-tech/wg-aerospace/blob/mlw/embedded-envs/demos/docs/embedded-environments/Readme.md)
+  - I also tried to document our existing environment so we have pictures / text to support current demos.
+
+**Open action**
+- Need to consider QEMU time granularity and how we're measuring
+  - e.g. time elapsing vs performance of main system
+  - Ground station currently doesn't understand time
+  - **ACTION:** https://youtu.be/IuE99fzAC00?si=DOzjgl9kEQxHZSli
+    - Matt to ask around in our sim team
+      - https://airbus-seclab.github.io/qemu_blog/timers.html
+      - 
+    - Rob willing to collaborate, Matt volunteered to help
+
+---
+
 ## 20251205
 
 **Attendance**
