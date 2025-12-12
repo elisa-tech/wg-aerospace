@@ -6,6 +6,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Overview
 
+The [Core Flight System (cFS) by NASA](https://github.com/nasa/cFS) is a generic flight software architecture framework used on flagship spacecraft, human spacecraft, cubesats, and Raspberry Pi.
+
 The following instructions assume that you've completed the [Development Setup](./Development.md).
 
 
