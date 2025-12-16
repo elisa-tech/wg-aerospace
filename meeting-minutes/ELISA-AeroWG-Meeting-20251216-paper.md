@@ -4,7 +4,6 @@ Link to contribute live to the Meeting Minutes:
 Link to the Meeting's Zoom event:
 - https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
 
-
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group, Paper-focused Meeting
@@ -22,13 +21,28 @@ Paper meetings are organised as follows:
 # Minutes
 
 ## Tasks from meeting of 27 Nov 2025:
-- (Rob): Problem Statement: Economics: Different distro, kernel... -> Declaring certain sets of requirements and specific versions, may lead to reduced cost -> long-term support for "ELISA-Aero-Linux"
-- Leonidas: (Read paper as-is), what is too much Space and not Aerospace?
-- Shefali: (Read paper as-is), what is too much Space and not Aerospace?
-- [DONE] Martin: System-figure: Decided on today: OK, go ahead; New: Describe in the text
 - [DONE] Martin: HowTo's on Overleaf
+- [DONE] Martin: System-figure: Decided on today: OK, go ahead; New: Describe in the text
+- [DONE] Rob: Problem Statement: Economics: Different distro, kernel... -> Declaring certain sets of requirements and specific versions, may lead to reduced cost -> long-term support for "ELISA-Aero-Linux"
+- [DONE] Leonidas: (Read paper as-is), what is too much Space and not Aerospace?
 
-# Tasks until next meeting:
+## Tasks until next meeting:
+- Leonidas: Proof read (Background): New paragraph related to system
+- Leonidas: (Background) explain common platform and reference https://www.autosar.org/capi
+- Rob: Add clarification open source (Introduction), closed source etc. as discussed
+- Martin: Continue in Background w/ system... ToDo
+- Matt: Move tasks that do not belong to the paper anymore
+- Leonidas: Start ToDo (Background): Avionics specific: Planning, documentation, config management
+- Shefali: (Read paper as-is), what is too much Space and not Aerospace?
+- Naga: (Read paper as-is), what is too much Space and not Aerospace?
+- Michael Mahoney: (Read paper as-is), what is too much Space and not Aerospace?
+- Michael Mahoney: (PRoof-read), content about avioincs / config management.,... if available
+- (All): Read https://www.sciencedirect.com/science/article/pii/S138376212500270X
+
+## Other business
+- Who is the audience
+  - Aerospace background
+  - You may be an expert in Linux > not an expert on running OSes on aircraft
 
 ---
 
@@ -39,7 +53,9 @@ Paper meetings are organised as follows:
 - Martin Halle - Hamburg University of Technology
 - Leonides Kosmidis - BSC
 - Rob Woolley - Wind River
-- Shefali Sharma
+- Shefali Sharma - Devstringx Technologies
+- Hans Weggeman - Wind River
+- Naga - Timesys/Lynx
 
 ## Attended recently in the past
 
