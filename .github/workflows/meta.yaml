@@ -1,0 +1,51 @@
+# SPDX-FileCopyrightText: 2025-2026 wucke13
+#
+# SPDX-License-Identifier: Apache-2.0
+
+on:
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: demos/AvioNix-demo
+
+jobs:
+  check-workflow-packages:
+    name: Check workflow derivation coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Checking each commit to have its derivations covered by CI
+        run: nix run .#check-commits -- nix run .#update-ci -- --check
+  check-fmt:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Checking each commit to be properly formatted
+        run: nix run .#check-commits -- nix fmt -- --ci
+  check-licenses:
+    name: Check licenses using reuse
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - name: Checking each commit to be merged for proper declaration of licenses
+        run: >
+          nix shell .#check-commits nixpkgs#reuse --command
+          reuse lint
