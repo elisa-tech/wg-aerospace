@@ -1,0 +1,74 @@
+# SPDX-FileCopyrightText: 2025 wucke13
+#
+# SPDX-License-Identifier: Apache-2.0
+
+on: [push]
+
+defaults:
+  run:
+    working-directory: demos/yad
+
+env:
+  EXTRA_NIX_FLAGS: --log-format raw-with-logs --print-build-logs
+
+jobs:
+  check:
+    name: Nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: nix flake check
+  build-package:
+    name: ${{ matrix.PACKAGE }} for ${{ matrix.SYSTEM }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        SYSTEM:
+          # TODO make this work well
+          # - "aarch64-linux"
+          - x86_64-linux
+        # Generated using
+        # nix run .#update-ci
+        PACKAGE:
+          - check-commits
+          - minimal-linux-kernel
+          - update-ci
+    steps:
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - id: supported-system
+        name: Skip unsupported builds
+        run: eval nix eval --json .#packages.${{ matrix.SYSTEM }}.${{
+          matrix.PACKAGE }}.meta.available
+      - if: steps.supported-system.conclusion == 'success'
+        run: |
+          # shellcheck disable=SC2086
+          nix build $EXTRA_NIX_FLAGS .#packages.${{ matrix.SYSTEM }}.${{ matrix.PACKAGE }}
+
+  build-nixosConfiguration:
+    name: NixOS on ${{ matrix.NIXOS_CONFIGURATION }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Generated using
+        # nix run .#update-ci
+        NIXOS_CONFIGURATION:
+          - elisa-demo
+          - elisa-demo-cross-x86_64-aarch64
+          - elisa-demo-cross-x86_64-armv7l
+    steps:
+      # The default image contains dozens of gigabytes of tools. NixOS config builds get big. Thus,
+      # remove unused tools (Nix provides for all we need!) to get some space.
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@main
+      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - run: |
+          # shellcheck disable=SC2086
+          nix build $EXTRA_NIX_FLAGS .#nixosConfigurations.${{ matrix.NIXOS_CONFIGURATION }}.config.system.build.toplevel
