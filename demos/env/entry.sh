@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# SPDX-License-Identifier: MIT
+
 set -e
 
 NON_ROOT_USER="user"
@@ -15,10 +18,7 @@ if [[ ! -z "$HOST_UID" ]]; then
         NON_ROOT_USER="mappedUser"
         sudo groupadd -g $HOST_GID $NON_ROOT_USER
         sudo useradd -m -u $HOST_UID -g $HOST_GID -s /bin/bash $NON_ROOT_USER
-        sudo cp -a /home/user/* \
-                /home/user/.bash* \
-                /home/user/.cabal \
-                /home/user/.ghc* \
+        sudo cp -a /home/user/.bash* \
                 /home/user/.profile \
                 /home/$NON_ROOT_USER/
         sudo chown $NON_ROOT_USER:$NON_ROOT_USER /home/$NON_ROOT_USER/ -R

@@ -2,11 +2,15 @@
 #
 # Dockerfile to install Copilot and make it available to the user
 #
+# This file is designed to support a Docker Build on both AMD64 and ARM64
 #
-# This file is specific to versions of Ubuntu strictly before 23.04. After that
-# version, Copilot became included in Ubuntu as a package.
-#
-FROM ubuntu:focal
+FROM ubuntu:26.04
+# Options
+# 22.04, jammy-20260109, jammy
+# 24.04, noble-20260113, noble, latest
+# 25.04, plucky-20251001, plucky
+# 25.10, questing-20251217, questing, rolling
+# 26.04, resolute-20260106.1, resolute, devel
 
 # Avoid questions during installation
 ENV DEBIAN_FRONTEND=noninteractive
@@ -14,46 +18,40 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install dependencies
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y \
-      build-essential \
-      cpio \
-      git \
-      git-lfs \
-      less \
-      locales \
-      screen \
-      sudo \
-      qemu-system-arm \
-      qemu-system-misc \
-      qemu-system-x86 \
-      tmux \
-      unzip \
-      vim \
-      wget \
+    apt-get install -y --no-install-recommends \
+      build-essential=* \
+      cpio=* \
+      git=* \
+      git-lfs=* \
+      less=* \
+      locales=* \
+      screen=* \
+      sudo=* \
+      qemu-system-arm=* \
+      qemu-system-misc=* \
+      qemu-system-x86=* \
+      tmux=* \
+      unzip=* \
+      vim=* \
+      wget=* \
       && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install Copilot dependencies
+# Install Copilot / Haskell via Ogma as depends
 RUN apt-get update && \
-    apt-get install -y \
-      alex \
-      happy \
-      libbz2-dev \
-      libexpat-dev \
-      libz-dev \
-      pkg-config \
-      software-properties-common \
-      && \
-    apt-get -y autoremove && \
-    apt-get -y clean && \
-    rm -rf /var/lib/apt/lists/*
-RUN add-apt-repository ppa:hvr/ghc && \
-    apt-get update && \
-    apt-get install -y \
-      ghc-8.6.5 \
-      cabal-install-2.4 \
+    apt-get install -y --no-install-recommends \
+      alex=3.5.* \
+      happy=1.20.* \
+      ghc=9.6.* \
+      libbz2-dev=1.0.* \
+      libexpat1-dev=2.7.* \
+      libghc-copilot-dev=4.* \
+      zlib1g-dev=1:1.3.dfsg+really1.3.* \
+      ogma=1.10.* \
+      pkg-config=1.8.* \
+      software-properties-common=0.119 \
       && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -63,7 +61,7 @@ RUN add-apt-repository ppa:hvr/ghc && \
 RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     /usr/sbin/locale-gen
 
-# Pass environment variables during build
+# Pass environment variables during a build to represent a version
 ARG CI_COMMIT_SHA="Local"
 ARG CI_PIPELINE_URL="Local"
 ARG DOCKERFILE_AUTHOR="Local"
@@ -83,37 +81,25 @@ RUN echo "Creation Date: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > /.VERSION && \
     cat /.VERSION
 
 # Stage default user
+RUN deluser --remove-home ubuntu || true
 RUN useradd -ms /bin/bash user
 RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \
     && chmod 0440 /etc/sudoers.d/user
+# hadolint ignore=SC2016
 RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH' >> /home/user/.bashrc && \
     chown -R user:user /home/user
-# Transparent uid:gid setup for manual container use
-COPY entry.sh /entry.sh
-RUN chmod 777 /entry.sh && chown root:root /entry.sh
 USER user
 WORKDIR /home/user
 
-# Install Copilot
-ENV PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH
-RUN cabal v2-update
-RUN cabal v2-install --lib \
-    copilot-4.5.1 \
-    copilot-c99-4.5.1 \
-    copilot-interpreter-4.5.1 \
-    copilot-language-4.5.1 \
-    copilot-libraries-4.5.1 \
-    copilot-theorem-4.5.1
+# Transparent uid:gid setup for manual container use
+# Moved here as the copy will always reset cached history for everything that follows
+USER root
+COPY entry.sh /entry.sh
+RUN chmod 777 /entry.sh && chown root:root /entry.sh
+USER user
 
-# Install Ogma
-RUN cd && \
-    git clone https://github.com/nasa/ogma.git && \
-    cd ogma && \
-    cabal v2-install ogma-cli:ogma && \
-    cd && \
-    rm -rf ogma
-
-# Check that tools seem to run
-RUN ghci --version && ogma --help
+# Check that tools seem to run as normal user
+RUN ghci --version && \
+    ogma --help
 
 ENTRYPOINT ["/entry.sh"]
