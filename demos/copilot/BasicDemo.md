@@ -32,6 +32,7 @@ make run
   - ![TMUX environment of Basic Demo](images/tmux.png)
 - In the latter, the command to run is already prepared as:
   - `python3 ../python/switch.py`
+  - Switch between windows using `CTRL+b` and the arrow keys
   - ....which can be run to start the demo
 - To exit the TMUX environment:
   - Press `CTRL+b`

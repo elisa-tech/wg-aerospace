@@ -6,6 +6,7 @@ For more information, contact the working group chair, [Matthew Weber](mailto:ma
 
 * [Upcoming Events](docs/events.md)
 * [Meeting Minutes](meeting-minutes)
+* [Use Cases](docs/Aerospace-Uses-Cases.md)
 * [Resources](docs/resources.md)
 
 ## Schedule

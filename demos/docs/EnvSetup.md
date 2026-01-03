@@ -3,9 +3,9 @@
 This environment utilizes a Docker container.  This gives us the benefit of a consistent environment where applications can run the same way in development, testing, and production. Containers provide isolation, preventing dependencies from interfering with each other, and simplify setup. This approach integrates well with CI/CD pipelines, and fosters collaboration by enabling developers to share environments easily.
 
 Compatible with Docker release/API v27+ in the following Operating Environments.
-- Linux (AMD64)
+- Linux (AMD64/ARM64)
   - Ubuntu 22.04+
-- Windows 10+ (AMD64)
+- Windows 10+ (AMD64/ARM64)
   - Windows Services for Linux (WSL) 2.0 running the "Ubuntu 24.04.1 LTS" Distribution
 
 ## Start Here
@@ -25,6 +25,7 @@ Next, in the shell started above
 - Change directory to your home `cd ~`
 - Clone use case codebase `git clone https://github.com/elisa-tech/wg-aerospace.git` and `cd wg-aerospace`.
 - Navigate to `./demos/env`, run our [environment setup script](../env/setup-env.sh) as a normal user with sudoers rights `bash ./setup-env.sh`. If this script failed with a "Sudo is disabled on that computer" error.  For Windows 11 WSL, to enable Sudo, navigate to Settings > System > For Developers and toggle on the Enable sudo option.
+- Setup so your user can directly use docker `sudo usermod -aG docker "${SUDO_USER:-$USER}"`
 - Start a new shell so that your user gains Docker rights (e.g., could just type `bash` enter).  Then run a test container `docker run hello-world`
 
 The last step is to try out the [Basic Demo](../copilot/BasicDemo.md) using this new environment.
@@ -33,4 +34,4 @@ The last step is to try out the [Basic Demo](../copilot/BasicDemo.md) using this
 
 ### Recreating our Prebuilt Docker image
 
-The [Dockerfile](./Dockerfile) was used in the [AeroWG CICD](https://gitlab.com/elisa-tech/aero-wg-ci/-/blob/main/.gitlab-ci.yml?ref_type=heads) to compose and publish the image into the [registry](https://gitlab.com/elisa-tech/aero-wg-ci/container_registry).  The CICD yml offers an example of how to compose and publish.
+The [Dockerfile](./Dockerfile) was used in the [AeroWG CICD](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/-/blob/main/.gitlab-ci.yml?ref_type=heads) to compose and publish the image into the [registry](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/container_registry).  The CICD yml offers an example of how to compose and publish.

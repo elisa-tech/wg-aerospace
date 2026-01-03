@@ -1,7 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
-# Aerospace Working Group Demostrations
+# Aerospace Working Group Demonstrations
 
 This folder contains a series of examples, documentation, and reference builds to achieve the following goals.
 
@@ -11,13 +11,15 @@ This folder contains a series of examples, documentation, and reference builds t
 - Discussion on how to tailor/capture specific attributes of the system for other use cases
 - Development of new content
 
-## Use case Examples
-
-- [Light Switch](./copilot/Readme.md)
-
 ## Environment Setup
 
 The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.  It will has notes on tool setup and how to retrieve the Docker image.
+
+> TBD tie to our background notes on the [env](../demos/docs/embedded-environments/Readme.md)
+
+## Use case Examples
+
+- [Light Switch](./copilot/Readme.md)
 
 ## Development
 

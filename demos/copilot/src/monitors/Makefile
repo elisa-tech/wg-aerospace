@@ -1,6 +1,20 @@
-# License: SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT
 
-CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:latest
+# Figure out the host OS so we grab the right SDK (e.g., host tools arch matches)
+ARCH := $(shell uname -m)
+$(info Detected architecture: $(ARCH))
+MIN_OS_URL = https://gitlab.com/api/v4/projects/71533173/packages/generic/min-kernel-debug/1.0.0
+ifeq ($(ARCH), x86_64)
+    MIN_ARCHIVE = archive.tar
+    CROSS_TOOLCHAIN=aarch64-buildroot-linux-musl_sdk-buildroot
+    CROSS_PREFIX=aarch64-linux
+else ifeq ($(ARCH), aarch64)
+    MIN_ARCHIVE = host-arm64/archive.tar
+    CROSS_TOOLCHAIN=aarch64-buildroot-linux-gnu_sdk-buildroot
+    CROSS_PREFIX=aarch64-none-linux-gnu
+endif
+
+CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2275691495
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
 CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
@@ -8,11 +22,11 @@ CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" 
 RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG))
 RUN_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG))
 RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG))
-DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors &&)
-DEMO_CHDIR_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/copilot/src/monitors &&)
+DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors)
+DEMO_CHDIR_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/copilot/src/monitors)
 
-CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
-CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
+CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) &&)
+CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) &&)
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
@@ -22,19 +36,21 @@ default: main_syslog main_syslog_local main_syslog_time
 
 # Defaulting to docker as prefered because of the setup complexities with environments.
 # See CoPilot docs for manually configuring an environment which supports haskell.
+# The Container build is documented under <toplevel>/demos/env/Readme.md
 prep:
 	docker pull $(CONTAINER_IMG)
 
+# The embedded builds are documented under <toplevel>/demos/docs/embedded-environments/Readme.md
 prep_cross: prep prep_cross_clean
-	@if [ ! -f "archive.tar" ]; then \
-		wget "https://gitlab.com/api/v4/projects/71533173/packages/generic/min-kernel-debug/1.0.0/archive.tar" -O archive.tar; \
+	@if [ ! -e "archive.tar" ]; then \
+		wget "$(MIN_OS_URL)/$(MIN_ARCHIVE)" -O archive.tar; \
 	fi
 	tar xf archive.tar
-	tar xf aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz && rm -f aarch64-buildroot-linux-musl_sdk-buildroot.tar.gz
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot && ./relocate-sdk.sh'
+	tar xf $(CROSS_TOOLCHAIN).tar.gz && rm -f $(CROSS_TOOLCHAIN).tar.gz
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/$(CROSS_TOOLCHAIN) && sudo apt update && sudo apt install -y file && ./relocate-sdk.sh'
 
 prep_cross_clean:
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf aarch64-buildroot-linux-musl_sdk-buildroot* Image rootfs.cpio* extracted_cpio archive.tar'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf $(CROSS_TOOLCHAIN)* Image rootfs.cpio* extracted_cpio archive.tar'
 
 env-debug:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
@@ -61,7 +77,7 @@ main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 
 main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && /demo/monitors/$(CROSS_TOOLCHAIN)/bin/$(CROSS_PREFIX)-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf extracted_cpio && mkdir -p extracted_cpio && gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed && cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio || true'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cp -rf  ../python ../tests  ./extracted_cpio/root/'
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && mkdir ./extracted_cpio/root/monitors && cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time && 	chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time'
