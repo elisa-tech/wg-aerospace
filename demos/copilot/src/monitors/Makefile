@@ -1,6 +1,6 @@
 # License: SPDX-License-Identifier: MIT
 
-CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:latest
+CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg-ci/copilot:2249410795
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
 CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
@@ -11,8 +11,8 @@ RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm 
 DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors &&)
 DEMO_CHDIR_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/copilot/src/monitors &&)
 
-CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
-CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) export "PATH=$$PATH:/opt/ghc/8.6.5/bin/" &&)
+CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) export "PATH=$$PATH:/home/user/.local/bin/:/home/user/.cabal/bin:/opt/.ghcup/bin" &&)
+CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) export "PATH=$$PATH:/home/user/.local/bin/:/home/user/.cabal/bin:/opt/.ghcup/bin" &&)
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
