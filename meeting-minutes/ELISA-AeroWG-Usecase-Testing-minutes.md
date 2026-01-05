@@ -2,12 +2,55 @@
 
 Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688254268?password=d7353f64-663f-4b53-8a8f-1e7b2ab7aa05
 
-**Parking lot:**
-- Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
-- Dec 5th call - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
-
 **Holiday / Vacations**
 - No meeting Dec 26th and Jan 2nd
+
+**Parking lot:**
+- Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
+- (Jan 2026?) - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
+- Need to consider QEMU time granularity and how we're measuring
+  - e.g. time elapsing vs performance of main system
+  - Ground station currently doesn't understand time
+  - **ACTION:** https://youtu.be/IuE99fzAC00?si=DOzjgl9kEQxHZSli
+    - Matt to ask around in our sim team
+      - https://airbus-seclab.github.io/qemu_blog/timers.html
+
+
+## 20251219
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Salim Jalaleddine (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Rob Woolley (Wind River)
+- Nagamahesh Gamidi (Timesys / Lynx)
+- Leonida Kosmidis (Barcelona Supercomputing Center)
+- Ivan Rodriguez (Coros Space)
+
+**Discussion topics**
+
+cFS demo work
+- (Matt) Sent email to ELISA leadership about navigating demo licenses
+- Action - sync license on main site
+
+Checkout the PR of different environments
+- What about Xen step one is emulated, but then on hw?????
+  - How do we couple to hardware?(Martin)
+  - low cost? what is enough to have HW that has the ISA hooks?  RPI2/3 vs Ultrascale+  (Leonidas)
+  - https://www.amd.com/en/products/system-on-modules/kria/k26/kv260-vision-starter-kit.html
+- ACTION: (Matt talk with Peter) Static vs dynamic allocation - how do we align the common topics vs the items that are different
+
+Developing on native ARM64
+- [Section 9 has discussion](https://upcommons.upc.edu/entities/publication/f95e76b3-4571-48a4-b058-729cb5f50006) on targeting a native scenario
+- Martin - starting a branch and we (Matt W) can start to look at the features
+  - Possible team: Martin, Matt, Ivan Rodriguez (-> Experiences on ARM targets)
+
+Fault injection / ARM reliabilty
+- Ivan discussed concepts that could related to future use case demos
+- (Matt) follow up on future call presentations
+  
+---
 
 ## 20251212
 
@@ -33,15 +76,6 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
     - [Rendered view](https://github.com/elisa-tech/wg-aerospace/blob/mlw/embedded-envs/demos/docs/embedded-environments/Readme.md)
   - I also tried to document our existing environment so we have pictures / text to support current demos.
 
-**Open action**
-- Need to consider QEMU time granularity and how we're measuring
-  - e.g. time elapsing vs performance of main system
-  - Ground station currently doesn't understand time
-  - **ACTION:** https://youtu.be/IuE99fzAC00?si=DOzjgl9kEQxHZSli
-    - Matt to ask around in our sim team
-      - https://airbus-seclab.github.io/qemu_blog/timers.html
-      - 
-    - Rob willing to collaborate, Matt volunteered to help
 
 ---
 
