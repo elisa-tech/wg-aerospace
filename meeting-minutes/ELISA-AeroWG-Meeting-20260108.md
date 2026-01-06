@@ -12,12 +12,44 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Agenda / Minutes
 
+- Review last call's minutes - https://github.com/elisa-tech/wg-aerospace/pull/112/files
+
 ## Old topics
+
+- Automotive Grade Linux [SoDev architecture](https://www.automotivelinux.org/announcements/sodev/)
+  - [Notional AeroWG env/scenarios](https://github.com/elisa-tech/wg-aerospace/pull/113/files) we could map to SoDev
+
+- Requirements for OS used in Use-Cases - [Product Profile template](../docs/product-profiles.md#template---name-of-notional-system)
+  - Comments are still welcome on [the merged PR](https://github.com/elisa-tech/wg-aerospace/pull/112/files#diff-963b6c432c9167c6ff9b914734bc978258dbd95b4c2b04f11a17b2b263e21a21R82)
 
 ## New topics
 
+### Open PRs?
+
+https://github.com/elisa-tech/wg-aerospace/pulls
+
+### Space artifacts / awareness email from SGL list
+
+https://lists.elisa.tech/g/space-grade-linux/message/142
+
+- Having a set of verifiable requirements for Linux
+- Being able to reduce down the scope/resources (this is why yocto is popular)
+  - Run on the smallest amount of resources/slow hardware, radiation tolerant hardware is still generations behind and single core (since multi-core V&V is much harder)
+- Tests and evidence of meeting requirements and functionality
+  - In space, we care more about reliability, control, and known actions
+-  Security aspects (While I do not need all the controls from NIST SP 800-53, we need to be able to show proper security)
+-  Real-time constraints
+-  Protection from Common-Cause failures
+-  Awareness of contributors and IP rights, and ITAR/EAR Laws
+   - Some uses will not allow “unknown” or foreign contributors
+
 ## Tasks until next meeting
 
+### Interest in ISO26262 vs DO-330 tool certification (presentation in Jan / Feb)?
+
+- It would have ties to paper development
+- What about Space certifications/tools?
+- ACTION: Matt will reach out to those that offered to discuss
 
 ---
 
