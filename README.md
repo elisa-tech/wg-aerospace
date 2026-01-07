@@ -28,4 +28,4 @@ To get started, checkout the [Demo(s)](demos/Readme.md).
 ## External Links
 * [ELISA Home](https://elisa.tech/)
 * [ELISA Aerospace on GitHub](https://github.com/elisa-tech/wg-aerospace)
-* [ELISA Tech Steering Committee](https://mensuel.framapad.org/p/elisa-tsc-minutes-a9tp)
+* [ELISA Tech Steering Committee](https://semestriel.framapad.org/p/elisa-tsc-minutes)
