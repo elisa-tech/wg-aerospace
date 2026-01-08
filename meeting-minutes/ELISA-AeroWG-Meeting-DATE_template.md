@@ -47,15 +47,19 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Gary Crum - Voyager
 - Iain Galloway - NXP Semiconductors
 - Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Joshua Whitehead - Boeing
 - Justin Pearson - Lynx Software
 - Laurent Meilleur
 - Lenka Koskova - TUL CZ
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
 - Macarena Sagredo
 - Manuel Beltran - Boeing
 - Martin Halle - Hamburg University of Technology
 - Matt Kelly - Boeing
 - Matt Weber - Boeing
 - Michael Epley - Redhat
+- Michael Mahoney - Wind River
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
 - Naga - Timesys/Lynx
