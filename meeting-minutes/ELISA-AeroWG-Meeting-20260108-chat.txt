@@ -1,0 +1,89 @@
+2026-01-08 10:04:58 From Matthew Weber (Boeing) to Everyone:
+	Link to contribute live to the Meeting Minutes:
+- https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ?both
+	
+2026-01-08 10:05:47 From Philip Balister (OpenEmbedded) to Everyone:
+	FOSDEM?
+	
+2026-01-08 10:06:05 From Tim Bird (Sony Group Corporation) to Everyone:
+	I had hoped to, but unfortunately no.
+	Philip Balister (OpenEmbedded):😢
+	
+2026-01-08 10:08:53 From Michael Monaghan to Everyone:
+	Stepping away for another meeting
+	
+2026-01-08 10:09:16 From Ivan to Everyone:
+	brb
+	
+2026-01-08 10:15:11 From Matthew Weber (Boeing) to Everyone:
+	@Leonidas Kosmidis (Barcelona Supercomputing Center)  https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ?edit=&stext=1576%3A45%3A1%3A1767888899%3AgWZSkJ
+	
+2026-01-08 10:16:39 From Ivan to Everyone:
+	Mon 3 - Fri 7 August 2026 Pasadena, California, United States
+	
+2026-01-08 10:18:58 From Matthew Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/pull/112/files
+	
+2026-01-08 10:20:23 From Matthew Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/pull/113/files
+	
+2026-01-08 10:21:52 From Matthew Weber (Boeing) to Everyone:
+	https://www.automotivelinux.org/announcements/sodev/
+	
+2026-01-08 10:27:36 From Matthew Weber (Boeing) to Everyone:
+	https://lists.elisa.tech/g/space-grade-linux/message/142
+	
+2026-01-08 10:41:17 From Wanja Zaeske (DLR) to Everyone:
+	This was our research-y attempt at doing partitioning based on namespaces and cgroups:
+	
+	https://github.com/DLR-FT/arinc653-wasm
+	
+2026-01-08 10:41:57 From Matthew Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/pull/115
+	
+2026-01-08 10:44:28 From Matthew Weber (Boeing) to Everyone:
+	https://github.com/elisa-tech/wg-aerospace/issues/114
+	
+2026-01-08 10:55:20 From Rob Woolley (Wind River Systems, Inc.) to Everyone:
+	Sorry, need to drop 
+	
+2026-01-08 10:56:58 From Ivan to Everyone:
+	How does using Nix overlap / conflict with the use of Yocto that was being proposed elsewhere
+	
+2026-01-08 10:58:14 From Wanja Zaeske (DLR) to Everyone:
+	It is an alternative. My experience with yocto was mixed, the system has much more vendor support, but is less disciplined
+	
+2026-01-08 10:58:42 From Ivan to Everyone:
+	I don't know if my question was heard.
+	
+2026-01-08 10:58:49 From Martin Halle (Hamburg University of Technology - Institute of Aircraft Systems Engineering) to Everyone:
+	Partially
+	
+2026-01-08 10:58:50 From Ivan to Everyone:
+	My question is: Nix has a very steep learning curve
+	
+2026-01-08 10:59:12 From Leonidas Kosmidis (Barcelona Supercomputing Center) to Everyone:
+	we can hear you
+	
+2026-01-08 10:59:15 From Martin Halle (Hamburg University of Technology - Institute of Aircraft Systems Engineering) to Everyone:
+	Yes, we can hear you.
+	
+2026-01-08 10:59:36 From Philip Balister (OpenEmbedded) to Everyone:
+	I need to drop also
+	
+2026-01-08 10:59:56 From Leonidas Kosmidis (Barcelona Supercomputing Center) to Everyone:
+	Thank you all, I need to drop. Talk to you soon
+	
+2026-01-08 11:01:06 From Ivan Rodriguez (Coros Space) to Everyone:
+	I need to drop also
+	
+2026-01-08 11:03:50 From Ivan to Everyone:
+	Sorry, I need to drop.
+	
+2026-01-08 11:04:43 From Tim Bird (Sony Group Corporation) to Everyone:
+	Need to drop.
+	
+2026-01-08 11:08:42 From Martin Halle (Hamburg University of Technology - Institute of Aircraft Systems Engineering) to Everyone:
+	I need to drop out now as well, otherwise I will not make it home...
+	Matthew Weber (Boeing):👍
+	

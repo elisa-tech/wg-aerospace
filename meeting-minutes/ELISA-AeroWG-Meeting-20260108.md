@@ -1,5 +1,5 @@
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+- https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ?both
 
 Link to the Meeting's Zoom event:
 - https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
@@ -18,23 +18,57 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 - Automotive Grade Linux [SoDev architecture](https://www.automotivelinux.org/announcements/sodev/)
   - [Notional AeroWG env/scenarios](https://github.com/elisa-tech/wg-aerospace/pull/113/files) we could map to SoDev
+  - The intent is to tie our work with ELISA Sys WG that is aligned with this SoDev efforts.  
+  - I.e., We'd express how our area would approach aspects and why (most likely using the Product aspects in the template below.)
+
 
 - Requirements for OS used in Use-Cases - [Product Profile template](../docs/product-profiles.md#template---name-of-notional-system)
   - Comments are still welcome on [the merged PR](https://github.com/elisa-tech/wg-aerospace/pull/112/files#diff-963b6c432c9167c6ff9b914734bc978258dbd95b4c2b04f11a17b2b263e21a21R82)
 
 ## New topics
 
-### Open PRs?
+### RISC-V in Space
+
+- There is a space-focused SIG call -- "Capture requirements relevant to space"
+- If you are interested, join the mailing list: https://lists.riscv.org/g/sig-space/messages
+- You can become a member as individuals (it's free) or through your organization if they are already a member (there is a membership fee, with exception for open source organizations, but you need to apply for them)
+- Once you are a member, you can join the weekly calls (unlike ELISA, the calls are only open to members).
+- The first call will be on January 8,2026
+- There are also TG/WG/SIGs for Functional Safety, Automotive, Post Quantum Crypto etc which might be interesting for ELISA Aerospace Group.
+- Feel free to join the corresponding mailing lists and join the calls. Call calendar: https://tech.riscv.org/calendar/
+- SIG Space Proposal of Work: https://riscv.atlassian.net/wiki/spaces/SPC/pages/543719540/Space+SIG+PoW
+
+### Open PRs
 
 https://github.com/elisa-tech/wg-aerospace/pulls
+
+#### Wanja Demo examples
+
+- Description in https://github.com/elisa-tech/wg-aerospace/issues/114
+- Looking at concepts on making demo examples less complicated
+  - PR proposes an example concept based off the issue points
+  - Builds a kernel / ramfs, no application
+- Meeting feedback
+  - Action -> encouraged others to review
+  - Still within existing use cases - looking to refine to the basics of the demo
+  - Question Ivan: Does Nix (with a steep learning curve) is OK to use or introduce hurdles?
+  - General question: Who would be happy to use Nix environment and contribute to this new environment?
+  - General feedback (trials on the PR) are welcome!
 
 ### Space artifacts / awareness email from SGL list
 
 https://lists.elisa.tech/g/space-grade-linux/message/142
 
+[Points from Scott's email]
+
 - Having a set of verifiable requirements for Linux
 - Being able to reduce down the scope/resources (this is why yocto is popular)
   - Run on the smallest amount of resources/slow hardware, radiation tolerant hardware is still generations behind and single core (since multi-core V&V is much harder)
+  - [From Aero call]
+    - Definitely two camps of old and new approach with resource impact vs. safety vs. constraining requirements - For sure a challenge for SGL to address
+    - Do we use linux for partitioning?  How far can Linux isolation address requirements?
+    - [Manuel] DO-178C historically has more structured guidelines and objectives to approach partitioning.  This would need reestablished if doing Linux alone.
+    - [Wanja] This was our research-y attempt at doing partitioning based on namespaces and cgroups: https://github.com/DLR-FT/arinc653-wasm
 - Tests and evidence of meeting requirements and functionality
   - In space, we care more about reliability, control, and known actions
 -  Security aspects (While I do not need all the controls from NIST SP 800-53, we need to be able to show proper security)
@@ -44,6 +78,8 @@ https://lists.elisa.tech/g/space-grade-linux/message/142
    - Some uses will not allow “unknown” or foreign contributors
 
 ## Tasks until next meeting
+
+- Fix invites as Jan/Feb are mixed up with an extra week.
 
 ### Interest in ISO26262 vs DO-330 tool certification (presentation in Jan / Feb)?
 
@@ -57,6 +93,21 @@ https://lists.elisa.tech/g/space-grade-linux/message/142
 
 ## Attended this meeting
 
+- Matt Weber - Boeing
+- Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Josh Whitehead - Boeing
+- Wanja Zaeske - DLR
+- Manuel Beltran - Boeing
+- Michael Mahoney - Wind River
+- Michael Monaghan - NASA Goddard
+- Martin Halle - Hamburg University of Technology
+- Philip Balister - OpenEmbedded
+- Tim Bird - Sony
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Shefali Sharma
+- Rob Woolley - Wind River
+- Laurent Meilleur
 
 ## Attended recently in the past
 
@@ -79,15 +130,19 @@ https://lists.elisa.tech/g/space-grade-linux/message/142
 - Gary Crum - Voyager
 - Iain Galloway - NXP Semiconductors
 - Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Joshua Whitehead - Boeing
 - Justin Pearson - Lynx Software
 - Laurent Meilleur
 - Lenka Koskova - TUL CZ
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
 - Macarena Sagredo
 - Manuel Beltran - Boeing
 - Martin Halle - Hamburg University of Technology
 - Matt Kelly - Boeing
 - Matt Weber - Boeing
 - Michael Epley - Redhat
+- Michael Mahoney - Wind River
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
 - Naga - Timesys/Lynx
