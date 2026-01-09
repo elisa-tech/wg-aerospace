@@ -36,7 +36,7 @@
 2026-01-08 10:41:17 From Wanja Zaeske (DLR) to Everyone:
 	This was our research-y attempt at doing partitioning based on namespaces and cgroups:
 	
-	https://github.com/DLR-FT/arinc653-wasm
+	https://github.com/dlr-ft/a653rs-linux
 	
 2026-01-08 10:41:57 From Matthew Weber (Boeing) to Everyone:
 	https://github.com/elisa-tech/wg-aerospace/pull/115
