@@ -57,6 +57,8 @@ jobs:
         # nix run .#update-ci
         NIXOS_CONFIGURATION:
           - elisa-demo
+          - elisa-demo-aarch64
+          - elisa-demo-cross-aarch64-x86_64
           - elisa-demo-cross-x86_64-aarch64
           - elisa-demo-cross-x86_64-armv7l
     steps:
