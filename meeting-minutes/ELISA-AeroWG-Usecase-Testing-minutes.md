@@ -3,7 +3,6 @@
 Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688254268?password=d7353f64-663f-4b53-8a8f-1e7b2ab7aa05
 
 **Holiday / Vacations**
-- No meeting Dec 26th and Jan 2nd
 
 **Parking lot:**
 - Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
@@ -15,6 +14,63 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
     - Matt to ask around in our sim team
       - https://airbus-seclab.github.io/qemu_blog/timers.html
 
+## 20260109
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Salim Jalaleddine (Boeing)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Software)
+- Joshua Whitehead (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Wanja Zaeske (DLR)
+
+**Discussion topics**
+
+NASA vs DO-178C standards comparison (older action)
+
+- Ivan discussed internally - feedback was that they are overlapping and 1:1
+- Leonidas shared minor differences that could be mapped out (Action, sharing a link)
+  - https://flightsoftware.org/workshop/FSW2024 Andoni Arregui, Enhancing Safety-Critical Class-A FSW through MC/DC and Object-to-Source Traceability Verification Guidelines, tools, and examples https://drive.google.com/drive/folders/1SNGQFT-EEIl_uJ282Apv3MtwJkjrURpC
+- Ivan - NPR7150 says: "If a project has safety-critical software, the project manager shall ensure that there is 100 percent code test coverage using the Modified Condition/Decision Coverage (MC/DC) criterion for all identified safety-critical software components."  I would not consider that you've achieved coverage of the safety-crticial component if you don't do it on the object code unless your compiler is certified.
+  - Added this to: https://github.com/elisa-tech/wg-aerospace/discussions/102
+
+cFS demo
+
+- ACTION: Ivan will clean up and get ready for merge - https://github.com/elisa-tech/wg-aerospace/pull/109
+- Testing is still welcomed!
+
+Formal verification copilot
+
+- Analysis of specification at compile time based on property definition
+- Formal verification ref links
+  - https://github.com/Copilot-Language/copilot/
+  - https://github.com/Copilot-Language/copilot/tree/master/copilot-theorem
+  - https://github.com/Copilot-Language/copilot/blob/master/copilot/examples/what4/Arithmetic.hs
+  - https://github.com/Copilot-Language/copilot/tree/master/copilot-verifier
+- Discussion/links on verifier - https://github.com/elisa-tech/wg-aerospace/issues/114#issuecomment-3725070025
+- Ogma generates tests based on specification
+
+System / Xen demo
+
+- Starting from https://github.com/elisa-tech/wg-systems/blob/main/Documentation/xen-demo-zcu102/Readme.md  and making it emulated
+- Basic xen based on this proposal - https://github.com/elisa-tech/wg-aerospace/pull/113/files
+- HPSC could be a follow on demo
+  - Leonidas offered to make a model
+  - Action: Matt poke at Microchip again on this
+  - People are using other boards for RISC-V to work around access
+- ACTION: Josh - plans to present in main call on Xen and how system wg applies in a different way to Aerospace
+- Make a couple diagrams to draw safety levels on concepts? Does this help outline the next step?
+- What level of safety certs were being done in the past on Linux?  How would this play in?
+
+Cleanup of use case ideas
+
+- https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#new-use-cases
+- Point them at discussions instead of listing in the case
+- Rename the file
 
 ## 20251219
 
