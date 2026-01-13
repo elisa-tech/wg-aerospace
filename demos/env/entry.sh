@@ -18,6 +18,7 @@ if [[ ! -z "$HOST_UID" ]]; then
         sudo cp -a /home/user/* \
                 /home/user/.bash* \
                 /home/user/.cabal \
+                /home/user/.local \
                 /home/user/.ghc* \
                 /home/user/.profile \
                 /home/$NON_ROOT_USER/
