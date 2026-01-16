@@ -1,8 +1,10 @@
 # Aerospace Uses Cases
 
-This document is a work in progress and has not been approved for use outside of the ELISA aerospace working group. 
+This document is a work in progress and has not been approved for use outside of the ELISA aerospace working group.
 
 ## Use Case: Cabin Lights
+
+The purpose of this use case is to implement an benchmark of a NASA's Core Flight System running on a custom kernel, inside QEMU, and determine whether messages are arriving to their destinations in time.
 
 Low DAL (D or lower) - blackbox level - functionally meets expectations
 
@@ -16,7 +18,7 @@ Hardware:
 * Computing device (platform) running the Apps
 * Connectivity is an Ethernet bus (messages can be lost or corrupted)
   * Options for assuring communication
-    * Send periodic message of current state 
+    * Send periodic message of current state
     * Or? acknowledge messages from application
     * Or? poll both sensor and actuator
 
@@ -24,7 +26,7 @@ Software Functions ("Apps"):
 * Switch App
 * Cabin Lights App
   * Application is waiting on the switch socket for a message, wakes up when message available
-  * When awoken, 
+  * When awoken,
     * application creates a message with new light state and sends on the light socket
     * log the event
     * yield?, goes back to waiting on switch socket
@@ -39,8 +41,23 @@ Software Functions ("Apps"):
 
 ### System Requirements
 
+* The Cabin Lights system is implemented as a cFS application.
+* The light switching system is implemented as a cFS application.
 * The Cabin Lights system shall turn lights on in less than 500 ms of the light switch turning on
 * The Cabin Lights system shall turn lights off in less than 500 ms of the light switch turning off
+
+### Proposed Plan
+
+We propose to progressively work towards this implementation by turning each
+element from the current demonstration into a cFS element, one at a time.
+
+1. Demonstrate sending a message to existing sample application in cFS.
+
+2. Demonstrate monitoring event from that application from within cFS.
+
+3. Make application for lights; send command from external system, monitor from within cFS.
+
+4. Make application for switch; send command through the SB, monitor from within cFS.
 
 ### Use Case Description for scenario "One Device"
 
@@ -48,7 +65,7 @@ Single computer with single function (="APP")
 
 [SENS] <-[ETH_MAC]-> [APP] <-[ETH_MAC]-> [ACT]
 
-- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
+- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator.
 - Smart sensor/actor w/ software and stack?
 - Best effort scheduling of IO processing that's tested for perceived worst case. (No monitor or scheduler based guarantee other then planned scheduler bandwidth/capacity margin)
 - How would a system architecture look like to close the signal/application loop? (7 voters in total)
@@ -67,7 +84,7 @@ Single computer with single function (="APP")
   - Comment on votes: (1 non-voter)
 - Comment: This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS. >> But an OS is implied for the Use-Case!
 
-#### Test 
+#### Test
 
 Items to key on
   - Logging check
@@ -90,28 +107,28 @@ Test environment
     graph TD
         subgraph QEMU_Environment_Unit_Under_Test
             direction TB
-        Ethernet_Bridge
-            App[2.Cabin Lights App] 
-            Log[Logging App]
+        Software_Bus[Software Bus]
+            App[2.Cabin Lights App]
             Sensor[1.Switch App]
             Actuator[3.Cabin Light]
 
         subgraph Monitor
             direction TB
-            Copilot[CoPilot]
+            Copilot[Copilot]
         end
 
         end
 
 
 
-        App -->|Interacts with| Log
-        Sensor -->|Sends State Msg| Ethernet_Bridge
-        Copilot -->|Sniffer| Ethernet_Bridge
-        Ethernet_Bridge -->|Sends State Msg| App
-        App -->|Control Msg| Ethernet_Bridge
-        Ethernet_Bridge -->|Control Msg| Actuator
-        Copilot -->|Log tail| Log
+        Sensor       -->|E#58; Switch status change| Software_Bus
+        App          -->|C#58; Turn lights on/off| Software_Bus
+        Actuator     -->|E#58; Turned lights on/off| Software_Bus
+        Copilot      -->|E#58; Violation| Software_Bus
+        Software_Bus -->|E#58; Switch status change| App
+        Software_Bus -->|C#58; Turn lights on/off| Actuator
+        Software_Bus -->|C#58; Turn lights on/off| Copilot
+        Software_Bus -->|E#58; Turned lights on/off| Copilot
 
         style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
         style Monitor fill:#bbf,stroke:#333,stroke-width:2px;
@@ -337,5 +354,5 @@ Renode
   - From: https://digitalcommons.calpoly.edu/cgi/viewcontent.cgi?article=1720&context=eesp
   - "the PolySat software architecture runs entirely on a custom Linux operating system"
   - Maybe a group for user feedback for what we define (design, prototype)
-- https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 
+- https://www.jpl.nasa.gov/missions/mars-cube-one-marco/
 - https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
