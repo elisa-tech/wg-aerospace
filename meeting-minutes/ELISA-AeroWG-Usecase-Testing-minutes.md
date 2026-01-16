@@ -5,14 +5,54 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 **Holiday / Vacations**
 
 **Parking lot:**
+
+- Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 - Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
-- (Jan 2026?) - suggesting we talk about the ELISA SystemWG Xen reference systems (docs, builds, testing)
-- Need to consider QEMU time granularity and how we're measuring
-  - e.g. time elapsing vs performance of main system
-  - Ground station currently doesn't understand time
-  - **ACTION:** https://youtu.be/IuE99fzAC00?si=DOzjgl9kEQxHZSli
-    - Matt to ask around in our sim team
-      - https://airbus-seclab.github.io/qemu_blog/timers.html
+
+
+## 20260116
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Joshua Whitehead (Boeing)
+
+**Discussion topics**
+
+License - use of Apache is still ongoing with ELISA TSC (cFS and Nix work)  - Wed Jan 21st agenda topic
+
+FSW March 23-26th - Paper accepted for "Industry Safety Level(s) vs. Aerospace Use Cases"
+- Matt will share a outline with some overview from ELISA annual call for review
+- Will want to collaborate on the demo and the points we want this community to take away
+
+QEMU overview / examples (Martin)
+- Leonidas mentioned he could do some overview
+- Maybe a good general call topic? (call between SGL/Aero)
+  - Feb 12 AeroWG or 19th SGL
+  - ACTION: Matt to mention to Ramon. Leonidas to check on dates and update us at the next call
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+- [Cross platform tool env](https://github.com/elisa-tech/wg-aerospace/pull/117/files)
+  - Added comments on upgrading parts which may remove source builds/shorten time
+  - Doc source builds
+- [feat: add Nix based ELISA demo framework](https://github.com/elisa-tech/wg-aerospace/pull/115)
+  - Ivan had a follow on.  Matt and Martin still to try it out
+  - Pending licensing
+- [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Waiting on license
+- [First step towards cFS-based use case](https://github.com/elisa-tech/wg-aerospace/pull/92)
+  - ACTION: Ivan is rebase and rename
+  - We did a cleanup in the call
+
+Move new cases to discussion ideas (Matt)
+- https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#new-use-cases
+  - Created - https://github.com/elisa-tech/wg-aerospace/discussions/119#discussioncomment-15519062
+  - TODO: update Landing doc - Point them at discussions instead of listing in the case
+  - Make this update after PR92
 
 ## 20260109
 
