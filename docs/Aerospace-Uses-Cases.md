@@ -4,6 +4,8 @@ This document is a work in progress and has not been approved for use outside of
 
 ## Use Case: Cabin Lights
 
+The purpose of this use case is to implement an benchmark of a NASA's Core Flight System running on a custom kernel, inside QEMU, and determine whether messages are arriving to their destinations in time.
+
 Low DAL (D or lower) - blackbox level - functionally meets expectations
 
 ### System Architecture
@@ -39,8 +41,23 @@ Software Functions ("Apps"):
 
 ### System Requirements
 
+* The Cabin Lights system is implemented as a cFS application.
+* The light switching system is implemented as a cFS application.
 * The Cabin Lights system shall turn lights on in less than 500 ms of the light switch turning on
 * The Cabin Lights system shall turn lights off in less than 500 ms of the light switch turning off
+
+### Proposed Plan
+
+We propose to progressively work towards this implementation by turning each
+element from the current demonstration into a cFS element, one at a time.
+
+1. Demonstrate sending a message to existing sample application in cFS.
+
+2. Demonstrate monitoring event from that application from within cFS.
+
+3. Make application for lights; send command from external system, monitor from within cFS.
+
+4. Make application for switch; send command through the SB, monitor from within cFS.
 
 ### Use Case Description for scenario "One Device"
 
@@ -90,28 +107,28 @@ Test environment
     graph TD
         subgraph QEMU_Environment_Unit_Under_Test
             direction TB
-        Ethernet_Bridge
+        Software_Bus[Software Bus]
             App[2.Cabin Lights App]
-            Log[Logging App]
             Sensor[1.Switch App]
             Actuator[3.Cabin Light]
 
         subgraph Monitor
             direction TB
-            Copilot[CoPilot]
+            Copilot[Copilot]
         end
 
         end
 
 
 
-        App -->|Interacts with| Log
-        Sensor -->|Sends State Msg| Ethernet_Bridge
-        Copilot -->|Sniffer| Ethernet_Bridge
-        Ethernet_Bridge -->|Sends State Msg| App
-        App -->|Control Msg| Ethernet_Bridge
-        Ethernet_Bridge -->|Control Msg| Actuator
-        Copilot -->|Log tail| Log
+        Sensor       -->|E#58; Switch status change| Software_Bus
+        App          -->|C#58; Turn lights on/off| Software_Bus
+        Actuator     -->|E#58; Turned lights on/off| Software_Bus
+        Copilot      -->|E#58; Violation| Software_Bus
+        Software_Bus -->|E#58; Switch status change| App
+        Software_Bus -->|C#58; Turn lights on/off| Actuator
+        Software_Bus -->|C#58; Turn lights on/off| Copilot
+        Software_Bus -->|E#58; Turned lights on/off| Copilot
 
         style QEMU_Environment_Unit_Under_Test fill:#f9f,stroke:#333,stroke-width:2px;
         style Monitor fill:#bbf,stroke:#333,stroke-width:2px;
