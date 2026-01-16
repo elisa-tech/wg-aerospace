@@ -1,6 +1,6 @@
 # Aerospace Uses Cases
 
-This document is a work in progress and has not been approved for use outside of the ELISA aerospace working group. 
+This document is a work in progress and has not been approved for use outside of the ELISA aerospace working group.
 
 ## Use Case: Cabin Lights
 
@@ -16,7 +16,7 @@ Hardware:
 * Computing device (platform) running the Apps
 * Connectivity is an Ethernet bus (messages can be lost or corrupted)
   * Options for assuring communication
-    * Send periodic message of current state 
+    * Send periodic message of current state
     * Or? acknowledge messages from application
     * Or? poll both sensor and actuator
 
@@ -24,7 +24,7 @@ Software Functions ("Apps"):
 * Switch App
 * Cabin Lights App
   * Application is waiting on the switch socket for a message, wakes up when message available
-  * When awoken, 
+  * When awoken,
     * application creates a message with new light state and sends on the light socket
     * log the event
     * yield?, goes back to waiting on switch socket
@@ -48,7 +48,7 @@ Single computer with single function (="APP")
 
 [SENS] <-[ETH_MAC]-> [APP] <-[ETH_MAC]-> [ACT]
 
-- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator. 
+- Presume bidirectional connectivity from computing platform to sensor, and bidirectional connectivity from computing platform to actuator.
 - Smart sensor/actor w/ software and stack?
 - Best effort scheduling of IO processing that's tested for perceived worst case. (No monitor or scheduler based guarantee other then planned scheduler bandwidth/capacity margin)
 - How would a system architecture look like to close the signal/application loop? (7 voters in total)
@@ -67,7 +67,7 @@ Single computer with single function (="APP")
   - Comment on votes: (1 non-voter)
 - Comment: This use case would not necessarily need an OS, but even in this case there are some capabilities we can leverage from the OS. Furthermore, this may be one of several use cases (functionalities) supported by the OS. >> But an OS is implied for the Use-Case!
 
-#### Test 
+#### Test
 
 Items to key on
   - Logging check
@@ -91,7 +91,7 @@ Test environment
         subgraph QEMU_Environment_Unit_Under_Test
             direction TB
         Ethernet_Bridge
-            App[2.Cabin Lights App] 
+            App[2.Cabin Lights App]
             Log[Logging App]
             Sensor[1.Switch App]
             Actuator[3.Cabin Light]
@@ -337,5 +337,5 @@ Renode
   - From: https://digitalcommons.calpoly.edu/cgi/viewcontent.cgi?article=1720&context=eesp
   - "the PolySat software architecture runs entirely on a custom Linux operating system"
   - Maybe a group for user feedback for what we define (design, prototype)
-- https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 
+- https://www.jpl.nasa.gov/missions/mars-cube-one-marco/
 - https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
