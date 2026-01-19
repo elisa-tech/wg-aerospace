@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 wucke13
+# SPDX-FileCopyrightText: 2025-2026 wucke13
 #
 # SPDX-License-Identifier: Apache-2.0
 
