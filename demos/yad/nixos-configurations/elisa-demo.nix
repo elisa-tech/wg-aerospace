@@ -23,7 +23,7 @@
     );
 
     zorn.boot.kernelDebugging.enable = true; # enable gdb launcher script generation
-    # zorn.boot.kernelDebugging.enableKernelDebugConfigOptions = true; # compile kernel with debugging aids
+    zorn.boot.kernelDebugging.enableKernelDebugConfigOptions = true; # compile kernel with debugging aids
     zorn.boot.standaloneInitramdisk.enable = true; # enable creation of a standalone initramdisk
     # zorn.boot.standaloneInitramdisk.useTailoredQemu = false; # use this to avoid compiling QEMU
     zorn.debloat.enable = true;
