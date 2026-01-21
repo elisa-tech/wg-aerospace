@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# License: SPDX-License-Identifier: MIT
-#
+# SPDX-License-Identifier: MIT
+
 # This script is used to test the lightServer and main_syslog programs
 # It creates a FIFO named testInput, starts the lightServer and main_syslog programs, and sends a message to the lightServer
 

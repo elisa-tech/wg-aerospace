@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
 09:09:50 From Martin Halle to Everyone:
 	Update: The deadline for the AvioSE'25 workshop has been extend to Nov 11, 2024.
 09:20:51 From Andrew Wilson (L3Harris) to Everyone:
@@ -31,7 +35,11 @@
 09:48:14 From Ramon to Everyone:
 	Folks I need to drop but it was nice hearing from everyone, please reach out if you need our help. Have a good rest of your week.
 09:48:22 From Martin Halle to Everyone:
-	Still trying with Docker: I am getting this message now:	2024-11-06 16:47:01 Fatal error: you must specify '--save', '--no-save' or '--vanilla'	...when trying to run the container.	Need to find out where this is coming form.	(But at least I am a few steps further…)
+	Still trying with Docker: I am getting this message now:
+	2024-11-06 16:47:01 Fatal error: you must specify '--save', '--no-save' or '--vanilla'
+	...when trying to run the container.
+	Need to find out where this is coming form.
+	(But at least I am a few steps further…)
 09:48:50 From Michael Monaghan (NASA Goddard) to Everyone:
 	Reacted to "Folks I need to dr..." with 👍
 09:51:47 From Michael Monaghan (NASA Goddard) to Everyone:

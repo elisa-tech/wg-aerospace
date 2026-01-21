@@ -1,4 +1,4 @@
-# License: SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT
 
 CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:latest
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo

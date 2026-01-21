@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+
 from enum import Enum
 from abc import ABC, abstractmethod
 import json
