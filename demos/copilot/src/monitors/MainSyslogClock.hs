@@ -1,5 +1,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
--- | License: SPDX-License-Identifier: MIT
+
+-- SPDX-License-Identifier: MIT
+
 import Auxiliary
 
 -- * System inputs

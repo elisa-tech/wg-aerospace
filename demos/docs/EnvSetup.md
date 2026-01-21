@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Environment Setup
 
 This environment utilizes a Docker container.  This gives us the benefit of a consistent environment where applications can run the same way in development, testing, and production. Containers provide isolation, preventing dependencies from interfering with each other, and simplify setup. This approach integrates well with CI/CD pipelines, and fosters collaboration by enabling developers to share environments easily.

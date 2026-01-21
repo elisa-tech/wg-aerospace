@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# License: SPDX-License-Identifier: MIT
+# SPDX-License-Identifier: MIT
 
 SCRIPT_DIR=$(dirname $(realpath "$0"))
 

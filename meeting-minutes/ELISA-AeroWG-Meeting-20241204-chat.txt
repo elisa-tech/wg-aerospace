@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
 08:58:27 From Matt Weber (Boeing) to Everyone:
 	Agenda / collaboration doc - https://mensuel.framapad.org/p/elisa-aerowg
 09:00:34 From Matt Weber (Boeing) to Everyone:

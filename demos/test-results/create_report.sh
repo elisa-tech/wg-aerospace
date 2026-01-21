@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: MIT
+
 # Define the output report file
 REPORT_FILE="test-results-example.xml"
 

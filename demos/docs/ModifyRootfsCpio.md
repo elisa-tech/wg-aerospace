@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # ELISA Root Filesystem CPIO Modification
 
 ## Steps to add a new application to an existing filesystem rootfs.cpio (using a simple 'helloworld' sample application)

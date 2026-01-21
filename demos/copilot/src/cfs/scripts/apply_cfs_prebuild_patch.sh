@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: MIT
+
 set -e
 
 BASE_DIR="/demo/elisa_emulation/cFS"
