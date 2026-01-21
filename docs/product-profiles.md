@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # Product profiles
 
 The following tables are proposed to frame up how a respective set of aerospace/space products might be compared.  The goal is to try to understand what the scope of a requirement set might look like to establish something like the Carrier Grade Linux model.  That model focused on maturing the capability toward the specific aspects of a targeted industry.

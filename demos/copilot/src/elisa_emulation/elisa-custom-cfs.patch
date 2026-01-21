@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 diff -ruN ./cFS-clean/osal/src/os/posix/inc/os-posix.h ./cFS/osal/src/os/posix/inc/os-posix.h
 --- ./cFS-clean/osal/src/os/posix/inc/os-posix.h	2025-11-07 17:07:10.239458517 +0000
 +++ ./cFS/osal/src/os/posix/inc/os-posix.h	2025-11-07 17:03:07.676411991 +0000

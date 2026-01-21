@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 ![logo](logo_elisa_small.png )
 
 ## ELISA Aerospace Working Group

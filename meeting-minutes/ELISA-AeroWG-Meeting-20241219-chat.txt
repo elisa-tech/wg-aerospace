@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
 09:59:59 From Matt Weber (Boeing) to Everyone:
 	https://mensuel.framapad.org/p/elisa-aerowg
 10:02:24 From Matt Weber (Boeing) to Everyone:
@@ -17,7 +21,11 @@
 10:08:45 From Andrew Wilson (FPGA Zealot) to Everyone:
 	RISC-V in Space Conference in April
 10:10:10 From Christopher Heistand to Everyone:
-	January 13, 2025	Abstract Acceptance Notification		February 24, 2025	Presentation Submission Deadline
+	January 13, 2025
+	Abstract Acceptance Notification
+	
+	February 24, 2025
+	Presentation Submission Deadline
 10:11:13 From Matt Weber (Boeing) to Everyone:
 	https://mensuel.framapad.org/p/elisa-aerowg
 10:12:02 From Michael Monaghan (NASA Goddard) to Everyone:
@@ -49,7 +57,8 @@
 10:28:50 From Andrew Wilson (FPGA Zealot) to Everyone:
 	The Microchip Pic64 is probably the best target for HPSC RISC-V
 10:31:40 From Matt Weber (Boeing) to Everyone:
-	We're at line ~ 178 	https://mensuel.framapad.org/p/elisa-aerowg
+	We're at line ~ 178 
+	https://mensuel.framapad.org/p/elisa-aerowg
 10:32:03 From Carole Garrison to Everyone:
 	I had a talk with HQ and they were looking into it. Nothing official just fyi
 10:32:14 From Ivan Perez (KBR @ NASA ARC) to Everyone:

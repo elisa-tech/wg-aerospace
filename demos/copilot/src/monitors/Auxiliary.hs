@@ -1,5 +1,7 @@
 {-# LANGUAGE RebindableSyntax #-}
--- | License: SPDX-License-Identifier: MIT
+
+-- SPDX-License-Identifier: MIT
+
 module Auxiliary
   (module Auxiliary, module Copilot.Language, module Language.Copilot) where
 

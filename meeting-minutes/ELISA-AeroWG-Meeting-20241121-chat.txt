@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
 10:01:05 From Ivan Perez to Everyone:
 	Just a sec. I need to re-connect my audio.
 10:03:59 From Matt Weber (Boeing) to Everyone:
@@ -33,7 +37,9 @@
 	
 	"the PolySat software architecture runs entirely on a custom Linux operating system"
 10:43:09 From Christopher Heistand to Everyone:
-	https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 		https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
+	https://www.jpl.nasa.gov/missions/mars-cube-one-marco/ 
+	
+	https://www.asi.it/en/planets-stars-universe/solar-system-and-beyond/liciacube/
 10:49:15 From Christopher Heistand to Everyone:
 	Stoke is resurrecting this one (since I started this a while ago): https://github.com/SOL-Space-Operating-Linux/meta-sol
 10:50:33 From Christopher Heistand to Everyone:

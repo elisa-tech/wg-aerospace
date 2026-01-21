@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 Link to contribute live to the Meeting Minutes:
 - https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
 
