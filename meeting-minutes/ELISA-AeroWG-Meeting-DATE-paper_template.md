@@ -25,10 +25,19 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Attended recently in the past
 
+- Brennan Hay
+- Chi-kwan Chan - University of Arizona
+- Hans Weggeman - Wind River
+- Hugo Cornelis (Mind OSS)
+- Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Leonidas Kosmidis - Barcelona Supercomputing Center (BSC)
 - Martin Halle - Hamburg University of Technology
-- Leonides Kosmidis - BSC
+- Matt Weber - Boeing
+- Michael Mahoney - Wind River
+- Naga - Timesys/Lynx
 - Rob Woolley - Wind River
-- Shefali Sharma
+- Shefali Sharma - Devstringx Technologies
 
 ---
 
