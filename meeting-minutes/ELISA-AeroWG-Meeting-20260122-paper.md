@@ -19,21 +19,34 @@ Paper meetings are organised as follows:
   - Who does what until the next Paper meeting (roughly every 4 weeks, see ELISA schedule)
 
 # Minutes
+- Address reference paper and how to use
+  - "Journal of Systems Architecture" maybe a candidate for a publication!
+- Bring the paper to the DASC 2026
+  - Have another meeting on 29th of Jan, same time. Action Martin: Invite through elisa mailing-list
+  - Martin: Abstract initial version
+  - Leonidas: Google drive link for shared abstract document
 
 ## Tasks from meeting of 16th Dec 2025:
-- Leonidas: Proof read (Background): New paragraph related to system
-- Leonidas: (Background) explain common platform and reference https://www.autosar.org/capi
-- Rob: Add clarification open source (Introduction), closed source etc. as discussed
-- Martin: Continue in Background w/ system... ToDo
-- Matt: Move tasks that do not belong to the paper anymore
-- Leonidas: Start ToDo (Background): Avionics specific: Planning, documentation, config management
-- Shefali: (Read paper as-is), what is too much Space and not Aerospace?
-- Naga: (Read paper as-is), what is too much Space and not Aerospace?
-- Michael Mahoney: (Read paper as-is), what is too much Space and not Aerospace?
-- Michael Mahoney: (PRoof-read), content about avioincs / config management.,... if available
-- (All): Read https://www.sciencedirect.com/science/article/pii/S138376212500270X
+- [DONE] Leonidas: Proof read (Background): New paragraph related to system
+- [DONE] Leonidas: (Background) explain common platform and reference https://www.autosar.org/capi
+- [DONE] Leonidas: Start ToDo (Background): Avionics specific: Planning, documentation, config management
+- [DONE] Martin: Continue in Background w/ system... (see TeX file)
+- [DONE] Matt: Move tasks that do not belong to the paper anymore
+- [Started] Shefali: (Read paper as-is), what is too much Space and not Aerospace?
 
 ## Tasks until next meeting:
+- Chi-kwan/Michael/Leonidas/Martin/Shefali: Proof-read Leonidas/Martins works on "Background"
+- Rob: Add clarification open source (Introduction), closed source etc. as discussed
+- Rob: What is Open Source and how does the community life-cycle work?
+- Rob/Michael: Backgound: More clarification of phrases like partitioning needed...?
+- Shefali: (Continue...), what is too much Space and not Aerospace?
+- Naga: (Read paper as-is), what is too much Space and not Aerospace?
+- Michael Mahoney: (Read paper as-is), what is too much Space and not Aerospace?
+- Michael Mahoney: (Proof-read), content about avionics / config management.,... if available
+- Martin: Make avionics references from paper available
+- Leonidas: CLosed Source Linux (?) ToDo on VxWorks...
+- (All) Discuss structure of the paper
+- (All): Read https://www.sciencedirect.com/science/article/pii/S138376212500270X
 
 ## Other business
 - Who is the audience
@@ -47,16 +60,32 @@ Paper meetings are organised as follows:
 ## Attended this meeting
 
 - Martin Halle - Hamburg University of Technology
+- Chi-kwan Chan - University of Arizona
+- Matt Weber - Boeing
+- Shefali Sharma - Devstringx Technologies
+- Michael Mahoney - Wind River
+- Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Leonidas Kosmidis - Barcelona Supercomputing Center (BSC)
+- Rob Woolley - Wind River
+- Hugo Cornelis (Mind OSS)
+- Brennan Hay
 
 ## Attended recently in the past
 
-- Leonides Kosmidis - BSC
+- Brennan Hay
+- Chi-kwan Chan - University of Arizona
+- Hans Weggeman - Wind River
+- Hugo Cornelis (Mind OSS)
+- Ivan Perez - KBR @ NASA Ames Research Center
+- Ivan Rodriguez - Coros Space
+- Leonidas Kosmidis - Barcelona Supercomputing Center (BSC)
+- Martin Halle - Hamburg University of Technology
+- Matt Weber - Boeing
+- Michael Mahoney - Wind River
+- Naga - Timesys/Lynx
 - Rob Woolley - Wind River
 - Shefali Sharma - Devstringx Technologies
-- Hans Weggeman - Wind River
-- Naga - Timesys/Lynx
-- Matt Weber - Boeing
-- Ivan Perez - KBR @ NASA Ames Research Center
 
 ---
 
