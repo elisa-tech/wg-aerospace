@@ -37,3 +37,4 @@
   - Adding Testable Code Specs to Linux kernel - https://lpc.events/event/19/contributions/2085/ - [**RECORDING**](https://youtu.be/OUv_U0rBAIY?t=23807)
   - KUnit Testing Insufficiencies - https://lpc.events/event/19/contributions/2041/ - [**STREAM later today**](https://www.youtube.com/live/rpImLE6JMlY)
   - Schedule with live streams - https://lpc.events/event/19/timetable/#all
+  - SGL Keynote - https://www.youtube.com/watch?v=dmx6K8TdlbI
