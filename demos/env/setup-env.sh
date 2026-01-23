@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# SPDX-License-Identifier: MIT
+
 # Check if the script is running with root privileges
 if [[ "$EUID" -eq 0 ]]; then
   echo "This script does not require running with 'sudo'."

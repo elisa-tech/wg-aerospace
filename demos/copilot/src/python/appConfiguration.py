@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: MIT
+
 from serverCommands import *
 
 class ServerConfiguration:

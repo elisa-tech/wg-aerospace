@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: CC-BY-SA-4.0
+ */
+
 10:11:55 From Kate Stewart to Everyone:
 	https://docs.google.com/document/d/1f-UaWE0sWFUFtOmd7Rxkq5cbTTkjK-km-dEtP9DAo94/edit
 10:15:13 From Ramon Roche (LF) to Everyone:

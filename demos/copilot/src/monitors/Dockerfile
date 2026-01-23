@@ -6,6 +6,7 @@
 # This file is specific to versions of Ubuntu strictly before 23.04. After that
 # version, Copilot became included in Ubuntu as a package.
 #
+
 FROM ubuntu:focal
 
 # Avoid questions during installation

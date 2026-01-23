@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+
 /*
  * This file implements a main driver for the test of the light switch
  * and the lights turning on within a certain time.

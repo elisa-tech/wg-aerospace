@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# SPDX-License-Identifier: MIT
+
 set -e
 
 NON_ROOT_USER="user"
