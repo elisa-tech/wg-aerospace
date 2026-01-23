@@ -16,6 +16,8 @@ This folder contains a series of examples, documentation, and reference builds t
 
 The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.  It will has notes on tool setup and how to retrieve the Docker image.
 
+Alternatively, [Yet Another Demo](./yad/README.md) contains a Nix based build infrastructure compile and run demos.
+
 ## Development
 
 The [Development Guide](docs/Development.md) is a good place to start if you need to get a shell within our environment to debug or expand on the demostration material.

@@ -1,5 +1,7 @@
 # Yet Another Demo
 
+This is another attempt at providing a meaningful demo. On the [Product Profiles](../../docs/product-profiles.md) ontology, this effort maps to Sofware Level E and possibly Software Level D. It features a slimmed down Linux kernel (<300 kSLoC) and slimmed down systemd, but a fairly comprehensive Linux userspace.
+
 ## Nix FAQ
 
 - **What is Nix?** Nix is a (functional, declarative) programming language geared towards package management. Nix expressions can be evaluated to build recipes ("derivations"). When a derivation is successfully built ("realized") it produces a folder in Nix' build cache on your machine (the "Nix store", usually under `/nix/store/`).
@@ -42,10 +44,13 @@
 - **What is NixOS?** NixOS is a Linux distribution built upon the foundation of Nix and the `nixpkgs`. At is core, a Linux distribution is just a package management mechanism (for NixOS that is Nix) and a set of packages containing kernel & userspace (all to be found in the `nixpkgs`).
 - **Do I need NixOS to use this repo?** No, the stuff in this repo only needs Nix for building, you don't need to install NixOS on your development machine. Nonetheless, you are in fact building slim NixOS installations, as some of the build outputs here use NixOS internals to provide a bootable Linux userland and Linux kernel.
 - **I want to learn more, where do I start?**
+  - [How Nix works](https://nixos.org/guides/how-nix-works/): A brief introduction on both Nix and NixOS, highlighting the main concepts
   - [Nix manual](https://nixos.org/manual/nix/stable): Quite formal, lengthy, detailed, covers the Nix language, the tool command line
   - [Nix pills](https://nixos.org/guides/nix-pills/): A guide gradually pulling away the curtain behind the technical foundation and core design of Nix
   - [Nixpkgs manual](https://nixos.org/manual/nixpkgs/stable/): Very formal, lengthy, detailed explanation of the nixpkgs and most relevant conventions within it
   - [NixOS manual](https://nixos.org/manual/nixos/stable/): Very formal, lengthy, detailed explanation of NixOS; this is what explains all the configuration options set within [`nixos-configurations`](./nixos-configurations)
+  - [Nix vs. Docker](https://www.devzero.io/blog/nix-vs-docker/): A fair comparison between Nix and Docker, comparing overlap and divergence in operation and capabilities
+  - [What to expect (good and bad) from using Nix/NixOS](https://pierrezemb.fr/posts/nixos-good-bad-ugly/): An experience report from a new user on perceived advantages and frustrations going the Nix way
 
 ## Build Instructions
 

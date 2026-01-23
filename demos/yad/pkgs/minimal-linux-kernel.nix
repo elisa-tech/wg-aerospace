@@ -13,6 +13,7 @@
   ...
 }@args:
 
+# TODO checkout what can be done to homologize this with https://raw.githubusercontent.com/Boeing/linux/f5d4b42051b045fb667d69eeb0272a89dde6ba20/arch/arm64/configs/minimal_defconfig
 assert lib.assertMsg (
   kernelSrc != null -> kernelVersion != null
 ) "If compiling kernel from scratch given a `kernelSrc`, `version` must be provided as well";
