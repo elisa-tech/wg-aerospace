@@ -7,8 +7,75 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 **Parking lot:**
 
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
-- Figure out distro / definition of environment and who owns / progress it (brought to the main AeroWG call)
 
+## 20260123
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+- Wanja Zaeske (DLR)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+
+**Discussion topics**
+
+- License - https://github.com/elisa-tech/wg-aerospace/pull/121
+  - Matt to rebase - [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Work with Wanja after licensing is on main
+  - ALL have action to review license PR for agreeing on file licenses
+
+- cFS is working a new release (Ivan)
+
+- Matt shared PR for HOST64 support
+  - Wanja has an example of binfmt approach we could look at for the runner
+  - [Cross platform tool env](https://github.com/elisa-tech/wg-aerospace/pull/117/files)
+  - Matt and Martin testing after call
+
+- FSW March 23-26th - Paper accepted for "Industry Safety Level(s) vs. Aerospace Use Cases"
+  - Matt can't, but would others like to present?
+    - Ivan offered, Matt will add him to the email thread
+    - Will want to collaborate on the demo and the points we want this community to take away
+  - Leonidas will be in person
+
+- Annual slides
+  - Contributors - 295 commits from 9 difference contributors
+    - https://github.com/elisa-tech/wg-aerospace/graphs/contributors?from=2%2F22%2F2024&to=1%2F17%2F2026
+  - Make a ref system line in 2026
+    - target hw and define a use-case / system to work on
+      - Example: RPi (easily available) and: https://www.raspberrypi.com/for-industry/space/
+    - custom kernel and something we can benchmark against
+    - hw what is relatable? Nvidia orin (Ivan R)?
+    - solid emu target (qemu) that also covers peripherals (Wanja)
+      - https://qemu-project.gitlab.io/qemu/system/target-arm.html
+
+- https://riscv-europe.org/summit/2026/ (Contact Leonidas if interested!)
+  - RISC-V in space
+  - Doesn't require full member (just registration)
+
+**Next call**
+
+- QEMU overview / examples (Martin)
+  - Leonidas mentioned he could do some overview
+  - Maybe a good general call topic? (call between SGL/Aero)
+    - Feb 12 AeroWG or 19th SGL
+    - ACTION: Matt to mention to Ramon. Leonidas to check on dates and update us at the next call
+
+- Merged the cFS use case doc and re-organized the material
+  - Move new cases to discussion ideas
+  - Added landing page
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+
+- [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Work towards merge for next call?
+- [feat: add Nix based ELISA demo framework](https://github.com/elisa-tech/wg-aerospace/pull/115)
+  - Ivan had a follow on.  Matt and Martin still to try it out
+  - Work towards merge for next call?
+
+---
 
 ## 20260116
 
@@ -53,6 +120,8 @@ Move new cases to discussion ideas (Matt)
   - Created - https://github.com/elisa-tech/wg-aerospace/discussions/119#discussioncomment-15519062
   - TODO: update Landing doc - Point them at discussions instead of listing in the case
   - Make this update after PR92
+
+---
 
 ## 20260109
 
@@ -111,6 +180,8 @@ Cleanup of use case ideas
 - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#new-use-cases
 - Point them at discussions instead of listing in the case
 - Rename the file
+
+---
 
 ## 20251219
 
