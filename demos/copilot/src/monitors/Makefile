@@ -14,7 +14,7 @@ else ifeq ($(ARCH), aarch64)
     CROSS_PREFIX=aarch64-none-linux-gnu
 endif
 
-CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2275691495
+CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2284164686
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
 CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
