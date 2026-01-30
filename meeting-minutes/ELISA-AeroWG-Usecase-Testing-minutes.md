@@ -12,6 +12,69 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 
+## 20260130
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+
+**Discussion topics**
+
+- Copilot / ogma releases - mostly sequence diagram focused
+
+- Contributing/license PR is merged and rebased [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Other PRs are good for rebase
+  - Wanja, you've been added to the project so if you want to branch on the project (vs fork) the workflows will run.
+
+- Merged ARM64 Host support after testing with Martin
+  - Wanja did you find that example of the binfmt approach for a CI runner build?
+
+- Add notes to Contrib
+  - Add a detail about blobs and formats that don't have commenting
+  - e.g json?  pdfs, etc
+  - This command puts CC on the whole cfs folder, however you probably want to run a few commands at different subfolders to get most of the designations correct for Apache/ MIT .  then fixup some manually where the files mix with different licenses.
+  - docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license CC-BY-SA-4.0 --recursive --fallback-dot-license demos/copilot/src/cfs/
+  - docker run --rm --volume $(pwd):/data fsfe/reuse supported-licenses
+  - Updates so all license descriptions are in the license folder.
+  - docker run --rm --volume $(pwd):/data fsfe/reuse download
+
+- QEMU overview / examples (Martin)
+  - Leonidas mentioned he could do some overview
+  - ACTION: Leonidas, Feb 20th to present on Use case call(this call)
+  - ACTION: Matt mentioned to Ramon about March call to repeat presentation
+
+- Docs ACTION: (Martin)
+  - Move and clean/clarify material
+  - Registry/index of content to make it navigatable
+  - Make it easier for new users to nagivate "Start"
+
+- Testing of [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Martin and Matt took an action
+  - Bug in ubuntu PC 24.04 on setup.sh with needing containerd installed as well.  Need to test on 22.04
+  - Build-cfs.sh
+    - fix step 5 to be clear about `cd /demo`
+    - Needs a version reworked for the lights demo w/cfs
+  - Spent remaining time walking steps
+  - This needs fixed for the new lights demo apps and tables - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/cfs/scripts/load_cfs.sh#L27
+    - Something in 28-66 needs rework
+
+**Next time**
+
+- Matrix of apps vs env and what we want to show/support?  (Martin)
+  - How do we best document this with current work?
+  - How do we breakout parts to make them usable?
+
+- Like to go through next step for demos - (Ivan)
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+
+---
+
 ## 20260123
 
 **Attendance**
