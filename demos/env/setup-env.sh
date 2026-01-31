@@ -17,7 +17,7 @@ fi
 echo "Installing prerequisites ..."
 {
     sudo apt-get update &&
-        sudo apt-get install -y docker.io make ca-certificates passwd curl wslu iptables
+        sudo apt-get install -y containerd docker.io make ca-certificates passwd curl wslu iptables
 } || {
     echo "Failed to setup Docker prerequisites"
     exit 1
