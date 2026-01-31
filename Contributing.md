@@ -58,9 +58,9 @@ For exceptions as part of your pull request:
 1) Describe contribution in PR description
   - Any alternative open source license(s) options
   - The justification for using an alternative open source license
-2) Add a license description file using the [reuse download workflow](https://github.com/fsfe/reuse-tool?tab=readme-ov-file#usage) or manually under `./LICENSES/`
-3) Add any specific exception clarification language to [LICENSE](./LICENSE) or the specific file(s) under the license header. (Or at least in the GIT commit description that makes the license change.)
-
+2) Add the SPDX tags to your files that need them.  (Checkout other files for examples.)
+3) Add a license description file using the [`docker run --rm --volume $(pwd):/data fsfe/reuse download --all`](https://github.com/fsfe/reuse-tool?tab=readme-ov-file#usage) or manually under `./LICENSES/`
+4) Add any specific exception clarification language to [LICENSE](./LICENSE) or the specific file(s) under the license header. (Or at least in the GIT commit description that makes the license change.)
 
 For any approved cases, follow the [LICENSE](./LICENSE) guidance:
 
@@ -73,10 +73,14 @@ Email communication will be treated as documentation and be received and made av
 
 Here's an example of how to locally cleanup licensing on your contribution.
 
+If you need to see what licenses are supported for use with the tool - `docker run --rm --volume $(pwd):/data fsfe/reuse supported-licenses`
+
 1) Go to the root of this repository and run `docker run --rm --volume $(pwd):/data fsfe/reuse` to get a report.
-2) Then if you are "not compliant", either manually add the SPDX headers or use the `reuse annotate` feature to help you.
-  - e.g. updating markdown files - `docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license CC-BY-SA-4.0 <filename>` 
-  - e.g. updating code files - `docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license MIT <filename>` 
+2) Then if you are "not compliant", either manually add the SPDX headers or use the `reuse annotate` feature to help you.  `reuse` does have a `--recursive` option that can be used for folders, however it marks everything.
+  - Updating individual markdown files - `docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license CC-BY-SA-4.0 <filename>` 
+  - Updating individual code files - `docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license MIT <filename>` 
+  - Add details for binary files and items like `json` - `docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license CC-BY-SA-4.0 --fallback-dot-license <filename>`
+    - This creates a file with a `.license` suffix that has the SPDX tag
 3) Check again doing (1).
 
 The tool has [various features](https://github.com/fsfe/reuse-tool?tab=readme-ov-file#usage) including automatically adding a license descriptions under `LICENSE/` if you had a new license type.
