@@ -8,7 +8,7 @@ on:
 
 defaults:
   run:
-    working-directory: demos/yad
+    working-directory: demos/AvioNix-demo
 
 jobs:
   check-workflow-packages:

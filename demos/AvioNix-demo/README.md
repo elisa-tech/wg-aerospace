@@ -1,6 +1,6 @@
-# Yet Another Demo
+# AvioNix Demonstrator
 
-This is another attempt at providing a meaningful demo. On the [Product Profiles](../../docs/product-profiles.md) ontology, this effort maps to Sofware Level E and possibly Software Level D. It features a slimmed down Linux kernel (<300 kSLoC) and slimmed down systemd, but a fairly comprehensive Linux userspace.
+This is another attempt at providing a meaningful demo. On the [Product Profiles](../../docs/product-profiles.md) ontology, this effort maps to Software Level E and possibly Software Level D. It features a slimmed down Linux kernel (<300 kSLoC) and slimmed down systemd, but a fairly comprehensive Linux userspace.
 
 ## Nix FAQ
 

@@ -6,7 +6,7 @@ on: [push]
 
 defaults:
   run:
-    working-directory: demos/yad
+    working-directory: demos/AvioNix-demo
 
 env:
   EXTRA_NIX_FLAGS: --log-format raw-with-logs --print-build-logs
