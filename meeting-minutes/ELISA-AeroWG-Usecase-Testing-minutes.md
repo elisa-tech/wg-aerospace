@@ -8,9 +8,91 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 
 **Holiday / Vacations**
 
+- Martin out for Feb 12/13 calls
+
 **Parking lot:**
 
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
+
+## 20260206
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+
+**Discussion topics**
+
+Testing ARM64 hosts
+ 
+- Ivan R tried the Basic demo on ARM64 and ran into a copilot import error
+  - ACTION: Matt to open PR to help to drop xfs condition and fix to have the setup script only install docker if not present - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/env/setup-env.sh#L18
+  - ACTION: Ivan R checking on another machine as well. `docker run hello-world`  similar error?
+    -  Looks like a docker.ce vs docker.io issue across ubuntu devices....
+
+```
+    Detected architecture: aarch64
+    docker run --rm -it -e HOST_UID="1000" -e HOST_GID="1000" -v /home/irodrigu/wg-aerospace/demos/copilot/src/monitors/../:/demo registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2284164686 sh -c 'cat /.VERSION && bash'
+    docker: Error response from daemon: failed to set up container networking: failed to create endpoint competent_black on network bridge: Unable to enable DIRECT ACCESS FILTERING - DROP rule:  (iptables failed: iptables --wait -t raw -A PREROUTING -d 172.17.0.2 ! -i docker0 -j DROP: iptables v1.8.7 (legacy): can't initialize iptables table `raw': Table does not exist (do you need to insmod?)
+    Perhaps iptables or your kernel needs to be upgraded.
+     (exit status 3))
+    Run 'docker run --help' for more information
+    make: *** [Makefile:68: dev] Error 125
+```
+
+Demo ideas
+
+- (Ivan) Demos with FPGA doing monitoring of processor execution?  Is this interesting as a demo?
+  - primary processor doing work, secondary running monitoring pieces (could be logic, could be RT code)
+  - https://hacarus.com/wp-content/uploads/2021/05/Figure2_EN_Versal_Series_Overview_cropped_ano_%E9%BB%92%E6%9E%A0-1024x535.png
+      - Similar to this with processor doing workflow with firmware doing monitoring / checks on executing code with shared mem
+      - There is a systemc TLM from AMD with A and R core ARMs could be used to simulate it - https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421112/Co-simulation
+  - Martin - valid application within how Aerospace does IO / integrates devices
+  - Matt - Suggested SGL topic?  Maybe have hardware / others interested to build a scenario?
+    - ACTION: Ask Manuel about cFS / copilot
+  - Ivan - Intern did some work --> https://github.com/Copilot-Language/copilot/tree/master/copilot/examples/fpga/HelloWorld
+    - https://bluespec.com/ - language conversion to verilog (copilot->bluespec->verilog)
+    - Thinking a cFS application that interfaces to FPGA
+
+- Minimal kernel demos?
+  - How minimal can we get and run parts of what we already did <<- Wanja has interest in this with the Nix work
+  - Do we research beyond config?
+  - Have a 5.15 now but would a newer be better?
+  - Assurance of a configuration? (traditional methods / breaking subsets and parts to improve QA towards cert)
+    - There are some efforts today upstream?  Do those overlap?
+  - Nvidia - where does their functional safety work fit?  Do we try to fold in?
+
+- Matt - interest in mixed functions and interferance
+  - interferance study and tools
+  - https://www.manschula.dev/projects/seniord/
+  - https://github.com/2Manchu/MOAT
+
+Docs are in progress (Martin)
+  - Move and clean/clarify material
+  - Registry/index of content to make it navigatable
+  - Make it easier for new users to nagivate "Start"
+
+- Testing of [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Matt stopped and pulled Salim in to add the missing assumptions to docs / steps
+  - Martin?
+  - Salim?
+
+**Next time**
+
+- QEMU overview / examples (Martin)
+  - Leonidas mentioned he could do some overview
+  - ACTION: Leonidas, Feb 20th to present on Use case call(this call)
+  - **Matt emailed Ramon** about March call to repeat presentation (no response so far)
+
+- Matrix of apps vs env and what we want to show/support?  (Martin)
+  - How do we best document this with current work?
+  - How do we breakout parts to make them usable?
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+
 
 ## 20260130
 
