@@ -18,15 +18,14 @@ CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:228416
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
 CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
-# Determine the docker run prefix based on no executing on a xfs filesystem (issue with ownership and encryption)
-RUN_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG))
-RUN_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG))
-RUN_IT_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG))
-DEMO_CHDIR := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/monitors)
-DEMO_CHDIR_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,cd /demo/copilot/src/monitors)
+RUN_PREFIX := docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG)
+RUN_PREFIX_TEST := docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG)
+RUN_IT_PREFIX := docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG)
+DEMO_CHDIR := cd /demo/monitors
+DEMO_CHDIR_TEST := cd /demo/copilot/src/monitors
 
-CMD_PREFIX := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR) &&)
-CMD_PREFIX_TEST := $(if $(shell mount | grep -q 'xfs' && echo 1),,$(DEMO_CHDIR_TEST) &&)
+CMD_PREFIX := $(DEMO_CHDIR) &&
+CMD_PREFIX_TEST := $(DEMO_CHDIR_TEST) &&
 
 # TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
 
