@@ -88,4 +88,4 @@ make
 
 8) To check cfs output run `tail -f cfs.log` (to get out of viewer press CTRL+C)
 
-9) Run the following command to send a NO-OP command to Sample App `./cmdUtil --host=localhost --port=1234 --pktid=0x1882 --cmdcode=0`
+9) Run the following command to send a NO-OP command to Sample App `./cmdUtil --host=localhost --port=1234 --pktid=0x1882 --cmdcode=0` 
