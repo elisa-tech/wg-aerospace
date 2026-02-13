@@ -37,6 +37,8 @@ jobs:
           - elf-to-sloc
           - elisa-demo-copilot-light
           - elisa-demo-python-light
+          - elisa-wg-lfscs-minimal-kernel
+          - elisa-wg-lfscs-minimal-kernel-cross-aarch64
           - minimal-linux-kernel
           - update-ci
     steps:
