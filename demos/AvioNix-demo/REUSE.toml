@@ -1,0 +1,17 @@
+version = 1
+
+[[annotations]]
+path = ["**/*/README.md", "assets/*"]
+SPDX-FileCopyrightText = "wucke13"
+SPDX-License-Identifier = "CC-BY-SA-4.0"
+
+[[annotations]]
+path = ["flake.lock"]
+SPDX-FileCopyrightText = "None"
+SPDX-License-Identifier = "Apache-2.0"
+
+
+[[annotations]]
+path = "**/*.patch"
+SPDX-FileCopyrightText = "wucke13"
+SPDX-License-Identifier = "CC0-1.0"
