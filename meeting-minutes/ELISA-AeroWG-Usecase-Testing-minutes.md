@@ -14,6 +14,69 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 
+## 20260213
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Ivan Perez (KBR @ NASA ARC)
+- Wanja Zaeske
+
+**Discussion topics**
+
+Testing ARM64 hosts
+- [PR that automates host testing](https://github.com/elisa-tech/wg-aerospace/pull/137)
+- [PR Docker only installs if not installed](https://github.com/elisa-tech/wg-aerospace/pull/136)
+- Docs/tutorial step automation (keep docs relevant by executing the docs) - (Ivan shared a paper was written)
+- Ivan R - ACTION Matt to check with him for retest
+
+- Nix PR
+  - ACTION: Matt to check his comments
+  - 
+
+- Minimal kernel demos?
+  - Last call
+    - How minimal can we get and run parts of what we already did <<- Wanja has interest in this with the Nix work
+    - Do we research beyond config?
+    - Have a 5.15 now but would a newer be better?
+    - Could lead to discusssions on assurance of a configuration? (traditional methods / breaking subsets and parts to improve QA towards cert)
+      - There are some efforts today upstream?  Do those overlap?
+    - Nvidia - where does their functional safety work fit?  Do we try to fold in?
+    
+  - Do we start with minimizing and maintain basic demo?
+    - Pick the specific architecture, targetted hardware, targetted IO
+    - Find common components / IO?
+    - Benefits of Linux: Clear user interface and suite of Drivers
+    - Which direction do we start, super limited and work up or tiny down?
+    - Where does this fit with ELISA Architecture / Linux Features for Safety WGs?
+      - ELISA has a tool for safety config - https://github.com/elisa-tech/kconfig-safety-check
+      - ACTION: find link to Features work on smaller then Tiny
+    - Do we have users, do we run multicore, Ethernet in userspace,
+      - Matt offered to share updated super minimal with research material
+    - What is this if we minimalize to a point where it really isn't linux?
+    - Leonidas will share a paper link to Metasat study on hypervisor+RTEMS for space (went through similar activity of what capability was needed)
+      - paper is "Mixed-Criticality Flight Software Integration In a High Performance RISC-V Space Platform", but the proceedings of the SMC-IT 2025 is not yet published in ieeexplore
+      - demo in RISC-V summit Europe 2025: https://www.youtube.com/watch?v=0LleyXCZLjg&list=PL85jopFZCnbNG7C1gljj2JRocxwT3fNux&index=11
+  - Look for a platform (e.g. embedded sensor, something that flys) that others are advancing <--  we could contribute to the kernel side?
+    - Is there a demo (at least for visibility) - Need to see how this ties into progress
+  - User space items are not considered in the SLOC measurements (just limited by what Kernel can do)
+  - Steps
+    - Matt/Brian shares config + research on new ticket (minimal config ticket) and tag on Nix PR
+      - Would be interested to recount the size of this with Wanja's tooling
+    - Nix updated for a minimal config respectively from research or examples shared in minimal config ticket
+    - Tailor - Disable multicore?  Drivers enabled?
+      - Networking - Raw Sockets / UDP (Look a size difference?)
+      - Storage - MTD?
+    - Nix cross toolchain build the copilot monitor C code (MUSL as libc for higher assurance, lower, GLIBC mostly for userspace compat reasons)
+    - Package monitor C code into cpio for emulation
+      - Prototype, could run monitor in background and echo strings to files it watches
+    - Development
+      - Run demo apps outside of emulation and talk to emulation with Raw sockets?
+      - A version of the demo apps on target that isn't a intepreter (e.g., python)?
+
+---
+
 ## 20260206
 
 **Attendance**
@@ -93,6 +156,7 @@ Docs are in progress (Martin)
 
 PRs - https://github.com/elisa-tech/wg-aerospace/pull/
 
+---
 
 ## 20260130
 
