@@ -83,9 +83,11 @@
     # add our application
     systemd.services.elisa-demo = {
       wantedBy = [ "multi-user.target" ];
-      serviceConfig.ExecStart = lib.meta.getExe pkgs.hello; # TODO get meaningful demo application
-      # serviceConfig.Restart = "always"; # TODO comment this in once we have a good demo application
-      serviceConfig.Type = "oneshot"; # TODO remove this, it just soothes systemd because GNU hello terminates
+      # TODO figure out how to make the monitor consume the syslog, as there is no syslog file.
+      # Potentially we could spawn a shell and use `<(journalctl -f)` as file, to pass in a file
+      # descriptor to journalctl's stdout.
+      serviceConfig.ExecStart = lib.meta.getExe' pkgs.elisa-demo-copilot-light "main_syslog_time";
+      serviceConfig.Restart = "always";
     };
   };
 }

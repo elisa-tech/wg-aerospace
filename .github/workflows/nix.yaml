@@ -35,6 +35,7 @@ jobs:
           - check-commits
           - dtb-edit
           - elf-to-sloc
+          - elisa-demo-copilot-light
           - minimal-linux-kernel
           - update-ci
     steps:
