@@ -66,6 +66,9 @@
       # pkgs.netcat
       # pkgs.socat
       # pkgs.strace
+
+      # ELISA demo software
+      pkgs.elisa-demo-python-light
     ];
 
     # use this to add packages to the early boot stage
@@ -80,13 +83,36 @@
     services.openssh.settings.PermitRootLogin = "yes";
     users.users.root.initialPassword = "root";
 
-    # add our application
-    systemd.services.elisa-demo = {
+    # add our applications
+    systemd.sockets.elisa-demo-python-light = {
+      socketConfig.ListenFIFO = "%t/%N-input.fifo";
+    };
+    systemd.services.elisa-demo-python-light = {
       wantedBy = [ "multi-user.target" ];
-      # TODO figure out how to make the monitor consume the syslog, as there is no syslog file.
-      # Potentially we could spawn a shell and use `<(journalctl -f)` as file, to pass in a file
-      # descriptor to journalctl's stdout.
-      serviceConfig.ExecStart = lib.meta.getExe' pkgs.elisa-demo-copilot-light "main_syslog_time";
+      requires = [ "%N.socket" ];
+      serviceConfig.ExecStart = lib.meta.getExe' pkgs.elisa-demo-python-light "lightServer";
+      serviceConfig.Restart = "always";
+      # The lightServer requires stdin to not imidiately return EOF, otherwise it crashes. Hence
+      # we allocate a FIFO for it. This allos allows sending REPL like commands to the light server
+      # despite it being a properly running service.
+      serviceConfig.StandardInput = "socket";
+      serviceConfig.StandardOutput = "journal";
+      serviceConfig.StandardError = "journal";
+    };
+
+    systemd.services.elisa-demo-copilot-light = {
+      wantedBy = [ "multi-user.target" ];
+      # The copilot monitor doesn't actually interface with the syslog(2) kernel API, but instead
+      # just reads a file. To make it consume the relevant log, we pipe `journalctl` with an
+      # appropiate output format to its stdin and pass /dev/stdin as the syslog file.
+      serviceConfig.ExecStart = "/bin/sh -c 'journalctl --follow --output=short-monotonic | ${lib.meta.getExe' pkgs.elisa-demo-copilot-light "main_syslog_time"} /dev/stdin'";
+      serviceConfig.Restart = "always";
+    };
+
+    systemd.services.elisa-demo-python-switch = {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "elisa-demo-python-light.service" ];
+      serviceConfig.ExecStart = lib.meta.getExe' pkgs.elisa-demo-python-light "switch";
       serviceConfig.Restart = "always";
     };
   };
