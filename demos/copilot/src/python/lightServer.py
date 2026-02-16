@@ -212,8 +212,7 @@ class ServerMain:
             self.LightServer.stop()
             self.LightServer.join()           
                     
-if __name__ == "__main__":
-
+def main():
     # Parse Command line args
     parser = argparse.ArgumentParser(description="Light Server program with configurable delay")
 
@@ -238,3 +237,6 @@ if __name__ == "__main__":
     # Start the application
     app = ServerMain(delayController)
     app.Start()
+
+if __name__ == "__main__":
+    main()
