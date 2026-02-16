@@ -36,6 +36,7 @@ jobs:
           - dtb-edit
           - elf-to-sloc
           - elisa-demo-copilot-light
+          - elisa-demo-python-light
           - minimal-linux-kernel
           - update-ci
     steps:

@@ -44,8 +44,7 @@ def SignalHandler(signum, frame):
     STOP_SWITCH = True
     
 
-if __name__ == "__main__":
-
+def main():
     signal.signal(signal.SIGUSR1, SignalHandler)
     
     while STOP_SWITCH == False:
@@ -58,3 +57,5 @@ if __name__ == "__main__":
         # Wait for a 1 sec before attempting to turn the switch off
         time.sleep(1)
 
+if __name__ == "__main__":
+    main()
