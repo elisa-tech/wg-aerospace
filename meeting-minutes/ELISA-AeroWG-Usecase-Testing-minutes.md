@@ -8,11 +8,75 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 
 **Holiday / Vacations**
 
-- Martin out for Feb 12/13 calls
-
 **Parking lot:**
 
+- ELISA blog post - what do we want to do for this?  demo?  what content, what doc work do we need to finish first
+
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
+
+## 20260220
+
+**Attendance**
+- Matt Weber (Boeing)
+- Wanja Zaeske
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Rodriguez (Coros Space)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Ivan Perez (KBR @ NASA ARC)
+- Nagamahesh Gamidi (Timesys / Lynx)
+
+
+**Discussion topics**
+
+Presentation on QEMU
+
+- Leonidas will try for Feb 27th
+
+Discussion on python and Makefile
+
+- organizing of python  (follow python practice standard)
+- split the Makefile so docker and build are split  (layers that streamline but also allow advanced use)
+  - allows inclusion of the build in nix and other use
+  - allows us to still have a focus on demo
+  - update the end user perspective, 1) maybe there are parts they need to focus on  2) or others may want to do part of the concept
+  - for the advanced case  - update the goals and outline how we handle docs + setup details where we expect "conventions to apply"
+  - top level must be simple
+    - individual components are made to be accessible
+- (Matt) PR for the goal/design update
+  - https://github.com/elisa-tech/wg-aerospace/tree/main/demos
+  - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/Readme.md
+
+Doc update (Martin) - https://github.com/elisa-tech/wg-aerospace/pull/140
+
+- walked through register approach
+- feed back was good
+- solves the "where is the info problem" without grepping in a clone'd repo
+- plan to merge current work and then we'll iterate on updates
+  - ACTION: (weber plans a CI check for md update)
+- Ivan had a reference for doc approach / structure
+  - https://github.com/nasa/ogma
+  - https://github.com/ivanperez-keera/Yampa
+  - https://github.com/ivanperez-keera/dunai/
+  - https://github.com/Copilot-Language/copilot/
+  - Our landing pages in specific topics would follow a similar structures (suggested) ACTION: Martin said he'd take a look at example for next time
+
+cFS (Ivan)
+
+- topic of platforms to support at TSC this week
+- need to get minimal kernel work and minimal dependency pieces aligned with SGL
+- could help with getting it to fly and further NASA support
+- ACTION: Matt will reach out to Ramon and Rob to see how we best coordinate this as it has been discussed before and building confidence for all stakeholders will only help SGL success and further round out the definition of our industry needs.
+
+
+Nix PR - https://github.com/elisa-tech/wg-aerospace/pull/115
+
+- `nix flake show` (outlines the system view of what all is assembled with versions)
+- Is it worth building our stuff on RISC-v / polarfire for the demo?  Could show a bridge to HPSC
+  - https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
+- ACTION: merge after a couple minor fixes
+
+---
 
 ## 20260213
 
