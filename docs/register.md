@@ -17,7 +17,7 @@ This document register shall help to find the information you are looking for. D
 [Envisioned product profiles from space and aerospace](./product-profiles.md)
 
 ## Aerospace Use Cases
-[Aerospace Use Cases landing page](./Aerospace-Use-Cases.md)
+[Aerospace Use Cases landing page](./Aerospace-Uses-Cases.md)
 - [Aerospace Use Cases - Cabin Lights](./use-cases/use-case-cabin-lights.md)
 - [Aerospace Use Cases - Cabin Lights using NASA cFS](./use-cases/use-case-cabin-lights-cfs.md)
 - [Use-case related items in discussions](https://github.com/elisa-tech/wg-aerospace/discussions?discussions_q=is%3Aopen%20label%3Ause-case)
@@ -34,9 +34,12 @@ This document register shall help to find the information you are looking for. D
 - [Copilot native test app and Copilot walk through](./../demos/copilot/BasicDemo.md)
 - [Copilot embedded demo](./../demos/copilot/EmbeddedDemo.md)
 
+[AvioNix Demo](./../demos/AvioNix-demo/README.md)
+
 ## Embedded environments (with respect to use-cases)
 [Embedded environments landing page](./../demos/docs/embedded-environments/Readme.md)
 - [Stand-alone embedded environments](./../demos/docs/embedded-environments/Standalone.md)
 - [Mixed functions embedded environments](./../demos/docs/embedded-environments/MixedFunctions.md)
-
-[Environments building notes](./../demos/env/Readme.md)
+- Host Depenencies (e.g., environment demos run on)
+  - [Container building](./../demos/env/Readme.md)
+  - [Host system testing](./../demos/env/test/host-ubuntu/README.md)

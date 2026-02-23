@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: MIT
+
+name: Check all markdown files are linked in register.md
+
+on: [push]
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run custom script to verify all files are linked
+        run: |
+          # Define the index file path
+          INDEX_FILE="./docs/register.md"
+          # Find all markdown files, excluding the index file and node_modules
+          ALL_MD_FILES=$(find . -type f -name '*.md' ! -wholename "$INDEX_FILE" ! \
+                        -path './Contributing.md' ! \
+                        -path './presentations*' ! \
+                        -path './meeting-minutes*' ! \
+                        -path './demos/AvioNix-demo/.github*' ! \
+                        -path './demos/copilot/src/cfs/apps/lights_app*' ! \
+                        -path './demos/copilot/src/cfs/apps/switch_app*' ! \
+                        -path './demos/copilot/src/cfs/elisa_usecase*' ! \
+                        -path './demos/copilot/src/cfs/updated_template*')
+
+          MISSING_FILES=()
+          for file in $ALL_MD_FILES; do
+            # Create a relative path for the link comparison (remove leading ./)
+            RELATIVE_PATH=${file#./}
+            # Drop docs/ if present
+            RELATIVE_PATH=${RELATIVE_PATH#docs/}
+            # Check if the relative path (link format) is in the index file
+            if ! grep -q "$RELATIVE_PATH" "$INDEX_FILE"; then
+              MISSING_FILES+=("$file")
+            fi
+          done
+
+          if [ ${#MISSING_FILES[@]} -ne 0 ]; then
+            echo "Error: The following markdown files are not linked in $INDEX_FILE:"
+            for missing_file in "${MISSING_FILES[@]}"; do
+              echo "- $missing_file"
+            done
+            exit 1
+          else
+            echo "Success: All markdown files are linked in $INDEX_FILE."
+          fi
