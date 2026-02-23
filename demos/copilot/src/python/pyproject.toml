@@ -1,0 +1,27 @@
+ # SPDX-FileCopyrightText: 2026 wucke13
+ #
+ # SPDX-License-Identifier: Apache-2.0
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = [
+  "appConfiguration",
+  "lightControl",
+  "lightServer",
+  "lightServerRawSocket",
+  "logger",
+  "serverCommands",
+  "switch",
+  "switchRawSocket",
+]
+
+[project]
+name = "light"
+version = "0.1.0"
+
+[project.scripts]
+lightServer = "lightServer:main"
+switch = "switch:main"

@@ -22,7 +22,7 @@ The following instructions assume that you've completed the [Development Setup](
    ```
 3) At this point you're in the docker container with all the tools to do testing and rebuild of the demos.
 4) Install required packages inside the container `sudo apt update && sudo apt install -y  vim git file wget make cmake` 
-5) If you wish to have the cFS build to persist on the docker container, cd to `/demo/` and set the variable `ELISA_DEMO=$(pwd)/elisa_emulation`
+5) If you wish to have the cFS build to persist on the docker container, `cd /demo/` and set the variable `ELISA_DEMO=$(pwd)/elisa_emulation`
 6) Make the directory where cFS will be cloned into `mkdir -p $ELISA_DEMO && cd $ELISA_DEMO`
 
 ### Clone cFS directory

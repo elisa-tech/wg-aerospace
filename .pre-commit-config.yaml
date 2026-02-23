@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: MIT
+
+exclude: "^meeting-minutes/"
+fail_fast: false
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+      # forbid files which have a UTF-8 byte-order marker
+      - id: fix-byte-order-marker
+      # Check for files that would conflict in case-insensitive filesystems
+      - id: check-case-conflict
+      # This hook checks json files for parseable syntax.
+      - id: check-json
+      # Check for files that contain merge conflict strings.
+      - id: check-merge-conflict
+      # Checks for symlinks which do not point to anything.
+      - id: check-symlinks
+      # This hook checks toml files for parseable syntax.
+      - id: check-toml
+      # Ensures that links to vcs websites are permalinks.
+      - id: check-vcs-permalinks
+      # This hook checks xml files for parseable syntax.
+      - id: check-xml
+      # This hook checks yaml files for parseable syntax.
+      - id: check-yaml
+      # Detects symlinks which are changed to regular files with a content of a path which that symlink was pointing to.
+      - id: destroyed-symlinks
+      # Detects the presence of private keys
+      - id: detect-private-key
+      # Replaces or checks mixed line ending
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+        description: Forces to replace line ending by the UNIX 'lf' character.
+      # This hook trims trailing whitespace.
+      - id: trailing-whitespace
+
+  # Prettier is an opinionated code formatter.
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v3.0.0-alpha.4"
+    hooks:
+      - id: prettier
+        exclude: '(\.terraform|\.md)$'
+
+  # Terraform hooks
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.83.5
+    hooks:
+      - id: terraform_fmt
+      - id: terraform_validate
+      - id: terraform_docs
+        args:
+          - --args=--lockfile=false
+      - id: terraform_tflint
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+      - id: terraform_tfsec
+      - id: terraform_checkov
+        args:
+          - --args=--quiet
+          - --args=--skip-check=CKV_AWS_*
+          - --args=--skip-check=CKV_AZURE_*
+          - --args=--skip-check=CKV_GCP_*
+          - --args=--skip-check=CKV_DOCKER_*
+
+  # Shell script hooks
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.5
+    hooks:
+      - id: shellcheck
+        args: ["-x"]
+
+  # Secret scanning
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks

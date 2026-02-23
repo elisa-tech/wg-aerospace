@@ -1,3 +1,4 @@
+
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
@@ -16,12 +17,53 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Agenda / Minutes
 
-## Old topics
+[Catch us on the Discord Aerospace channel!](https://chat.elisa.tech)
 
-## New topics
+DASC paper submission
+- "Survey on State-of-the-Art Aerospace Operating Systems in Avionics"
+– Do we start a SIG for paper development?
+
+Presented the Annual update today - https://github.com/elisa-tech/wg-aerospace/blob/main/presentations/2026-ELISA-aerospace-wg-Annual_Update.pdf
+- [Discuss the 2026 ideas](https://github.com/elisa-tech/wg-aerospace/discussions/124)
+- Add your comments / feedback plus vote on them!
+
+Future presentors
+- (Leonidas) Overview of QEMU + custom machine/board models
+  - ACTION: Matt/Rob bring up the time ref/sync QEMU topic from 2025 demo call
+    - https://github.com/elisa-tech/wg-aerospace/discussions/119#discussioncomment-15519103
+- ISO26262 vs DO-330 tool certification  (What about Space certifications/tools?) - TBD, need to regroup with person that originally requested.
+- Nix overview (re-present Lund talk) - Erin der Veen offered to present
+- WASM presentation?
+- Rust for safety?
+
+[Open PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+- Nix based ELISA demo framework
+- A series from Matt on host env fixups / testing
+- cFS demo docs
+
+Automotive Grade Linux SoDev architecture
+- Where does this fit?
+- ACTION: See if SystemsWG could present again on AGL progress in a few months
+- What other parts could we present on to grow understanding of the topic space? e.g., partition items, comm/ipc, standards
+- Xen FuSa present?
+
+## Awareness items
+
+ELISA annual update event Feb 11 & 12th was recorded and videos should be posted soon.
+
+Xen FuSa (https://gitlab.com/xen-project/fusa)
+- AMD released more architecture material - https://gitlab.com/xen-project/fusa/architecture_specs
+- Boeing published a system spec - https://gitlab.com/xen-project/fusa/fusa-docs/-/merge_requests/15
+
+Weekly use case demo team
+- Working doc and usability updates
+
+SGL last month - [Guest Presentation: Radshield - Software Radiation Protection](https://github.com/elisa-tech/sig-sgl/pull/13/changes#diff-815e83ba7960305da5c6b4fba417dc2240d856e2e802c84e160a4dd8f0c63225R149)
+
 
 ## Tasks until next meeting
 
+See ACTIONS above.
 
 ---
 
@@ -29,67 +71,15 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Attended this meeting
 
+- Matt Weber - Boeing
+- Alexey Simonov - TII, UAE
+- Michael Monaghan - NASA Goddard
+- Shefali Sharma
+- Rob Woolley (Wind River)
 
 ## Attended recently in the past
 
-- Abdi Kitesa
-- Alexey Simonov - TII, UAE
-- Allen Brown - Odyssey Space Research
-- Anshul Makkar - Infinitede
-- Andrew Wilson - L3Harris, BYU, FPGA Zealot
-- Brennan Stewart - NASA
-- Carole Garrison - NASA Langley
-- Chuck Wolber - Boeing
-- Cyril Jean - Microchip Technology Inc.
-- Daniel Riechers - Collins (Security)
-- Daniel Witte - Astro Mechanica
-- David Graziano - Collins (Security)
-- Douglas Landgraf - Red Hat
-- Emmanuel Gravel - Skytrac
-- Gabriele Paoloni - Red Hat
-- Gaston Gonzalez - VENG
-- Gary Crum - Voyager
-- Iain Galloway - NXP Semiconductors
-- Ivan Perez - KBR @ NASA Ames Research Center
-- Ivan Rodriguez - Coros Space
-- Joshua Whitehead - Boeing
-- Justin Pearson - Lynx Software
-- Laurent Meilleur
-- Lenka Koskova - TUL CZ
-- Leonidas Kosmidis (Barcelona Supercomputing Center)
-- Macarena Sagredo
-- Manuel Beltran - Boeing
-- Martin Halle - Hamburg University of Technology
-- Matt Kelly - Boeing
-- Matt Weber - Boeing
-- Michael Epley - Redhat
-- Michael Mahoney - Wind River
-- Michael Monaghan - NASA Goddard
-- Merlin Kooshmanian - ESA
-- Naga - Timesys/Lynx
-- Olivier Charrier - Wind River
-- Paul Greenwood - Vorago Technologies
-- Paul Mani - Collins India
-- Pavel Roskin
-- Phaedrus Leeds - Aerospace Corp
-- Philip Balister - OpenEmbedded
-- Philipp Ahmann (ETAS GmbH)
-- Piotr Skrzypek - ESA
-- Qasim Majeed - Siemens
-- Rajesh Kurapati - KMC
-- Ramon Roche - LF
-- Rob Woolley (Wind River)
-- Sascha Wise - Elodin
-- Sam Thompson - Rapita Systems
-- Scott Salmon - Cesium
-- Shefali Sharma
-- Steve VanderLeest - Boeing
-- Tim Bird (Sony)
-- Tomas Novotny - Czech Aerospace Research Centre
-- Vikash Kodati
-- Walt Miner - Linux Foundation
-- Wanja Zaeske - DLR
-- Yasushi SHOJI - Space Cubics
+[List](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/ELISA-AeroWG-Meeting-DATE_template.md#attended-recently-in-the-past)
 
 ---
 

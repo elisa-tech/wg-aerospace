@@ -15,6 +15,8 @@ This folder contains a series of examples, documentation, and reference builds t
 
 The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.  It will has notes on tool setup and how to retrieve the Docker image.
 
+Alternatively, [AvioNix Demo](./AvioNix-demo/README.md) contains a Nix based build infrastructure compile and run demos.
+
 > TBD tie to our background notes on the [env](../demos/docs/embedded-environments/Readme.md)
 
 ## Use case Examples

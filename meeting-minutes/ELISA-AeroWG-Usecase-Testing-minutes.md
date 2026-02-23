@@ -10,7 +10,280 @@ Zoom link for call - https://zoom-lfx.platform.linuxfoundation.org/meeting/95688
 
 **Parking lot:**
 
+- ELISA blog post - what do we want to do for this?  demo?  what content, what doc work do we need to finish first
+
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
+
+## 20260220
+
+**Attendance**
+- Matt Weber (Boeing)
+- Wanja Zaeske
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Rodriguez (Coros Space)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Ivan Perez (KBR @ NASA ARC)
+- Nagamahesh Gamidi (Timesys / Lynx)
+
+
+**Discussion topics**
+
+Presentation on QEMU
+
+- Leonidas will try for Feb 27th
+
+Discussion on python and Makefile
+
+- organizing of python  (follow python practice standard)
+- split the Makefile so docker and build are split  (layers that streamline but also allow advanced use)
+  - allows inclusion of the build in nix and other use
+  - allows us to still have a focus on demo
+  - update the end user perspective, 1) maybe there are parts they need to focus on  2) or others may want to do part of the concept
+  - for the advanced case  - update the goals and outline how we handle docs + setup details where we expect "conventions to apply"
+  - top level must be simple
+    - individual components are made to be accessible
+- (Matt) PR for the goal/design update
+  - https://github.com/elisa-tech/wg-aerospace/tree/main/demos
+  - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/Readme.md
+
+Doc update (Martin) - https://github.com/elisa-tech/wg-aerospace/pull/140
+
+- walked through register approach
+- feed back was good
+- solves the "where is the info problem" without grepping in a clone'd repo
+- plan to merge current work and then we'll iterate on updates
+  - ACTION: (weber plans a CI check for md update)
+- Ivan had a reference for doc approach / structure
+  - https://github.com/nasa/ogma
+  - https://github.com/ivanperez-keera/Yampa
+  - https://github.com/ivanperez-keera/dunai/
+  - https://github.com/Copilot-Language/copilot/
+  - Our landing pages in specific topics would follow a similar structures (suggested) ACTION: Martin said he'd take a look at example for next time
+
+cFS (Ivan)
+
+- topic of platforms to support at TSC this week
+- need to get minimal kernel work and minimal dependency pieces aligned with SGL
+- could help with getting it to fly and further NASA support
+- ACTION: Matt will reach out to Ramon and Rob to see how we best coordinate this as it has been discussed before and building confidence for all stakeholders will only help SGL success and further round out the definition of our industry needs.
+
+
+Nix PR - https://github.com/elisa-tech/wg-aerospace/pull/115
+
+- `nix flake show` (outlines the system view of what all is assembled with versions)
+- Is it worth building our stuff on RISC-v / polarfire for the demo?  Could show a bridge to HPSC
+  - https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html
+- ACTION: merge after a couple minor fixes
+
+---
+
+## 20260213
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Ivan Perez (KBR @ NASA ARC)
+- Wanja Zaeske
+
+**Discussion topics**
+
+Testing ARM64 hosts
+- [PR that automates host testing](https://github.com/elisa-tech/wg-aerospace/pull/137)
+- [PR Docker only installs if not installed](https://github.com/elisa-tech/wg-aerospace/pull/136)
+- Docs/tutorial step automation (keep docs relevant by executing the docs) - (Ivan shared a paper was written)
+- Ivan R - ACTION Matt to check with him for retest
+
+- Nix PR
+  - ACTION: Matt to check his comments
+  - 
+
+- Minimal kernel demos?
+  - Last call
+    - How minimal can we get and run parts of what we already did <<- Wanja has interest in this with the Nix work
+    - Do we research beyond config?
+    - Have a 5.15 now but would a newer be better?
+    - Could lead to discusssions on assurance of a configuration? (traditional methods / breaking subsets and parts to improve QA towards cert)
+      - There are some efforts today upstream?  Do those overlap?
+    - Nvidia - where does their functional safety work fit?  Do we try to fold in?
+    
+  - Do we start with minimizing and maintain basic demo?
+    - Pick the specific architecture, targetted hardware, targetted IO
+    - Find common components / IO?
+    - Benefits of Linux: Clear user interface and suite of Drivers
+    - Which direction do we start, super limited and work up or tiny down?
+    - Where does this fit with ELISA Architecture / Linux Features for Safety WGs?
+      - ELISA has a tool for safety config - https://github.com/elisa-tech/kconfig-safety-check
+      - ACTION: find link to Features work on smaller then Tiny
+    - Do we have users, do we run multicore, Ethernet in userspace,
+      - Matt offered to share updated super minimal with research material
+    - What is this if we minimalize to a point where it really isn't linux?
+    - Leonidas will share a paper link to Metasat study on hypervisor+RTEMS for space (went through similar activity of what capability was needed)
+      - paper is "Mixed-Criticality Flight Software Integration In a High Performance RISC-V Space Platform", but the proceedings of the SMC-IT 2025 is not yet published in ieeexplore
+      - demo in RISC-V summit Europe 2025: https://www.youtube.com/watch?v=0LleyXCZLjg&list=PL85jopFZCnbNG7C1gljj2JRocxwT3fNux&index=11
+  - Look for a platform (e.g. embedded sensor, something that flys) that others are advancing <--  we could contribute to the kernel side?
+    - Is there a demo (at least for visibility) - Need to see how this ties into progress
+  - User space items are not considered in the SLOC measurements (just limited by what Kernel can do)
+  - Steps
+    - Matt/Brian shares config + research on new ticket (minimal config ticket) and tag on Nix PR
+      - Would be interested to recount the size of this with Wanja's tooling
+    - Nix updated for a minimal config respectively from research or examples shared in minimal config ticket
+    - Tailor - Disable multicore?  Drivers enabled?
+      - Networking - Raw Sockets / UDP (Look a size difference?)
+      - Storage - MTD?
+    - Nix cross toolchain build the copilot monitor C code (MUSL as libc for higher assurance, lower, GLIBC mostly for userspace compat reasons)
+    - Package monitor C code into cpio for emulation
+      - Prototype, could run monitor in background and echo strings to files it watches
+    - Development
+      - Run demo apps outside of emulation and talk to emulation with Raw sockets?
+      - A version of the demo apps on target that isn't a intepreter (e.g., python)?
+
+---
+
+## 20260206
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+
+**Discussion topics**
+
+Testing ARM64 hosts
+ 
+- Ivan R tried the Basic demo on ARM64 and ran into a copilot import error
+  - ACTION: Matt to open PR to help to drop xfs condition and fix to have the setup script only install docker if not present - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/env/setup-env.sh#L18
+  - ACTION: Ivan R checking on another machine as well. `docker run hello-world`  similar error?
+    -  Looks like a docker.ce vs docker.io issue across ubuntu devices....
+
+```
+    Detected architecture: aarch64
+    docker run --rm -it -e HOST_UID="1000" -e HOST_GID="1000" -v /home/irodrigu/wg-aerospace/demos/copilot/src/monitors/../:/demo registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2284164686 sh -c 'cat /.VERSION && bash'
+    docker: Error response from daemon: failed to set up container networking: failed to create endpoint competent_black on network bridge: Unable to enable DIRECT ACCESS FILTERING - DROP rule:  (iptables failed: iptables --wait -t raw -A PREROUTING -d 172.17.0.2 ! -i docker0 -j DROP: iptables v1.8.7 (legacy): can't initialize iptables table `raw': Table does not exist (do you need to insmod?)
+    Perhaps iptables or your kernel needs to be upgraded.
+     (exit status 3))
+    Run 'docker run --help' for more information
+    make: *** [Makefile:68: dev] Error 125
+```
+
+Demo ideas
+
+- (Ivan) Demos with FPGA doing monitoring of processor execution?  Is this interesting as a demo?
+  - primary processor doing work, secondary running monitoring pieces (could be logic, could be RT code)
+  - https://hacarus.com/wp-content/uploads/2021/05/Figure2_EN_Versal_Series_Overview_cropped_ano_%E9%BB%92%E6%9E%A0-1024x535.png
+      - Similar to this with processor doing workflow with firmware doing monitoring / checks on executing code with shared mem
+      - There is a systemc TLM from AMD with A and R core ARMs could be used to simulate it - https://xilinx-wiki.atlassian.net/wiki/spaces/A/pages/862421112/Co-simulation
+  - Martin - valid application within how Aerospace does IO / integrates devices
+  - Matt - Suggested SGL topic?  Maybe have hardware / others interested to build a scenario?
+    - ACTION: Ask Manuel about cFS / copilot
+  - Ivan - Intern did some work --> https://github.com/Copilot-Language/copilot/tree/master/copilot/examples/fpga/HelloWorld
+    - https://bluespec.com/ - language conversion to verilog (copilot->bluespec->verilog)
+    - Thinking a cFS application that interfaces to FPGA
+
+- Minimal kernel demos?
+  - How minimal can we get and run parts of what we already did <<- Wanja has interest in this with the Nix work
+  - Do we research beyond config?
+  - Have a 5.15 now but would a newer be better?
+  - Assurance of a configuration? (traditional methods / breaking subsets and parts to improve QA towards cert)
+    - There are some efforts today upstream?  Do those overlap?
+  - Nvidia - where does their functional safety work fit?  Do we try to fold in?
+
+- Matt - interest in mixed functions and interferance
+  - interferance study and tools
+  - https://www.manschula.dev/projects/seniord/
+  - https://github.com/2Manchu/MOAT
+
+Docs are in progress (Martin)
+  - Move and clean/clarify material
+  - Registry/index of content to make it navigatable
+  - Make it easier for new users to nagivate "Start"
+
+- Testing of [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Matt stopped and pulled Salim in to add the missing assumptions to docs / steps
+  - Martin?
+  - Salim?
+
+**Next time**
+
+- QEMU overview / examples (Martin)
+  - Leonidas mentioned he could do some overview
+  - ACTION: Leonidas, Feb 20th to present on Use case call(this call)
+  - **Matt emailed Ramon** about March call to repeat presentation (no response so far)
+
+- Matrix of apps vs env and what we want to show/support?  (Martin)
+  - How do we best document this with current work?
+  - How do we breakout parts to make them usable?
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+
+---
+
+## 20260130
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (Hamburg University of Technology)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+
+**Discussion topics**
+
+- Copilot / ogma releases - mostly sequence diagram focused
+
+- Contributing/license PR is merged and rebased [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Other PRs are good for rebase
+  - Wanja, you've been added to the project so if you want to branch on the project (vs fork) the workflows will run.
+
+- Merged ARM64 Host support after testing with Martin
+  - Wanja did you find that example of the binfmt approach for a CI runner build?
+
+- Add notes to Contrib
+  - Add a detail about blobs and formats that don't have commenting
+  - e.g json?  pdfs, etc
+  - This command puts CC on the whole cfs folder, however you probably want to run a few commands at different subfolders to get most of the designations correct for Apache/ MIT .  then fixup some manually where the files mix with different licenses.
+  - docker run --rm --volume $(pwd):/data fsfe/reuse annotate --license CC-BY-SA-4.0 --recursive --fallback-dot-license demos/copilot/src/cfs/
+  - docker run --rm --volume $(pwd):/data fsfe/reuse supported-licenses
+  - Updates so all license descriptions are in the license folder.
+  - docker run --rm --volume $(pwd):/data fsfe/reuse download
+
+- QEMU overview / examples (Martin)
+  - Leonidas mentioned he could do some overview
+  - ACTION: Leonidas, Feb 20th to present on Use case call(this call)
+  - ACTION: Matt mentioned to Ramon about March call to repeat presentation
+
+- Docs ACTION: (Martin)
+  - Move and clean/clarify material
+  - Registry/index of content to make it navigatable
+  - Make it easier for new users to nagivate "Start"
+
+- Testing of [WIP: cFS app demonstration](https://github.com/elisa-tech/wg-aerospace/pull/109)
+  - Martin and Matt took an action
+  - Bug in ubuntu PC 24.04 on setup.sh with needing containerd installed as well.  Need to test on 22.04
+  - Build-cfs.sh
+    - fix step 5 to be clear about `cd /demo`
+    - Needs a version reworked for the lights demo w/cfs
+  - Spent remaining time walking steps
+  - This needs fixed for the new lights demo apps and tables - https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/cfs/scripts/load_cfs.sh#L27
+    - Something in 28-66 needs rework
+
+**Next time**
+
+- Matrix of apps vs env and what we want to show/support?  (Martin)
+  - How do we best document this with current work?
+  - How do we breakout parts to make them usable?
+
+- Like to go through next step for demos - (Ivan)
+
+PRs - https://github.com/elisa-tech/wg-aerospace/pull/
+
+---
 
 ## 20260123
 
