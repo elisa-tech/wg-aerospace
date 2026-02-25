@@ -4,11 +4,10 @@ name: CI
 
 on:
   push:
+    paths:
+      - 'demos/**'
     branches:
       - "*" # This will trigger the workflow on all branches
-  pull_request:
-    branches:
-      - "*" # This will trigger the workflow on pull requests to all branches
 
 jobs:
   clone-and-build:
