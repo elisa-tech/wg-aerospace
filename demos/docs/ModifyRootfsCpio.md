@@ -49,7 +49,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
    cat << EOF > helloworld.c
    # include <stdio.h>
    # include <unistd.h>
-   
+
    int main() {
       while(1) {
          printf("Hello, World!\n");
@@ -71,13 +71,13 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 9. Extract the current CPIO rootfs:
 
-    NOTE: some of these remaining commands will need to be as root to properly
-    process the device nodes from cpio archive extraction/creation:
+   NOTE: some of these remaining commands will need to be as root to properly
+   process the device nodes from cpio archive extraction/creation:
 
-    ```text
-    mkdir extracted_cpio
-    sudo cpio -i -R +0:+0 -n -F rootfs.cpio --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio
-    ```
+   ```text
+   mkdir extracted_cpio
+   sudo cpio -i -R +0:+0 -n -F rootfs.cpio --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio
+   ```
 
 10. Change into the 'extracted_cpio' directory and make filesystem modifications, add applications/libraries, etc...:
 
@@ -118,7 +118,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
     ```text
     qemu-system-aarch64 -M virt -cpu cortex-a53 -m 512 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append 'root=/dev/ram0 rdinit=/bin/helloworld console=ttyAMA0 printk.time=y initcall_debug debug ignore_loglevel' -netdev user,id=eth0 -device virtio-net-device,netdev=eth0 -chardev socket,id=ttyAMA0,host=localhost,port=45450,server,nowait -device pci-serial,chardev=ttyAMA0
-    
+
     ...
     [    0.285604] calling  0xffff80008027c844 @ 1
     [    0.285640] initcall 0xffff80008027c844 returned 0 after 27 usecs
@@ -134,11 +134,11 @@ SPDX-License-Identifier: CC-BY-SA-4.0
     Hello, World!
     ```
 
-    This exmaple runs QEMU and drops to a shell prompt where the 'helloworld' application can be ran (again the '-append ..." kernel parameters could be adjusted as needed):
+    This example runs QEMU and drops to a shell prompt where the 'helloworld' application can be ran (again the '-append ..." kernel parameters could be adjusted as needed):
 
     ```text
     qemu-system-aarch64 -M virt -cpu cortex-a53 -m 512 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -append 'root=/dev/ram0 console=ttyAMA0 printk.time=y initcall_debug debug ignore_loglevel' -netdev user,id=eth0 -device virtio-net-device,netdev=eth0 -chardev socket,id=ttyAMA0,host=localhost,port=45450,server,nowait -device pci-serial,chardev=ttyAMA0
-    
+
     ...
     [    1.820463] Run /init as init process
     [    1.820591]   with arguments:
@@ -154,7 +154,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
     Welcome to Buildroot
     buildroot login: root
-    # /bin/helloworld 
+    # /bin/helloworld
     Hello, World!
     Hello, World!
     Hello, World!

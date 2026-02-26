@@ -54,7 +54,7 @@
     // (inputs.flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ] (
       system:
       let
-        # nixpkgs instance for the current sytem with our overlay applied
+        # nixpkgs instance for the current system with our overlay applied
         pkgs = import nixpkgs {
           inherit system;
           overlays = [

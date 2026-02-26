@@ -47,6 +47,8 @@ resource "aws_instance" "main" {
   key_name               = aws_key_pair.ec2_key_pair.key_name
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.example_profile.name
+  monitoring             = true
+  ebs_optimized          = true
 
   metadata_options {
     http_tokens = "required"
@@ -77,10 +79,15 @@ resource "aws_security_group" "ec2_sg" {
   description = "Security group for EC2 instance"
 
   # SSH access from anywhere
+  # NOTE: This is a TEST ENVIRONMENT ONLY configuration
+  # Production environments should restrict SSH access to specific IP ranges
   #
   # Ideas around restricting this
   #  - https://www.google.com/search?q=how+to+auto+gen+the+cidr_blocks+%3D+%5B%220.0.0.0%2F0%22%5D+for+ssh+inbound+at+terraform+apply&rlz=1CAANLP_enUS1091US1091&oq=how+to+auto+gen+the+cidr_blocks+%3D+%5B%220.0.0.0%2F0%22%5D+for+ssh+inbound+at+terraform+apply&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTEyMjY1ajBqNKgCA7ACAfEF99H0otuk_Lw&sourceid=chrome&ie=UTF-8
   #tfsec:ignore:aws-ec2-no-public-ingress-sgr
+  #checkov:skip=CKV_AWS_24:Test environment - SSH access required from any IP for demo purposes
+  #trivy:ignore:AVD-AWS-0107
+  #ts:skip=AC_AWS_0227 Test environment - SSH access required from any IP for demo purposes
   ingress {
     description = "SSH"
     from_port   = 22

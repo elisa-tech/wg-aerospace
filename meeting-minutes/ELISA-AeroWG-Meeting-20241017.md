@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -85,36 +85,35 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Upcoming Events
 
 - 10-12 Dec - Hosted by NASA at Goddard Space Flight Center
-  - Location: Goddard Space Flight Center https://maps.app.goo.gl/NoVcCPoSEk38ardU6
-  - Registration open: https://elisa.tech/event/elisa-workshop-at-at-nasa-goddard-space-grade-linux/
-  - Agenda draft: https://docs.google.com/document/d/1Mytz9pGkTEIVqTnlEKxTpx3ozPt1xFlBqhYrj0gCsRU
+  - Location: Goddard Space Flight Center <https://maps.app.goo.gl/NoVcCPoSEk38ardU6>
+  - Registration open: <https://elisa.tech/event/elisa-workshop-at-at-nasa-goddard-space-grade-linux/>
+  - Agenda draft: <https://docs.google.com/document/d/1Mytz9pGkTEIVqTnlEKxTpx3ozPt1xFlBqhYrj0gCsRU>
   - Virtual attendance possible for speakers.
   - For wider listening some talks may be shared as webinars.
   - Share presented slides later for the ELISA result database.
 - 25th Feb in Karlsruhe, Germany - 7th Workshop on Avionics Systems and Software Engineering (AvioSE)
-  - **(NEW) Call for Papers and further information on: https://aviose-workshop.github.io/**
-- 24th-27th March in Seattle, WA - Flight Software Workshop (https://flightsoftware.org/workshop/FSW2025)
+  - **(NEW) Call for Papers and further information on: <https://aviose-workshop.github.io/>**
+- 24th-27th March in Seattle, WA - Flight Software Workshop (<https://flightsoftware.org/workshop/FSW2025>)
   - Presentation only - submissions start ~Oct 14th (ends ~Dec)
   - This workshop drove some of the Space Grade Linux topics
   - Lessons learned / BOF-like with presentation
   - Registration/abstracts open - 200 slots
   - Christopher Heistand is chairing
-    - [MW]  **Ask Michael about proposing some talks.  Status of RT primer with stats?? Maybe a combo of space and non-space perspective?**  Chat with Kate?
+    - [MW] **Ask Michael about proposing some talks. Status of RT primer with stats?? Maybe a combo of space and non-space perspective?** Chat with Kate?
 - July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA)
   - Workshops (deadline for submissions Fall 2024) and papers
-  - **Do we want to propose a topic?  Or a Space workshop at the event with ELISA topics?(ELISA was a sponsor in prior 2 yrs)**
-- Aug - SmallSat - Call for paper is open - https://www.smallsat.org/downloads/call-for-papers.pdf
-- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
+  - **Do we want to propose a topic? Or a Space workshop at the event with ELISA topics?(ELISA was a sponsor in prior 2 yrs)**
+- Aug - SmallSat - Call for paper is open - <https://www.smallsat.org/downloads/call-for-papers.pdf>
+- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (<https://2025.dasconline.org/>) (Montreal, Canada)
 
 ## Articles / Publications
 
@@ -123,7 +122,9 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Space Grade Linux (SGL)
@@ -131,9 +132,10 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 - Survey: [Shape the Future of Linux in Space](https://lists.elisa.tech/g/aerospace/topic/help_shape_the_future_of/108506014)
   - Marketing push pending staff recovering from LPC
   - End date (not set yet)
-  - Ramon sent email to  list offering to meet and gather partial details / product independent feedback
+  - Ramon sent email to list offering to meet and gather partial details / product independent feedback
 
 ## December 10-12 Workshop
+
 - Planning call topics
   - Looking for food sponsors (Contact Kate if interested)
 - Rough survey of attendance has most of those on the call being virtual
@@ -151,6 +153,7 @@ Continue the discussion series, now in a separate document:
 [Collaboration doc](https://mensuel.framapad.org/p/elisa-aerowg)
 
 ---
+
 ---
 
 # Closing
@@ -160,4 +163,3 @@ Continue the discussion series, now in a separate document:
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-

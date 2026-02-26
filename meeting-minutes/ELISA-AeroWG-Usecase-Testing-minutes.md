@@ -234,7 +234,7 @@ Testing ARM64 hosts
   - ACTION: Ivan R checking on another machine as well. `docker run hello-world` similar error?
     - Looks like a docker.ce vs docker.io issue across ubuntu devices....
 
-```
+```bash
     Detected architecture: aarch64
     docker run --rm -it -e HOST_UID="1000" -e HOST_GID="1000" -v /home/irodrigu/wg-aerospace/demos/copilot/src/monitors/../:/demo registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2284164686 sh -c 'cat /.VERSION && bash'
     docker: Error response from daemon: failed to set up container networking: failed to create endpoint competent_black on network bridge: Unable to enable DIRECT ACCESS FILTERING - DROP rule:  (iptables failed: iptables --wait -t raw -A PREROUTING -d 172.17.0.2 ! -i docker0 -j DROP: iptables v1.8.7 (legacy): can't initialize iptables table `raw': Table does not exist (do you need to insmod?)
@@ -1006,7 +1006,7 @@ Salim
 - Demo simple cFS app
 
 - Rob
-  - Described approaches to Yocto inclusion of cFS - Multi receipe vs.?????
+  - Described approaches to Yocto inclusion of cFS - Multi recipe vs.?????
   - Current meta-sgl work
     - 1. BSPs building with Kas
     - 2. Getting automated CI setup
@@ -1106,7 +1106,7 @@ Goals of cFS demo
   - Ivan mentioned, cFS depends on <stdint.h>,<stdbool.h>,<string.h>,<stdlib.h>,<math.h>
   - Progress towards a Minimal kernel and libc from current emulation build
 - Demo Apps 2.0
-  - Converstion to C as part of cFS (copilot can generate part of the outline of the apps)
+  - Conversion to C as part of cFS (copilot can generate part of the outline of the apps)
   - Switch app (e.g. how we control and configure what is observed)
     - Still want to support configuration input values
     - Get configuration from a virtual serial from outside emulation to drive config to switchapp (mimic's a comm link)

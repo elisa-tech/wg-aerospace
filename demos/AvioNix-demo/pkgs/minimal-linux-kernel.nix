@@ -84,13 +84,13 @@ let
 
       # essentials
       BINFMT_ELF = yes;
-      BINFMT_SCRIPT = yes; # otherwise shebangs wont work for systemd services
+      BINFMT_SCRIPT = yes; # otherwise shebangs won't work for systemd services
       BLK_DEV_INITRD = yes;
       CRYPTO = yes;
       CRYPTO_USER_API_HASH = yes;
       DMI = mkIf hpl.isx86;
       DMIID = mkIf hpl.isx86;
-      FILE_LOCKING = yes; # otherwise libmount fails to updat the userpace mount table
+      FILE_LOCKING = yes; # otherwise libmount fails to update the userspace mount table
       MULTIUSER = yes;
       # SMP = yes; # enable multi-core support
 

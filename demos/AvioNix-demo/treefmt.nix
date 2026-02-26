@@ -15,7 +15,7 @@
   programs.rustfmt.enable = true;
   programs.taplo.enable = true; # formats TOML files
 
-  # Large chunks of this repo are not canoncialized using the formatters confiugred above, so we
+  # Large chunks of this repo are not canonicalized using the formatters configured above, so we
   # ignore them for now
   settings.excludes = [
     ".github/workflows/ci.yml"

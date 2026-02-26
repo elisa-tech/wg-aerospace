@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+
+BasedOnStyle: LLVM   # or Google, Mozilla, etc.
+AllowShortFunctionsOnASingleLine: None
+AlignConsecutiveMacros: true

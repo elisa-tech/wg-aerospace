@@ -4,7 +4,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Basic
 
-
 ## Build
 
 Assuming the code base was previously cloned during [Environment Setup](../copilot/EnvSetup.md) as follows.
@@ -41,7 +40,6 @@ make run
 - To exit the TMUX environment:
   - Press `CTRL+b`
   - type `:kill-session` <Enter>
-
 
 ## Future improvements
 

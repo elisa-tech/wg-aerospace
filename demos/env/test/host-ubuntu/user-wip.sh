@@ -16,7 +16,7 @@ echo "ubuntu ALL=(ALL) NOPASSWD: ALL" | tee /etc/sudoers.d/90-ubuntu-nopasswd
 ## Setup the auto shutdown script
 ##   Cron test to check every 10 min (20mins to shutdown if not used)
 apt-get update -y && apt install -y net-tools
-cat << EOM > /sbin/shutdown-if-inactive
+cat <<EOM >/sbin/shutdown-if-inactive
 #!/bin/bash
 #
 # https://serverfault.com/a/1061792
@@ -50,7 +50,7 @@ else
 fi
 EOM
 chmod 755 /sbin/shutdown-if-inactive
-echo "*/10 * * * *   root    /sbin/shutdown-if-inactive" >> /etc/crontab
+echo "*/10 * * * *   root    /sbin/shutdown-if-inactive" >>/etc/crontab
 
 # Run our setup, build and test sequence
 su -c "cd /home/ubuntu && git clone https://github.com/elisa-tech/wg-aerospace.git" ubuntu

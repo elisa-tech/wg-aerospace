@@ -2,4 +2,4 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-For collaboration on the various paper ideas, we're working to get a better environment set up that sync's with Github.  For now, please contact Martin Halle <martin.halle@tuhh.de> to access whats is present in Overleaf!
+For collaboration on the various paper ideas, we're working to get a better environment set up that sync's with Github. For now, please contact Martin Halle <martin.halle@tuhh.de> to access what's is present in Overleaf!

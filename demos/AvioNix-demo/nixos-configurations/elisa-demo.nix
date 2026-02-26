@@ -92,8 +92,8 @@
       requires = [ "%N.socket" ];
       serviceConfig.ExecStart = lib.meta.getExe' pkgs.elisa-demo-python-light "lightServer";
       serviceConfig.Restart = "always";
-      # The lightServer requires stdin to not imidiately return EOF, otherwise it crashes. Hence
-      # we allocate a FIFO for it. This allos allows sending REPL like commands to the light server
+      # The lightServer requires stdin to not immediately return EOF, otherwise it crashes. Hence
+      # we allocate a FIFO for it. This allows allows sending REPL like commands to the light server
       # despite it being a properly running service.
       serviceConfig.StandardInput = "socket";
       serviceConfig.StandardOutput = "journal";
@@ -104,7 +104,7 @@
       wantedBy = [ "multi-user.target" ];
       # The copilot monitor doesn't actually interface with the syslog(2) kernel API, but instead
       # just reads a file. To make it consume the relevant log, we pipe `journalctl` with an
-      # appropiate output format to its stdin and pass /dev/stdin as the syslog file.
+      # appropriate output format to its stdin and pass /dev/stdin as the syslog file.
       serviceConfig.ExecStart = "/bin/sh -c 'journalctl --follow --output=short-monotonic | ${lib.meta.getExe' pkgs.elisa-demo-copilot-light "main_syslog_time"} /dev/stdin'";
       serviceConfig.Restart = "always";
     };

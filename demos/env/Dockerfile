@@ -4,7 +4,9 @@
 #
 # This file is designed to support a Docker Build on both AMD64 and ARM64
 #
+# checkov:skip=CKV_DOCKER_2: no health check
 FROM ubuntu:26.04
+
 # Options
 # 22.04, jammy-20260109, jammy
 # 24.04, noble-20260113, noble, latest

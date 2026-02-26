@@ -3,26 +3,30 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+
+- <https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
+
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group, Paper-focused Meeting
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 Paper meetings are organised as follows:
+
 - Work on the paper:
-  - Show/ briefly discuss new content, assing reviewers, if needed
+  - Show/ briefly discuss new content, assign reviewers, if needed
   - Decide on chaptes addressed next, maybe what to focus on
   - Discuss ideas for new content
 - Task distribution:
   - Who does what until the next Paper meeting (roughly every 4 weeks, see ELISA schedule)
 
 # Minutes
+
 - Address reference paper and how to use
   - "Journal of Systems Architecture" maybe a candidate for a publication!
 - Bring the paper to the DASC 2026
@@ -30,19 +34,21 @@ Paper meetings are organised as follows:
   - Martin: Abstract initial version
   - Leonidas: Google drive link for shared abstract document
 
-## Tasks from meeting of 16th Dec 2025:
+## Tasks from meeting of 16th Dec 2025
+
 - [DONE] Leonidas: Proof read (Background): New paragraph related to system
-- [DONE] Leonidas: (Background) explain common platform and reference https://www.autosar.org/capi
+- [DONE] Leonidas: (Background) explain common platform and reference <https://www.autosar.org/capi>
 - [DONE] Leonidas: Start ToDo (Background): Avionics specific: Planning, documentation, config management
 - [DONE] Martin: Continue in Background w/ system... (see TeX file)
 - [DONE] Matt: Move tasks that do not belong to the paper anymore
 - [Started] Shefali: (Read paper as-is), what is too much Space and not Aerospace?
 
-## Tasks until next meeting:
+## Tasks until next meeting
+
 - Chi-kwan/Michael/Leonidas/Martin/Shefali: Proof-read Leonidas/Martins works on "Background"
 - Rob: Add clarification open source (Introduction), closed source etc. as discussed
 - Rob: What is Open Source and how does the community life-cycle work?
-- Rob/Michael: Backgound: More clarification of phrases like partitioning needed...?
+- Rob/Michael: Background: More clarification of phrases like partitioning needed...?
 - Shefali: (Continue...), what is too much Space and not Aerospace?
 - Naga: (Read paper as-is), what is too much Space and not Aerospace?
 - Michael Mahoney: (Read paper as-is), what is too much Space and not Aerospace?
@@ -50,9 +56,10 @@ Paper meetings are organised as follows:
 - Martin: Make avionics references from paper available
 - Leonidas: CLosed Source Linux (?) ToDo on VxWorks...
 - (All) Discuss structure of the paper
-- (All): Read https://www.sciencedirect.com/science/article/pii/S138376212500270X
+- (All): Read <https://www.sciencedirect.com/science/article/pii/S138376212500270X>
 
 ## Other business
+
 - Who is the audience
   - Aerospace background
   - You may be an expert in Linux > not an expert on running OSes on aircraft

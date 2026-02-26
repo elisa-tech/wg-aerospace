@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -45,7 +45,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Manuel Beltran - Boeing
 - Andrew Wilson - L3Harris, BYU, FPGA Zealot
 - Philip Balister - OpenEmbedded
-- Rob Woolley  - Wind River
+- Rob Woolley - Wind River
 - Tim Bird - Sony
 - Andrew E Wilson (L3Harris, BYU, FPGA Zealot)
 - Cyril Jean (Microchip Technology Inc.)
@@ -108,31 +108,30 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Meetings
 
 ## Upcoming Events
 
 - June 23-25 - Open Source Summit North America (including Embedded Linux Conference) in Denver, CO
-  - Event web site: https://events.linuxfoundation.org/open-source-summit-north-america/
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
+  - Event web site: <https://events.linuxfoundation.org/open-source-summit-north-america/>
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (<https://2025.smcit-scc.space/>) (Occurring for 20yrs, cross industry/global)
   - July 28 - Aug 1
   - Open source for space workshop (Ivan organizing)
-  - Located @ California Science Center in LA  (close to USC)
+  - Located @ California Science Center in LA (close to USC)
   - Reach out to Ivan Perez if interested in providing a topic related to OSS in space (open data / hw / sw)
-- Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
-- August 5th - Open Source Summit India - Hyderabad, India - https://events.linuxfoundation.org/open-source-summit-india/
-- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference https://events.linuxfoundation.org/open-source-summit-europe/
+- Aug - SmallSat - Call for paper is open (Due Feb 4th) - <https://www.smallsat.org/downloads/call-for-papers.pdf>
+- August 5th - Open Source Summit India - Hyderabad, India - <https://events.linuxfoundation.org/open-source-summit-india/>
+- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference <https://events.linuxfoundation.org/open-source-summit-europe/>
 - TBD 10/31/2025, Drone+Space Community Meetup @ KAU (Korea Aerospace University) Ramon & Dongshik Host
-- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
-- Dec 11-13: Linux Plumbers Conference 2025, in Tokyo (https://lpc.events/)
-- ?? NASA SPARK submissions (https://spark.nasa.gov/)
+- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (<https://2025.dasconline.org/>) (Montreal, Canada)
+- Dec 11-13: Linux Plumbers Conference 2025, in Tokyo (<https://lpc.events/>)
+- ?? NASA SPARK submissions (<https://spark.nasa.gov/>)
 
 ## Journals
 
@@ -145,10 +144,13 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
-## Use case demo feedback (https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot)
+## Use case demo feedback (<https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot>)
+
 - How do you expect to use this demo (judge by adding a plus symbol below)?
   - Research [+++]
   - University student hands on [+]
@@ -173,16 +175,17 @@ See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_Aero
     - detection and recovery mechanism - watchdog / crc / edac / etc
     - Is there a kernel design changes that make things less impacts?
   - Voting algos
-    - partitioning to have mutliple kernels running on several cores
+    - partitioning to have multiple kernels running on several cores
     - Ivan what are the common voting algos in use and any already part of CoPilot - Whitepaper topic?
-    - Michael Epley - if any  of these voting algorithms are in use, I suspect there are test cases + correctness, verification, and specific use cases implemented as well
+    - Michael Epley - if any of these voting algorithms are in use, I suspect there are test cases + correctness, verification, and specific use cases implemented as well
 
 - **ACTION** Next call, start to write up a higher availability/safety focused use case
-    - Focused around bold items above? Seed the discussion?
+  - Focused around bold items above? Seed the discussion?
 
 ## Whitepaper on "Survey State of Art...""
 
 Background
+
 - Edits
   - Via online [Overleaf editor](https://www.overleaf.com/) - we have limited licenses so we've shared the pdf link below
   - latex format and editor can generate documents
@@ -192,9 +195,11 @@ Background
   - Doc still informs goals and activities of AeroWG & Space
 
 ACTIONS
-- Martin can add you as an editor to the paper if you have contributions!  Or you can use our latest pdf on the mailing list and supply comments back in a marked up version.
+
+- Martin can add you as an editor to the paper if you have contributions! Or you can use our latest pdf on the mailing list and supply comments back in a marked up version.
 
 ---
+
 ---
 
 # Closing
