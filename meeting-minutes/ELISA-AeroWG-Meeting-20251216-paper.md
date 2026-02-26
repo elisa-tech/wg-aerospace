@@ -3,20 +3,23 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+
+- <https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
+
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group, Paper-focused Meeting
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 Paper meetings are organised as follows:
+
 - Work on the paper:
-  - Show/ briefly discuss new content, assing reviewers, if needed
+  - Show/ briefly discuss new content, assign reviewers, if needed
   - Decide on chaptes addressed next, maybe what to focus on
   - Discuss ideas for new content
 - Task distribution:
@@ -24,15 +27,17 @@ Paper meetings are organised as follows:
 
 # Minutes
 
-## Tasks from meeting of 27 Nov 2025:
+## Tasks from meeting of 27 Nov 2025
+
 - [DONE] Martin: HowTo's on Overleaf
 - [DONE] Martin: System-figure: Decided on today: OK, go ahead; New: Describe in the text
 - [DONE] Rob: Problem Statement: Economics: Different distro, kernel... -> Declaring certain sets of requirements and specific versions, may lead to reduced cost -> long-term support for "ELISA-Aero-Linux"
 - [DONE] Leonidas: (Read paper as-is), what is too much Space and not Aerospace?
 
-## Tasks until next meeting:
+## Tasks until next meeting
+
 - Leonidas: Proof read (Background): New paragraph related to system
-- Leonidas: (Background) explain common platform and reference https://www.autosar.org/capi
+- Leonidas: (Background) explain common platform and reference <https://www.autosar.org/capi>
 - Rob: Add clarification open source (Introduction), closed source etc. as discussed
 - Martin: Continue in Background w/ system... ToDo
 - Matt: Move tasks that do not belong to the paper anymore
@@ -41,9 +46,10 @@ Paper meetings are organised as follows:
 - Naga: (Read paper as-is), what is too much Space and not Aerospace?
 - Michael Mahoney: (Read paper as-is), what is too much Space and not Aerospace?
 - Michael Mahoney: (PRoof-read), content about avioincs / config management.,... if available
-- (All): Read https://www.sciencedirect.com/science/article/pii/S138376212500270X
+- (All): Read <https://www.sciencedirect.com/science/article/pii/S138376212500270X>
 
 ## Other business
+
 - Who is the audience
   - Aerospace background
   - You may be an expert in Linux > not an expert on running OSes on aircraft

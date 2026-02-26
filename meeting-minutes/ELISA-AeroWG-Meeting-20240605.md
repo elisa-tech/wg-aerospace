@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -74,12 +74,11 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, and meeting minutes.
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, and meeting minutes.
 
 ## Upcoming Events
 
@@ -94,12 +93,12 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 
 See our [Literature Database](../literature-database/literature.bib)
 
-
 ---
+
 # Space Grade Linux
 
 - Outbrief from 2nd organizing call (Scot gave a brief discussion for ~10mins and had to drop.)
-  - Mike Monaghan NASA (focal as Scot transitions) - has flexibility in time to focus on this and working with Kate to outline steps  (Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov>)
+  - Mike Monaghan NASA (focal as Scot transitions) - has flexibility in time to focus on this and working with Kate to outline steps (Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov>)
     - ACTION, need to identify for next call if we can do an agenda with Michael.
   - Tim Bird - took action to reach out to other Space related linux groups
 
@@ -107,9 +106,7 @@ See our [Literature Database](../literature-database/literature.bib)
   - Cadance / Frequency of this meeting
   - Ideas on future agenda topics
 
-- 
-
----
+- ***
 
 # Discussion on Features for Aerospace
 
@@ -118,17 +115,17 @@ Continue discussion series, now in separate document:
 
 The conversation was around the Next Steps section of the document. (A short 20min conversation)
 
-- What is our output of the use case?  Suggestion to define a result we can measure/use.  Do we have this in a early meeting's minutes?
+- What is our output of the use case? Suggestion to define a result we can measure/use. Do we have this in a early meeting's minutes?
   - Whitepaper has a tangible reason / visible result.
   - Is it to attempt to define the core of linux for other influencing reasons?
-  - safety vs non-safety?  What is the value for non-safety use cases in this group?
+  - safety vs non-safety? What is the value for non-safety use cases in this group?
     - Aero - smallest feature set for cert
       - Is there a example of this to compare against SpaceROS requirement matrix? Is that comparison valuable?
     - Space - less critical more functionality - Goal? alignment of usage and artifacts - drive maturity / streamlines certification
-        - Ivan mentioned there was evaluation of SpaceROS against lowest criticality (TBD planning to publish a guide / matrix for requirement compliance in SpaceROS)
-  - One suggestion is to present the use cases for feedback (find a wider audience and what distro / linux approach are they using.  survey how they use it, compose it and cfg they depend on)
+      - Ivan mentioned there was evaluation of SpaceROS against lowest criticality (TBD planning to publish a guide / matrix for requirement compliance in SpaceROS)
+  - One suggestion is to present the use cases for feedback (find a wider audience and what distro / linux approach are they using. survey how they use it, compose it and cfg they depend on)
     - This drives a timeline and output plan so others can use it
-- If the use case implied a distro, what would it be based on or would it follow a pattern like carrier grade that standardizes a configuration. (for the few of us on the call)Leaning towards a pattern/standard.  e.g., Yocto/RHEL/Ubuntu using a pattern with artifacts living in core projects.  So maybe for the current aerospace use case we could reuse the Automotive Yocto configuration?
+- If the use case implied a distro, what would it be based on or would it follow a pattern like carrier grade that standardizes a configuration. (for the few of us on the call)Leaning towards a pattern/standard. e.g., Yocto/RHEL/Ubuntu using a pattern with artifacts living in core projects. So maybe for the current aerospace use case we could reuse the Automotive Yocto configuration?
   - Need to checkout ref build that automative did for their use case.
 
 ---
@@ -138,10 +135,10 @@ The conversation was around the Next Steps section of the document. (A short 20m
 - Carried over from previous meeting...
   - Do we need to introduce a dictionary? One example of a question that was raised:
     - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
-      - 1) Multiple PCI devices SATA, USB, network etc.
-      - 2) PCI devices with multiple functions, root bridge can have multiple functions
-      - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
-	- **NEW**: Tend to a common understanding of 3)
+      - 1. Multiple PCI devices SATA, USB, network etc.
+      - 2. PCI devices with multiple functions, root bridge can have multiple functions
+      - 3. System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+    - **NEW**: Tend to a common understanding of 3)
 
 ---
 
@@ -152,5 +149,3 @@ The conversation was around the Next Steps section of the document. (A short 20m
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-
-

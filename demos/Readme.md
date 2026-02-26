@@ -1,6 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
+
 # Aerospace Working Group Demonstrations
 
 This folder contains a series of examples, documentation, and reference builds to achieve the following goals.
@@ -13,7 +14,8 @@ This folder contains a series of examples, documentation, and reference builds t
 
 ## Environment Setup
 
-The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.  It will has notes on tool setup and how to retrieve the Docker image.
+The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.
+It will has notes on tool setup and how to retrieve the Docker image.
 
 Alternatively, [AvioNix Demo](./AvioNix-demo/README.md) contains a Nix based build infrastructure compile and run demos.
 
@@ -27,7 +29,8 @@ Alternatively, [AvioNix Demo](./AvioNix-demo/README.md) contains a Nix based bui
 
 The [Development Guide](docs/Development.md) is a good place to start if you need to get a shell within our environment to debug or expand on the demonstration material.
 
-The demos use a few pre-built [Embedded Environments](docs/embedded-environments/Readme.md).  Each demo is assembled using the necessary tooling and base images.
+The demos use a few pre-built [Embedded Environments](docs/embedded-environments/Readme.md).
+Each demo is assembled using the necessary tooling and base images.
 
 ## Contributing
 

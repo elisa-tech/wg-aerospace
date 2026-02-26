@@ -10,6 +10,9 @@ on:
     branches:
       - "*" # This will trigger the workflow on all branches
 
+permissions:
+  contents: read
+
 jobs:
   clone-and-build:
     runs-on: ubuntu-latest

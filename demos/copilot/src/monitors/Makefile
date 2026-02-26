@@ -33,7 +33,7 @@ CMD_PREFIX_TEST := $(DEMO_CHDIR_TEST) &&
 
 default: main_syslog main_syslog_local main_syslog_time
 
-# Defaulting to docker as prefered because of the setup complexities with environments.
+# Defaulting to docker as preferred because of the setup complexities with environments.
 # See CoPilot docs for manually configuring an environment which supports haskell.
 # The Container build is documented under <toplevel>/demos/env/Readme.md
 prep:

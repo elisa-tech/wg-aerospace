@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: 2025-2026 wucke13
 #
 # SPDX-License-Identifier: Apache-2.0
-
+---
 on:
   push:
     paths:
-      - 'demos/**'
+      - "demos/**"
 
 defaults:
   run:
@@ -14,14 +14,19 @@ defaults:
 env:
   EXTRA_NIX_FLAGS: --log-format raw-with-logs --print-build-logs
 
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Nix flake check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
+      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
       - run: nix flake check
   build-package:
     name: ${{ matrix.PACKAGE }} for ${{ matrix.SYSTEM }}
@@ -46,9 +51,11 @@ jobs:
           - minimal-linux-kernel
           - update-ci
     steps:
-      - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
+      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
       - id: supported-system
         name: Skip unsupported builds
         continue-on-error: true
@@ -75,12 +82,14 @@ jobs:
       # The default image contains dozens of gigabytes of tools. NixOS config builds get big. Thus,
       # remove unused tools (Nix provides for all we need!) to get some space.
       - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
         with:
           tool-cache: true
-      - uses: actions/checkout@v6
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
+      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
+      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
       - id: supported-system
         name: Skip unsupported builds
         continue-on-error: true

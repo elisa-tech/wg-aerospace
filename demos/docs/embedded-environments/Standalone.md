@@ -4,11 +4,12 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Operating Environments Demonstrating Standalone Functions
 
-The example configurations below showcase the Cabin Lights demo.  
+The example configurations below showcase the Cabin Lights demo.
 
-These environments run in QEMU and are built on the https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux images.
+These environments run in QEMU and are built on the <https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux> images.
 
 Capabilities:
+
 - Minimal Linux environment
 
 ## Basic Cabin Lights

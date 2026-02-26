@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -85,7 +85,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Events
 
-- 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Linz, Austria
+- 27 Feb [Workshop on Avionics Systems and Software Engineering (AvioSE'24)](https://aviose-workshop.github.io/) in Lines, Austria
 - 2-9 Mar [IEEE Aerospace Conference](https://www.aeroconf.org/) in Montana, USA
 - 12-14 Mar [SAE AeroTech](https://www.sae.org/attend/aerotech) in Charlotte, NC, USA
 - 16-18 Apr [Aerospace Tech Week](https://www.aerospacetechweek.com/europe/) in Munich, Germany
@@ -115,7 +115,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
       - second, full distribution (kernel, services, BSP/drivers, API, libraries, applications, bootloader, etc.)
     - Hardware
       - MMU as minimum?, multicore?, availability (physical or simulation at first), validation, crypto, etc.
-  - Certification scope 
+  - Certification scope
     - Non-critical - discuss first, DAL-D and lower
       - Decisions about features to include at low DAL do not (necessarily) apply to high DAL
     - Mission-critical
@@ -139,12 +139,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Maintenance and Support
   - Need to maintain for decades
 - Tools
-  - Identify features unique to aerospace, DO-330 qualification 
+  - Identify features unique to aerospace, DO-330 qualification
 
 ## Way of working
 
 - Get agreement on one area before moving on to next topic
-- Drive one simple use case through all areas 
+- Drive one simple use case through all areas
 
 ## Logistics
 
@@ -188,8 +188,4 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
-
 ## Round Table
-
-
-

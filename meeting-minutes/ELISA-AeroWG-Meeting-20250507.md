@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -36,7 +36,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Andrew Wilson - L3Harris, BYU, FPGA Zealot
 - Philip Balister - OpenEmbedded
 - Shefali Sharma
-- Rob Woolley  - Wind River
+- Rob Woolley - Wind River
 - Tim Bird - Sony
 
 ## Attended recently in the past
@@ -105,12 +105,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Meetings
 
@@ -119,20 +118,20 @@ Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) pag
 - ELISA workshop - May 7-9 at Volvo in Lund, Sweden
   - TSC discussed on Mar 5th and more details [here](https://lists.elisa.tech/g/devel/topic/meeting_notes_elisa_tsc/111529766)
   - Provided TSC these ideas from AeroWG
-    -	Demo our first use case’s verification example
-    -	Present the content/outline of the State of Art whitepaper (considering it was restarted today with more contributors)
+    - Demo our first use case’s verification example
+    - Present the content/outline of the State of Art whitepaper (considering it was restarted today with more contributors)
 - June 23-25 - Open Source Summit North America (including Embedded Linux Conference) in Denver, CO
-  - Event web site: https://events.linuxfoundation.org/open-source-summit-north-america/
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
+  - Event web site: <https://events.linuxfoundation.org/open-source-summit-north-america/>
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (<https://2025.smcit-scc.space/>) (Occurring for 20yrs, cross industry/global)
   - July 28 - Aug 1
   - Open source for space workshop (Ivan organizing)
-  - Located @ California Science Center in LA  (close to USC)
+  - Located @ California Science Center in LA (close to USC)
   - Reach out to Ivan Perez if interested in providing a topic related to OSS in space (open data / hw / sw)
-- Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
-- August 5th - Open Source Summit India - Hyderabad, India - https://events.linuxfoundation.org/open-source-summit-india/
-- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference https://events.linuxfoundation.org/open-source-summit-europe/
+- Aug - SmallSat - Call for paper is open (Due Feb 4th) - <https://www.smallsat.org/downloads/call-for-papers.pdf>
+- August 5th - Open Source Summit India - Hyderabad, India - <https://events.linuxfoundation.org/open-source-summit-india/>
+- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference <https://events.linuxfoundation.org/open-source-summit-europe/>
 - TBD 10/31/2025, Drone+Space Community Meetup @ KAU (Korea Aerospace University) Ramon & Dongshik Host
-- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
+- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (<https://2025.dasconline.org/>) (Montreal, Canada)
 - Dec 11-13: Linux Plumbers Conference 2025, in Tokyo
 - ?? NASA SPARK submissions
 
@@ -143,20 +142,23 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Demo of Cabin Lights Use Case
 
 See [Readme](../demos/copilot/Readme.md).
 
-- Drives other WG discussion, minimal configurations, and practice of monitor-based verfication
+- Drives other WG discussion, minimal configurations, and practice of monitor-based verification
 - Practice has application for operational monitor use cases
-- Join us Friday 9am CDT - invite - https://elisa.tech/community/meetings/
+- Join us Friday 9am CDT - invite - <https://elisa.tech/community/meetings/>
 
 ## Whitepaper on "Survey State of Art...""
 
 Background
+
 - Edits
   - Via online [Overleaf editor](https://www.overleaf.com/) - we have limited licenses so we've shared the pdf link below
   - latex format and editor can generate documents
@@ -168,9 +170,11 @@ Background
 [Worked on Abstract - TDB updated copy link](../docs/20250417_ELISA_AeroWG_Whitepaper.pdf) today
 
 ACTIONS
-- Martin is going to finish the abstract and move the portions "marked for Intro" into the Intro section.  Next time focusing on Intro.
+
+- Martin is going to finish the abstract and move the portions "marked for Intro" into the Intro section. Next time focusing on Intro.
 
 ---
+
 ---
 
 # Closing

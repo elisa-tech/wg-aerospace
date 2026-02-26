@@ -1,3 +1,5 @@
+# Note
+
 The Nix based tool chain assumes the `flake.nix` to be in the repo root. The `workflow` symlinks in this dir helps to make it able to
 update/format the `.github/workflow/{meta,nix}.yaml` files:
 

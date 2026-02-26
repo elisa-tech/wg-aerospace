@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -104,9 +104,9 @@ Insufficient size of group today for discussion series, deferring to next meetin
 
 Updated scope of white paper. We adopted an approach suggested in the comments by Sam Thompson. This led us to anticipate at least two white papers.
 
-* Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
+- Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
 
-* Option B) Broader scope whats available, motivation as an outcome, detailed comparison with a subset as second paper
+- Option B) Broader scope what's available, motivation as an outcome, detailed comparison with a subset as second paper
 
 The group tends towards Option B. The revised title will be "Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics"
 
@@ -118,8 +118,4 @@ The group tends towards Option B. The revised title will be "Survey on State-of-
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
-
 ## Round Table
-
-
-

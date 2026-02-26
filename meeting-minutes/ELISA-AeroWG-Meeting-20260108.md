@@ -3,28 +3,29 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ?both
+
+- <https://hackmd.io/4-50o2_1Rce60mFJUNYnsQ?both>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
+
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Agenda / Minutes
 
-- Review last call's minutes - https://github.com/elisa-tech/wg-aerospace/pull/112/files
+- Review last call's minutes - <https://github.com/elisa-tech/wg-aerospace/pull/112/files>
 
 ## Old topics
 
 - Automotive Grade Linux [SoDev architecture](https://www.automotivelinux.org/announcements/sodev/)
   - [Notional AeroWG env/scenarios](https://github.com/elisa-tech/wg-aerospace/pull/113/files) we could map to SoDev
-  - The intent is to tie our work with ELISA Sys WG that is aligned with this SoDev efforts.  
+  - The intent is to tie our work with ELISA Sys WG that is aligned with this SoDev efforts.
   - I.e., We'd express how our area would approach aspects and why (most likely using the Product aspects in the template below.)
-
 
 - Requirements for OS used in Use-Cases - [Product Profile template](../docs/product-profiles.md#template---name-of-notional-system)
   - Comments are still welcome on [the merged PR](https://github.com/elisa-tech/wg-aerospace/pull/112/files#diff-963b6c432c9167c6ff9b914734bc978258dbd95b4c2b04f11a17b2b263e21a21R82)
@@ -34,21 +35,21 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ### RISC-V in Space
 
 - There is a space-focused SIG call -- "Capture requirements relevant to space"
-- If you are interested, join the mailing list: https://lists.riscv.org/g/sig-space/messages
+- If you are interested, join the mailing list: <https://lists.riscv.org/g/sig-space/messages>
 - You can become a member as individuals (it's free) or through your organization if they are already a member (there is a membership fee, with exception for open source organizations, but you need to apply for them)
 - Once you are a member, you can join the weekly calls (unlike ELISA, the calls are only open to members).
 - The first call will be on January 8,2026
 - There are also TG/WG/SIGs for Functional Safety, Automotive, Post Quantum Crypto etc which might be interesting for ELISA Aerospace Group.
-- Feel free to join the corresponding mailing lists and join the calls. Call calendar: https://tech.riscv.org/calendar/
-- SIG Space Proposal of Work: https://riscv.atlassian.net/wiki/spaces/SPC/pages/543719540/Space+SIG+PoW
+- Feel free to join the corresponding mailing lists and join the calls. Call calendar: <https://tech.riscv.org/calendar/>
+- SIG Space Proposal of Work: <https://riscv.atlassian.net/wiki/spaces/SPC/pages/543719540/Space+SIG+PoW>
 
 ### Open PRs
 
-https://github.com/elisa-tech/wg-aerospace/pulls
+<https://github.com/elisa-tech/wg-aerospace/pulls>
 
 #### Wanja Demo examples
 
-- Description in https://github.com/elisa-tech/wg-aerospace/issues/114
+- Description in <https://github.com/elisa-tech/wg-aerospace/issues/114>
 - Looking at concepts on making demo examples less complicated
   - PR proposes an example concept based off the issue points
   - Builds a kernel / ramfs, no application
@@ -61,7 +62,7 @@ https://github.com/elisa-tech/wg-aerospace/pulls
 
 ### Space artifacts / awareness email from SGL list
 
-https://lists.elisa.tech/g/space-grade-linux/message/142
+<https://lists.elisa.tech/g/space-grade-linux/message/142>
 
 [Points from Scott's email]
 
@@ -70,16 +71,16 @@ https://lists.elisa.tech/g/space-grade-linux/message/142
   - Run on the smallest amount of resources/slow hardware, radiation tolerant hardware is still generations behind and single core (since multi-core V&V is much harder)
   - [From Aero call]
     - Definitely two camps of old and new approach with resource impact vs. safety vs. constraining requirements - For sure a challenge for SGL to address
-    - Do we use linux for partitioning?  How far can Linux isolation address requirements?
-    - [Manuel] DO-178C historically has more structured guidelines and objectives to approach partitioning.  This would need reestablished if doing Linux alone.
-    - [Wanja] This was our research-y attempt at doing partitioning based on namespaces and cgroups: https://github.com/DLR-FT/arinc653-wasm
+    - Do we use linux for partitioning? How far can Linux isolation address requirements?
+    - [Manuel] DO-178C historically has more structured guidelines and objectives to approach partitioning. This would need reestablished if doing Linux alone.
+    - [Wanja] This was our research-y attempt at doing partitioning based on namespaces and cgroups: <https://github.com/DLR-FT/arinc653-wasm>
 - Tests and evidence of meeting requirements and functionality
   - In space, we care more about reliability, control, and known actions
--  Security aspects (While I do not need all the controls from NIST SP 800-53, we need to be able to show proper security)
--  Real-time constraints
--  Protection from Common-Cause failures
--  Awareness of contributors and IP rights, and ITAR/EAR Laws
-   - Some uses will not allow “unknown” or foreign contributors
+- Security aspects (While I do not need all the controls from NIST SP 800-53, we need to be able to show proper security)
+- Real-time constraints
+- Protection from Common-Cause failures
+- Awareness of contributors and IP rights, and ITAR/EAR Laws
+  - Some uses will not allow “unknown” or foreign contributors
 
 ## Tasks until next meeting
 

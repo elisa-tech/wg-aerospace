@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -38,7 +38,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - Sam Thompson - Rapita
 - Steve VanderLeest - Boeing
 - Matt Weber - Boeing
-
 
 ## Attended recently in the past
 
@@ -109,13 +108,13 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
     - Software
       - first, discuss kernel (try to finish, and only discuss broader distribution if necessary to make a decision about kernel)
         - subsystem by subsystem, by DAL
-		- protocol stacks
+          - protocol stacks
       - second, full distribution (kernel, services, BSP/drivers, API, libraries, applications, bootloader, etc.)
-	  - Decision postponed to after system architecture
+      - Decision postponed to after system architecture
     - Hardware
       - MMU as minimum?, multicore?, availability (physical or simulation at first), validation, crypto, etc.
-	  - Decision postponed after system architecture
-  - Certification scope 
+      - Decision postponed after system architecture
+  - Certification scope
     - Option A: Non-critical - discuss first, DAL-D and lower
       - Decisions about features to include at low DAL do not (necessarily) apply to high DAL
     - Option B: Mission-critical
@@ -129,12 +128,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
     - Air
     - Space
     - Ground equipment - secondary discussion
-	  - Agreed on a broader group: Exclude ground equipment in the first phase
+      - Agreed on a broader group: Exclude ground equipment in the first phase
 - Use Cases
-  - confirmed Option A for system architecture, option D for use case. 
+  - confirmed Option A for system architecture, option D for use case.
   - Use case now moved to separate document [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
   - Clarified: What about the other 2 votes (A and B), do we exclude people?
-      - Option D is at least reasonable to pursue, perhaps others found another option more interesting, but we agree Option D will be pursued first. One of the votes last week for other options present again today agreed with this statement.
+    - Option D is at least reasonable to pursue, perhaps others found another option more interesting, but we agree Option D will be pursued first. One of the votes last week for other options present again today agreed with this statement.
 - Identification of features for use cases
 - Mechanisms to configure features (include/exclude)
   - connection to partitioning
@@ -144,18 +143,18 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Maintenance and Support
   - Need to maintain for decades
 - Tools
-  - Identify features unique to aerospace, DO-330 qualification 
+  - Identify features unique to aerospace, DO-330 qualification
 
 ---
 
 # Other business
 
-  - Do we need to introduce a dictionary? One example of a question that was raised:
-    - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
-      - 1) Multiple PCI devices SATA, USB, network etc.
-      - 2) PCI devices with multiple functions, root bridge can have multiple functions
-      - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
-	- **NEW**: Tend to a common understanding of 3)
+- Do we need to introduce a dictionary? One example of a question that was raised:
+  - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
+    - 1. Multiple PCI devices SATA, USB, network etc.
+    - 2. PCI devices with multiple functions, root bridge can have multiple functions
+    - 3. System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+  - **NEW**: Tend to a common understanding of 3)
 
 ---
 
@@ -168,4 +167,3 @@ Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 ## Round Table
 
 - (Skipped due to time constraints)
-

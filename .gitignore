@@ -30,3 +30,4 @@ demos/copilot/src/elisa_emulation/rootfs.cpio*
 demos/env/test/host-ubuntu/terraform.tfstate*
 demos/env/test/host-ubuntu/.terraform*
 *.pem
+.mypy_cache*
