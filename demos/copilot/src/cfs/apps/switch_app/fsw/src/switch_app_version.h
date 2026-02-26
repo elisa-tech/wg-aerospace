@@ -29,17 +29,24 @@
 
 /* Development Build Macro Definitions */
 
-#define SWITCH_APP_BUILD_NUMBER    54
-#define SWITCH_APP_BUILD_BASELINE  "equuleus-rc1" /*!< Development Build: git tag that is the base for the current development */
-#define SWITCH_APP_BUILD_DEV_CYCLE "equuleus-rc2" /**< @brief Development: Release name for current development cycle */
-#define SWITCH_APP_BUILD_CODENAME  "Equuleus" /**< @brief: Development: Code name for the current build */
+#define SWITCH_APP_BUILD_NUMBER 54
+#define SWITCH_APP_BUILD_BASELINE                                              \
+  "equuleus-rc1" /*!< Development Build: git tag that is the base for the      \
+                    current development */
+#define SWITCH_APP_BUILD_DEV_CYCLE                                             \
+  "equuleus-rc2" /**< @brief Development: Release name for current development \
+                    cycle */
+#define SWITCH_APP_BUILD_CODENAME                                              \
+  "Equuleus" /**< @brief: Development: Code name for the current build */
 
 /*
  * Version Macros, see \ref cfsversions for definitions.
  */
-#define SWITCH_APP_MAJOR_VERSION 1  /*!< @brief Major version number. */
-#define SWITCH_APP_MINOR_VERSION 1  /*!< @brief Minor version number. */
-#define SWITCH_APP_REVISION      0  /*!< @brief Revision version number. Value of 0 indicates a development version.*/
+#define SWITCH_APP_MAJOR_VERSION 1 /*!< @brief Major version number. */
+#define SWITCH_APP_MINOR_VERSION 1 /*!< @brief Minor version number. */
+#define SWITCH_APP_REVISION                                                    \
+  0 /*!< @brief Revision version number. Value of 0 indicates a development    \
+       version.*/
 
 /**
  * @brief Last official release.
@@ -50,20 +57,25 @@
  * @brief Mission revision.
  *
  * Reserved for mission use to denote patches/customizations as needed.
- * Values 1-254 are reserved for mission use to denote patches/customizations as needed. NOTE: Reserving 0 and 0xFF for
- * cFS open-source development use (pending resolution of nasa/cFS#440)
+ * Values 1-254 are reserved for mission use to denote patches/customizations as
+ * needed. NOTE: Reserving 0 and 0xFF for cFS open-source development use
+ * (pending resolution of nasa/cFS#440)
  */
 #define SWITCH_APP_MISSION_REV 0xFF
 
-#define SWITCH_APP_STR_HELPER(x) #x /*!< @brief Helper function to concatenate strings from integer macros */
-#define SWITCH_APP_STR(x) \
-    SWITCH_APP_STR_HELPER(x) /*!< @brief Helper function to concatenate strings from integer macros */
+#define SWITCH_APP_STR_HELPER(x)                                               \
+  #x /*!< @brief Helper function to concatenate strings from integer macros */
+#define SWITCH_APP_STR(x)                                                      \
+  SWITCH_APP_STR_HELPER(x) /*!< @brief Helper function to concatenate strings  \
+                              from integer macros */
 
 /*! @brief Development Build Version Number.
  * @details Baseline git tag + Number of commits since baseline. @n
- * See @ref cfsversions for format differences between development and release versions.
+ * See @ref cfsversions for format differences between development and release
+ * versions.
  */
-#define SWITCH_APP_VERSION SWITCH_APP_BUILD_BASELINE "+dev" SWITCH_APP_STR(SWITCH_APP_BUILD_NUMBER)
+#define SWITCH_APP_VERSION                                                     \
+  SWITCH_APP_BUILD_BASELINE "+dev" SWITCH_APP_STR(SWITCH_APP_BUILD_NUMBER)
 
 /**
  * @brief Max Version String length.

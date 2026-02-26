@@ -35,32 +35,32 @@
 #ifndef EVENTCHECK_H
 #define EVENTCHECK_H
 
-#include "common_types.h"
 #include "cfe_evs.h"
+#include "common_types.h"
 
 #include "utassert.h"
-#include "uttest.h"
 #include "utstubs.h"
+#include "uttest.h"
 
 /*
  * Unit test check event hook information
  */
-typedef struct
-{
-    uint16      ExpectedEvent;
-    uint32      MatchCount;
-    const char *ExpectedFormat;
+typedef struct {
+  uint16 ExpectedEvent;
+  uint32 MatchCount;
+  const char *ExpectedFormat;
 } UT_CheckEvent_t;
 
 /* Macro to get expected event name */
-#define UT_CHECKEVENT_SETUP(Evt, ExpectedEvent, ExpectedFormat) \
-    UT_CheckEvent_Setup_Impl(Evt, ExpectedEvent, #ExpectedEvent, ExpectedFormat)
+#define UT_CHECKEVENT_SETUP(Evt, ExpectedEvent, ExpectedFormat)                \
+  UT_CheckEvent_Setup_Impl(Evt, ExpectedEvent, #ExpectedEvent, ExpectedFormat)
 
 /*
  * Helper function to set up for event checking
  * This attaches the hook function to CFE_EVS_SendEvent
  */
-void UT_CheckEvent_Setup_Impl(UT_CheckEvent_t *Evt, uint16 ExpectedEvent, const char *EventName,
+void UT_CheckEvent_Setup_Impl(UT_CheckEvent_t *Evt, uint16 ExpectedEvent,
+                              const char *EventName,
                               const char *ExpectedFormat);
 
 #endif

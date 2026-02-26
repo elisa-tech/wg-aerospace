@@ -1,17 +1,23 @@
 # SPDX-License-Identifier: MIT
-
+---
 name: CI
 
 on:
   push:
     paths:
-      - 'demos/**'
+      - "demos/**"
     branches:
       - "*" # This will trigger the workflow on all branches
 
 jobs:
   clone-and-build:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
 
     steps:
       - name: Checkout

@@ -29,8 +29,8 @@
  *   STRUCTURE DEFINITIONS IN THIS FILE!
  *   ADD THEM TO {{app_name_lc}}_tbl.h IF NEEDED!
  */
-#ifndef {{app_name_uc}}_TBLDEFS_H
-#define {{app_name_uc}}_TBLDEFS_H
+#ifndef{{app_name_uc } } _TBLDEFS_H
+#define{{app_name_uc } } _TBLDEFS_H
 
 #include "common_types.h"
 #include "{{app_name_lc}}_mission_cfg.h"
@@ -38,10 +38,14 @@
 /*
 ** Example Table structure
 */
-typedef struct
-{
-    uint16 Int1;
-    uint16 Int2;
-} {{app_name_uc}}_ExampleTable_t;
+typedef struct {
+  uint16 Int1;
+  uint16 Int2;
+} {
+  {
+    app_name_uc
+  }
+}
+_ExampleTable_t;
 
 #endif

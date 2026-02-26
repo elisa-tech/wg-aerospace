@@ -64,7 +64,7 @@ monitor2 = (lightsOn || lightsTurnedOff)
         && switchOff
         && timeSinceLastTime' switchTurnedOff > limit
 
--- | Constant limit: amount of steps betwen the light switch turning on and
+-- | Constant limit: amount of steps between the light switch turning on and
 -- the light turning on.
 limit :: Stream Int64
 limit = 500

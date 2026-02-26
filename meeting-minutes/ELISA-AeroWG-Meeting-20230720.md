@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -29,6 +29,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Roll Call
 
 ## Attended this meeting
+
 - Sebastien Boria - Airbus
 - Martin Halle – TUHH
 - Steve VanderLeest – Boeing
@@ -61,12 +62,13 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Code of Conduct and Legal Notices
 
-* ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
+- ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
   - [Linux Foundation Antitrust Policy](http://www.linuxfoundation.org/antitrust-policy)
-- Email communication will be treated as documentation and be received and made available by the Project under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0). Please refer to the ELISA Technical Charter section 7 subsection iv. for details.
-- The discussions in these meetings are exploratory. The opinions expressed by participants are not necessarily the policy of the companies.
-- No recordings of working group meetings are permitted. Special provisions may be arranged for recording in advance with explicit consent of the participants.
-- The kernel and LF Code of Conduct applies to all communication with this project
+
+* Email communication will be treated as documentation and be received and made available by the Project under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0). Please refer to the ELISA Technical Charter section 7 subsection iv. for details.
+* The discussions in these meetings are exploratory. The opinions expressed by participants are not necessarily the policy of the companies.
+* No recordings of working group meetings are permitted. Special provisions may be arranged for recording in advance with explicit consent of the participants.
+* The kernel and LF Code of Conduct applies to all communication with this project
   - [Linux Foundation Code of Conduct](https://www.linuxfoundation.org/code-of-conduct/)
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
@@ -77,10 +79,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## 2023 Goals
 
-* Establishing our operations as a new working group
-- Survey on the state of the art within aerospace on use of Linux and associated certification approach and equivalent Design Assurance Level (DAL)
-- Identify the challenges to adopting Linux in aerospace
-- Identify candidate use cases using Linux
+- Establishing our operations as a new working group
+
+* Survey on the state of the art within aerospace on use of Linux and associated certification approach and equivalent Design Assurance Level (DAL)
+* Identify the challenges to adopting Linux in aerospace
+* Identify candidate use cases using Linux
 
 ---
 
@@ -88,14 +91,16 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Upcoming Webinars
 
-* 18 Jul 2023, 10am EDT, Chuck Wolber [webinar](https://www.youtube.com/watch?v=UguCnpNXyS0&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=4) on yocto
-- 6 Sep 2023, 10am EDT, Stefano Stabellini webinar on Xen Hypervisor
+- 18 Jul 2023, 10am EDT, Chuck Wolber [webinar](https://www.youtube.com/watch?v=UguCnpNXyS0&list=PLuDNrzTpK8zqx7AJroClzENM8lpPhGkJu&index=4) on yocto
+
+* 6 Sep 2023, 10am EDT, Stefano Stabellini webinar on Xen Hypervisor
 
 ## Upcoming Conferences
 
-* 1-5 Oct 2023 [Digital Avionics Systems Conference](https://2023.dasconline.org/) in Barcelona, Spain
-- 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
-- 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
+- 1-5 Oct 2023 [Digital Avionics Systems Conference](https://2023.dasconline.org/) in Barcelona, Spain
+
+* 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
+* 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Lines, Austria
 
 ---
 
@@ -105,20 +110,20 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 
 ## Scope
 
-* Discussion at this time
+- Discussion at this time
   - limited to aerospace (subsequent discussions may be broadened to other domains)
     - may have different answers in aero compared to space
   - covers features in an entire distribution (subsequent discussions may focus narrowly on the kernel)
   - covers all criticality (software levels), but may have different answers for different software levels
   - time limit each major section so that all are covered in first meeting, schedule subsequent meetings on narrower topics as needed
 
-* how many meetings?
-  * more than one?
-* when do we schedule?
-  * cautious of holidays coming up in Europe
-* do we schedule these during our regular working group time slots?
-  * yes same time slot for first overall meeting
-  * allow for different time slots when splitting to sub-groups
+- how many meetings?
+  - more than one?
+- when do we schedule?
+  - cautious of holidays coming up in Europe
+- do we schedule these during our regular working group time slots?
+  - yes same time slot for first overall meeting
+  - allow for different time slots when splitting to sub-groups
 
 ## What are the outcomes of discussion?
 
@@ -128,7 +133,7 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 - Methods for selecting features and evaluating the impact (e.g., DAL)
 - Refinement of our Aerospace use-case
   - The use-case may help us concretely decide the features for the specified system functionality
-  - focus first on applications that we all have in common 
+  - focus first on applications that we all have in common
 - Convergence of our focus
   - Focus on a single processor architecture?
 - Next steps for our list of features
@@ -148,28 +153,26 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 - Method of proceeding with identification of features
 - Configuration of features (include/exclude)
   - connection to partitioning
-  - features that are included/excluded in a real-time aspect  
+  - features that are included/excluded in a real-time aspect
   - different safety features that configured and are certified at different levels (e.g., DO-178C software level)
     - may exclude features, e.g., exclude any feature certified below DAL-B
 - Use Cases
 - Maintenance and Support
 - Tools
 
-
 other ways to categorize:
+
 - first look at kernel? Then go higher layers? kernel layer, services layer, application layer
   - where do drivers fit in discussion?
   - API for system applications (user level) - is that a feature?, e.g., ARINC 653
-  - 
+  -
 
 - Multiple perspectives on where to start discussion
   - kernel/services/application
-  - DAL level 
+  - DAL level
   - use case
     - aero vs space
-  
 - Perhaps we have a matrix of the two dimensions above and walk through the intersections of those rows and columns
-
 
 ---
 
@@ -193,11 +196,11 @@ other ways to categorize:
 
 ## Features identification
 
-- What features must be supported?  
+- What features must be supported?
 - Obtaining necessary and sufficient timing and precision
 - List of system functions that must be able to run and their requirements
 - Supported I/O
-- What resources must be available for which criticality levels  
+- What resources must be available for which criticality levels
 - Ensure we document the rationale for including/excluding
 - Should we classify features in some way?
   - Kernelspace vs. userspace?

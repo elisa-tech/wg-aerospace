@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -72,7 +72,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
@@ -90,8 +89,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 See our [Literature Database](../literature-database/literature.bib)
 
-
 ---
+
 # Space Grade Linux
 
 If someone attends from the nascent Space Grade Linux initiative, ask them to introduce the initiative. Discuss peliminary ideas on pros and cons of the ELISA Aerospace Working Group acting as the host for this work, incorporating the work into our ongoing agenda.
@@ -107,7 +106,7 @@ If someone attends from the nascent Space Grade Linux initiative, ask them to in
   - Join forces for this purposes with Space Grade Linux initiative
   - Help to make a product to be as applicable as possible to a broader range of space applications
   - Next Meeting: Discuss current state, how to join, what to expect, time-line
-  - Action: Vote for date/time on a further discussion: https://doodle.com/meeting/participate/id/erMpZqEd
+  - Action: Vote for date/time on a further discussion: <https://doodle.com/meeting/participate/id/erMpZqEd>
 
 ---
 
@@ -116,9 +115,9 @@ If someone attends from the nascent Space Grade Linux initiative, ask them to in
 Continue discussion series, now in separate document:
 [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md)
 
-- Exlaining the current state to new members
+- Explaining the current state to new members
 - Focussed on system architecture to answer open questions like wrt smart sensors
-- Came up with a vote for (4 out of 6 voters, no  strong arguments against this decision):
+- Came up with a vote for (4 out of 6 voters, no strong arguments against this decision):
   - Option B:
     - Sensor + actuator on a general purpose computer as emulation (on non-Aerospace Linux)
       - Attention: This probably means no real-time OS on sensor / actuator side
@@ -132,10 +131,10 @@ Continue discussion series, now in separate document:
 - Carried over from previous meeting...
   - Do we need to introduce a dictionary? One example of a question that was raised:
     - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
-      - 1) Multiple PCI devices SATA, USB, network etc.
-      - 2) PCI devices with multiple functions, root bridge can have multiple functions
-      - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
-	- **NEW**: Tend to a common understanding of 3)
+      - 1. Multiple PCI devices SATA, USB, network etc.
+      - 2. PCI devices with multiple functions, root bridge can have multiple functions
+      - 3. System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+    - **NEW**: Tend to a common understanding of 3)
 
 ---
 
@@ -146,6 +145,3 @@ Continue discussion series, now in separate document:
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-
-
-

@@ -32,6 +32,6 @@
 #include "switch_app.h"
 
 CFE_Status_t SWITCH_APP_TblValidationFunc(void *TblData);
-void         SWITCH_APP_GetCrc(const char *TableName);
+void SWITCH_APP_GetCrc(const char *TableName);
 
 #endif /* SWITCH_APP_UTILS_H */

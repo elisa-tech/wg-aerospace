@@ -22,8 +22,18 @@
 #include "{{app_name_lc}}.h"
 
 /* UT includes */
-#include "uttest.h"
 #include "utassert.h"
 #include "utstubs.h"
+#include "uttest.h"
 
-{{app_name_uc}}_Data_t {{app_name_uc}}_Data;
+{
+  {
+    app_name_uc
+  }
+}
+_Data_t {
+  {
+    app_name_uc
+  }
+}
+_Data;

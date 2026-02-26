@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: MIT
-
 ---
 name: Lint
 
 on: # yamllint disable-line rule:truthy
-  push: null
+  push: {}
 
 permissions: {}
 
@@ -32,4 +31,4 @@ jobs:
         env:
           # To report GitHub Actions status checks
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DISABLE_ERRORS: true # This line makes the linting warn and not fail
+          #DISABLE_ERRORS: true # This line makes the linting warn and not fail

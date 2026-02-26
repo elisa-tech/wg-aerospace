@@ -36,9 +36,9 @@
 #include "switch_app_mission_cfg.h"
 #include "switch_app_platform_cfg.h"
 
-#include "switch_app_perfids.h"
-#include "switch_app_msgids.h"
 #include "switch_app_msg.h"
+#include "switch_app_msgids.h"
+#include "switch_app_perfids.h"
 
 /************************************************************************
 ** Type Definitions
@@ -47,30 +47,29 @@
 /*
 ** Global Data
 */
-typedef struct
-{
-    /*
-    ** Command interface counters...
-    */
-    uint8 CmdCounter;
-    uint8 ErrCounter;
+typedef struct {
+  /*
+  ** Command interface counters...
+  */
+  uint8 CmdCounter;
+  uint8 ErrCounter;
 
-    /*
-    ** Housekeeping telemetry packet...
-    */
-    SWITCH_APP_HkTlm_t HkTlm;
+  /*
+  ** Housekeeping telemetry packet...
+  */
+  SWITCH_APP_HkTlm_t HkTlm;
 
-    /*
-    ** Run Status variable used in the main processing loop
-    */
-    uint32 RunStatus;
+  /*
+  ** Run Status variable used in the main processing loop
+  */
+  uint32 RunStatus;
 
-    /*
-    ** Operational data (not reported in housekeeping)...
-    */
-    CFE_SB_PipeId_t CommandPipe;
+  /*
+  ** Operational data (not reported in housekeeping)...
+  */
+  CFE_SB_PipeId_t CommandPipe;
 
-    CFE_TBL_Handle_t TblHandles[SWITCH_APP_NUMBER_OF_TABLES];
+  CFE_TBL_Handle_t TblHandles[SWITCH_APP_NUMBER_OF_TABLES];
 } SWITCH_APP_Data_t;
 
 /*
@@ -85,7 +84,7 @@ extern SWITCH_APP_Data_t SWITCH_APP_Data;
 ** Note: Except for the entry point (SWITCH_APP_Main), these
 **       functions are not called from any other source module.
 */
-void         SWITCH_APP_Main(void);
+void SWITCH_APP_Main(void);
 CFE_Status_t SWITCH_APP_Init(void);
 
 #endif /* SWITCH_APP_H */

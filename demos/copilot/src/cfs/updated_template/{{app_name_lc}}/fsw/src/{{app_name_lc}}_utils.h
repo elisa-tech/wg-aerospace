@@ -20,18 +20,29 @@
 
 /**
  * @file
- *   This file contains the prototypes for the {{app_name_txt}} App utility functions
+ *   This file contains the prototypes for the {{app_name_txt}} App utility
+ * functions
  */
 
-#ifndef {{app_name_uc}}_UTILS_H
-#define {{app_name_uc}}_UTILS_H
+#ifndef{{app_name_uc } } _UTILS_H
+#define{{app_name_uc } } _UTILS_H
 
 /*
 ** Required header files.
 */
 #include "{{app_name_lc}}.h"
 
-CFE_Status_t {{app_name_uc}}_TblValidationFunc(void *TblData);
-void         {{app_name_uc}}_GetCrc(const char *TableName);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_TblValidationFunc(void *TblData);
+void {
+  {
+    app_name_uc
+  }
+}
+_GetCrc(const char *TableName);
 
 #endif /* {{app_name_uc}}_UTILS_H */

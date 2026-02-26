@@ -37,9 +37,9 @@
 /*
 ** Sample App command codes
 */
-#define SWITCH_APP_NOOP_CC           0
+#define SWITCH_APP_NOOP_CC 0
 #define SWITCH_APP_RESET_COUNTERS_CC 1
-#define SWITCH_APP_PROCESS_CC        2
-#define SWITCH_APP_DISPLAY_PARAM_CC  3
+#define SWITCH_APP_PROCESS_CC 2
+#define SWITCH_APP_DISPLAY_PARAM_CC 3
 
 #endif

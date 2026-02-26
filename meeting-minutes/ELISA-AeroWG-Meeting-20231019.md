@@ -2,14 +2,13 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
 # Minutes
 
 ## 19 Oct 2023
-
 
 ---
 
@@ -30,6 +29,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Roll Call
 
 ## Attended this meeting
+
 - Martin Halle - TUHH
 - Qasim Majeed - Siemens
 - Ulises Vega - Luxoft (but joined privately)
@@ -61,12 +61,13 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Code of Conduct and Legal Notices
 
-* ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
+- ELISA Project meetings involve participation by industry competitors, and it is the intention of the Linux Foundation to conduct all of its activities in accordance with applicable antitrust and competition laws. It is therefore extremely important that attendees adhere to meeting agendas, and be aware of, and not participate in, any activities that are prohibited under applicable US state, federal, or foreign antitrust and competition laws.
   - [Linux Foundation Antitrust Policy](http://www.linuxfoundation.org/antitrust-policy)
-- Email communication will be treated as documentation and be received and made available by the Project under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0). Please refer to the ELISA Technical Charter section 7 subsection iv. for details.
-- The discussions in these meetings are exploratory. The opinions expressed by participants are not necessarily the policy of the companies.
-- No recordings of working group meetings are permitted. Special provisions may be arranged for recording in advance with explicit consent of the participants.
-- The kernel and LF Code of Conduct applies to all communication with this project
+
+* Email communication will be treated as documentation and be received and made available by the Project under the [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0). Please refer to the ELISA Technical Charter section 7 subsection iv. for details.
+* The discussions in these meetings are exploratory. The opinions expressed by participants are not necessarily the policy of the companies.
+* No recordings of working group meetings are permitted. Special provisions may be arranged for recording in advance with explicit consent of the participants.
+* The kernel and LF Code of Conduct applies to all communication with this project
   - [Linux Foundation Code of Conduct](https://www.linuxfoundation.org/code-of-conduct/)
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
@@ -77,10 +78,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## 2023 Goals
 
-* Establishing our operations as a new working group
-- Survey on the state of the art within aerospace on use of Linux and associated certification approach and equivalent Design Assurance Level (DAL)
-- Identify the challenges to adopting Linux in aerospace
-- Identify candidate use cases using Linux
+- Establishing our operations as a new working group
+
+* Survey on the state of the art within aerospace on use of Linux and associated certification approach and equivalent Design Assurance Level (DAL)
+* Identify the challenges to adopting Linux in aerospace
+* Identify candidate use cases using Linux
 
 ---
 
@@ -88,33 +90,34 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Recent Events
 
-- Stefano Stabellini webinar on Xen Hypervisor for Safety-Critical Domains on ELISA Youtube channel](https://t.sidekickopen27.com/Ctc/RI+23284/cZw--04/JkM2-6qcW6N1vHY6lZ3kqW4GQ8GV7F5vbBW7V_pQp2lrM5tW5MQG4w5Wp4C9W23wbNC1t4g5SW1ndryk5BmgTmVbvF1z6L01wHW7ByzFd5BV5fTVp9P9t83S3WdW1KLzR03FWnsVW2WhGcg4MlcrNW3zmWb74js_ZWVy54w158j7RMW2zfRfZ9jxkyQVm3g2v3m5Q4mW6jcW708MpbgJW5rRvYd2Ff54xW8tsntp2JFXGsW5bL7rR1YlMFbW7pdcJF6l_t_ZW6c8DTQ3pC3D5W8nQgrR237VrqN2gwNvgcfKdRf39HkR404)
+- Stefano Stabellini webinar on Xen Hypervisor for Safety-Critical Domains on ELISA Youtube channel](<https://t.sidekickopen27.com/Ctc/RI+23284/cZw--04/JkM2-6qcW6N1vHY6lZ3kqW4GQ8GV7F5vbBW7V_pQp2lrM5tW5MQG4w5Wp4C9W23wbNC1t4g5SW1ndryk5BmgTmVbvF1z6L01wHW7ByzFd5BV5fTVp9P9t83S3WdW1KLzR03FWnsVW2WhGcg4MlcrNW3zmWb74js_ZWVy54w158j7RMW2zfRfZ9jxkyQVm3g2v3m5Q4mW6jcW708MpbgJW5rRvYd2Ff54xW8tsntp2JFXGsW5bL7rR1YlMFbW7pdcJF6l_t_ZW6c8DTQ3pC3D5W8nQgrR237VrqN2gwNvgcfKdRf39HkR404>)
 - Digital Avionics Systems Conference
-
 
 ## Upcoming Events
 
 - "The Road to Safe Space Exploration" - ELISA webinar. Due to technical difficulties, was cancelled on 11 Oct, will be rescheduled soon
 - 14-15 Nov 2023 [Aerospace TechWeek](https://www.aerospacetechweek.com/americas/) in Atlanta, US
-- 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Linz, Austria
+- 27 Feb 2024 [AvioSE'24](https://aviose-workshop.github.io/) in Lines, Austria
   - Papers due 27 Oct 2023
 - 29 Jul - 2 Aug 2024 [AIAA Aviation Forum](https://www.aiaa.org/aviation/presentations-papers/call-for-papers) in Las Vegas, US
   - Abstracts due 30 Nov 2023
 
 ---
+
 # Follow-up for Recent Events
 
 - Webinar on Xen by Stabellini
   - Any follow up steps?
-    -  Software life cycle data supporting certification from AMD
+    - Software life cycle data supporting certification from AMD
 - Digital Avionics Systems Conference (next slide)
 
 ---
+
 # Follow-up on Digital Avionics Systems Conference
 
 - paper #1 (Steve VanderLeest, DASC):
   - short presentation of the content, commenst as follows:
-  - Sam: There is som more work on overarching properties by NASA, Mallory Graydon
+  - Sam: There is some more work on overarching properties by NASA, Mallory Graydon
     - proposal: get in toucch with her wrt experiences
   - Sam: Comments on Reverse Engineering (RE) approach:
     - feasible, but going to be a lot of work...
@@ -124,7 +127,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Lenka: agrees on best approach is RE
     - Linux in space: did a similar study, will publish about it
     - addresses certification only to drivers that are OpenSource, no use of binary drivers and pre-selected HW configuration
-    - experience so far: selected 5 different HW plattforms where drivers are included in a compatible way
+    - experience so far: selected 5 different HW platforms where drivers are included in a compatible way
   - Qasim
     - No comments
   - Ulises:
@@ -139,15 +142,15 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 
 ## Scope
 
-* Discussion at this time
+- Discussion at this time
   - address challenges in both ways: top-bottom and bottom-up approach in parallel to capture different views
     - is there a common, compatible use-case?
       - remotely piloted aircraft is similar and easier than manned aircraft
-      - common ground/use-case: plattform deployable in several objects (e.g. flying helicopters on mars)
+      - common ground/use-case: platform deployable in several objects (e.g. flying helicopters on mars)
       - most simple functions max. DAL-C (DAL-D...)
   - limited to aerospace (subsequent discussions may be broadened to other domains)
     - may have different answers in aero compared to space
-    - different regulations nned to be considered, but can learn from each other
+    - different regulations need to be considered, but can learn from each other
     - less complicated in space due to many aspects without human beings
   - covers features in an entire distribution (subsequent discussions may focus narrowly on the kernel)
     - setup a working group to continue Steves work on analysing and "stripping" the kernel?
@@ -162,13 +165,13 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
   - covers all criticality (software levels), but may have different answers for different software levels
   - time limit each major section so that all are covered in first meeting, schedule subsequent meetings on narrower topics as needed
 
-* how many meetings?
-  * more than one?
-* when do we schedule?
-  * cautious of holidays coming up in Europe
-* do we schedule these during our regular working group time slots?
-  * yes same time slot for first overall meeting
-  * allow for different time slots when splitting to sub-groups
+- how many meetings?
+  - more than one?
+- when do we schedule?
+  - cautious of holidays coming up in Europe
+- do we schedule these during our regular working group time slots?
+  - yes same time slot for first overall meeting
+  - allow for different time slots when splitting to sub-groups
 
 ## What are the outcomes of discussion?
 
@@ -205,8 +208,8 @@ A future discussion will cover "Features Required for Aerospace". Next steps are
 - Maintenance and Support
 - Tools
 
-
 other ways to categorize:
+
 - first look at kernel? Then go higher layers? kernel layer, services layer, application layer
   - where do drivers fit in discussion?
   - API for system applications (user level) - is that a feature?, e.g., ARINC 653
@@ -219,7 +222,6 @@ other ways to categorize:
     - aero vs space
 
 - Perhaps we have a matrix of the two dimensions above and walk through the intersections of those rows and columns
-
 
 ---
 
@@ -357,6 +359,5 @@ Identify use case categories that require differentiated set of features
 ## Action Items
 
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
-
 
 ## Round Table

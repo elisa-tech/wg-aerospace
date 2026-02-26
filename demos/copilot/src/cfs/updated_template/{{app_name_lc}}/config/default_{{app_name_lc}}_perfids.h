@@ -22,9 +22,9 @@
  * @file
  *   Define TO Lab Performance IDs
  */
-#ifndef {{app_name_uc}}_PERFIDS_H
-#define {{app_name_uc}}_PERFIDS_H
+#ifndef{{app_name_uc } } _PERFIDS_H
+#define{{app_name_uc } } _PERFIDS_H
 
-#define {{app_name_uc}}_PERF_ID 91
+#define{{app_name_uc } } _PERF_ID 91
 
 #endif

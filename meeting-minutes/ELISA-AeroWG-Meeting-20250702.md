@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -46,7 +46,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Manuel Beltran - Boeing
 - Andrew Wilson - L3Harris, BYU, FPGA Zealot
 - Philip Balister - OpenEmbedded
-- Rob Woolley  - Wind River
+- Rob Woolley - Wind River
 - Tim Bird - Sony
 - Andrew E Wilson (L3Harris, BYU, FPGA Zealot)
 - Cyril Jean (Microchip Technology Inc.)
@@ -112,41 +112,41 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Meetings
 
 ## Upcoming Events
 
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (<https://2025.smcit-scc.space/>) (Occurring for 20yrs, cross industry/global)
   - July 28 - Aug 1
   - Open source for space workshop (Ivan organizing)
-  - Located @ California Science Center in LA  (close to USC)
+  - Located @ California Science Center in LA (close to USC)
   - Reach out to Ivan Perez if interested in providing a topic related to OSS in space (open data / hw / sw)
-- August 5th - Open Source Summit India - Hyderabad, India - https://events.linuxfoundation.org/open-source-summit-india/
+- August 5th - Open Source Summit India - Hyderabad, India - <https://events.linuxfoundation.org/open-source-summit-india/>
 - SmallSat Salt Lake City, Utah (AUgust 10-13) -> [link](https://smallsat.org/)
-    - Flash Talk by Andrew Wilson (Monday)
-    - Is anyone hosting a side chat room for Linux in Space? (was done in past)
+  - Flash Talk by Andrew Wilson (Monday)
+  - Is anyone hosting a side chat room for Linux in Space? (was done in past)
 - AMD Space Day (August 19, 2025) Registration (San Jose, CA.) -> [link](https://www.feedback.amd.com/se/5A1E27D22E92B566)
   - AMD Space lounge access required [link](https://account.amd.com/en/forms/registration/space.html)
   - Free Registration - Centered around AMD Versal
-- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference https://events.linuxfoundation.org/open-source-summit-europe/
+- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference <https://events.linuxfoundation.org/open-source-summit-europe/>
   - [SGL Talk](https://osseu2025.sched.com/event/25VnF/space-grade-linux-building-a-safer-open-source-future-for-space-systems-ramon-roche-linux-foundation)
-- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
+- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (<https://2025.dasconline.org/>) (Montreal, Canada)
 - Oct 31 Drone+Space Community Meetup @ KAU (Korea Aerospace University) Ramon & Dongshik Host
   - ELISA Project + Dronecode [link](https://elisa.tech/event/elisa-project-dronecode-foundation-meetup/)
 - Nov 4-5 OSS Korea - Safety track it looking for topics! Contact Kate
 - Dec 8-10 OSS Japan
-- Dec 11-13: Linux Plumbers Conference 2025, in Tokyo (https://lpc.events/)
-- ?? NASA SPARK submissions (https://spark.nasa.gov/)
+- Dec 11-13: Linux Plumbers Conference 2025, in Tokyo (<https://lpc.events/>)
+- ?? NASA SPARK submissions (<https://spark.nasa.gov/>)
 
 ## Journals
 
-- Springer CEAS Aeronautical Journal (https://link.springer.com/journal/13272)
+- Springer CEAS Aeronautical Journal (<https://link.springer.com/journal/13272>)
   - Has a special avionics track
-- AIAA Journal: AIAAJ for Aeronautics (https://arc.aiaa.org/loi/aiaaj)
-- SAE International Journal of Aerospace (https://www.sae.org/publications/collections/content/E-JOURNAL-01/)
-- Avionics International / Avionics Today (https://www.aviationtoday.com/)
+- AIAA Journal: AIAAJ for Aeronautics (<https://arc.aiaa.org/loi/aiaaj>)
+- SAE International Journal of Aerospace (<https://www.sae.org/publications/collections/content/E-JOURNAL-01/>)
+- Avionics International / Avionics Today (<https://www.aviationtoday.com/>)
   - Less scientific, more industrial-oriented
 
 ## Articles / Publications
@@ -156,6 +156,7 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
 
 # Technical Topics
@@ -165,16 +166,16 @@ See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_Aero
 - Good cross presentation focus on requirements or definition of functionality to drive testing / coverage
   - Nvidia and Boeing had separate talks
 
-## Use case demo (https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot)
+## Use case demo (<https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot>)
 
--	Brief update on Use Case demo work
-  - Completed - native python demo of the CoPilot monitor and rehosted into a minimal ARM64 Linux (Documentation is pending)
-  - Creating - similar demo with raw sockets and targeting a minimal Linux w/o network stack - Question is as follows:
-    - Do we want to start an updated Use Case to represent this (maybe start from our current one and tailor?)
-      - **Last Month's ACTION was sort of aligned** Start to write up a higher availability/safety focused use case
-          - We could focused around the following to seed the discussion
-            - **multi board simulation (multi-qemu with some watchdog / remedy behavior)**
-            - **Fault injection into QEMU - memory / cpu faults**
+- Brief update on Use Case demo work
+- Completed - native python demo of the CoPilot monitor and rehosted into a minimal ARM64 Linux (Documentation is pending)
+- Creating - similar demo with raw sockets and targeting a minimal Linux w/o network stack - Question is as follows:
+  - Do we want to start an updated Use Case to represent this (maybe start from our current one and tailor?)
+    - **Last Month's ACTION was sort of aligned** Start to write up a higher availability/safety focused use case
+      - We could focused around the following to seed the discussion
+        - **multi board simulation (multi-qemu with some watchdog / remedy behavior)**
+        - **Fault injection into QEMU - memory / cpu faults**
 
 - NASA standard vs DO-178 (Ivan had action from last call)
   - Hard to establish equivalency as reverse engineering practice would apply either direction when wanting to reuse artifacts.
@@ -184,19 +185,20 @@ See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_Aero
 ## Emulated OS discussion
 
 - Discussion on collaborating on a minimal OS configuration
-    - (Michael) attested boot - baremetal boot to Linux  (could be a interesting demo for minimal linux config)
-    - (Matt W) reduced code count is a goal
-    - ACTION - Aim towards capturing a new use case to help drive this direction
+  - (Michael) attested boot - baremetal boot to Linux (could be a interesting demo for minimal linux config)
+  - (Matt W) reduced code count is a goal
+  - ACTION - Aim towards capturing a new use case to help drive this direction
 - Do we want to follow SGL’s approach to licensing and collaboration agreements for AeroWG content?
-  - https://github.com/elisa-tech/meta-sgl/blob/main/LICENSE
+  - <https://github.com/elisa-tech/meta-sgl/blob/main/LICENSE>
 - [Github](https://github.com/elisa-tech/) or [Gitlab](https://gitlab.com/elisa-tech/) ?
   - If Gitlab
-      - Our CICD scales better
-      - Thinking we use a subgroup so we can have a series of project repos
+    - Our CICD scales better
+    - Thinking we use a subgroup so we can have a series of project repos
 
 ## Whitepaper on "Survey State of Art...""
 
 Background
+
 - Edits
   - Via online [Overleaf editor](https://www.overleaf.com/) - we have limited licenses so we've shared the pdf link below
   - latex format and editor can generate documents
@@ -206,9 +208,11 @@ Background
   - Doc still informs goals and activities of AeroWG & Space
 
 ACTIONS
-- Martin can add you as an editor to the paper if you have contributions!  Or you can use our latest pdf on the mailing list and supply comments back in a marked up version.
+
+- Martin can add you as an editor to the paper if you have contributions! Or you can use our latest pdf on the mailing list and supply comments back in a marked up version.
 
 ---
+
 ---
 
 # Closing

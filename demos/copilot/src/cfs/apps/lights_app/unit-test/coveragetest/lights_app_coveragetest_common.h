@@ -32,25 +32,26 @@
  */
 
 #include "utassert.h"
-#include "uttest.h"
 #include "utstubs.h"
+#include "uttest.h"
 
-#include "setup.h"
 #include "eventcheck.h"
+#include "setup.h"
 
 #include "cfe.h"
-#include "lights_app_eventids.h"
 #include "lights_app.h"
-#include "lights_app_dispatch.h"
 #include "lights_app_cmds.h"
-#include "lights_app_utils.h"
-#include "lights_app_msgids.h"
+#include "lights_app_dispatch.h"
+#include "lights_app_eventids.h"
 #include "lights_app_msg.h"
+#include "lights_app_msgids.h"
 #include "lights_app_tbl.h"
+#include "lights_app_utils.h"
 
 /*
  * Macro to add a test case to the list of tests to execute
  */
-#define ADD_TEST(test) UtTest_Add((Test_##test), Sample_UT_Setup, Sample_UT_TearDown, #test)
+#define ADD_TEST(test)                                                         \
+  UtTest_Add((Test_##test), Sample_UT_Setup, Sample_UT_TearDown, #test)
 
 #endif /* LIGHTS_APP_COVERAGETEST_COMMON_H */

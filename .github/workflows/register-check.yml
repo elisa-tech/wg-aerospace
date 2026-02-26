@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-
+---
 name: Check all markdown files are linked in register.md
 
 on: [push]

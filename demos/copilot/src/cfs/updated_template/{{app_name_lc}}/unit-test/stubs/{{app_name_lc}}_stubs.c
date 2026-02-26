@@ -21,24 +21,47 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in {{app_name_lc}} header
+ * Auto-Generated stub implementations for functions defined in {{app_name_lc}}
+ * header
  */
 
-#include "{{app_name_lc}}.h"
 #include "utgenstub.h"
+#include "{{app_name_lc}}.h"
 
 /*
  * ----------------------------------------------------
  * Generated stub function for {{app_name_uc}}_Init()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_Init(void)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_Init, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_Init(void) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _Init,
+      CFE_Status_t);
 
-    UT_GenStub_Execute({{app_name_uc}}_Init, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _Init,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_Init, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _Init,
+      CFE_Status_t);
 }
 
 /*
@@ -46,8 +69,18 @@ CFE_Status_t {{app_name_uc}}_Init(void)
  * Generated stub function for {{app_name_uc}}_Main()
  * ----------------------------------------------------
  */
-void {{app_name_uc}}_Main(void)
-{
+void {
+  {
+    app_name_uc
+  }
+}
+_Main(void) {
 
-    UT_GenStub_Execute({{app_name_uc}}_Main, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _Main,
+      Basic, NULL);
 }

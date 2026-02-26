@@ -24,33 +24,34 @@
  * Common definitions for all {{app_name_lc}} coverage tests
  */
 
-#ifndef {{app_name_uc}}_COVERAGETEST_COMMON_H
-#define {{app_name_uc}}_COVERAGETEST_COMMON_H
+#ifndef{{app_name_uc } } _COVERAGETEST_COMMON_H
+#define{{app_name_uc } } _COVERAGETEST_COMMON_H
 
 /*
  * Includes
  */
 
 #include "utassert.h"
-#include "uttest.h"
 #include "utstubs.h"
+#include "uttest.h"
 
-#include "setup.h"
 #include "eventcheck.h"
+#include "setup.h"
 
 #include "cfe.h"
-#include "{{app_name_lc}}_eventids.h"
 #include "{{app_name_lc}}.h"
-#include "{{app_name_lc}}_dispatch.h"
 #include "{{app_name_lc}}_cmds.h"
-#include "{{app_name_lc}}_utils.h"
-#include "{{app_name_lc}}_msgids.h"
+#include "{{app_name_lc}}_dispatch.h"
+#include "{{app_name_lc}}_eventids.h"
 #include "{{app_name_lc}}_msg.h"
+#include "{{app_name_lc}}_msgids.h"
 #include "{{app_name_lc}}_tbl.h"
+#include "{{app_name_lc}}_utils.h"
 
 /*
  * Macro to add a test case to the list of tests to execute
  */
-#define ADD_TEST(test) UtTest_Add((Test_##test), Sample_UT_Setup, Sample_UT_TearDown, #test)
+#define ADD_TEST(test)                                                         \
+  UtTest_Add((Test_##test), Sample_UT_Setup, Sample_UT_TearDown, #test)
 
 #endif /* {{app_name_uc}}_COVERAGETEST_COMMON_H */

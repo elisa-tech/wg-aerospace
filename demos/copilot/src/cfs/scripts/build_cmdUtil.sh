@@ -12,7 +12,7 @@ DEST_DIR="$EXTRACTED_CPIO_DIR/usr/cfs_build/arm-linux-gnu/default_cpu1/cpu1"
 echo "Building cmdUtil..."
 
 # 1. Overwrite the Makefile with the required content
-cat > "$CMDUTIL_DIR/Makefile" << 'EOF'
+cat >"$CMDUTIL_DIR/Makefile" <<'EOF'
 # Set the full path to your cross-compiler
 CROSS_COMPILER := /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/bin/aarch64-linux-gcc
 

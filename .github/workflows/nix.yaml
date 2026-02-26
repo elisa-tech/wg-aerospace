@@ -1,11 +1,11 @@
 # SPDX-FileCopyrightText: 2025-2026 wucke13
 #
 # SPDX-License-Identifier: Apache-2.0
-
+---
 on:
   push:
     paths:
-      - 'demos/**'
+      - "demos/**"
 
 defaults:
   run:
@@ -13,6 +13,9 @@ defaults:
 
 env:
   EXTRA_NIX_FLAGS: --log-format raw-with-logs --print-build-logs
+
+permissions:
+  contents: read
 
 jobs:
   check:

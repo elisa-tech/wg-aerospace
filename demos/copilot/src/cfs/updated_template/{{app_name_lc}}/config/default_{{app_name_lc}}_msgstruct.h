@@ -27,16 +27,16 @@
  *   Constants and enumerated types related to these message structures
  *   are defined in {{app_name_lc}}_msgdefs.h.
  */
-#ifndef {{app_name_uc}}_MSGSTRUCT_H
-#define {{app_name_uc}}_MSGSTRUCT_H
+#ifndef{{app_name_uc } } _MSGSTRUCT_H
+#define{{app_name_uc } } _MSGSTRUCT_H
 
 /************************************************************************
  * Includes
  ************************************************************************/
 
+#include "cfe_msg_hdr.h"
 #include "{{app_name_lc}}_mission_cfg.h"
 #include "{{app_name_lc}}_msgdefs.h"
-#include "cfe_msg_hdr.h"
 
 /*************************************************************************/
 
@@ -44,44 +44,79 @@
 ** The following commands all share the "NoArgs" format
 **
 ** They are each given their own type name matching the command name, which
-** allows them to change independently in the future without changing the prototype
+** allows them to change independently in the future without changing the
+* prototype
 ** of the handler function
 */
-typedef struct
-{
-    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
-} {{app_name_uc}}_NoopCmd_t;
+typedef struct {
+  CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
+} {
+  {
+    app_name_uc
+  }
+}
+_NoopCmd_t;
 
-typedef struct
-{
-    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
-} {{app_name_uc}}_ResetCountersCmd_t;
+typedef struct {
+  CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
+} {
+  {
+    app_name_uc
+  }
+}
+_ResetCountersCmd_t;
 
-typedef struct
-{
-    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
-} {{app_name_uc}}_ProcessCmd_t;
+typedef struct {
+  CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
+} {
+  {
+    app_name_uc
+  }
+}
+_ProcessCmd_t;
 
-typedef struct
-{
-    CFE_MSG_CommandHeader_t           CommandHeader; /**< \brief Command header */
-    {{app_name_uc}}_DisplayParam_Payload_t Payload;
-} {{app_name_uc}}_DisplayParamCmd_t;
+typedef struct {
+  CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
+  {
+    {
+      app_name_uc
+    }
+  }
+  _DisplayParam_Payload_t Payload;
+} {
+  {
+    app_name_uc
+  }
+}
+_DisplayParamCmd_t;
 
 /*************************************************************************/
 /*
 ** Type definition ({{app_name_txt}} App housekeeping)
 */
 
-typedef struct
-{
-    CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
-} {{app_name_uc}}_SendHkCmd_t;
+typedef struct {
+  CFE_MSG_CommandHeader_t CommandHeader; /**< \brief Command header */
+} {
+  {
+    app_name_uc
+  }
+}
+_SendHkCmd_t;
 
-typedef struct
-{
-    CFE_MSG_TelemetryHeader_t  TelemetryHeader; /**< \brief Telemetry header */
-    {{app_name_uc}}_HkTlm_Payload_t Payload;         /**< \brief Telemetry payload */
-} {{app_name_uc}}_HkTlm_t;
+typedef struct {
+  CFE_MSG_TelemetryHeader_t TelemetryHeader; /**< \brief Telemetry header */
+  {
+    {
+      app_name_uc
+    }
+  }
+  _HkTlm_Payload_t Payload; /**< \brief Telemetry payload */
+} {
+  {
+    app_name_uc
+  }
+}
+_HkTlm_t;
 
 #endif /* {{app_name_uc}}_MSGSTRUCT_H */

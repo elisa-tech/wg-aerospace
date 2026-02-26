@@ -20,7 +20,8 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App Ground Command-handling functions
+ *   This file contains the prototypes for the Sample App Ground
+ * Command-handling functions
  */
 
 #ifndef LIGHTS_APP_CMDS_H
@@ -33,9 +34,11 @@
 #include "lights_app_msg.h"
 
 CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg);
-CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg);
+CFE_Status_t
+LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg);
 CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg);
 CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg);
-CFE_Status_t LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg);
+CFE_Status_t
+LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg);
 
 #endif /* LIGHTS_APP_CMDS_H */

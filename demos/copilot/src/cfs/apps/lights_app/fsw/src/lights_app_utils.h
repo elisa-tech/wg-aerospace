@@ -32,6 +32,6 @@
 #include "lights_app.h"
 
 CFE_Status_t LIGHTS_APP_TblValidationFunc(void *TblData);
-void         LIGHTS_APP_GetCrc(const char *TableName);
+void LIGHTS_APP_GetCrc(const char *TableName);
 
 #endif /* LIGHTS_APP_UTILS_H */

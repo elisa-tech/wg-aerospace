@@ -36,10 +36,10 @@
  * Includes
  */
 
-#include "switch_app_coveragetest_common.h"
 #include "switch_app.h"
-#include "switch_app_dispatch.h"
 #include "switch_app_cmds.h"
+#include "switch_app_coveragetest_common.h"
+#include "switch_app_dispatch.h"
 
 /*
 **********************************************************************************
@@ -47,18 +47,14 @@
 **********************************************************************************
 */
 
-void Test_SWITCH_APP_TaskPipe(void)
-{
-    /*
-     * Test Case For:
-     * void SWITCH_APP_TaskPipe
-     */
+void Test_SWITCH_APP_TaskPipe(void) {
+  /*
+   * Test Case For:
+   * void SWITCH_APP_TaskPipe
+   */
 }
 
 /*
  * Register the test cases to execute with the unit test tool
  */
-void UtTest_Setup(void)
-{
-    ADD_TEST(SWITCH_APP_TaskPipe);
-}
+void UtTest_Setup(void) { ADD_TEST(SWITCH_APP_TaskPipe); }

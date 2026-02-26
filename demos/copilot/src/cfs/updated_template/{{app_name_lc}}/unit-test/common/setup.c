@@ -40,16 +40,13 @@
 #include "setup.h"
 
 #include "utassert.h"
-#include "uttest.h"
 #include "utstubs.h"
+#include "uttest.h"
 
 /*
  * Setup function prior to every test
  */
-void Sample_UT_Setup(void)
-{
-    UT_ResetState(0);
-}
+void Sample_UT_Setup(void) { UT_ResetState(0); }
 
 /*
  * Teardown function after every test

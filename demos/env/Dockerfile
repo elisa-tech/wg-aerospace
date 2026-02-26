@@ -102,4 +102,5 @@ USER user
 RUN ghci --version && \
     ogma --help
 
+# HEALTHCHECK instruction is not applicable in this context.
 ENTRYPOINT ["/entry.sh"]

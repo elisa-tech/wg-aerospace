@@ -24,8 +24,8 @@
  * Main header file for the Sample application
  */
 
-#ifndef {{app_name_uc}}_H
-#define {{app_name_uc}}_H
+#ifndef{{app_name_uc } } _H
+#define{{app_name_uc } } _H
 
 /*
 ** Required header files.
@@ -36,9 +36,9 @@
 #include "{{app_name_lc}}_mission_cfg.h"
 #include "{{app_name_lc}}_platform_cfg.h"
 
-#include "{{app_name_lc}}_perfids.h"
-#include "{{app_name_lc}}_msgids.h"
 #include "{{app_name_lc}}_msg.h"
+#include "{{app_name_lc}}_msgids.h"
+#include "{{app_name_lc}}_perfids.h"
 
 /************************************************************************
 ** Type Definitions
@@ -47,36 +47,59 @@
 /*
 ** Global Data
 */
-typedef struct
-{
-    /*
-    ** Command interface counters...
-    */
-    uint8 CmdCounter;
-    uint8 ErrCounter;
+typedef struct {
+  /*
+  ** Command interface counters...
+  */
+  uint8 CmdCounter;
+  uint8 ErrCounter;
 
-    /*
-    ** Housekeeping telemetry packet...
-    */
-    {{app_name_uc}}_HkTlm_t HkTlm;
+  /*
+  ** Housekeeping telemetry packet...
+  */
+  {
+    {
+      app_name_uc
+    }
+  }
+  _HkTlm_t HkTlm;
 
-    /*
-    ** Run Status variable used in the main processing loop
-    */
-    uint32 RunStatus;
+  /*
+  ** Run Status variable used in the main processing loop
+  */
+  uint32 RunStatus;
 
-    /*
-    ** Operational data (not reported in housekeeping)...
-    */
-    CFE_SB_PipeId_t CommandPipe;
+  /*
+  ** Operational data (not reported in housekeeping)...
+  */
+  CFE_SB_PipeId_t CommandPipe;
 
-    CFE_TBL_Handle_t TblHandles[{{app_name_uc}}_NUMBER_OF_TABLES];
-} {{app_name_uc}}_Data_t;
+  CFE_TBL_Handle_t TblHandles[{
+    {
+      app_name_uc
+    }
+  } _NUMBER_OF_TABLES];
+} {
+  {
+    app_name_uc
+  }
+}
+_Data_t;
 
 /*
 ** Global data structure
 */
-extern {{app_name_uc}}_Data_t {{app_name_uc}}_Data;
+extern {
+  {
+    app_name_uc
+  }
+}
+_Data_t {
+  {
+    app_name_uc
+  }
+}
+_Data;
 
 /****************************************************************************/
 /*
@@ -85,7 +108,17 @@ extern {{app_name_uc}}_Data_t {{app_name_uc}}_Data;
 ** Note: Except for the entry point ({{app_name_uc}}_Main), these
 **       functions are not called from any other source module.
 */
-void         {{app_name_uc}}_Main(void);
-CFE_Status_t {{app_name_uc}}_Init(void);
+void {
+  {
+    app_name_uc
+  }
+}
+_Main(void);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_Init(void);
 
 #endif /* {{app_name_uc}}_H */

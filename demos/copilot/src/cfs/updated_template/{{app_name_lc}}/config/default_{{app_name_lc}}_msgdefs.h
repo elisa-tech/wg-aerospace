@@ -25,29 +25,51 @@
  *
  *  For {{app_name_uc}} this is only the function/command code definitions
  */
-#ifndef {{app_name_uc}}_MSGDEFS_H
-#define {{app_name_uc}}_MSGDEFS_H
+#ifndef{{app_name_uc } } _MSGDEFS_H
+#define{{app_name_uc } } _MSGDEFS_H
 
 #include "common_types.h"
 #include "{{app_name_lc}}_fcncodes.h"
 
-typedef struct {{app_name_uc}}_DisplayParam_Payload
+typedef struct {
+  {
+    app_name_uc
+  }
+} _DisplayParam_Payload {
+  uint32 ValU32; /**< 32 bit unsigned integer value */
+  int16 ValI16;  /**< 16 bit signed integer value */
+  char ValStr[{
+    {
+      app_name_uc
+    }
+  } _STRING_VAL_LEN]; /**< An example string */
+}
 {
-    uint32 ValU32;                            /**< 32 bit unsigned integer value */
-    int16  ValI16;                            /**< 16 bit signed integer value */
-    char   ValStr[{{app_name_uc}}_STRING_VAL_LEN]; /**< An example string */
-} {{app_name_uc}}_DisplayParam_Payload_t;
+  {
+    app_name_uc
+  }
+}
+_DisplayParam_Payload_t;
 
 /*************************************************************************/
 /*
 ** Type definition ({{app_name_txt}} App housekeeping)
 */
 
-typedef struct {{app_name_uc}}_HkTlm_Payload
+typedef struct {
+  {
+    app_name_uc
+  }
+} _HkTlm_Payload {
+  uint8 CommandErrorCounter;
+  uint8 CommandCounter;
+  uint8 spare[2];
+}
 {
-    uint8 CommandErrorCounter;
-    uint8 CommandCounter;
-    uint8 spare[2];
-} {{app_name_uc}}_HkTlm_Payload_t;
+  {
+    app_name_uc
+  }
+}
+_HkTlm_Payload_t;
 
 #endif

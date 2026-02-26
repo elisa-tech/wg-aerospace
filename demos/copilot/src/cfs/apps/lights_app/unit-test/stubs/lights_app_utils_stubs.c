@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in lights_app_utils header
+ * Auto-Generated stub implementations for functions defined in lights_app_utils
+ * header
  */
 
 #include "lights_app_utils.h"
@@ -32,11 +33,10 @@
  * Generated stub function for LIGHTS_APP_GetCrc()
  * ----------------------------------------------------
  */
-void LIGHTS_APP_GetCrc(const char *TableName)
-{
-    UT_GenStub_AddParam(LIGHTS_APP_GetCrc, const char *, TableName);
+void LIGHTS_APP_GetCrc(const char *TableName) {
+  UT_GenStub_AddParam(LIGHTS_APP_GetCrc, const char *, TableName);
 
-    UT_GenStub_Execute(LIGHTS_APP_GetCrc, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_GetCrc, Basic, NULL);
 }
 
 /*
@@ -44,13 +44,12 @@ void LIGHTS_APP_GetCrc(const char *TableName)
  * Generated stub function for LIGHTS_APP_TblValidationFunc()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_TblValidationFunc(void *TblData)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_TblValidationFunc, CFE_Status_t);
+CFE_Status_t LIGHTS_APP_TblValidationFunc(void *TblData) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_TblValidationFunc, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_TblValidationFunc, void *, TblData);
+  UT_GenStub_AddParam(LIGHTS_APP_TblValidationFunc, void *, TblData);
 
-    UT_GenStub_Execute(LIGHTS_APP_TblValidationFunc, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_TblValidationFunc, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_TblValidationFunc, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_TblValidationFunc, CFE_Status_t);
 }

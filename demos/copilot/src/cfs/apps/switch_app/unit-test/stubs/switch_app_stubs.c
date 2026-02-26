@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in switch_app header
+ * Auto-Generated stub implementations for functions defined in switch_app
+ * header
  */
 
 #include "switch_app.h"
@@ -32,13 +33,12 @@
  * Generated stub function for SWITCH_APP_Init()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_Init(void)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_Init, CFE_Status_t);
+CFE_Status_t SWITCH_APP_Init(void) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_Init, CFE_Status_t);
 
-    UT_GenStub_Execute(SWITCH_APP_Init, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_Init, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_Init, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_Init, CFE_Status_t);
 }
 
 /*
@@ -46,8 +46,4 @@ CFE_Status_t SWITCH_APP_Init(void)
  * Generated stub function for SWITCH_APP_Main()
  * ----------------------------------------------------
  */
-void SWITCH_APP_Main(void)
-{
-
-    UT_GenStub_Execute(SWITCH_APP_Main, Basic, NULL);
-}
+void SWITCH_APP_Main(void) { UT_GenStub_Execute(SWITCH_APP_Main, Basic, NULL); }

@@ -20,20 +20,21 @@
 
 /**
  * \file
- *   This file contains the source code for the {{app_name_txt}} App Ground Command-handling functions
+ *   This file contains the source code for the {{app_name_txt}} App Ground
+ * Command-handling functions
  */
 
 /*
 ** Include Files:
 */
-#include "{{app_name_lc}}.h"
 #include "{{app_name_lc}}_cmds.h"
-#include "{{app_name_lc}}_msgids.h"
+#include "{{app_name_lc}}.h"
 #include "{{app_name_lc}}_eventids.h"
-#include "{{app_name_lc}}_version.h"
+#include "{{app_name_lc}}_msg.h"
+#include "{{app_name_lc}}_msgids.h"
 #include "{{app_name_lc}}_tbl.h"
 #include "{{app_name_lc}}_utils.h"
-#include "{{app_name_lc}}_msg.h"
+#include "{{app_name_lc}}_version.h"
 
 /* The sample_lib module provides the SAMPLE_Function() prototype */
 #include "sample_lib.h"
@@ -46,46 +47,105 @@
 /*         telemetry, packetize it and send it to the housekeeping task via   */
 /*         the software bus                                                   */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t {{app_name_uc}}_SendHkCmd(const {{app_name_uc}}_SendHkCmd_t *Msg)
-{
-    int i;
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_SendHkCmd(const {
+  {
+    app_name_uc
+  }
+} _SendHkCmd_t *Msg) {
+  int i;
 
-    /*
-    ** Get command execution counters...
-    */
-    {{app_name_uc}}_Data.HkTlm.Payload.CommandErrorCounter = {{app_name_uc}}_Data.ErrCounter;
-    {{app_name_uc}}_Data.HkTlm.Payload.CommandCounter      = {{app_name_uc}}_Data.CmdCounter;
-
-    /*
-    ** Send housekeeping telemetry packet...
-    */
-    CFE_SB_TimeStampMsg(CFE_MSG_PTR({{app_name_uc}}_Data.HkTlm.TelemetryHeader));
-    CFE_SB_TransmitMsg(CFE_MSG_PTR({{app_name_uc}}_Data.HkTlm.TelemetryHeader), true);
-
-    /*
-    ** Manage any pending table loads, validations, etc.
-    */
-    for (i = 0; i < {{app_name_uc}}_NUMBER_OF_TABLES; i++)
+  /*
+  ** Get command execution counters...
+  */
+  {
     {
-        CFE_TBL_Manage({{app_name_uc}}_Data.TblHandles[i]);
+      app_name_uc
     }
+  }
+  _Data.HkTlm.Payload.CommandErrorCounter = { {app_name_uc} } _Data.ErrCounter;
+  {
+    {
+      app_name_uc
+    }
+  }
+  _Data.HkTlm.Payload.CommandCounter = { {app_name_uc} } _Data.CmdCounter;
 
-    return CFE_SUCCESS;
+  /*
+  ** Send housekeeping telemetry packet...
+  */
+  CFE_SB_TimeStampMsg(CFE_MSG_PTR({
+    {
+      app_name_uc
+    }
+  } _Data.HkTlm.TelemetryHeader));
+  CFE_SB_TransmitMsg(CFE_MSG_PTR({
+                       {
+                         app_name_uc
+                       }
+                     } _Data.HkTlm.TelemetryHeader),
+                     true);
+
+  /*
+  ** Manage any pending table loads, validations, etc.
+  */
+  for (i = 0; i <
+              {
+                {
+                  app_name_uc
+                }
+              } _NUMBER_OF_TABLES;
+       i++) {
+    CFE_TBL_Manage({
+      {
+        app_name_uc
+      }
+    } _Data.TblHandles[i]);
+  }
+
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* {{app_name_short}} NOOP commands                                                       */
+/* {{app_name_short}} NOOP commands */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-CFE_Status_t {{app_name_uc}}_NoopCmd(const {{app_name_uc}}_NoopCmd_t *Msg)
-{
-    {{app_name_uc}}_Data.CmdCounter++;
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_NoopCmd(const {
+  {
+    app_name_uc
+  }
+} _NoopCmd_t *Msg) {
+  {
+    {
+      app_name_uc
+    }
+  }
+  _Data.CmdCounter++;
 
-    CFE_EVS_SendEvent({{app_name_uc}}_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: NOOP command %s",
-                      {{app_name_uc}}_VERSION);
+  CFE_EVS_SendEvent(
+      {
+        {
+          app_name_uc
+        }
+      } _NOOP_INF_EID,
+      CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: NOOP command %s",
+      {
+        {
+          app_name_uc
+        }
+      } _VERSION);
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -95,14 +155,38 @@ CFE_Status_t {{app_name_uc}}_NoopCmd(const {{app_name_uc}}_NoopCmd_t *Msg)
 /*         part of the task telemetry.                                        */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t {{app_name_uc}}_ResetCountersCmd(const {{app_name_uc}}_ResetCountersCmd_t *Msg)
-{
-    {{app_name_uc}}_Data.CmdCounter = 0;
-    {{app_name_uc}}_Data.ErrCounter = 0;
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_ResetCountersCmd(const {
+  {
+    app_name_uc
+  }
+} _ResetCountersCmd_t *Msg) {
+  {
+    {
+      app_name_uc
+    }
+  }
+  _Data.CmdCounter = 0;
+  {
+    {
+      app_name_uc
+    }
+  }
+  _Data.ErrCounter = 0;
 
-    CFE_EVS_SendEvent({{app_name_uc}}_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: RESET command");
+  CFE_EVS_SendEvent(
+      {
+        {
+          app_name_uc
+        }
+      } _RESET_INF_EID,
+      CFE_EVS_EventType_INFORMATION, "{{app_name_short}}: RESET command");
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -111,40 +195,71 @@ CFE_Status_t {{app_name_uc}}_ResetCountersCmd(const {{app_name_uc}}_ResetCounter
 /*         This function Process Ground Station Command                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t {{app_name_uc}}_ProcessCmd(const {{app_name_uc}}_ProcessCmd_t *Msg)
-{
-    CFE_Status_t               Status;
-    void *                     TblAddr;
-    {{app_name_uc}}_ExampleTable_t *TblPtr;
-    const char *               TableName = "{{app_name_uc}}.ExampleTable";
-
-    /* {{app_name_txt}} Use of Example Table */
-    {{app_name_uc}}_Data.CmdCounter++;
-    Status = CFE_TBL_GetAddress(&TblAddr, {{app_name_uc}}_Data.TblHandles[0]);
-    if (Status < CFE_SUCCESS)
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_ProcessCmd(const {
+  {
+    app_name_uc
+  }
+} _ProcessCmd_t *Msg) {
+  CFE_Status_t Status;
+  void *TblAddr;
+  {
     {
-        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Fail to get table address: 0x%08lx", (unsigned long)Status);
+      app_name_uc
     }
-    else
+  }
+  _ExampleTable_t *TblPtr;
+  const char *TableName = "{{app_name_uc}}.ExampleTable";
+
+  /* {{app_name_txt}} Use of Example Table */
+  {
     {
-        TblPtr = TblAddr;
-        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
-
-        {{app_name_uc}}_GetCrc(TableName);
-
-        Status = CFE_TBL_ReleaseAddress({{app_name_uc}}_Data.TblHandles[0]);
-        if (Status != CFE_SUCCESS)
-        {
-            CFE_ES_WriteToSysLog("{{app_name_txt}} App: Fail to release table address: 0x%08lx", (unsigned long)Status);
-        }
-        else
-        {
-            /* Invoke a function provided by {{app_name_uc}}_LIB */
-            SAMPLE_LIB_Function();
-        }
+      app_name_uc
     }
+  }
+  _Data.CmdCounter++;
+  Status = CFE_TBL_GetAddress(&TblAddr, {
+    {
+      app_name_uc
+    }
+  } _Data.TblHandles[0]);
+  if (Status < CFE_SUCCESS) {
+    CFE_ES_WriteToSysLog(
+        "{{app_name_txt}} App: Fail to get table address: 0x%08lx",
+        (unsigned long)Status);
+  } else {
+    TblPtr = TblAddr;
+    CFE_ES_WriteToSysLog(
+        "{{app_name_txt}} App: Example Table Value 1: %d  Value 2: %d",
+        TblPtr->Int1, TblPtr->Int2);
 
-    return Status;
+    {
+      {
+        app_name_uc
+      }
+    }
+    _GetCrc(TableName);
+
+    Status = CFE_TBL_ReleaseAddress({
+      {
+        app_name_uc
+      }
+    } _Data.TblHandles[0]);
+    if (Status != CFE_SUCCESS) {
+      CFE_ES_WriteToSysLog(
+          "{{app_name_txt}} App: Fail to release table address: 0x%08lx",
+          (unsigned long)Status);
+    } else {
+      /* Invoke a function provided by {{app_name_uc}}_LIB */
+      SAMPLE_LIB_Function();
+    }
+  }
+
+  return Status;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -152,12 +267,32 @@ CFE_Status_t {{app_name_uc}}_ProcessCmd(const {{app_name_uc}}_ProcessCmd_t *Msg)
 /* A simple example command that displays a passed-in value                   */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-CFE_Status_t {{app_name_uc}}_DisplayParamCmd(const {{app_name_uc}}_DisplayParamCmd_t *Msg)
-{
-    {{app_name_uc}}_Data.CmdCounter++;
-    CFE_EVS_SendEvent({{app_name_uc}}_VALUE_INF_EID, CFE_EVS_EventType_INFORMATION,
-                      "{{app_name_uc}}: ValU32=%lu, ValI16=%d, ValStr=%s", (unsigned long)Msg->Payload.ValU32,
-                      (int)Msg->Payload.ValI16, Msg->Payload.ValStr);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_DisplayParamCmd(const {
+  {
+    app_name_uc
+  }
+} _DisplayParamCmd_t *Msg) {
+  {
+    {
+      app_name_uc
+    }
+  }
+  _Data.CmdCounter++;
+  CFE_EVS_SendEvent(
+      {
+        {
+          app_name_uc
+        }
+      } _VALUE_INF_EID,
+      CFE_EVS_EventType_INFORMATION,
+      "{{app_name_uc}}: ValU32=%lu, ValI16=%d, ValStr=%s",
+      (unsigned long)Msg->Payload.ValU32, (int)Msg->Payload.ValI16,
+      Msg->Payload.ValStr);
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }

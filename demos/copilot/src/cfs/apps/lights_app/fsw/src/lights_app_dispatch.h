@@ -35,7 +35,8 @@
 
 void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr);
 void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr);
-bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
+bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr,
+                                size_t ExpectedLength);
 
 void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr);
 void LIGHTS_APP_ProcessLightsAdjustCommand(const CFE_SB_Buffer_t *SBBufPtr);

@@ -27,12 +27,12 @@
  * interface, tables definitions, and any other data products that
  * serve to exchange information with other entities.
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
-#ifndef {{app_name_uc}}_INTERFACE_CFG_H
-#define {{app_name_uc}}_INTERFACE_CFG_H
+#ifndef{{app_name_uc } } _INTERFACE_CFG_H
+#define{{app_name_uc } } _INTERFACE_CFG_H
 
 /**
  * \brief Length of string buffer in the Display Value command
@@ -41,6 +41,6 @@
  * parameters of different types.  This macro controls the length
  * of the string parameter.
  */
-#define {{app_name_uc}}_STRING_VAL_LEN 10
+#define{{app_name_uc } } _STRING_VAL_LEN 10
 
 #endif

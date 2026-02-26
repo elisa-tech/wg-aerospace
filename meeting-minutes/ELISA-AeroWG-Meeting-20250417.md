@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -42,7 +42,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Dongshik Won - TelePIX/KAIST
 - Ivan Perez - NASA Ames
 - Martin Halle - Hamburg University of Technology
-- Rob Woolley  - Wind River
+- Rob Woolley - Wind River
 - Paul Mani - Collins India
 - Iain Galloway - NXP Semiconductors
 - Laurent Meilleur
@@ -106,38 +106,37 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Meetings
 
 ## Upcoming Events
 
-- April 2-3: RISC-V in Space Conference, Gothenburg https://indico.esa.int/event/562/overview
+- April 2-3: RISC-V in Space Conference, Gothenburg <https://indico.esa.int/event/562/overview>
 - ELISA workshop - May 7-9 at Volvo in Lund, Sweden
   - Is virtual an option? (Asked TSC)
   - TSC discussed on Mar 5th and more details [here](https://lists.elisa.tech/g/devel/topic/meeting_notes_elisa_tsc/111529766)
   - Provided TSC these ideas from AeroWG
-    -	Demo our first use case’s verification example
-    -	Present the content/outline of the State of Art whitepaper (considering it was restarted today with more contributors)
+    - Demo our first use case’s verification example
+    - Present the content/outline of the State of Art whitepaper (considering it was restarted today with more contributors)
 - June 23-25 - Open Source Summit North America (including Embedded Linux Conference) in Denver, CO
-  - Event web site: https://events.linuxfoundation.org/open-source-summit-north-america/
-- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (https://2025.smcit-scc.space/) (Occurring for 20yrs, cross industry/global)
+  - Event web site: <https://events.linuxfoundation.org/open-source-summit-north-america/>
+- July 2025 - Space Mission Challenges for Information Technology Space Computing Conference IEEE (Pasadena, CA) (<https://2025.smcit-scc.space/>) (Occurring for 20yrs, cross industry/global)
   - July 28 - Aug 1
   - Open source for space workshop (Ivan organizing)
-  - Located @ California Science Center in LA  (close to USC)
+  - Located @ California Science Center in LA (close to USC)
   - Call for papers submission (Closes Apr 3rd)
-- Aug - SmallSat - Call for paper is open (Due Feb 4th) - https://www.smallsat.org/downloads/call-for-papers.pdf
-- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference https://events.linuxfoundation.org/open-source-summit-europe/
-  - Amsterdam, CFP here: https://events.linuxfoundation.org/open-source-summit-europe/program/cfp/
+- Aug - SmallSat - Call for paper is open (Due Feb 4th) - <https://www.smallsat.org/downloads/call-for-papers.pdf>
+- August 25-27 Linux Foundation Open Source Summit EU & Embedded Linux Conference <https://events.linuxfoundation.org/open-source-summit-europe/>
+  - Amsterdam, CFP here: <https://events.linuxfoundation.org/open-source-summit-europe/program/cfp/>
   - CFP closes April 14
   - See if we can get space content (There has been more EU space topics in the past and may have opportunity for future talks at this event.)
 - TBD 10/31/2025, Drone+Space Community Meetup @ KAU (Korea Aerospace University) Ramon & Dongshik Host
-- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (https://2025.dasconline.org/) (Montreal, Canada)
+- DASC 2025: September 14-18, 2025 44th Digital Avionics Systems Conference (<https://2025.dasconline.org/>) (Montreal, Canada)
 - Dec 11-13: Linux Plumbers Conference 2025, in Tokyo
 - ?? NASA SPARK submissions
 
@@ -148,12 +147,15 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(March 5th, 2025 revision) Whitepaper](../docs/20250305_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Whitepaper on "Survey State of Art...""
 
 Background
+
 - Edits
   - Via online [Overleaf editor](https://www.overleaf.com/) - we have limited licenses so we've shared the pdf link below
   - latex format and editor can generate documents
@@ -167,24 +169,26 @@ Background
   - Challenges
   - Overview
     - closed solutions
-    - RTOS  in Aero
+    - RTOS in Aero
     - Linux in other industries
     - Linux in aero and related considerations
   - Comparison / conclusion / criteria
 - Paper started really focused and restructure started when the group became more diverse with standards and concerns
   - Suggestion in this call was to consider adjusting the standards language to not just focus on DO-178C but consider NASA / MIL guidance.
 - Gaps
-  - State of the art - how far back (e.g., Perseverance rover backshell camera control but thats older) - Yes
+  - State of the art - how far back (e.g., Perseverance rover backshell camera control but that's older) - Yes
   - Mention of Phone SATs
-  - SWL vs class levels mapped to examples  (human factor vs reliability)
-      - Cross roads example could be Touch controls on Dragon
+  - SWL vs class levels mapped to examples (human factor vs reliability)
+    - Cross roads example could be Touch controls on Dragon
 
 [Worked on Abstract](../docs/20250417_ELISA_AeroWG_Whitepaper.pdf) today
 
 **Open actions**
+
 - Martin/Ivan/Matt - Update sections of the abstract as tagged
 
 ---
+
 ---
 
 # Closing

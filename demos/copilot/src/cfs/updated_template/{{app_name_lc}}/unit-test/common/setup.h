@@ -38,8 +38,8 @@
 #include "common_types.h"
 
 #include "utassert.h"
-#include "uttest.h"
 #include "utstubs.h"
+#include "uttest.h"
 
 void Sample_UT_Setup(void);
 void Sample_UT_TearDown(void);

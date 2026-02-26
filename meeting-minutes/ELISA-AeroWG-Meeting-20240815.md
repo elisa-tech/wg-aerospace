@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -83,12 +83,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Upcoming Events
 
@@ -117,7 +116,9 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Old Business
@@ -130,8 +131,9 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
   - Could also target feature surveys later to NASA/ESA
 
 Updates from Michael
+
 - NASA funded to work on a base Yocto distro this fall
-  - Basic configuration running Core Flight software framework @ Goddard - https://github.com/nasa/cFS
+  - Basic configuration running Core Flight software framework @ Goddard - <https://github.com/nasa/cFS>
     - cFS has a contributor model and agreements on Github
   - Porting some CF apps to support Linux (Apps target workstation to embedded and OS agnostic)
   - Surveying internal groups for CF expansion (kernel logging, container runtime, update approach, flash mgmt)
@@ -145,40 +147,46 @@ Updates from Michael
 - Michael is going to share survey updates with the group **(ACTION)**
 
 Plans for outreach material
+
 - Michael's ppt could expand on
 - Blurb to share with other groups - vision? & survey
-- Landing page on ELISA webpage and update conversation to match under https://lists.elisa.tech/g/space-grade-linux **(ACTION)** Kate/Matt/Michael/Ramon - sort out details
+- Landing page on ELISA webpage and update conversation to match under <https://lists.elisa.tech/g/space-grade-linux> **(ACTION)** Kate/Matt/Michael/Ramon - sort out details
 
-Tim attended Linux4Space call - https://gitlab.com/linux4space  (https://linux4space.org/)
+Tim attended Linux4Space call - <https://gitlab.com/linux4space> (<https://linux4space.org/>)
+
 - meta layer for distro (not doing a full distro)
   - cubesat focused
-  - libcsp - https://github.com/libcsp/libcsp
+  - libcsp - <https://github.com/libcsp/libcsp>
 
-Libre Space Foundation - https://libre.space/ + https://www.facebook.com/librespacefoundation
+Libre Space Foundation - <https://libre.space/> + <https://www.facebook.com/librespacefoundation>
 
-Space Operating Linux - https://github.com/SOL-Space-Operating-Linux/meta-sol  (CH mentioned)
+Space Operating Linux - <https://github.com/SOL-Space-Operating-Linux/meta-sol> (CH mentioned)
+
 - Ideally pulled into part of SGL
 
-Space-ros - https://github.com/space-ros/space-ros
+Space-ros - <https://github.com/space-ros/space-ros>
 
-Fprime - https://nasa.github.io/fprime/
+Fprime - <https://nasa.github.io/fprime/>
 
 Space hardware
-- Jetson cubesat - https://github.com/antmicro/jetson-orin-baseboard
-  - (https://designer.antmicro.com/welcome)
-  - virtual hardware - https://designer.antmicro.com/projects/cubesat_edge_computing_system
-- Simluation options?  (AeroWG had targeted this first in our use case)
 
-Discussion around benefits of getting layers organized between parts of the stack. (Trying to identify to get feedback on layers as part of the survey.  i.e. which libs and frameworks.)
+- Jetson cubesat - <https://github.com/antmicro/jetson-orin-baseboard>
+  - (<https://designer.antmicro.com/welcome>)
+  - virtual hardware - <https://designer.antmicro.com/projects/cubesat_edge_computing_system>
+- Simluation options? (AeroWG had targeted this first in our use case)
+
+Discussion around benefits of getting layers organized between parts of the stack. (Trying to identify to get feedback on layers as part of the survey. i.e. which libs and frameworks.)
 
 ESA
+
 - LEON4(sparc) processor support for Linux with RTpatch - bsp/hw focused
   - Working towards next gen L5 riscV
 - Ivan is willing to share survey around within the organization
 
-Where / How do we document the best practice for applying a practice and sharing guidance?  reference impl, emulations, etc
+Where / How do we document the best practice for applying a practice and sharing guidance? reference impl, emulations, etc
 
 Next time
+
 - Share survey and then send out
 - Review landing page content
 
@@ -194,6 +202,7 @@ Continue the discussion series, now in a separate document:
 [Collaboration doc](https://annuel2.framapad.org/p/xu58a5s8qj-elisa-aerowg-a8x2?lang=en)
 
 ---
+
 ---
 
 # Closing
@@ -203,4 +212,3 @@ Continue the discussion series, now in a separate document:
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-

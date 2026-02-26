@@ -26,9 +26,9 @@
  * This is a compatibility header for the "lights_app_msg.h" file that has
  * traditionally provided the message definitions for cFS apps.
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
 #ifndef LIGHTS_APP_MSG_H
 #define LIGHTS_APP_MSG_H

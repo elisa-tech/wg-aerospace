@@ -26,13 +26,13 @@
  *   Constants and enumerated types related to these table structures
  *   are defined in {{app_name_lc}}_tbldefs.h.
  */
-#ifndef {{app_name_uc}}_TBL_H
-#define {{app_name_uc}}_TBL_H
+#ifndef{{app_name_uc } } _TBL_H
+#define{{app_name_uc } } _TBL_H
 
 #include "{{app_name_lc}}_tbldefs.h"
 #include "{{app_name_lc}}_tblstruct.h"
 
 /* Define filenames of default data images for tables */
-#define {{app_name_uc}}_TABLE_FILE "/cf/{{app_name_lc}}_tbl.tbl"
+#define{{app_name_uc } } _TABLE_FILE "/cf/{{app_name_lc}}_tbl.tbl"
 
 #endif

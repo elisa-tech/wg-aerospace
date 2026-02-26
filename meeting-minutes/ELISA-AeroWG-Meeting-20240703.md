@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -75,12 +75,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Upcoming Events
 
@@ -96,7 +95,9 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Old Business
@@ -104,40 +105,40 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 - Space Grade Linux action - Contacted Monaghan, Michael L. (GSFC-5870) <michael.l.monaghan@nasa.gov> to work on agenda and topics
   - Tentatively planning to have the first Aug WG session Space focused
 
-- Do we need to introduce a dictionary? One example of a question that was raised:   Is this covered in another WG?
+- Do we need to introduce a dictionary? One example of a question that was raised: Is this covered in another WG?
   - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
-    - 1) Multiple PCI devices SATA, USB, network etc.
-    - 2) PCI devices with multiple functions, root bridge can have multiple functions
-    - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+    - 1. Multiple PCI devices SATA, USB, network etc.
+    - 2. PCI devices with multiple functions, root bridge can have multiple functions
+    - 3. System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
   - Tend to a common understanding of 3)
-  - [MB] data dict used as a alignment tool between development teams (i.e. header generation).  Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
+  - [MB] data dict used as a alignment tool between development teams (i.e. header generation). Also referenced as a glossary. (logical names / themes to expand on to code artifacts)
   - ACTION: Need to check with Martin. [IP] maybe the goal was term alignment as multiple teams have a different perspective.
   - ACTION: Move to Use case [Next steps](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
-- (ToDo) Check with Min/Kate for Automotive's approach for previous use cases.  "What is the feedback approach / rollout for the use cases?  Audience?"
+- (ToDo) Check with Min/Kate for Automotive's approach for previous use cases. "What is the feedback approach / rollout for the use cases? Audience?"
 
-- (ToDo) Use the mailing list to build a list of questions for a survey.  Questions would cover topics like what distro / Linux approach they are using and how they use it, compose it, and cfg they depend on, etc. - Used to drive our next use case and timeline.
+- (ToDo) Use the mailing list to build a list of questions for a survey. Questions would cover topics like what distro / Linux approach they are using and how they use it, compose it, and cfg they depend on, etc. - Used to drive our next use case and timeline.
 
 ## Linux Features for Safety-Critical Systems (LFSCS)
-- Tiny Kernel and QEMU target - https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240611.md
-- Link to Arch WG minutes & Minimal Application - https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240625.md
+
+- Tiny Kernel and QEMU target - <https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240611.md>
+- Link to Arch WG minutes & Minimal Application - <https://github.com/elisa-tech/wg-lfscs/blob/main/lfscs-meetings/20240625.md>
 
 [SV] Definitely overlapping goals and a converged focus helps sustain the features needed collectively.
 
-[CW] Application of safety eng against a subset.  
+[CW] Application of safety eng against a subset.
 
 ACTION: How is the topic space being constrained (component/subsystem driven?)
 
-ACTION:  Can LFSCS present on the minimal kernel and emulation?  (Building a conversation towards "Could this be used for targeting our use case?")
-
+ACTION: Can LFSCS present on the minimal kernel and emulation? (Building a conversation towards "Could this be used for targeting our use case?")
 
 ## Discussion on Features for Aerospace
 
 Continue the discussion series, now in a separate document:
 [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
-
 ---
+
 ---
 
 # Closing
@@ -147,4 +148,3 @@ Continue the discussion series, now in a separate document:
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-

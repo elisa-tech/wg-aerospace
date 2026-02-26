@@ -4,8 +4,9 @@ import os
 import glob
 import sys
 
+
 def extract_attendance(file_path):
-    with open(file_path, 'r') as file:
+    with open(file_path, "r") as file:
         in_attendance_section = False
         attendees = set()
         for line in file:
@@ -18,6 +19,7 @@ def extract_attendance(file_path):
                 name = line.strip().split(" - ")[0].strip()
                 attendees.add(name)
         return attendees
+
 
 def main(year):
     unique_attendees = set()
@@ -32,6 +34,7 @@ def main(year):
             print(attendee)
     else:
         print("No attendance data found.")
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
