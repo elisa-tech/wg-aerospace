@@ -14,8 +14,64 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 
-- Is it worth building our stuff on RISC-v / polarfire for the demo? Could show a bridge to HPSC
-  - <https://www.qemu.org/docs/master/system/riscv/microchip-icicle-kit.html>
+## 20260306
+
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Ivan Perez (KBR @ NASA ARC)
+- Ivan Rodriguez (Coros Space)
+- Brian Wood (Boeing)
+- Wanja Zaeske (German Aerospace Center, DLR)
+
+**Discussion topics**
+
+Merged PRs
+
+- Securing per email from LXF - https://github.com/elisa-tech/wg-aerospace/pull/155
+  - Fix bug this created with test results - https://github.com/elisa-tech/wg-aerospace/pull/156
+  - [Security Advisory details](https://github.com/elisa-tech/wg-aerospace/issues/160)
+  - Security bump super-linter - https://github.com/elisa-tech/wg-aerospace/pull/154
+- Lint clean up - https://github.com/elisa-tech/wg-aerospace/pull/149
+  - Added lint rules to Contributing - https://github.com/elisa-tech/wg-aerospace/blob/main/Contributing.md#style-guide
+  - Set to fail but excluded a few folders - https://github.com/elisa-tech/wg-aerospace/blob/main/.github/super-linter.env#L4
+
+Open PRs - https://github.com/elisa-tech/wg-aerospace/pulls
+
+- Wanja - https://github.com/elisa-tech/wg-aerospace/pull/150
+  - Github CI action caching - rate limited, falls back to full build
+  - Background on options - https://github.com/elisa-tech/wg-aerospace/pull/150#issuecomment-3997840436
+  - ACTION: Option3 - Setting up https://www.cachix.org/  - Weber has set the token
+
+Ivan
+
+- Lunar missions with Linux and Rust
+- ACTION: Checking on getting more information and mission name + kernel config
+- https://erau.edu/eaglecam
+
+Martin
+
+- still in Nix debug, had to reset env
+- live walked through the build and working out gaps in docs plus ARM64 has the host system
+
+**Items we have open but not discussed**
+
+Presentation on QEMU (Future call - Leonidas)
+
+Minimal kernel - <https://github.com/elisa-tech/wg-aerospace/issues/139>
+
+Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
+
+Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
+
+Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
+
+Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+
+---
 
 ## 20260227
 
