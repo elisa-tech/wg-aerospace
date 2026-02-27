@@ -7,6 +7,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 ## Build
 
 OS buildsystem
+
 ```
 Clone
 Cross build OS.....
@@ -28,6 +29,7 @@ cd wg-aerospace/demos/copilot
 ## Launch
 
 Logical steps
+
 - Setup emulation parts , run example
   - Do we want to draw a mermaid diagram and have copilot auto gen the monitor?
 - Example modifying kernel config (run for consistent results)
@@ -36,7 +38,8 @@ Logical steps
 - Modify system to prove spec/monitor tailoring captures intended behavior
 
 Launch sequence (raw frames)
-  1) TBD, need to work out emulation and more details of networking....
+
+1. TBD, need to work out emulation and more details of networking....
 
 ```
 call sequence....

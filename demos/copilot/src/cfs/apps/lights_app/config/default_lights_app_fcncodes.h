@@ -37,9 +37,9 @@
 /*
 ** Sample App command codes
 */
-#define LIGHTS_APP_NOOP_CC           0
+#define LIGHTS_APP_NOOP_CC 0
 #define LIGHTS_APP_RESET_COUNTERS_CC 1
-#define LIGHTS_APP_PROCESS_CC        2
-#define LIGHTS_APP_DISPLAY_PARAM_CC  3
+#define LIGHTS_APP_PROCESS_CC 2
+#define LIGHTS_APP_DISPLAY_PARAM_CC 3
 
 #endif

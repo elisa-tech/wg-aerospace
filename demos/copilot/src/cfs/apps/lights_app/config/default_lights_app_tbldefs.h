@@ -38,10 +38,9 @@
 /*
 ** Example Table structure
 */
-typedef struct
-{
-    uint16 Int1;
-    uint16 Int2;
+typedef struct {
+  uint16 Int1;
+  uint16 Int2;
 } LIGHTS_APP_ExampleTable_t;
 
 #endif

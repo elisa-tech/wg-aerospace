@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in lights_app_dispatch header
+ * Auto-Generated stub implementations for functions defined in
+ * lights_app_dispatch header
  */
 
 #include "lights_app_dispatch.h"
@@ -32,11 +33,11 @@
  * Generated stub function for LIGHTS_APP_ProcessGroundCommand()
  * ----------------------------------------------------
  */
-void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam(LIGHTS_APP_ProcessGroundCommand, const CFE_SB_Buffer_t *, SBBufPtr);
+void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(LIGHTS_APP_ProcessGroundCommand, const CFE_SB_Buffer_t *,
+                      SBBufPtr);
 
-    UT_GenStub_Execute(LIGHTS_APP_ProcessGroundCommand, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_ProcessGroundCommand, Basic, NULL);
 }
 
 /*
@@ -44,11 +45,10 @@ void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for LIGHTS_APP_TaskPipe()
  * ----------------------------------------------------
  */
-void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam(LIGHTS_APP_TaskPipe, const CFE_SB_Buffer_t *, SBBufPtr);
+void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(LIGHTS_APP_TaskPipe, const CFE_SB_Buffer_t *, SBBufPtr);
 
-    UT_GenStub_Execute(LIGHTS_APP_TaskPipe, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_TaskPipe, Basic, NULL);
 }
 
 /*
@@ -56,14 +56,15 @@ void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for LIGHTS_APP_VerifyCmdLength()
  * ----------------------------------------------------
  */
-bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_VerifyCmdLength, bool);
+bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr,
+                                size_t ExpectedLength) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_VerifyCmdLength, bool);
 
-    UT_GenStub_AddParam(LIGHTS_APP_VerifyCmdLength, const CFE_MSG_Message_t *, MsgPtr);
-    UT_GenStub_AddParam(LIGHTS_APP_VerifyCmdLength, size_t, ExpectedLength);
+  UT_GenStub_AddParam(LIGHTS_APP_VerifyCmdLength, const CFE_MSG_Message_t *,
+                      MsgPtr);
+  UT_GenStub_AddParam(LIGHTS_APP_VerifyCmdLength, size_t, ExpectedLength);
 
-    UT_GenStub_Execute(LIGHTS_APP_VerifyCmdLength, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_VerifyCmdLength, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_VerifyCmdLength, bool);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_VerifyCmdLength, bool);
 }

@@ -27,8 +27,8 @@
  *   macro definitions.  Other definitions such as enums, typedefs, or other
  *   macros should be placed in the msgdefs.h or msg.h files.
  */
-#ifndef {{app_name_uc}}_FCNCODES_H
-#define {{app_name_uc}}_FCNCODES_H
+#ifndef{{app_name_uc } } _FCNCODES_H
+#define{{app_name_uc } } _FCNCODES_H
 
 /************************************************************************
  * Macro Definitions
@@ -37,9 +37,9 @@
 /*
 ** {{app_name_txt}} App command codes
 */
-#define {{app_name_uc}}_NOOP_CC           0
-#define {{app_name_uc}}_RESET_COUNTERS_CC 1
-#define {{app_name_uc}}_PROCESS_CC        2
-#define {{app_name_uc}}_DISPLAY_PARAM_CC  3
+#define{{app_name_uc } } _NOOP_CC 0
+#define{{app_name_uc } } _RESET_COUNTERS_CC 1
+#define{{app_name_uc } } _PROCESS_CC 2
+#define{{app_name_uc } } _DISPLAY_PARAM_CC 3
 
 #endif

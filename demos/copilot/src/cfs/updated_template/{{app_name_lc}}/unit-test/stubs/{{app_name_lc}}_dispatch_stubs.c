@@ -21,22 +21,39 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in {{app_name_lc}}_dispatch header
+ * Auto-Generated stub implementations for functions defined in
+ * {{app_name_lc}}_dispatch header
  */
 
-#include "{{app_name_lc}}_dispatch.h"
 #include "utgenstub.h"
+#include "{{app_name_lc}}_dispatch.h"
 
 /*
  * ----------------------------------------------------
  * Generated stub function for {{app_name_uc}}_ProcessGroundCommand()
  * ----------------------------------------------------
  */
-void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam({{app_name_uc}}_ProcessGroundCommand, const CFE_SB_Buffer_t *, SBBufPtr);
+void {
+  {
+    app_name_uc
+  }
+}
+_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessGroundCommand,
+      const CFE_SB_Buffer_t *, SBBufPtr);
 
-    UT_GenStub_Execute({{app_name_uc}}_ProcessGroundCommand, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessGroundCommand,
+      Basic, NULL);
 }
 
 /*
@@ -44,11 +61,27 @@ void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for {{app_name_uc}}_TaskPipe()
  * ----------------------------------------------------
  */
-void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam({{app_name_uc}}_TaskPipe, const CFE_SB_Buffer_t *, SBBufPtr);
+void {
+  {
+    app_name_uc
+  }
+}
+_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _TaskPipe,
+      const CFE_SB_Buffer_t *, SBBufPtr);
 
-    UT_GenStub_Execute({{app_name_uc}}_TaskPipe, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _TaskPipe,
+      Basic, NULL);
 }
 
 /*
@@ -56,14 +89,48 @@ void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for {{app_name_uc}}_VerifyCmdLength()
  * ----------------------------------------------------
  */
-bool {{app_name_uc}}_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_VerifyCmdLength, bool);
+bool {
+  {
+    app_name_uc
+  }
+}
+_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _VerifyCmdLength,
+      bool);
 
-    UT_GenStub_AddParam({{app_name_uc}}_VerifyCmdLength, const CFE_MSG_Message_t *, MsgPtr);
-    UT_GenStub_AddParam({{app_name_uc}}_VerifyCmdLength, size_t, ExpectedLength);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _VerifyCmdLength,
+      const CFE_MSG_Message_t *, MsgPtr);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _VerifyCmdLength,
+      size_t, ExpectedLength);
 
-    UT_GenStub_Execute({{app_name_uc}}_VerifyCmdLength, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _VerifyCmdLength,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_VerifyCmdLength, bool);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _VerifyCmdLength,
+      bool);
 }

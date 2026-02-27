@@ -35,7 +35,8 @@
 
 void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr);
 void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr);
-bool SWITCH_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
+bool SWITCH_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr,
+                                size_t ExpectedLength);
 
 void GROUND_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr);
 

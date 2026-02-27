@@ -26,14 +26,14 @@
 /*
 ** Include Files:
 */
-#include <time.h>
-#include "lights_app.h"
 #include "lights_app_dispatch.h"
+#include "extra.h"
+#include "lights_app.h"
 #include "lights_app_cmds.h"
 #include "lights_app_eventids.h"
-#include "lights_app_msgids.h"
 #include "lights_app_msg.h"
-#include "extra.h"
+#include "lights_app_msgids.h"
+#include <time.h>
 
 struct timespec delay = {0, 400000000}; // 400 ms.
 
@@ -44,34 +44,34 @@ lights_status_t lights_message;
 /* Verify command packet length                                               */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
-{
-    bool              result       = true;
-    size_t            ActualLength = 0;
-    CFE_SB_MsgId_t    MsgId        = CFE_SB_INVALID_MSG_ID;
-    CFE_MSG_FcnCode_t FcnCode      = 0;
+bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr,
+                                size_t ExpectedLength) {
+  bool result = true;
+  size_t ActualLength = 0;
+  CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
+  CFE_MSG_FcnCode_t FcnCode = 0;
 
-    CFE_MSG_GetSize(MsgPtr, &ActualLength);
+  CFE_MSG_GetSize(MsgPtr, &ActualLength);
 
-    /*
-    ** Verify the command packet length.
-    */
-    if (ExpectedLength != ActualLength)
-    {
-        CFE_MSG_GetMsgId(MsgPtr, &MsgId);
-        CFE_MSG_GetFcnCode(MsgPtr, &FcnCode);
+  /*
+  ** Verify the command packet length.
+  */
+  if (ExpectedLength != ActualLength) {
+    CFE_MSG_GetMsgId(MsgPtr, &MsgId);
+    CFE_MSG_GetFcnCode(MsgPtr, &FcnCode);
 
-        CFE_EVS_SendEvent(LIGHTS_APP_CMD_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
-                          "Invalid Msg length: ID = 0x%X,  CC = %u, Len = %u, Expected = %u",
-                          (unsigned int)CFE_SB_MsgIdToValue(MsgId), (unsigned int)FcnCode, (unsigned int)ActualLength,
-                          (unsigned int)ExpectedLength);
+    CFE_EVS_SendEvent(
+        LIGHTS_APP_CMD_LEN_ERR_EID, CFE_EVS_EventType_ERROR,
+        "Invalid Msg length: ID = 0x%X,  CC = %u, Len = %u, Expected = %u",
+        (unsigned int)CFE_SB_MsgIdToValue(MsgId), (unsigned int)FcnCode,
+        (unsigned int)ActualLength, (unsigned int)ExpectedLength);
 
-        result = false;
+    result = false;
 
-        LIGHTS_APP_Data.ErrCounter++;
-    }
+    LIGHTS_APP_Data.ErrCounter++;
+  }
 
-    return result;
+  return result;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -79,51 +79,51 @@ bool LIGHTS_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t Expected
 /* SAMPLE ground commands                                                     */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    CFE_MSG_FcnCode_t CommandCode = 0;
+void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  CFE_MSG_FcnCode_t CommandCode = 0;
 
-    CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
+  CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
 
-    /*
-    ** Process SAMPLE app ground commands
-    */
-    switch (CommandCode)
-    {
-        case LIGHTS_APP_NOOP_CC:
-            if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg, sizeof(LIGHTS_APP_NoopCmd_t)))
-            {
-                LIGHTS_APP_NoopCmd((const LIGHTS_APP_NoopCmd_t *)SBBufPtr);
-            }
-            break;
-
-        case LIGHTS_APP_RESET_COUNTERS_CC:
-            if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg, sizeof(LIGHTS_APP_ResetCountersCmd_t)))
-            {
-                LIGHTS_APP_ResetCountersCmd((const LIGHTS_APP_ResetCountersCmd_t *)SBBufPtr);
-            }
-            break;
-
-        case LIGHTS_APP_PROCESS_CC:
-            if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg, sizeof(LIGHTS_APP_ProcessCmd_t)))
-            {
-                LIGHTS_APP_ProcessCmd((const LIGHTS_APP_ProcessCmd_t *)SBBufPtr);
-            }
-            break;
-
-        case LIGHTS_APP_DISPLAY_PARAM_CC:
-            if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg, sizeof(LIGHTS_APP_DisplayParamCmd_t)))
-            {
-                LIGHTS_APP_DisplayParamCmd((const LIGHTS_APP_DisplayParamCmd_t *)SBBufPtr);
-            }
-            break;
-
-        /* default case already found during FC vs length test */
-        default:
-            CFE_EVS_SendEvent(LIGHTS_APP_CC_ERR_EID, CFE_EVS_EventType_ERROR, "Invalid ground command code: CC = %d",
-                              CommandCode);
-            break;
+  /*
+  ** Process SAMPLE app ground commands
+  */
+  switch (CommandCode) {
+  case LIGHTS_APP_NOOP_CC:
+    if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg,
+                                   sizeof(LIGHTS_APP_NoopCmd_t))) {
+      LIGHTS_APP_NoopCmd((const LIGHTS_APP_NoopCmd_t *)SBBufPtr);
     }
+    break;
+
+  case LIGHTS_APP_RESET_COUNTERS_CC:
+    if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg,
+                                   sizeof(LIGHTS_APP_ResetCountersCmd_t))) {
+      LIGHTS_APP_ResetCountersCmd(
+          (const LIGHTS_APP_ResetCountersCmd_t *)SBBufPtr);
+    }
+    break;
+
+  case LIGHTS_APP_PROCESS_CC:
+    if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg,
+                                   sizeof(LIGHTS_APP_ProcessCmd_t))) {
+      LIGHTS_APP_ProcessCmd((const LIGHTS_APP_ProcessCmd_t *)SBBufPtr);
+    }
+    break;
+
+  case LIGHTS_APP_DISPLAY_PARAM_CC:
+    if (LIGHTS_APP_VerifyCmdLength(&SBBufPtr->Msg,
+                                   sizeof(LIGHTS_APP_DisplayParamCmd_t))) {
+      LIGHTS_APP_DisplayParamCmd(
+          (const LIGHTS_APP_DisplayParamCmd_t *)SBBufPtr);
+    }
+    break;
+
+  /* default case already found during FC vs length test */
+  default:
+    CFE_EVS_SendEvent(LIGHTS_APP_CC_ERR_EID, CFE_EVS_EventType_ERROR,
+                      "Invalid ground command code: CC = %d", CommandCode);
+    break;
+  }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -133,66 +133,63 @@ void LIGHTS_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
 /*     command pipe.                                                          */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
+void LIGHTS_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr) {
+  CFE_SB_MsgId_t MsgId = CFE_SB_INVALID_MSG_ID;
 
-    CFE_MSG_GetMsgId(&SBBufPtr->Msg, &MsgId);
+  CFE_MSG_GetMsgId(&SBBufPtr->Msg, &MsgId);
 
-    switch (CFE_SB_MsgIdToValue(MsgId))
-    {
-        case LIGHTS_APP_CMD_MID:
-            LIGHTS_APP_ProcessGroundCommand(SBBufPtr);
-            break;
+  switch (CFE_SB_MsgIdToValue(MsgId)) {
+  case LIGHTS_APP_CMD_MID:
+    LIGHTS_APP_ProcessGroundCommand(SBBufPtr);
+    break;
 
-        case LIGHTS_APP_SEND_HK_MID:
-            LIGHTS_APP_SendHkCmd((const LIGHTS_APP_SendHkCmd_t *)SBBufPtr);
-            break;
+  case LIGHTS_APP_SEND_HK_MID:
+    LIGHTS_APP_SendHkCmd((const LIGHTS_APP_SendHkCmd_t *)SBBufPtr);
+    break;
 
-        case LIGHTS_COMMAND:
-            LIGHTS_APP_ProcessLightsCommand(SBBufPtr);
-            break;
+  case LIGHTS_COMMAND:
+    LIGHTS_APP_ProcessLightsCommand(SBBufPtr);
+    break;
 
-        case LIGHTS_ADJUST_COMMAND:
-            LIGHTS_APP_ProcessLightsAdjustCommand(SBBufPtr);
-            break;
+  case LIGHTS_ADJUST_COMMAND:
+    LIGHTS_APP_ProcessLightsAdjustCommand(SBBufPtr);
+    break;
 
-        default:
-            CFE_EVS_SendEvent(LIGHTS_APP_MID_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
-            break;
-    }
+  default:
+    CFE_EVS_SendEvent(LIGHTS_APP_MID_ERR_EID, CFE_EVS_EventType_ERROR,
+                      "SAMPLE: invalid command packet,MID = 0x%x",
+                      (unsigned int)CFE_SB_MsgIdToValue(MsgId));
+    break;
+  }
 }
 
 /**
  * Make received data available to Copilot and run monitors.
  */
-void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    nanosleep(&delay, NULL);   // Wait fixed time to send message
+void LIGHTS_APP_ProcessLightsCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  nanosleep(&delay, NULL); // Wait fixed time to send message
 
-    lights_cmd_t* msg;
-    msg = (lights_cmd_t*) (&SBBufPtr->Msg);
+  lights_cmd_t *msg;
+  msg = (lights_cmd_t *)(&SBBufPtr->Msg);
 
-    CFE_MSG_Init(CFE_MSG_PTR(lights_message.TelemetryHeader), CFE_SB_ValueToMsgId(LIGHTS_STATUS),
-                 sizeof(lights_message));
+  CFE_MSG_Init(CFE_MSG_PTR(lights_message.TelemetryHeader),
+               CFE_SB_ValueToMsgId(LIGHTS_STATUS), sizeof(lights_message));
 
-    CFE_SB_TimeStampMsg(CFE_MSG_PTR(lights_message.TelemetryHeader));
-    lights_message.payload = msg->payload;
+  CFE_SB_TimeStampMsg(CFE_MSG_PTR(lights_message.TelemetryHeader));
+  lights_message.payload = msg->payload;
 
-    CFE_SB_TransmitMsg((CFE_MSG_Message_t *)&lights_message, true);
+  CFE_SB_TransmitMsg((CFE_MSG_Message_t *)&lights_message, true);
 }
 
 /**
  * Adjust delay introduced before actually adjusting the lights.
  */
-void LIGHTS_APP_ProcessLightsAdjustCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    lights_adjust_cmd_t* msg;
-    msg = (lights_adjust_cmd_t*) (&SBBufPtr->Msg);
+void LIGHTS_APP_ProcessLightsAdjustCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  lights_adjust_cmd_t *msg;
+  msg = (lights_adjust_cmd_t *)(&SBBufPtr->Msg);
 
-    delay.tv_nsec = msg->delay;
+  delay.tv_nsec = msg->delay;
 
-    CFE_EVS_SendEvent(LIGHTS_APP_NEW_DELAY_EID, CFE_EVS_EventType_INFORMATION,
-                      "LIGHTS: updated delay to %ld nanosec", delay.tv_nsec);
+  CFE_EVS_SendEvent(LIGHTS_APP_NEW_DELAY_EID, CFE_EVS_EventType_INFORMATION,
+                    "LIGHTS: updated delay to %ld nanosec", delay.tv_nsec);
 }

@@ -24,7 +24,7 @@ The [switch_app CodeQL GitHub Actions workflow](https://github.com/nasa/switch_a
 
 CodeQL is ran for every push and pull-request on all branches of switch_app in GitHub Actions.
 
-For the CodeQL GitHub Actions setup, visit https://github.com/github/codeql-action.
+For the CodeQL GitHub Actions setup, visit <https://github.com/github/codeql-action>.
 
 ### Cppcheck
 
@@ -32,12 +32,12 @@ The [switch_app Cppcheck GitHub Actions workflow and results](https://github.com
 
 Cppcheck is ran for every push on the main branch and every pull request on all branches of switch_app in Github Actions.
 
-For more information about Cppcheck, visit http://cppcheck.sourceforge.net/.
+For more information about Cppcheck, visit <http://cppcheck.sourceforge.net/>.
 
 ## Additional Support
 
-For additional support, submit a GitHub issue. You can also email the cfs community at cfs-community@lists.nasa.gov.
+For additional support, submit a GitHub issue. You can also email the cfs community at <cfs-community@lists.nasa.gov>.
 
 You can subscribe to the mailing list [here](https://lists.nasa.gov/mailman/listinfo/cfs-community) that includes all the community members/users of the NASA core Flight Software (cFS) product line. The mailing list is used to communicate any information related to the cFS product such as current releases, bug findings and fixes, enhancement requests, community meeting notifications, sending out meeting minutes, etc.
 
-If you wish to report a cybersecurity incident or concern, please contact the NASA Security Operations Center either by phone at 1-877-627-2732 or via email address soc@nasa.gov.
+If you wish to report a cybersecurity incident or concern, please contact the NASA Security Operations Center either by phone at 1-877-627-2732 or via email address <soc@nasa.gov>.

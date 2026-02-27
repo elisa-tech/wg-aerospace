@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in lights_app_cmds header
+ * Auto-Generated stub implementations for functions defined in lights_app_cmds
+ * header
  */
 
 #include "lights_app_cmds.h"
@@ -32,15 +33,16 @@
  * Generated stub function for LIGHTS_APP_DisplayParamCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_DisplayParamCmd, CFE_Status_t);
+CFE_Status_t
+LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_DisplayParamCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_DisplayParamCmd, const LIGHTS_APP_DisplayParamCmd_t *, Msg);
+  UT_GenStub_AddParam(LIGHTS_APP_DisplayParamCmd,
+                      const LIGHTS_APP_DisplayParamCmd_t *, Msg);
 
-    UT_GenStub_Execute(LIGHTS_APP_DisplayParamCmd, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_DisplayParamCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_DisplayParamCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_DisplayParamCmd, CFE_Status_t);
 }
 
 /*
@@ -48,15 +50,14 @@ CFE_Status_t LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg)
  * Generated stub function for LIGHTS_APP_NoopCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_NoopCmd, CFE_Status_t);
+CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_NoopCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_NoopCmd, const LIGHTS_APP_NoopCmd_t *, Msg);
+  UT_GenStub_AddParam(LIGHTS_APP_NoopCmd, const LIGHTS_APP_NoopCmd_t *, Msg);
 
-    UT_GenStub_Execute(LIGHTS_APP_NoopCmd, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_NoopCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_NoopCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_NoopCmd, CFE_Status_t);
 }
 
 /*
@@ -64,15 +65,15 @@ CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg)
  * Generated stub function for LIGHTS_APP_ProcessCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_ProcessCmd, CFE_Status_t);
+CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_ProcessCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_ProcessCmd, const LIGHTS_APP_ProcessCmd_t *, Msg);
+  UT_GenStub_AddParam(LIGHTS_APP_ProcessCmd, const LIGHTS_APP_ProcessCmd_t *,
+                      Msg);
 
-    UT_GenStub_Execute(LIGHTS_APP_ProcessCmd, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_ProcessCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_ProcessCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_ProcessCmd, CFE_Status_t);
 }
 
 /*
@@ -80,15 +81,16 @@ CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg)
  * Generated stub function for LIGHTS_APP_ResetCountersCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_ResetCountersCmd, CFE_Status_t);
+CFE_Status_t
+LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_ResetCountersCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_ResetCountersCmd, const LIGHTS_APP_ResetCountersCmd_t *, Msg);
+  UT_GenStub_AddParam(LIGHTS_APP_ResetCountersCmd,
+                      const LIGHTS_APP_ResetCountersCmd_t *, Msg);
 
-    UT_GenStub_Execute(LIGHTS_APP_ResetCountersCmd, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_ResetCountersCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_ResetCountersCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_ResetCountersCmd, CFE_Status_t);
 }
 
 /*
@@ -96,13 +98,13 @@ CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Ms
  * Generated stub function for LIGHTS_APP_SendHkCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_SendHkCmd, CFE_Status_t);
+CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_SendHkCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(LIGHTS_APP_SendHkCmd, const LIGHTS_APP_SendHkCmd_t *, Msg);
+  UT_GenStub_AddParam(LIGHTS_APP_SendHkCmd, const LIGHTS_APP_SendHkCmd_t *,
+                      Msg);
 
-    UT_GenStub_Execute(LIGHTS_APP_SendHkCmd, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_SendHkCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_SendHkCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_SendHkCmd, CFE_Status_t);
 }

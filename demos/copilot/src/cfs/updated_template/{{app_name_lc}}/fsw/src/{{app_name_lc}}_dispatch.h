@@ -24,8 +24,8 @@
  * Main header file for the {{app_name_short}} application
  */
 
-#ifndef {{app_name_uc}}_DISPATCH_H
-#define {{app_name_uc}}_DISPATCH_H
+#ifndef{{app_name_uc } } _DISPATCH_H
+#define{{app_name_uc } } _DISPATCH_H
 
 /*
 ** Required header files.
@@ -33,21 +33,72 @@
 #include "cfe.h"
 #include "{{app_name_lc}}_msg.h"
 
-void {{app_name_uc}}_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr);
-void {{app_name_uc}}_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr);
-bool {{app_name_uc}}_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
+void {
+  {
+    app_name_uc
+  }
+}
+_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr);
+void {
+  {
+    app_name_uc
+  }
+}
+_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr);
+bool {
+  {
+    app_name_uc
+  }
+}
+_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength);
 
-{{#msgHandlers}}
+{
+  {
+#msgHandlers
+  }
+}
 void COPILOT_Process{{msgDataDesc}}(const CFE_SB_Buffer_t *SBBufPtr);
-{{/msgHandlers}}
+{
+  {
+    / msgHandlers
+  }
+}
 
-{{#triggers}}
-{{#triggerType}}
-void {{triggerName}}({{.}} arg);
-{{/triggerType}}
-{{^triggerType}}
-void {{triggerName}}(void);
-{{/triggerType}}
-{{/triggers}}
+{
+  {
+#triggers
+  }
+}
+{
+  {
+#triggerType
+  }
+}
+void{{triggerName}}({
+  {
+    .
+  }
+} arg);
+{
+  {
+    / triggerType
+  }
+}
+{
+  {
+    ^triggerType
+  }
+}
+void{{triggerName}}(void);
+{
+  {
+    / triggerType
+  }
+}
+{
+  {
+    / triggers
+  }
+}
 
 #endif /* {{app_name_uc}}_DISPATCH_H */

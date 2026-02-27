@@ -3,25 +3,27 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+
+- <https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
+
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
-- Automotive Grade Linux SoDev architecture - https://www.automotivelinux.org/announcements/sodev/
+- Automotive Grade Linux SoDev architecture - <https://www.automotivelinux.org/announcements/sodev/>
   - Could outline a comparison with safety levels?
   - Redraw the picture from our view?
   - Retarget a existing demo to the framework
-  - Could start from systemsWG view - https://github.com/elisa-tech/wg-systems/tree/main/Documentation/xen-demo-zcu102
-  - ACTION:  Matt to share a outline on mailing list to drive some discussion in Jan call
+  - Could start from systemsWG view - <https://github.com/elisa-tech/wg-systems/tree/main/Documentation/xen-demo-zcu102>
+  - ACTION: Matt to share a outline on mailing list to drive some discussion in Jan call
 
 ## Requirements for OS used in Use-Cases
 
@@ -34,6 +36,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 ## Interest in ISO26262 vs DO-330 tool certification (presentation in Jan / Feb)?
 
 Feedback
+
 - It would have ties to paper development
 - What about Space certifications/tools?
 - ACTION: Matt will reach out to those that offered to discuss

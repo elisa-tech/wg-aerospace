@@ -9,14 +9,16 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 For more information, contact the working group chair, [Matthew Weber](mailto:matthew.l.weber3@boeing.com) or co-chair [Martin Halle](mailto:martin.halle@tuhh.de).
 
 Further information on specific topics can be found here:
-* [Meeting Minutes](meeting-minutes)
-* [Document / resource register](docs/register.md)
+
+- [Meeting Minutes](meeting-minutes)
+- [Document / resource register](docs/register.md)
 
 ## Schedule
 
 [Register HERE](https://elisa.tech/community/meetings/) for invites.
 
 Monthly meeting schedule - 10-11am CST (UTC-06)
+
 - 1st week - Open slot
 - 2nd week - Aerospace WG (General Call) - [[Minutes]](meeting-minutes)
 - 3rd week - Space Grade Linux - [[Minutes]](https://github.com/elisa-tech/sig-sgl/tree/main/meeting-minutes)
@@ -24,12 +26,12 @@ Monthly meeting schedule - 10-11am CST (UTC-06)
 
 Weekly use case demo development - 9-10am CST (UTC-06) - [[Minutes]](meeting-minutes/ELISA-AeroWG-Usecase-Testing-minutes.md)
 
-
 ## Demonstrations and Reference Designs
 
 To get started, checkout the [Demo(s)](demos/Readme.md).
 
 ## External Links
-* [ELISA Home](https://elisa.tech/)
-* [ELISA Aerospace on GitHub](https://github.com/elisa-tech/wg-aerospace)
-* [ELISA Tech Steering Committee](https://semestriel.framapad.org/p/elisa-tsc-minutes)
+
+- [ELISA Home](https://elisa.tech/)
+- [ELISA Aerospace on GitHub](https://github.com/elisa-tech/wg-aerospace)
+- [ELISA Tech Steering Committee](https://semestriel.framapad.org/p/elisa-tsc-minutes)

@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -120,11 +120,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - "Intro and Consideration of Temporal Partitioning in Avionics"
 - **(Nov 18-19)** ELISA Workshop [Link](https://elisa.tech/event/elisa-workshop-munich-2025/)
   - Proposed sessions (paper ideas, intro to safety rigor/levels w/ examples, demos)
-  - Registration is now also open!  [Link](https://czw--04.na1.hs-sales-engage.com/Ctc/RI+23284/cZw--04/JkM2-6qcW6N1vHY6lZ3mXW8p3-sx1rYFMdW10ST4Y3QSmknW3wHFgK19hk9nW8X5DFJ7qmp-rW4-Xwxc12wZrMW6Gm3hc9h-h8yW6HQ1yt3WZvSPW6PFDGB5H8wlRW5Th7Dk4tlLMMW85bf8V8hnbH-VMdFwK6cKWzbW5V1Ssj8bxY-9VXYLzr33jv2sW33Wjbz2CQhC_W7cVF864W7hVrW8RCJpT6FkSLgW4Tw3v3879vSWN43KBFCqxfM7W41Y-GJ5Z-qrKW8PV0Bb7QDKqmW5KlR0S7PXgbGW3KQ8Y55-YrbCf5cx88004)
+  - Registration is now also open! [Link](https://czw--04.na1.hs-sales-engage.com/Ctc/RI+23284/cZw--04/JkM2-6qcW6N1vHY6lZ3mXW8p3-sx1rYFMdW10ST4Y3QSmknW3wHFgK19hk9nW8X5DFJ7qmp-rW4-Xwxc12wZrMW6Gm3hc9h-h8yW6HQ1yt3WZvSPW6PFDGB5H8wlRW5Th7Dk4tlLMMW85bf8V8hnbH-VMdFwK6cKWzbW5V1Ssj8bxY-9VXYLzr33jv2sW33Wjbz2CQhC_W7cVF864W7hVrW8RCJpT6FkSLgW4Tw3v3879vSWN43KBFCqxfM7W41Y-GJ5Z-qrKW8PV0Bb7QDKqmW5KlR0S7PXgbGW3KQ8Y55-YrbCf5cx88004)
 - **(Dec 8-10)** OSS Japan -> [Link](https://elisa.tech/event/open-source-summit-tokyo-japan-2025/)
 - **(Dec 11-13)** : Linux Plumbers Conference 2025, in Tokyo -> [Link](https://lpc.events/)
 - NASA SPARK submissions -> [Link](https://spark.nasa.gov/)
-
 
 ### Recently Past Deadlines/Events
 
@@ -137,10 +136,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - ACTION: Ask Steve/Andrew about how to share the coverage paper / presentation
 - **(Sept 15-17)** Xen Project Summit (@Xilinx, San Jose, CA.) -> [Link](https://xenproject.org/resources/xen-summit/)
 
-
 # Resources
 
 ## ELISA
+
 [Seminar Library](https://elisa.tech/seminar-series/)
 
 [Technical Directory](https://directory.elisa.tech/)
@@ -151,11 +150,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Journals
 
-- Springer CEAS Aeronautical Journal (https://link.springer.com/journal/13272)
+- Springer CEAS Aeronautical Journal (<https://link.springer.com/journal/13272>)
   - Has a special avionics track
-- AIAA Journal: AIAAJ for Aeronautics (https://arc.aiaa.org/loi/aiaaj)
-- SAE International Journal of Aerospace (https://www.sae.org/publications/collections/content/E-JOURNAL-01/)
-- Avionics International / Avionics Today (https://www.aviationtoday.com/)
+- AIAA Journal: AIAAJ for Aeronautics (<https://arc.aiaa.org/loi/aiaaj>)
+- SAE International Journal of Aerospace (<https://www.sae.org/publications/collections/content/E-JOURNAL-01/>)
+- Avionics International / Avionics Today (<https://www.aviationtoday.com/>)
   - Less scientific, more industrial-oriented
 
 ## Articles / Publications
@@ -164,37 +163,38 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 [eLinux Space Research](https://elinux.org/Space_Research)
 
-[AeroWG Literature Database](https://github.com/elisa-tech/wg-aerospace/blob/main/literature-database/literature.bib?raw=true) 
+[AeroWG Literature Database](https://github.com/elisa-tech/wg-aerospace/blob/main/literature-database/literature.bib?raw=true)
 
 See Martin for Overleaf access to our Survey Whitepaper document. (See Whitepaper section below in Tech Topics)
 
 ---
+
 ---
 
 # Technical Topics
 
 ## Requirements for OS used in Use-Cases
-  - Should we capture the reasons for being different (timing, footprint, simplicity, minimization, radiation, etc)? [YES but with caution]
-    - Carrier set high level threshold and then distros could show they met the requirements
-      - Performance and promotional - prove productization of Linux is real in commercial cases
-    - Need at least a charter / scope
-    - What are our themes / KPIs which would justify capturing this as different?
-      - e.g. stronger EDAC  (Suggested by Tim and Rob has interest)
-      - ACTION: Next call topic on KPI?
-  - Where should we capture these?
-    - Could use paper approach to guide (model/lessons learned) this and similar structure to Carrier content?  Could be split of the basics of minimal system vs distro level features (e.g. even between AeroWG/SGL)
-  - Patterns
-    - Could we follow the Carrier Grade Linux example? “config guidance plus self-compliance approach”
-      - https://wiki.linuxfoundation.org/cgl/start
-      - https://www.static.linuxfound.org/sites/main/files/CGL_5.0_Specification.pdf
-    - Just tooling?  Could extend https://github.com/elisa-tech/kconfig-safety-check ?
-    - Example of minimal config work - https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace
-      - LFSCS mission https://github.com/elisa-tech/wg-lfscs/blob/main/mission.md
-    - Automotive grade linux definitions
-      - https://www.automotivelinux.org/wp-content/uploads/sites/4/2017/08/agl_spec_v1_280515.pdf
-      - https://www.automotivelinux.org/wp-content/uploads/sites/4/2018/06/GoogleDrive_The-AGL-software-defined-connected-car-architecture.pdf
-  - How do we do it in a way to be inclusive of other distros?
 
+- Should we capture the reasons for being different (timing, footprint, simplicity, minimization, radiation, etc)? [YES but with caution]
+  - Carrier set high level threshold and then distros could show they met the requirements
+    - Performance and promotional - prove productization of Linux is real in commercial cases
+  - Need at least a charter / scope
+  - What are our themes / KPIs which would justify capturing this as different?
+    - e.g. stronger EDAC (Suggested by Tim and Rob has interest)
+    - ACTION: Next call topic on KPI?
+- Where should we capture these?
+  - Could use paper approach to guide (model/lessons learned) this and similar structure to Carrier content? Could be split of the basics of minimal system vs distro level features (e.g. even between AeroWG/SGL)
+- Patterns
+  - Could we follow the Carrier Grade Linux example? “config guidance plus self-compliance approach”
+    - <https://wiki.linuxfoundation.org/cgl/start>
+    - <https://www.static.linuxfound.org/sites/main/files/CGL_5.0_Specification.pdf>
+  - Just tooling? Could extend <https://github.com/elisa-tech/kconfig-safety-check> ?
+  - Example of minimal config work - <https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace>
+    - LFSCS mission <https://github.com/elisa-tech/wg-lfscs/blob/main/mission.md>
+  - Automotive grade linux definitions
+    - <https://www.automotivelinux.org/wp-content/uploads/sites/4/2017/08/agl_spec_v1_280515.pdf>
+    - <https://www.automotivelinux.org/wp-content/uploads/sites/4/2018/06/GoogleDrive_The-AGL-software-defined-connected-car-architecture.pdf>
+- How do we do it in a way to be inclusive of other distros?
 
 ## Meeting times / slots
 
@@ -205,12 +205,14 @@ We’ve had a few discussions in different calls about adjusting our meeting fre
 What are everyone’s thoughts on these options that get our calls consistently at the same times so the slots better align as a recurring meeting each week.
 
 Wednesday10-11am CDT
+
 - 1st wk – AerospaceWG
 - 2nd wk – Space SIG
-- 3rd wk – AerospaceWG Paper  (new call)
+- 3rd wk – AerospaceWG Paper (new call)
 - 4th wk – Space SIG
 
 Thursday 10-11am CDT
+
 - 1st wk – Aerospace
 - 2nd wk – Space SIG
 - 3rd wk – AerospaceWG Paper (new call)
@@ -218,12 +220,12 @@ Thursday 10-11am CDT
 
 ## Alternative Environments for Use-Cases
 
-(Wanja presenting nixos - https://nixos.org/)
+(Wanja presenting nixos - <https://nixos.org/>)
 
-Problem space - what is an env we can use to build kernels and systems for demostration.  (build, debug, compose)
+Problem space - what is an env we can use to build kernels and systems for demonstration. (build, debug, compose)
 
 - Minimal kernel - tiny config
-  - nix abstraction to support multiple architectures (conditional kconfig)  plus multiple Kernel revs
+  - nix abstraction to support multiple architectures (conditional kconfig) plus multiple Kernel revs
 - System building
   - Has a split of initramfs and kernel builds
   - nix composition via config that defines the ramfs content
@@ -231,25 +233,28 @@ Problem space - what is an env we can use to build kernels and systems for demos
   - Wrapper for QEMU kernel debugging
 
 Single command, reproducible workflow if you have nix shell.
-Reference snapshot (Wanja): https://github.com/wucke13/minimal-nixos/
+Reference snapshot (Wanja): <https://github.com/wucke13/minimal-nixos/>
 
 Questions
+
 - Is this the step to hardware configs / bsp support?
-- Where does this fit between AeroWG or SGL?  AeroWG is chartered to define "use cases" and we stretched that to provide example demos.  Does this just provide organizing of "demos"?
-- Could initially cleanup https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux/-/blob/main/build_minimal.sh?ref_type=heads using this approach?  MRs welcome!
+- Where does this fit between AeroWG or SGL? AeroWG is chartered to define "use cases" and we stretched that to provide example demos. Does this just provide organizing of "demos"?
+- Could initially cleanup <https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux/-/blob/main/build_minimal.sh?ref_type=heads> using this approach? MRs welcome!
 
 ## Parking lot items
 
 Lab grid project
-- Lab grid is a board managment framework (similar Lava)
+
+- Lab grid is a board management framework (similar Lava)
 - E.g. deploy SW to board, configure SUT etc. into different configurations
 - Greatly facilitates a test frameworks, by managing HW in convenient way
-    - Coordinates/manages connections to board (serial, power, usb)
+  - Coordinates/manages connections to board (serial, power, usb)
 - Comes with a PyTest plugin
-- ACTION: Invite Lab grid developers to present capabilities and background? https://github.com/emantor
+- ACTION: Invite Lab grid developers to present capabilities and background? <https://github.com/emantor>
 - ACTION (Matt): Mention to Ramon as this might be good for SGL call
 
 ---
+
 ---
 
 # Closing
@@ -260,6 +265,4 @@ Located in [GitHub Discussions](https://github.com/elisa-tech/wg-aerospace/discu
 
 ## Round Table
 
-
-See https://github.com/elisa-tech/wg-aerospace/tree/main/meeting-minutes  for the latest meeting minutes.
-
+See <https://github.com/elisa-tech/wg-aerospace/tree/main/meeting-minutes> for the latest meeting minutes.

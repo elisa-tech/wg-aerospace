@@ -36,10 +36,10 @@
  * Includes
  */
 
-#include "{{app_name_lc}}_coveragetest_common.h"
 #include "{{app_name_lc}}.h"
-#include "{{app_name_lc}}_dispatch.h"
 #include "{{app_name_lc}}_cmds.h"
+#include "{{app_name_lc}}_coveragetest_common.h"
+#include "{{app_name_lc}}_dispatch.h"
 
 /*
 **********************************************************************************
@@ -47,18 +47,25 @@
 **********************************************************************************
 */
 
-void Test_{{app_name_uc}}_TaskPipe(void)
-{
-    /*
-     * Test Case For:
-     * void {{app_name_uc}}_TaskPipe
-     */
+void Test_ {
+  {
+    app_name_uc
+  }
+}
+_TaskPipe(void) {
+  /*
+   * Test Case For:
+   * void {{app_name_uc}}_TaskPipe
+   */
 }
 
 /*
  * Register the test cases to execute with the unit test tool
  */
-void UtTest_Setup(void)
-{
-    ADD_TEST({{app_name_uc}}_TaskPipe);
+void UtTest_Setup(void) {
+  ADD_TEST({
+    {
+      app_name_uc
+    }
+  } _TaskPipe);
 }

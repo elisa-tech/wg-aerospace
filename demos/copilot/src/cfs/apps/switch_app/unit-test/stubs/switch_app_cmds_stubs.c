@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in switch_app_cmds header
+ * Auto-Generated stub implementations for functions defined in switch_app_cmds
+ * header
  */
 
 #include "switch_app_cmds.h"
@@ -32,15 +33,16 @@
  * Generated stub function for SWITCH_APP_DisplayParamCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_DisplayParamCmd(const SWITCH_APP_DisplayParamCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_DisplayParamCmd, CFE_Status_t);
+CFE_Status_t
+SWITCH_APP_DisplayParamCmd(const SWITCH_APP_DisplayParamCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_DisplayParamCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_DisplayParamCmd, const SWITCH_APP_DisplayParamCmd_t *, Msg);
+  UT_GenStub_AddParam(SWITCH_APP_DisplayParamCmd,
+                      const SWITCH_APP_DisplayParamCmd_t *, Msg);
 
-    UT_GenStub_Execute(SWITCH_APP_DisplayParamCmd, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_DisplayParamCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_DisplayParamCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_DisplayParamCmd, CFE_Status_t);
 }
 
 /*
@@ -48,15 +50,14 @@ CFE_Status_t SWITCH_APP_DisplayParamCmd(const SWITCH_APP_DisplayParamCmd_t *Msg)
  * Generated stub function for SWITCH_APP_NoopCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_NoopCmd(const SWITCH_APP_NoopCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_NoopCmd, CFE_Status_t);
+CFE_Status_t SWITCH_APP_NoopCmd(const SWITCH_APP_NoopCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_NoopCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_NoopCmd, const SWITCH_APP_NoopCmd_t *, Msg);
+  UT_GenStub_AddParam(SWITCH_APP_NoopCmd, const SWITCH_APP_NoopCmd_t *, Msg);
 
-    UT_GenStub_Execute(SWITCH_APP_NoopCmd, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_NoopCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_NoopCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_NoopCmd, CFE_Status_t);
 }
 
 /*
@@ -64,15 +65,15 @@ CFE_Status_t SWITCH_APP_NoopCmd(const SWITCH_APP_NoopCmd_t *Msg)
  * Generated stub function for SWITCH_APP_ProcessCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_ProcessCmd(const SWITCH_APP_ProcessCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_ProcessCmd, CFE_Status_t);
+CFE_Status_t SWITCH_APP_ProcessCmd(const SWITCH_APP_ProcessCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_ProcessCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_ProcessCmd, const SWITCH_APP_ProcessCmd_t *, Msg);
+  UT_GenStub_AddParam(SWITCH_APP_ProcessCmd, const SWITCH_APP_ProcessCmd_t *,
+                      Msg);
 
-    UT_GenStub_Execute(SWITCH_APP_ProcessCmd, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_ProcessCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_ProcessCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_ProcessCmd, CFE_Status_t);
 }
 
 /*
@@ -80,15 +81,16 @@ CFE_Status_t SWITCH_APP_ProcessCmd(const SWITCH_APP_ProcessCmd_t *Msg)
  * Generated stub function for SWITCH_APP_ResetCountersCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_ResetCountersCmd, CFE_Status_t);
+CFE_Status_t
+SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_ResetCountersCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_ResetCountersCmd, const SWITCH_APP_ResetCountersCmd_t *, Msg);
+  UT_GenStub_AddParam(SWITCH_APP_ResetCountersCmd,
+                      const SWITCH_APP_ResetCountersCmd_t *, Msg);
 
-    UT_GenStub_Execute(SWITCH_APP_ResetCountersCmd, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_ResetCountersCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_ResetCountersCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_ResetCountersCmd, CFE_Status_t);
 }
 
 /*
@@ -96,13 +98,13 @@ CFE_Status_t SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Ms
  * Generated stub function for SWITCH_APP_SendHkCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_SendHkCmd(const SWITCH_APP_SendHkCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_SendHkCmd, CFE_Status_t);
+CFE_Status_t SWITCH_APP_SendHkCmd(const SWITCH_APP_SendHkCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_SendHkCmd, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_SendHkCmd, const SWITCH_APP_SendHkCmd_t *, Msg);
+  UT_GenStub_AddParam(SWITCH_APP_SendHkCmd, const SWITCH_APP_SendHkCmd_t *,
+                      Msg);
 
-    UT_GenStub_Execute(SWITCH_APP_SendHkCmd, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_SendHkCmd, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_SendHkCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_SendHkCmd, CFE_Status_t);
 }

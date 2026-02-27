@@ -2,7 +2,7 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
@@ -103,13 +103,13 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
     - Software
       - first, discuss kernel (try to finish, and only discuss broader distribution if necessary to make a decision about kernel)
         - subsystem by subsystem, by DAL
-		- protocol stacks
+          - protocol stacks
       - second, full distribution (kernel, services, BSP/drivers, API, libraries, applications, bootloader, etc.)
-	  - **NEW**: Decision postponed to after system architecture
+      - **NEW**: Decision postponed to after system architecture
     - Hardware
       - MMU as minimum?, multicore?, availability (physical or simulation at first), validation, crypto, etc.
-	  - **NEW**: Decision postponed after system architecture
-  - Certification scope 
+      - **NEW**: Decision postponed after system architecture
+  - Certification scope
     - Option A: Non-critical - discuss first, DAL-D and lower
       - Decisions about features to include at low DAL do not (necessarily) apply to high DAL
     - Option B: Mission-critical
@@ -123,33 +123,33 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
     - Air
     - Space
     - Ground equipment - secondary discussion
-	- **NEW**: Agreed on a broader group: Exclude ground equipment in the first phase
+    - **NEW**: Agreed on a broader group: Exclude ground equipment in the first phase
 - Use Cases
   - A use case should define a system architecture and function
-	- **NEW**: Agreed on a broader group: Think of something like:
-	  - Option A: Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin light (+ notification item in a log)
-	  - Option B: Sensor=Temperature; Function=Control Temperature; Function=Logging; Actuator=Heating device (+ notification item in a log)
-	  - **NOTE**: Advantage of option A: Clearly Low-DAL, as Option B could be safety critical
+    - **NEW**: Agreed on a broader group: Think of something like:
+      - Option A: Sensor=Switch; Function=Cabin Light Control; Function=Logging; Actuator=Cabin light (+ notification item in a log)
+      - Option B: Sensor=Temperature; Function=Control Temperature; Function=Logging; Actuator=Heating device (+ notification item in a log)
+      - **NOTE**: Advantage of option A: Clearly Low-DAL, as Option B could be safety critical
   - Single simple sensor(s)
     - Voting on architecture [8 votes in total (ESA=1)]:
-	  - Amount of computers
-	    - Option A: Multiple computers in total (w/ functions): 1
-	    - Option B: Single computers in total (w/ functions): 7
-		- **NEW**: Agreed on a broader group: Option B
+      - Amount of computers
+        - Option A: Multiple computers in total (w/ functions): 1
+        - Option B: Single computers in total (w/ functions): 7
+          - **NEW**: Agreed on a broader group: Option B
       - Amount and type of functions:
-	    - Option A: Multiple computers with single/multiple functions
-	      - (Ignored due to decision above)
-	    - Option B: Single computer with multiple functions of multiple systems: 1
-	    - Option C: Single computer with multiple functions of one system: 1
-	      - Example concept:
-		    - App1: [SENS] -[?]-> [APP_CON] -[UDP/MEM]-> [APP_VOT]
-		    - App2: [SENS] -[?]-> [APP_MON] -[UDP/MEM]-> [APP_VOT]
-		    - App3: [APP_VOT] -[?]-> [ACT]
-	    - Option D: Single computer with single function: 6
-	      - Example concept:
-		  - [SENS] -[ETH_MAC]-> [APP] -[ETH_MAC]-> [ACT]
-		- **NEW**: Agreed on a broader group: Option D
-		- **TODO**: Clarify what about the other 2 votes (A and B), do we exclude people?
+        - Option A: Multiple computers with single/multiple functions
+          - (Ignored due to decision above)
+        - Option B: Single computer with multiple functions of multiple systems: 1
+        - Option C: Single computer with multiple functions of one system: 1
+          - Example concept:
+            - App1: [SENS] -[?]-> [APP_CON] -[UDP/MEM]-> [APP_VOT]
+            - App2: [SENS] -[?]-> [APP_MON] -[UDP/MEM]-> [APP_VOT]
+            - App3: [APP_VOT] -[?]-> [ACT]
+        - Option D: Single computer with single function: 6
+          - Example concept:
+            - [SENS] -[ETH_MAC]-> [APP] -[ETH_MAC]-> [ACT]
+          - **NEW**: Agreed on a broader group: Option D
+          - **TODO**: Clarify what about the other 2 votes (A and B), do we exclude people?
 - Identification of features for use cases
 - Mechanisms to configure features (include/exclude)
   - connection to partitioning
@@ -159,15 +159,15 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Maintenance and Support
   - Need to maintain for decades
 - Tools
-  - Identify features unique to aerospace, DO-330 qualification 
+  - Identify features unique to aerospace, DO-330 qualification
 
 - **NEW**: Other business:
   - Do we need to introduce a dictionary? One example of a question that was raised:
     - What is the understanding of "multiple functions"? -> 3 Answers with 9 people
-      - 1) Multiple PCI devices SATA, USB, network etc.
-      - 2) PCI devices with multiple functions, root bridge can have multiple functions
-      - 3) System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
-	- **NEW**: Tend to a common understanding of 3)
+      - 1. Multiple PCI devices SATA, USB, network etc.
+      - 2. PCI devices with multiple functions, root bridge can have multiple functions
+      - 3. System function perspective: Applications (processes, tasks, functions as S/W components) to achieve a system function like switch on cabin light (example: read sensor, log data, report failure, drive actuator)
+    - **NEW**: Tend to a common understanding of 3)
 
 ---
 
@@ -175,7 +175,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 - Explanation of the updated scope of the white paper. Two options for white papers:
   - Option A) Scope is on a detailed comparison of some selected options (subset) of all options available (not mentioned in the paper)
-  - Option B) Broader scope whats available, motivation as an outcome, detailed comparison with a subset as second paper
+  - Option B) Broader scope what's available, motivation as an outcome, detailed comparison with a subset as second paper
 - **NEW**: Agreed on a broader group: The group tends towards Option B. The revised title will be "Survey on State-of-the-Art Open Source Linux-Like Operating Systems in Avionics"
 
 ---
@@ -191,4 +191,3 @@ Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 ## Round Table
 
 - (Skipped due to time constraints)
-

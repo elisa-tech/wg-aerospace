@@ -14,7 +14,7 @@ echo "Starting post-build setup..."
 # 1. Extract rootfs.cpio.gz into extracted_cpio directory
 mkdir -p "$EXTRACTED_CPIO_DIR"
 echo "Uncompressing rootfs.cpio.gz..."
-sudo gunzip -c "$ROOTFS_CPIO_GZ" > "/demo/monitors/rootfs.cpio_uncompressed"
+sudo gunzip -c "$ROOTFS_CPIO_GZ" >"/demo/monitors/rootfs.cpio_uncompressed"
 
 echo "Extracting rootfs.cpio_uncompressed into $EXTRACTED_CPIO_DIR..."
 sudo cpio -i -R +0:+0 -n -F "/demo/monitors/rootfs.cpio_uncompressed" --make-directories --preserve-modification-time --no-absolute-filenames --directory="$EXTRACTED_CPIO_DIR" || true
@@ -40,34 +40,34 @@ sudo mv "$CF_DIR/cpu1_cfe_es_startup.scr" "$CF_DIR/cfe_es_startup.scr"
 # 6. Copy application shared objects
 echo "Copying application shared objects..."
 APPS=(
-  "cfe_assert"
-  "ci_lab"
-  "to_lab"
-  "sample_app"
-  "sample_lib"
-  "sch_lab"
-  "copilot_app"
-  "lights_app"
-  "switch_app"
+	"cfe_assert"
+	"ci_lab"
+	"to_lab"
+	"sample_app"
+	"sample_lib"
+	"sch_lab"
+	"copilot_app"
+	"lights_app"
+	"switch_app"
 )
 
 for app in "${APPS[@]}"; do
-  sudo cp "$CFS_BUILD_DIR/arm-linux-gnu/default_cpu1/apps/$app/$app.so" "$CF_DIR/"
+	sudo cp "$CFS_BUILD_DIR/arm-linux-gnu/default_cpu1/apps/$app/$app.so" "$CF_DIR/"
 done
 
 # 7. Copy table files
 echo "Copying table files..."
 TABLES=(
-  "to_lab_sub.tbl"
-  "sample_app_tbl.tbl"
-  "copilot_app_tbl.tbl"
-  "lights_app_tbl.tbl"
-  "switch_app_tbl.tbl"
-  "sch_lab_table.tbl"
+	"to_lab_sub.tbl"
+	"sample_app_tbl.tbl"
+	"copilot_app_tbl.tbl"
+	"lights_app_tbl.tbl"
+	"switch_app_tbl.tbl"
+	"sch_lab_table.tbl"
 )
 
 for tbl in "${TABLES[@]}"; do
-  sudo cp "$CFS_BUILD_DIR/tables/staging/cpu1/cf/$tbl" "$CF_DIR/"
+	sudo cp "$CFS_BUILD_DIR/tables/staging/cpu1/cf/$tbl" "$CF_DIR/"
 done
 
 echo "Post-build setup completed."

@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in switch_app_dispatch header
+ * Auto-Generated stub implementations for functions defined in
+ * switch_app_dispatch header
  */
 
 #include "switch_app_dispatch.h"
@@ -32,11 +33,11 @@
  * Generated stub function for SWITCH_APP_ProcessGroundCommand()
  * ----------------------------------------------------
  */
-void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam(SWITCH_APP_ProcessGroundCommand, const CFE_SB_Buffer_t *, SBBufPtr);
+void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(SWITCH_APP_ProcessGroundCommand, const CFE_SB_Buffer_t *,
+                      SBBufPtr);
 
-    UT_GenStub_Execute(SWITCH_APP_ProcessGroundCommand, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_ProcessGroundCommand, Basic, NULL);
 }
 
 /*
@@ -44,11 +45,10 @@ void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for SWITCH_APP_TaskPipe()
  * ----------------------------------------------------
  */
-void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
-{
-    UT_GenStub_AddParam(SWITCH_APP_TaskPipe, const CFE_SB_Buffer_t *, SBBufPtr);
+void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr) {
+  UT_GenStub_AddParam(SWITCH_APP_TaskPipe, const CFE_SB_Buffer_t *, SBBufPtr);
 
-    UT_GenStub_Execute(SWITCH_APP_TaskPipe, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_TaskPipe, Basic, NULL);
 }
 
 /*
@@ -56,14 +56,15 @@ void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
  * Generated stub function for SWITCH_APP_VerifyCmdLength()
  * ----------------------------------------------------
  */
-bool SWITCH_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t ExpectedLength)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_VerifyCmdLength, bool);
+bool SWITCH_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr,
+                                size_t ExpectedLength) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_VerifyCmdLength, bool);
 
-    UT_GenStub_AddParam(SWITCH_APP_VerifyCmdLength, const CFE_MSG_Message_t *, MsgPtr);
-    UT_GenStub_AddParam(SWITCH_APP_VerifyCmdLength, size_t, ExpectedLength);
+  UT_GenStub_AddParam(SWITCH_APP_VerifyCmdLength, const CFE_MSG_Message_t *,
+                      MsgPtr);
+  UT_GenStub_AddParam(SWITCH_APP_VerifyCmdLength, size_t, ExpectedLength);
 
-    UT_GenStub_Execute(SWITCH_APP_VerifyCmdLength, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_VerifyCmdLength, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_VerifyCmdLength, bool);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_VerifyCmdLength, bool);
 }

@@ -42,8 +42,8 @@ echo "Adding 'execinfo' to target_link_libraries in $CMAKELISTS..."
 
 # Check if execinfo is already present to avoid duplicates
 if ! grep -q 'execinfo' "$CMAKELISTS"; then
-  # Use awk to insert execinfo before the closing parenthesis of the PRIVATE block
-  awk '
+	# Use awk to insert execinfo before the closing parenthesis of the PRIVATE block
+	awk '
   # Flag to track if inside the PRIVATE target_link_libraries block
   /target_link_libraries\(psp-\${CFE_PSP_TARGETNAME} PRIVATE/ {
     print
@@ -59,9 +59,9 @@ if ! grep -q 'execinfo' "$CMAKELISTS"; then
   {
     print
   }
-' "$CMAKELISTS" > "${CMAKELISTS}.tmp" && mv "${CMAKELISTS}.tmp" "$CMAKELISTS"
+' "$CMAKELISTS" >"${CMAKELISTS}.tmp" && mv "${CMAKELISTS}.tmp" "$CMAKELISTS"
 else
-  echo "'execinfo' already present in target_link_libraries."
+	echo "'execinfo' already present in target_link_libraries."
 fi
 
 echo "Patch script completed."

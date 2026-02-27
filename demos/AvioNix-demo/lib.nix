@@ -11,7 +11,7 @@ let
   inherit (lib.strings) removeSuffix;
 
   # generates an attribute set where each name is the filename of a file in pkgs, while the
-  # coresponding value is the path to that file
+  # corresponding value is the path to that file
 
   isNixFile = n: t: lib.strings.hasSuffix ".nix" n && t == "regular";
 
@@ -98,7 +98,7 @@ in
         value = dir + "/${n}";
       }) ((filterAttrs isNixFile) (readDir dir));
 
-    # Get a list of all Nix files withing a folder, recursively traversing all its subdirs
+    # Get a list of all Nix files within a folder, recursively traversing all its subdirs
     nixFilesToListRecursive =
       dir: lib.lists.filter (lib.strings.hasSuffix ".nix") (lib.filesystem.listFilesRecursive dir);
 

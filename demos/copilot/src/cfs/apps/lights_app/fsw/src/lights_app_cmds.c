@@ -20,20 +20,21 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App Ground Command-handling functions
+ *   This file contains the source code for the Sample App Ground
+ * Command-handling functions
  */
 
 /*
 ** Include Files:
 */
-#include "lights_app.h"
 #include "lights_app_cmds.h"
-#include "lights_app_msgids.h"
+#include "lights_app.h"
 #include "lights_app_eventids.h"
-#include "lights_app_version.h"
+#include "lights_app_msg.h"
+#include "lights_app_msgids.h"
 #include "lights_app_tbl.h"
 #include "lights_app_utils.h"
-#include "lights_app_msg.h"
+#include "lights_app_version.h"
 
 /* The sample_lib module provides the SAMPLE_Function() prototype */
 #include "sample_lib.h"
@@ -46,31 +47,30 @@
 /*         telemetry, packetize it and send it to the housekeeping task via   */
 /*         the software bus                                                   */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg)
-{
-    int i;
+CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg) {
+  int i;
 
-    /*
-    ** Get command execution counters...
-    */
-    LIGHTS_APP_Data.HkTlm.Payload.CommandErrorCounter = LIGHTS_APP_Data.ErrCounter;
-    LIGHTS_APP_Data.HkTlm.Payload.CommandCounter      = LIGHTS_APP_Data.CmdCounter;
+  /*
+  ** Get command execution counters...
+  */
+  LIGHTS_APP_Data.HkTlm.Payload.CommandErrorCounter =
+      LIGHTS_APP_Data.ErrCounter;
+  LIGHTS_APP_Data.HkTlm.Payload.CommandCounter = LIGHTS_APP_Data.CmdCounter;
 
-    /*
-    ** Send housekeeping telemetry packet...
-    */
-    CFE_SB_TimeStampMsg(CFE_MSG_PTR(LIGHTS_APP_Data.HkTlm.TelemetryHeader));
-    CFE_SB_TransmitMsg(CFE_MSG_PTR(LIGHTS_APP_Data.HkTlm.TelemetryHeader), true);
+  /*
+  ** Send housekeeping telemetry packet...
+  */
+  CFE_SB_TimeStampMsg(CFE_MSG_PTR(LIGHTS_APP_Data.HkTlm.TelemetryHeader));
+  CFE_SB_TransmitMsg(CFE_MSG_PTR(LIGHTS_APP_Data.HkTlm.TelemetryHeader), true);
 
-    /*
-    ** Manage any pending table loads, validations, etc.
-    */
-    for (i = 0; i < LIGHTS_APP_NUMBER_OF_TABLES; i++)
-    {
-        CFE_TBL_Manage(LIGHTS_APP_Data.TblHandles[i]);
-    }
+  /*
+  ** Manage any pending table loads, validations, etc.
+  */
+  for (i = 0; i < LIGHTS_APP_NUMBER_OF_TABLES; i++) {
+    CFE_TBL_Manage(LIGHTS_APP_Data.TblHandles[i]);
+  }
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -78,14 +78,13 @@ CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg)
 /* SAMPLE NOOP commands                                                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg)
-{
-    LIGHTS_APP_Data.CmdCounter++;
+CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg) {
+  LIGHTS_APP_Data.CmdCounter++;
 
-    CFE_EVS_SendEvent(LIGHTS_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: NOOP command %s",
-                      LIGHTS_APP_VERSION);
+  CFE_EVS_SendEvent(LIGHTS_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION,
+                    "SAMPLE: NOOP command %s", LIGHTS_APP_VERSION);
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -95,14 +94,15 @@ CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg)
 /*         part of the task telemetry.                                        */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg)
-{
-    LIGHTS_APP_Data.CmdCounter = 0;
-    LIGHTS_APP_Data.ErrCounter = 0;
+CFE_Status_t
+LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Msg) {
+  LIGHTS_APP_Data.CmdCounter = 0;
+  LIGHTS_APP_Data.ErrCounter = 0;
 
-    CFE_EVS_SendEvent(LIGHTS_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: RESET command");
+  CFE_EVS_SendEvent(LIGHTS_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION,
+                    "SAMPLE: RESET command");
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -111,40 +111,36 @@ CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Ms
 /*         This function Process Ground Station Command                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
-CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg)
-{
-    CFE_Status_t               Status;
-    void *                     TblAddr;
-    LIGHTS_APP_ExampleTable_t *TblPtr;
-    const char *               TableName = "LIGHTS_APP.ExampleTable";
+CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg) {
+  CFE_Status_t Status;
+  void *TblAddr;
+  LIGHTS_APP_ExampleTable_t *TblPtr;
+  const char *TableName = "LIGHTS_APP.ExampleTable";
 
-    /* Sample Use of Example Table */
-    LIGHTS_APP_Data.CmdCounter++;
-    Status = CFE_TBL_GetAddress(&TblAddr, LIGHTS_APP_Data.TblHandles[0]);
-    if (Status < CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("Sample App: Fail to get table address: 0x%08lx", (unsigned long)Status);
+  /* Sample Use of Example Table */
+  LIGHTS_APP_Data.CmdCounter++;
+  Status = CFE_TBL_GetAddress(&TblAddr, LIGHTS_APP_Data.TblHandles[0]);
+  if (Status < CFE_SUCCESS) {
+    CFE_ES_WriteToSysLog("Sample App: Fail to get table address: 0x%08lx",
+                         (unsigned long)Status);
+  } else {
+    TblPtr = TblAddr;
+    CFE_ES_WriteToSysLog("Sample App: Example Table Value 1: %d  Value 2: %d",
+                         TblPtr->Int1, TblPtr->Int2);
+
+    LIGHTS_APP_GetCrc(TableName);
+
+    Status = CFE_TBL_ReleaseAddress(LIGHTS_APP_Data.TblHandles[0]);
+    if (Status != CFE_SUCCESS) {
+      CFE_ES_WriteToSysLog("Sample App: Fail to release table address: 0x%08lx",
+                           (unsigned long)Status);
+    } else {
+      /* Invoke a function provided by LIGHTS_APP_LIB */
+      SAMPLE_LIB_Function();
     }
-    else
-    {
-        TblPtr = TblAddr;
-        CFE_ES_WriteToSysLog("Sample App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
+  }
 
-        LIGHTS_APP_GetCrc(TableName);
-
-        Status = CFE_TBL_ReleaseAddress(LIGHTS_APP_Data.TblHandles[0]);
-        if (Status != CFE_SUCCESS)
-        {
-            CFE_ES_WriteToSysLog("Sample App: Fail to release table address: 0x%08lx", (unsigned long)Status);
-        }
-        else
-        {
-            /* Invoke a function provided by LIGHTS_APP_LIB */
-            SAMPLE_LIB_Function();
-        }
-    }
-
-    return Status;
+  return Status;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
@@ -152,12 +148,13 @@ CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg)
 /* A simple example command that displays a passed-in value                   */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
-CFE_Status_t LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg)
-{
-    LIGHTS_APP_Data.CmdCounter++;
-    CFE_EVS_SendEvent(LIGHTS_APP_VALUE_INF_EID, CFE_EVS_EventType_INFORMATION,
-                      "LIGHTS_APP: ValU32=%lu, ValI16=%d, ValStr=%s", (unsigned long)Msg->Payload.ValU32,
-                      (int)Msg->Payload.ValI16, Msg->Payload.ValStr);
+CFE_Status_t
+LIGHTS_APP_DisplayParamCmd(const LIGHTS_APP_DisplayParamCmd_t *Msg) {
+  LIGHTS_APP_Data.CmdCounter++;
+  CFE_EVS_SendEvent(LIGHTS_APP_VALUE_INF_EID, CFE_EVS_EventType_INFORMATION,
+                    "LIGHTS_APP: ValU32=%lu, ValI16=%d, ValStr=%s",
+                    (unsigned long)Msg->Payload.ValU32,
+                    (int)Msg->Payload.ValI16, Msg->Payload.ValStr);
 
-    return CFE_SUCCESS;
+  return CFE_SUCCESS;
 }

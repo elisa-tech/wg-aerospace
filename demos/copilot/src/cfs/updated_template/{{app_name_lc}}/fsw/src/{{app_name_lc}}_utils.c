@@ -20,37 +20,54 @@
 
 /**
  * \file
- *   This file contains the source code for the {{app_name_txt}} App utility functions
+ *   This file contains the source code for the {{app_name_txt}} App utility
+ * functions
  */
 
 /*
 ** Include Files:
 */
+#include "{{app_name_lc}}_utils.h"
 #include "{{app_name_lc}}.h"
 #include "{{app_name_lc}}_eventids.h"
 #include "{{app_name_lc}}_tbl.h"
-#include "{{app_name_lc}}_utils.h"
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 /*                                                                 */
 /* Verify contents of First Example Table buffer contents                  */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-CFE_Status_t {{app_name_uc}}_TblValidationFunc(void *TblData)
-{
-    CFE_Status_t               ReturnCode = CFE_SUCCESS;
-    {{app_name_uc}}_ExampleTable_t *TblDataPtr = ({{app_name_uc}}_ExampleTable_t *)TblData;
-
-    /*
-    ** {{app_name_txt}} Example Table Validation
-    */
-    if (TblDataPtr->Int1 > {{app_name_uc}}_TBL_ELEMENT_1_MAX)
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_TblValidationFunc(void *TblData) {
+  CFE_Status_t ReturnCode = CFE_SUCCESS;
+  {
     {
-        /* First element is out of range, return an appropriate error code */
-        ReturnCode = {{app_name_uc}}_TABLE_OUT_OF_RANGE_ERR_CODE;
+      app_name_uc
     }
+  }
+  _ExampleTable_t *TblDataPtr = ({
+    {
+      app_name_uc
+    }
+  } _ExampleTable_t *)TblData;
 
-    return ReturnCode;
+  /*
+  ** {{app_name_txt}} Example Table Validation
+  */
+  if (TblDataPtr->Int1 > {
+        {
+          app_name_uc
+        }
+      } _TBL_ELEMENT_1_MAX) {
+    /* First element is out of range, return an appropriate error code */
+    ReturnCode = { {app_name_uc} } _TABLE_OUT_OF_RANGE_ERR_CODE;
+  }
+
+  return ReturnCode;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -58,20 +75,23 @@ CFE_Status_t {{app_name_uc}}_TblValidationFunc(void *TblData)
 /* Output CRC                                                      */
 /*                                                                 */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-void {{app_name_uc}}_GetCrc(const char *TableName)
-{
-    CFE_Status_t   status;
-    uint32         Crc;
-    CFE_TBL_Info_t TblInfoPtr;
+void {
+  {
+    app_name_uc
+  }
+}
+_GetCrc(const char *TableName) {
+  CFE_Status_t status;
+  uint32 Crc;
+  CFE_TBL_Info_t TblInfoPtr;
 
-    status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
-    if (status != CFE_SUCCESS)
-    {
-        CFE_ES_WriteToSysLog("{{app_name_txt}} App: Error Getting Example Table Info");
-    }
-    else
-    {
-        Crc = TblInfoPtr.Crc;
-        CFE_ES_WriteToSysLog("{{app_name_txt}} App: CRC: 0x%08lX\n\n", (unsigned long)Crc);
-    }
+  status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
+  if (status != CFE_SUCCESS) {
+    CFE_ES_WriteToSysLog(
+        "{{app_name_txt}} App: Error Getting Example Table Info");
+  } else {
+    Crc = TblInfoPtr.Crc;
+    CFE_ES_WriteToSysLog("{{app_name_txt}} App: CRC: 0x%08lX\n\n",
+                         (unsigned long)Crc);
+  }
 }

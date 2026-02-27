@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -125,15 +125,17 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - NASA SPARK submissions -> [Link](https://spark.nasa.gov/)
 
 ### Recently Past Deadlines
+
 - Flight Software Workshop, Submission Deadline 24th of February, Event: March 24th - 27th. -> [link](https://flightsoftware.org/)
 - ELC NA 2025 (and safety critical conference) (June 23-25, Denver)
 - ELC EU 2025 (and safety critical conference, and Embedded Linux Conference) (Aug 25-27, Amsterdam)
 - SmallSat Salt Lake City, Utah (Aug 10-13, SLC)
-- AMD Space Day  (Aug 19, San Jose, CA.)
+- AMD Space Day (Aug 19, San Jose, CA.)
 
 # Resources
 
 ## ELISA
+
 [Seminar Library](https://elisa.tech/seminar-series/)
 
 [Technical Directory](https://directory.elisa.tech/)
@@ -144,11 +146,11 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 ## Journals
 
-- Springer CEAS Aeronautical Journal (https://link.springer.com/journal/13272)
+- Springer CEAS Aeronautical Journal (<https://link.springer.com/journal/13272>)
   - Has a special avionics track
-- AIAA Journal: AIAAJ for Aeronautics (https://arc.aiaa.org/loi/aiaaj)
-- SAE International Journal of Aerospace (https://www.sae.org/publications/collections/content/E-JOURNAL-01/)
-- Avionics International / Avionics Today (https://www.aviationtoday.com/)
+- AIAA Journal: AIAAJ for Aeronautics (<https://arc.aiaa.org/loi/aiaaj>)
+- SAE International Journal of Aerospace (<https://www.sae.org/publications/collections/content/E-JOURNAL-01/>)
+- Avionics International / Avionics Today (<https://www.aviationtoday.com/>)
   - Less scientific, more industrial-oriented
 
 ## Articles / Publications
@@ -157,18 +159,19 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 
 [eLinux Space Research](https://elinux.org/Space_Research)
 
-[AeroWG Literature Database](https://github.com/elisa-tech/wg-aerospace/blob/main/literature-database/literature.bib?raw=true) 
+[AeroWG Literature Database](https://github.com/elisa-tech/wg-aerospace/blob/main/literature-database/literature.bib?raw=true)
 
 See Martin for Overleaf access to our Survey Whitepaper document. (See Whitepaper section below in Tech Topics)
 
 ---
+
 ---
 
 # Technical Topics
 
 ## GitHub discussions
 
-https://github.com/elisa-tech/wg-aerospace/discussions
+<https://github.com/elisa-tech/wg-aerospace/discussions>
 
 - You're invited to add new discussions
 - Gives you a chance to upvote items
@@ -176,6 +179,7 @@ https://github.com/elisa-tech/wg-aerospace/discussions
 ## Use case demo
 
 Goals
+
 - Lowering the level of entry
 - Clear tool setup
 - Examples of customizing a concept/configuration
@@ -187,22 +191,21 @@ Goals
 
 ### Update
 
--	Brief update on Use Case demo work
-  - [Cabin Lights](https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot)
-    - Completed - native python demo of the CoPilot monitor and rehosted into a minimal ARM64 Linux
-    - Completed - similar demo with raw sockets and targeting a minimal Linux
-    - Next step - documentation and present the demo
-    - Next step - get experience from users / feedback
-  - NASA Core Flight System (cFS) - https://github.com/elisa-tech/wg-aerospace/pull/92
-    - Completed - Experimenting with a build for minimal ARM64 Linux emulation
-    - Proposing new "NASA cFS running Light Switch app"
+- Brief update on Use Case demo work
+- [Cabin Lights](https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot)
+  - Completed - native python demo of the CoPilot monitor and rehosted into a minimal ARM64 Linux
+  - Completed - similar demo with raw sockets and targeting a minimal Linux
+  - Next step - documentation and present the demo
+  - Next step - get experience from users / feedback
+- NASA Core Flight System (cFS) - <https://github.com/elisa-tech/wg-aerospace/pull/92>
+  - Completed - Experimenting with a build for minimal ARM64 Linux emulation
+  - Proposing new "NASA cFS running Light Switch app"
 
 - Hardware in the Loop - could use an accessible drone/HW people can access
   - Previous actions / discussion
     - Ivan - checking with CalPoly team (had some F' work shown at IEEE conf)
     - Anyone looking for student projects?
     - Any SGL drone/HW ideas that come to mind that we should entertain?
-
 
 ## Whitepaper on "Survey State of Art..."
 
@@ -212,19 +215,19 @@ Goals
   - Doc still informs goals and activities of AeroWG & Space
 
 ### Next steps
-  - Establishing a separate call of "core contributors"
-  - Charter: “To focus on providing contributions and working through open actions to get to a first draft.  Attendees are committed to participating in review and providing timely material.”
-  - Initial Goals:
-    -	Complete background and problem statement sections
-    -	Add a cabin system example to show how to add supporting survey sections
-    -	Present completed section material to larger group for feedback
-  - If you're interested, select ALL possible meeting times that work for you!  https://doodle.com/group-poll/participate/axj6nV9d
 
-  
+- Establishing a separate call of "core contributors"
+- Charter: “To focus on providing contributions and working through open actions to get to a first draft. Attendees are committed to participating in review and providing timely material.”
+- Initial Goals:
+  - Complete background and problem statement sections
+  - Add a cabin system example to show how to add supporting survey sections
+  - Present completed section material to larger group for feedback
+- If you're interested, select ALL possible meeting times that work for you! <https://doodle.com/group-poll/participate/axj6nV9d>
+
 ## Parking lot items
 
-
 ---
+
 ---
 
 # Closing
@@ -237,11 +240,10 @@ Located in [GitHub Discussions](https://github.com/elisa-tech/wg-aerospace/discu
 
 - See if we can make note of event recordings for past events (vs just dropping the event item without making it a resource.)
 
-- A question was posed "How can an attendee engage, where is the focus?  What should an attendee expect to gain from participating?"
+- A question was posed "How can an attendee engage, where is the focus? What should an attendee expect to gain from participating?"
   - Use cases
   - Market dynamics
   - OS / customization need
   - TBD what events are important
 
-
-See https://github.com/elisa-tech/wg-aerospace/tree/main/meeting-minutes  for the latest meeting minutes.
+See <https://github.com/elisa-tech/wg-aerospace/tree/main/meeting-minutes> for the latest meeting minutes.

@@ -21,22 +21,39 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in {{app_name_lc}}_utils header
+ * Auto-Generated stub implementations for functions defined in
+ * {{app_name_lc}}_utils header
  */
 
-#include "{{app_name_lc}}_utils.h"
 #include "utgenstub.h"
+#include "{{app_name_lc}}_utils.h"
 
 /*
  * ----------------------------------------------------
  * Generated stub function for {{app_name_uc}}_GetCrc()
  * ----------------------------------------------------
  */
-void {{app_name_uc}}_GetCrc(const char *TableName)
-{
-    UT_GenStub_AddParam({{app_name_uc}}_GetCrc, const char *, TableName);
+void {
+  {
+    app_name_uc
+  }
+}
+_GetCrc(const char *TableName) {
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _GetCrc,
+      const char *, TableName);
 
-    UT_GenStub_Execute({{app_name_uc}}_GetCrc, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _GetCrc,
+      Basic, NULL);
 }
 
 /*
@@ -44,13 +61,41 @@ void {{app_name_uc}}_GetCrc(const char *TableName)
  * Generated stub function for {{app_name_uc}}_TblValidationFunc()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_TblValidationFunc(void *TblData)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_TblValidationFunc, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_TblValidationFunc(void *TblData) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _TblValidationFunc,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_TblValidationFunc, void *, TblData);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _TblValidationFunc,
+      void *, TblData);
 
-    UT_GenStub_Execute({{app_name_uc}}_TblValidationFunc, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _TblValidationFunc,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_TblValidationFunc, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _TblValidationFunc,
+      CFE_Status_t);
 }

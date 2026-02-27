@@ -27,9 +27,9 @@
  * interface, tables definitions, and any other data products that
  * serve to exchange information with other entities.
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
 #ifndef SWITCH_APP_INTERFACE_CFG_H
 #define SWITCH_APP_INTERFACE_CFG_H

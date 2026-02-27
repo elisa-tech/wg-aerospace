@@ -22,8 +22,8 @@
 #include "switch_app.h"
 
 /* UT includes */
-#include "uttest.h"
 #include "utassert.h"
 #include "utstubs.h"
+#include "uttest.h"
 
 SWITCH_APP_Data_t SWITCH_APP_Data;

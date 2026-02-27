@@ -1,45 +1,38 @@
-{ "inputs":
-     [ { "name": "lights"
-       , "type": "bool"
-       , "connections":
-           [ { "scope": "cfs"
-             , "topic": "LIGHTS_COMMAND"
-             , "field": "payload"
-             }
-           ]
-       }
-     , { "name": "lightSwitch"
-       , "type": "bool"
-       , "connections":
-           [ { "scope": "cfs"
-             , "topic": "LIGHTS_STATUS"
-             , "field": "payload"
-             }
-           ]
-       }
-     ]
-, "topics":
-     [ { "scope": "cfs"
-       , "topic": "LIGHTS_COMMAND"
-       , "type":  "lights_cmd_t"
-       }
-     , { "scope": "cfs"
-       , "topic": "LIGHTS_STATUS"
-       , "type":  "lights_status_t"
-       }
-     ]
-, "types": [
-       { "fromScope": "cfs"
-       , "fromType":  "lights_cmd_t"
-       , "fromField": "payload"
-       , "toScope":   "C"
-       , "toType":    "bool"
-       }
-     , { "fromScope": "cfs"
-       , "fromType":  "lights_status_t"
-       , "fromField": "payload"
-       , "toScope":   "C"
-       , "toType":    "bool"
-       }
-     ]
+{
+  "inputs": [
+    {
+      "name": "lights",
+      "type": "bool",
+      "connections": [
+        { "scope": "cfs", "topic": "LIGHTS_COMMAND", "field": "payload" }
+      ]
+    },
+    {
+      "name": "lightSwitch",
+      "type": "bool",
+      "connections": [
+        { "scope": "cfs", "topic": "LIGHTS_STATUS", "field": "payload" }
+      ]
+    }
+  ],
+  "topics": [
+    { "scope": "cfs", "topic": "LIGHTS_COMMAND", "type": "lights_cmd_t" },
+    { "scope": "cfs", "topic": "LIGHTS_STATUS", "type": "lights_status_t" }
+  ],
+  "types": [
+    {
+      "fromScope": "cfs",
+      "fromType": "lights_cmd_t",
+      "fromField": "payload",
+      "toScope": "C",
+      "toType": "bool"
+    },
+    {
+      "fromScope": "cfs",
+      "fromType": "lights_status_t",
+      "fromField": "payload",
+      "toScope": "C",
+      "toType": "bool"
+    }
+  ]
 }

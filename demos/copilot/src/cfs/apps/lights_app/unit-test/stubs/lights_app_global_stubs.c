@@ -22,8 +22,8 @@
 #include "lights_app.h"
 
 /* UT includes */
-#include "uttest.h"
 #include "utassert.h"
 #include "utstubs.h"
+#include "uttest.h"
 
 LIGHTS_APP_Data_t LIGHTS_APP_Data;

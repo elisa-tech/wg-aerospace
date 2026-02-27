@@ -27,16 +27,18 @@
  * to items in this file only affect the local module and will be transparent
  * to external entities that are using the public interface(s).
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
 #ifndef SWITCH_APP_INTERNAL_CFG_H
 #define SWITCH_APP_INTERNAL_CFG_H
 
 /***********************************************************************/
-#define SWITCH_APP_PIPE_DEPTH 32 /* Depth of the Command Pipe for Application */
-#define SWITCH_APP_PIPE_NAME  "SWITCH_APP_CMD_PIPE"
+#define SWITCH_APP_PIPE_DEPTH                                                  \
+  32 /* Depth of the Command Pipe for Application                              \
+      */
+#define SWITCH_APP_PIPE_NAME "SWITCH_APP_CMD_PIPE"
 
 #define SWITCH_APP_NUMBER_OF_TABLES 1 /* Number of Example Table(s) */
 

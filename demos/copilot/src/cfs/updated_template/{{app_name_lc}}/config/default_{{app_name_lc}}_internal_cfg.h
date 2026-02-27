@@ -27,21 +27,22 @@
  * to items in this file only affect the local module and will be transparent
  * to external entities that are using the public interface(s).
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
-#ifndef {{app_name_uc}}_INTERNAL_CFG_H
-#define {{app_name_uc}}_INTERNAL_CFG_H
+#ifndef{{app_name_uc } } _INTERNAL_CFG_H
+#define{{app_name_uc } } _INTERNAL_CFG_H
 
 /***********************************************************************/
-#define {{app_name_uc}}_PIPE_DEPTH 32 /* Depth of the Command Pipe for Application */
-#define {{app_name_uc}}_PIPE_NAME  "{{app_name_short}}_CMD_PIPE"
+#define{{app_name_uc } } _PIPE_DEPTH 32 /* Depth of the Command Pipe for       \
+                                           Application */
+#define{{app_name_uc } } _PIPE_NAME "{{app_name_short}}_CMD_PIPE"
 
-#define {{app_name_uc}}_NUMBER_OF_TABLES 1 /* Number of Example Table(s) */
+#define{{app_name_uc } } _NUMBER_OF_TABLES 1 /* Number of Example Table(s) */
 
-#define {{app_name_uc}}_TABLE_OUT_OF_RANGE_ERR_CODE -1
+#define{{app_name_uc } } _TABLE_OUT_OF_RANGE_ERR_CODE - 1
 
-#define {{app_name_uc}}_TBL_ELEMENT_1_MAX 10
+#define{{app_name_uc } } _TBL_ELEMENT_1_MAX 10
 
 #endif

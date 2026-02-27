@@ -36,10 +36,10 @@
  * Includes
  */
 
-#include "lights_app_coveragetest_common.h"
 #include "lights_app.h"
-#include "lights_app_dispatch.h"
 #include "lights_app_cmds.h"
+#include "lights_app_coveragetest_common.h"
+#include "lights_app_dispatch.h"
 
 /*
 **********************************************************************************
@@ -47,18 +47,14 @@
 **********************************************************************************
 */
 
-void Test_LIGHTS_APP_TaskPipe(void)
-{
-    /*
-     * Test Case For:
-     * void LIGHTS_APP_TaskPipe
-     */
+void Test_LIGHTS_APP_TaskPipe(void) {
+  /*
+   * Test Case For:
+   * void LIGHTS_APP_TaskPipe
+   */
 }
 
 /*
  * Register the test cases to execute with the unit test tool
  */
-void UtTest_Setup(void)
-{
-    ADD_TEST(LIGHTS_APP_TaskPipe);
-}
+void UtTest_Setup(void) { ADD_TEST(LIGHTS_APP_TaskPipe); }

@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in lights_app header
+ * Auto-Generated stub implementations for functions defined in lights_app
+ * header
  */
 
 #include "lights_app.h"
@@ -32,13 +33,12 @@
  * Generated stub function for LIGHTS_APP_Init()
  * ----------------------------------------------------
  */
-CFE_Status_t LIGHTS_APP_Init(void)
-{
-    UT_GenStub_SetupReturnBuffer(LIGHTS_APP_Init, CFE_Status_t);
+CFE_Status_t LIGHTS_APP_Init(void) {
+  UT_GenStub_SetupReturnBuffer(LIGHTS_APP_Init, CFE_Status_t);
 
-    UT_GenStub_Execute(LIGHTS_APP_Init, Basic, NULL);
+  UT_GenStub_Execute(LIGHTS_APP_Init, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(LIGHTS_APP_Init, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(LIGHTS_APP_Init, CFE_Status_t);
 }
 
 /*
@@ -46,8 +46,4 @@ CFE_Status_t LIGHTS_APP_Init(void)
  * Generated stub function for LIGHTS_APP_Main()
  * ----------------------------------------------------
  */
-void LIGHTS_APP_Main(void)
-{
-
-    UT_GenStub_Execute(LIGHTS_APP_Main, Basic, NULL);
-}
+void LIGHTS_APP_Main(void) { UT_GenStub_Execute(LIGHTS_APP_Main, Basic, NULL); }

@@ -31,11 +31,10 @@
 #include "common_types.h"
 #include "switch_app_fcncodes.h"
 
-typedef struct SWITCH_APP_DisplayParam_Payload
-{
-    uint32 ValU32;                            /**< 32 bit unsigned integer value */
-    int16  ValI16;                            /**< 16 bit signed integer value */
-    char   ValStr[SWITCH_APP_STRING_VAL_LEN]; /**< An example string */
+typedef struct SWITCH_APP_DisplayParam_Payload {
+  uint32 ValU32;                          /**< 32 bit unsigned integer value */
+  int16 ValI16;                           /**< 16 bit signed integer value */
+  char ValStr[SWITCH_APP_STRING_VAL_LEN]; /**< An example string */
 } SWITCH_APP_DisplayParam_Payload_t;
 
 /*************************************************************************/
@@ -43,11 +42,10 @@ typedef struct SWITCH_APP_DisplayParam_Payload
 ** Type definition (Sample App housekeeping)
 */
 
-typedef struct SWITCH_APP_HkTlm_Payload
-{
-    uint8 CommandErrorCounter;
-    uint8 CommandCounter;
-    uint8 spare[2];
+typedef struct SWITCH_APP_HkTlm_Payload {
+  uint8 CommandErrorCounter;
+  uint8 CommandCounter;
+  uint8 spare[2];
 } SWITCH_APP_HkTlm_Payload_t;
 
 #endif

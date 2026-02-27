@@ -21,26 +21,64 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in {{app_name_lc}}_cmds header
+ * Auto-Generated stub implementations for functions defined in
+ * {{app_name_lc}}_cmds header
  */
 
-#include "{{app_name_lc}}_cmds.h"
 #include "utgenstub.h"
+#include "{{app_name_lc}}_cmds.h"
 
 /*
  * ----------------------------------------------------
  * Generated stub function for {{app_name_uc}}_DisplayParamCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_DisplayParamCmd(const {{app_name_uc}}_DisplayParamCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_DisplayParamCmd, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_DisplayParamCmd(const {
+  {
+    app_name_uc
+  }
+} _DisplayParamCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _DisplayParamCmd,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_DisplayParamCmd, const {{app_name_uc}}_DisplayParamCmd_t *, Msg);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _DisplayParamCmd,
+      const {
+        {
+          app_name_uc
+        }
+      } _DisplayParamCmd_t *,
+      Msg);
 
-    UT_GenStub_Execute({{app_name_uc}}_DisplayParamCmd, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _DisplayParamCmd,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_DisplayParamCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _DisplayParamCmd,
+      CFE_Status_t);
 }
 
 /*
@@ -48,15 +86,52 @@ CFE_Status_t {{app_name_uc}}_DisplayParamCmd(const {{app_name_uc}}_DisplayParamC
  * Generated stub function for {{app_name_uc}}_NoopCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_NoopCmd(const {{app_name_uc}}_NoopCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_NoopCmd, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_NoopCmd(const {
+  {
+    app_name_uc
+  }
+} _NoopCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _NoopCmd,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_NoopCmd, const {{app_name_uc}}_NoopCmd_t *, Msg);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _NoopCmd,
+      const {
+        {
+          app_name_uc
+        }
+      } _NoopCmd_t *,
+      Msg);
 
-    UT_GenStub_Execute({{app_name_uc}}_NoopCmd, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _NoopCmd,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_NoopCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _NoopCmd,
+      CFE_Status_t);
 }
 
 /*
@@ -64,15 +139,52 @@ CFE_Status_t {{app_name_uc}}_NoopCmd(const {{app_name_uc}}_NoopCmd_t *Msg)
  * Generated stub function for {{app_name_uc}}_ProcessCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_ProcessCmd(const {{app_name_uc}}_ProcessCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_ProcessCmd, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_ProcessCmd(const {
+  {
+    app_name_uc
+  }
+} _ProcessCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessCmd,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_ProcessCmd, const {{app_name_uc}}_ProcessCmd_t *, Msg);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessCmd,
+      const {
+        {
+          app_name_uc
+        }
+      } _ProcessCmd_t *,
+      Msg);
 
-    UT_GenStub_Execute({{app_name_uc}}_ProcessCmd, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessCmd,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_ProcessCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _ProcessCmd,
+      CFE_Status_t);
 }
 
 /*
@@ -80,15 +192,52 @@ CFE_Status_t {{app_name_uc}}_ProcessCmd(const {{app_name_uc}}_ProcessCmd_t *Msg)
  * Generated stub function for {{app_name_uc}}_ResetCountersCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_ResetCountersCmd(const {{app_name_uc}}_ResetCountersCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_ResetCountersCmd, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_ResetCountersCmd(const {
+  {
+    app_name_uc
+  }
+} _ResetCountersCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _ResetCountersCmd,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_ResetCountersCmd, const {{app_name_uc}}_ResetCountersCmd_t *, Msg);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _ResetCountersCmd,
+      const {
+        {
+          app_name_uc
+        }
+      } _ResetCountersCmd_t *,
+      Msg);
 
-    UT_GenStub_Execute({{app_name_uc}}_ResetCountersCmd, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _ResetCountersCmd,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_ResetCountersCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _ResetCountersCmd,
+      CFE_Status_t);
 }
 
 /*
@@ -96,13 +245,50 @@ CFE_Status_t {{app_name_uc}}_ResetCountersCmd(const {{app_name_uc}}_ResetCounter
  * Generated stub function for {{app_name_uc}}_SendHkCmd()
  * ----------------------------------------------------
  */
-CFE_Status_t {{app_name_uc}}_SendHkCmd(const {{app_name_uc}}_SendHkCmd_t *Msg)
-{
-    UT_GenStub_SetupReturnBuffer({{app_name_uc}}_SendHkCmd, CFE_Status_t);
+CFE_Status_t {
+  {
+    app_name_uc
+  }
+}
+_SendHkCmd(const {
+  {
+    app_name_uc
+  }
+} _SendHkCmd_t *Msg) {
+  UT_GenStub_SetupReturnBuffer(
+      {
+        {
+          app_name_uc
+        }
+      } _SendHkCmd,
+      CFE_Status_t);
 
-    UT_GenStub_AddParam({{app_name_uc}}_SendHkCmd, const {{app_name_uc}}_SendHkCmd_t *, Msg);
+  UT_GenStub_AddParam(
+      {
+        {
+          app_name_uc
+        }
+      } _SendHkCmd,
+      const {
+        {
+          app_name_uc
+        }
+      } _SendHkCmd_t *,
+      Msg);
 
-    UT_GenStub_Execute({{app_name_uc}}_SendHkCmd, Basic, NULL);
+  UT_GenStub_Execute(
+      {
+        {
+          app_name_uc
+        }
+      } _SendHkCmd,
+      Basic, NULL);
 
-    return UT_GenStub_GetReturnValue({{app_name_uc}}_SendHkCmd, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(
+      {
+        {
+          app_name_uc
+        }
+      } _SendHkCmd,
+      CFE_Status_t);
 }

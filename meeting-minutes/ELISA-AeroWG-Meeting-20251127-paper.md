@@ -3,34 +3,37 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+
+- <https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
 
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group, Paper-focused Meeting
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
 ## 27 Nov 2025
 
 Decided upon how to organise te paper meetings as follows:
+
 - Work on the paper:
-  - Show/ briefly discuss new content, assing reviewers, if needed
+  - Show/ briefly discuss new content, assign reviewers, if needed
   - Decide on chaptes addressed next, maybe what to focus on
   - Discuss ideas for new content
 - Task distribution:
   - Who does what untl the next Paper meeting (roughly every 4 weeks, see ELISA schedule)
 
 Todays additional topics:
+
 - Introduce paper topics to new audience
-- Show / discuss results from Questionaire
-  - Priorisation / decisions
+- Show / discuss results from Questionnaire
+  - Prioritisation / decisions
     - Paper Topic no. 1 has most votes: 5
     - Todays team focusses on Paper Topic no. 1: Voting: 4/4
 - Team building
@@ -40,7 +43,7 @@ Todays additional topics:
 - Make aware of "_todo_.tex" file in Overleaf collecting upcoming ToDos
 - Introduce new "_howto_.tex" file in Overleaf describing how to collectively work (WIP)
 
-# Tasks until next meeting:
+# Tasks until next meeting
 
 - (Rob): Problem Statement: Economics: Different distro, kernel... -> Declaring certain sets of requirements and specific versions, may lead to reduced cost -> long-term support for "ELISA-Aero-Linux"
 - Leonidas: (Read paper as-is), what is too much Space and not Aerospace?

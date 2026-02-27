@@ -30,14 +30,14 @@
  * These definitions are now provided in two separate files, one for
  * the public/mission scope and one for internal scope.
  *
- * @note This file may be overridden/superceded by mission-provided defintions
- * either by overriding this header or by generating definitions from a command/data
- * dictionary tool.
+ * @note This file may be overridden/superseded by mission-provided definitions
+ * either by overriding this header or by generating definitions from a
+ * command/data dictionary tool.
  */
 #ifndef LIGHTS_APP_PLATFORM_CFG_H
 #define LIGHTS_APP_PLATFORM_CFG_H
 
-#include "lights_app_mission_cfg.h"
 #include "lights_app_internal_cfg.h"
+#include "lights_app_mission_cfg.h"
 
 #endif

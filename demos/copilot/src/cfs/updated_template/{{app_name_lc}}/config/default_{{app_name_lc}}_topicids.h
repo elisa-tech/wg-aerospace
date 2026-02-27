@@ -22,11 +22,29 @@
  * @file
  *   {{app_name_uc}} Application Topic IDs
  */
-#ifndef {{app_name_uc}}_TOPICIDS_H
-#define {{app_name_uc}}_TOPICIDS_H
+#ifndef{{app_name_uc } } _TOPICIDS_H
+#define{{app_name_uc } } _TOPICIDS_H
 
-#define CFE_MISSION_{{app_name_uc}}_CMD_TOPICID       0x82
-#define CFE_MISSION_{{app_name_uc}}_SEND_HK_TOPICID   0x83
-#define CFE_MISSION_{{app_name_uc}}_HK_TLM_TOPICID    0x83
+#define CFE_MISSION_                                                           \
+  {                                                                            \
+    {                                                                          \
+      app_name_uc                                                              \
+    }                                                                          \
+  }                                                                            \
+  _CMD_TOPICID 0x82
+#define CFE_MISSION_                                                           \
+  {                                                                            \
+    {                                                                          \
+      app_name_uc                                                              \
+    }                                                                          \
+  }                                                                            \
+  _SEND_HK_TOPICID 0x83
+#define CFE_MISSION_                                                           \
+  {                                                                            \
+    {                                                                          \
+      app_name_uc                                                              \
+    }                                                                          \
+  }                                                                            \
+  _HK_TLM_TOPICID 0x83
 
 #endif

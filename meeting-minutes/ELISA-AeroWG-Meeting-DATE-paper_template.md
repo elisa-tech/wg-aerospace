@@ -3,29 +3,28 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
 Link to contribute live to the Meeting Minutes:
-- https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit
+
+- <https://hackmd.io/@AS9atTJpQgeXj_ICWAprZw/By850egu1g/edit>
 
 Link to the Meeting's Zoom event:
-- https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec
+
+- <https://zoom-lfx.platform.linuxfoundation.org/meeting/93217874199?password=0305e3a3-21c3-43a1-8369-d24c39334eec>
 
 ![logo](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/logo_elisa_small.png?raw=true)
 
 ## ELISA Aerospace Working Group, Paper-focussed Meeting
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
-
-## Tasks until next meeting:
-
+## Tasks until next meeting
 
 ---
 
 # Roll Call
 
 ## Attended this meeting
-
 
 ## Attended recently in the past
 

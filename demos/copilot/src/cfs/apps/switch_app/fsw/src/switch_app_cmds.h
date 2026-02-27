@@ -20,7 +20,8 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App Ground Command-handling functions
+ *   This file contains the prototypes for the Sample App Ground
+ * Command-handling functions
  */
 
 #ifndef SWITCH_APP_CMDS_H
@@ -33,9 +34,11 @@
 #include "switch_app_msg.h"
 
 CFE_Status_t SWITCH_APP_SendHkCmd(const SWITCH_APP_SendHkCmd_t *Msg);
-CFE_Status_t SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Msg);
+CFE_Status_t
+SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Msg);
 CFE_Status_t SWITCH_APP_ProcessCmd(const SWITCH_APP_ProcessCmd_t *Msg);
 CFE_Status_t SWITCH_APP_NoopCmd(const SWITCH_APP_NoopCmd_t *Msg);
-CFE_Status_t SWITCH_APP_DisplayParamCmd(const SWITCH_APP_DisplayParamCmd_t *Msg);
+CFE_Status_t
+SWITCH_APP_DisplayParamCmd(const SWITCH_APP_DisplayParamCmd_t *Msg);
 
 #endif /* SWITCH_APP_CMDS_H */

@@ -21,7 +21,8 @@
 /**
  * @file
  *
- * Auto-Generated stub implementations for functions defined in switch_app_utils header
+ * Auto-Generated stub implementations for functions defined in switch_app_utils
+ * header
  */
 
 #include "switch_app_utils.h"
@@ -32,11 +33,10 @@
  * Generated stub function for SWITCH_APP_GetCrc()
  * ----------------------------------------------------
  */
-void SWITCH_APP_GetCrc(const char *TableName)
-{
-    UT_GenStub_AddParam(SWITCH_APP_GetCrc, const char *, TableName);
+void SWITCH_APP_GetCrc(const char *TableName) {
+  UT_GenStub_AddParam(SWITCH_APP_GetCrc, const char *, TableName);
 
-    UT_GenStub_Execute(SWITCH_APP_GetCrc, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_GetCrc, Basic, NULL);
 }
 
 /*
@@ -44,13 +44,12 @@ void SWITCH_APP_GetCrc(const char *TableName)
  * Generated stub function for SWITCH_APP_TblValidationFunc()
  * ----------------------------------------------------
  */
-CFE_Status_t SWITCH_APP_TblValidationFunc(void *TblData)
-{
-    UT_GenStub_SetupReturnBuffer(SWITCH_APP_TblValidationFunc, CFE_Status_t);
+CFE_Status_t SWITCH_APP_TblValidationFunc(void *TblData) {
+  UT_GenStub_SetupReturnBuffer(SWITCH_APP_TblValidationFunc, CFE_Status_t);
 
-    UT_GenStub_AddParam(SWITCH_APP_TblValidationFunc, void *, TblData);
+  UT_GenStub_AddParam(SWITCH_APP_TblValidationFunc, void *, TblData);
 
-    UT_GenStub_Execute(SWITCH_APP_TblValidationFunc, Basic, NULL);
+  UT_GenStub_Execute(SWITCH_APP_TblValidationFunc, Basic, NULL);
 
-    return UT_GenStub_GetReturnValue(SWITCH_APP_TblValidationFunc, CFE_Status_t);
+  return UT_GenStub_GetReturnValue(SWITCH_APP_TblValidationFunc, CFE_Status_t);
 }

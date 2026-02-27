@@ -22,14 +22,17 @@
  * @file
  *   {{app_name_uc}} Application Message IDs
  */
-#ifndef {{app_name_uc}}_MSGIDS_H
-#define {{app_name_uc}}_MSGIDS_H
+#ifndef{{app_name_uc } } _MSGIDS_H
+#define{{app_name_uc } } _MSGIDS_H
 
 #include "cfe_core_api_base_msgids.h"
 #include "{{app_name_lc}}_topicids.h"
 
-#define {{app_name_uc}}_CMD_MID     CFE_PLATFORM_CMD_TOPICID_TO_MIDV(CFE_MISSION_{{app_name_uc}}_CMD_TOPICID)
-#define {{app_name_uc}}_SEND_HK_MID CFE_PLATFORM_CMD_TOPICID_TO_MIDV(CFE_MISSION_{{app_name_uc}}_SEND_HK_TOPICID)
-#define {{app_name_uc}}_HK_TLM_MID  CFE_PLATFORM_TLM_TOPICID_TO_MIDV(CFE_MISSION_{{app_name_uc}}_HK_TLM_TOPICID)
+#define{{app_name_uc } } _CMD_MID CFE_PLATFORM_CMD_TOPICID_TO_MIDV(            \
+    CFE_MISSION_{{app_name_uc}} _CMD_TOPICID)
+#define{{app_name_uc } } _SEND_HK_MID CFE_PLATFORM_CMD_TOPICID_TO_MIDV(        \
+    CFE_MISSION_{{app_name_uc}} _SEND_HK_TOPICID)
+#define{{app_name_uc } } _HK_TLM_MID CFE_PLATFORM_TLM_TOPICID_TO_MIDV(         \
+    CFE_MISSION_{{app_name_uc}} _HK_TLM_TOPICID)
 
 #endif

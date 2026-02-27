@@ -1,11 +1,12 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
+
 # Environment building notes
 
-The information talks about the process and background notes used to develop the Docker environment used to run the demos.  The specific emulated environments are described [here.](../docs/embedded-environments/Readme.md)
+The information talks about the process and background notes used to develop the Docker environment used to run the demos. The specific emulated environments are described [here.](../docs/embedded-environments/Readme.md)
 
-CI that builds and stores our images - https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci
+CI that builds and stores our images - <https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci>
 
 ## Development
 
@@ -17,6 +18,7 @@ CI that builds and stores our images - https://gitlab.com/elisa-tech/aero-wg/aer
 - Used a ARM64 host from AWS and Ubuntu 24.x
 
 - Matt and Martin verified the following on a Windows 11 ARM64 WSL for the commit this was added with.
+
 ```
 # uname -a
 Linux martin-surface2 6.6.87.2-microsoft-standard-WSL2 #1 SMP PREEMPT_DYNAMIC Thu Jun  5 18:31:42 UTC 2025 aarch64 aarch64 aarch64 GNU/Linux
@@ -82,7 +84,7 @@ RUN apt-get update && \
     apt-get -y autoremove && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
- 
+
 RUN echo 'source /opt/.ghcup/env' >> /home/user/.bashrc && \
     chown -R user:user /home/user
 USER user
@@ -128,4 +130,3 @@ RUN sudo apt-get update && \
 
 ENV PATH=/home/user/.local/bin/:$PATH
 ```
-

@@ -2,11 +2,11 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-![logo](logo_elisa_small.png )
+![logo](logo_elisa_small.png)
 
 ## ELISA Aerospace Working Group
 
-The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels.  (https://lists.elisa.tech/g/aerospace)
+The Aerospace Working Group shall develop use cases to inform and influence Linux architecture and related tools, work to derive technical requirements for avionics operating systems, and seek to enhance and expand avionics software lifecycle processes, practices, and tools to enable use of Linux in avionics systems that are certified to high design assurance levels. (<https://lists.elisa.tech/g/aerospace>)
 
 # Minutes
 
@@ -77,18 +77,17 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
   - Linux [Contributor Covenant Code of Conduct](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct.rst)
   - Linux Kernel Contributor Covenant [Code of Conduct Interpretation](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/process/code-of-conduct-interpretation.rst)
 
-
 ---
 
 # Announcements
 
-Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation.  It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).  
+Checkout our [Aerospace working group](https://lists.elisa.tech/g/aerospace) page as part of the ELISA foundation. It includes a schedule of events, link to join the mailing lists, meeting minutes, and [seminar library](https://elisa.tech/seminar-series/).
 
 ## Upcoming Events
 
 - 1-3 Oct [IEEE Digital Avionics Systems Conference](http://dasconline.org/) in San Diego, CA, USA
   - Call for 2025 papers ~Oct/Nov 2024 (Steve is General Chair for 2025 in Montreal)
-- 3-8 Aug - Small Satellite Conference (https://smallsat.org/)
+- 3-8 Aug - Small Satellite Conference (<https://smallsat.org/>)
 - 16-18 Sept [OSS Europe](https://events.linuxfoundation.org/open-source-summit-europe/) - Sessions to be published
   - [Linux in Space: Fault Detection, Recovery and Fault-Tolerant System Designs - Lenka Kosková Třísková & Lukas Mazl, Technical University of Liberec & Tomas Novotny, VZLU](https://sched.co/1ej1t)
 - 18-20 Sept [Linux Plumbers](https://lpc.events/) - In-person tickets are sold out but virtual still has slots - Sessions to be published
@@ -113,14 +112,17 @@ See our [Literature Database](../literature-database/literature.bib)
 See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_AeroWG_Whitepaper.pdf)
 
 ---
+
 ---
+
 # Technical Topics
 
 ## Old Business
 
 ### Space Grade Linux
+
 - 07/16 - Matt Weber met with Kate Stewart & Ramon Roche to discuss SMCIT conference and LXF plans for Space Grade work
-  - (Kate's Action) schedule call with Michael and Ivan to discuss the following:  - DONE
+  - (Kate's Action) schedule call with Michael and Ivan to discuss the following: - DONE
     - interest survey
     - growing mailing list (inviting IEEE SMCIT)
     - Initial goals
@@ -132,22 +134,22 @@ See our [Draft(April 18th, 2024 revision) Whitepaper](../docs/20240418_ELISA_Aer
 
 ### Linux Features for Safety-Critical Systems (LFSCS)
 
-(Email sent on 7/16 to mailing list) https://lists.elisa.tech/g/linux-features/topic/questions_from_the_aero_wg/107253914
+(Email sent on 7/16 to mailing list) <https://lists.elisa.tech/g/linux-features/topic/questions_from_the_aero_wg/107253914>
 
 - How is the topic space being organized (e.g., component/subsystem driven)?
-- Can LFSCS present on the minimal kernel and emulation?  (Building a conversation towards "Could this be used for targeting our use case?")
+- Can LFSCS present on the minimal kernel and emulation? (Building a conversation towards "Could this be used for targeting our use case?")
 
   **(Alessandro shared some feedback on the thread linked above.)**
 
-Alessandro has a example of subsystem tracing - https://lists.elisa.tech/g/linux-features/topic/meet_on_aug_6/107661288
+Alessandro has a example of subsystem tracing - <https://lists.elisa.tech/g/linux-features/topic/meet_on_aug_6/107661288>
 
 ## Discussion on Features for Aerospace
 
 Continue the discussion series, now in a separate document:
 [Aerospace-Uses-Cases](../docs/Aerospace-Uses-Cases.md) -- [[Next steps]](https://github.com/elisa-tech/wg-aerospace/blob/main/docs/Aerospace-Uses-Cases.md#foreseeable-next-steps-tbc-at-on-of-the-next-meetings)
 
-
 ---
+
 ---
 
 # Closing
@@ -157,4 +159,3 @@ Continue the discussion series, now in a separate document:
 Located in [GitHub Issues](https://github.com/elisa-tech/wg-aerospace/issues)
 
 ## Round Table
-
