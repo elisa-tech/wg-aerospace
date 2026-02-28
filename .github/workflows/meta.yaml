@@ -18,6 +18,30 @@ defaults:
     working-directory: demos/AvioNix-demo
 
 jobs:
+  check-workflow-packages:
+    name: Check workflow derivation coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
+      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - name: Checking each commit to have its derivations covered by CI
+        run: nix run .#check-commits -- nix run .#update-ci -- --check
+  check-fmt:
+    name: Check formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # checkout full tree
+          fetch-depth: 0
+      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
+      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - name: Checking each commit to be properly formatted
+        run: nix run .#check-commits -- nix fmt -- --ci
   check-licenses:
     name: Check licenses using reuse
     runs-on: ubuntu-latest
