@@ -5,7 +5,7 @@
 on:
   push:
     paths:
-      - 'demos/**'
+      - demos/**
 
 defaults:
   run:
