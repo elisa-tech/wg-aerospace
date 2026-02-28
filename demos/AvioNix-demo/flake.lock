@@ -31,11 +31,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768826049,
-        "narHash": "sha256-pNl+iKVhvQ4WUYYAkEImSQoXyTV/AuUj5eC5Kn6IrwE=",
+        "lastModified": 1772314124,
+        "narHash": "sha256-ZnEuVmHlYW2Emcvrp585qgjtNgedt+C5yrhl5Vv+MhU=",
         "owner": "wucke13",
         "repo": "minimal-nixos",
-        "rev": "b93358d71a2204072ca0e5efe56dffa6574357de",
+        "rev": "0c715eea5e09519bc8d34973eb2d3cadfaf9a609",
         "type": "github"
       },
       "original": {

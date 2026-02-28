@@ -3,9 +3,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 on:
-  push:
+  pull_request:
+    branches: [main]
     paths:
-      - 'demos/**'
+      - .github/workflows/nix.yaml
+      - demos/**
 
 defaults:
   run:

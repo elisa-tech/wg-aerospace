@@ -6,7 +6,8 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - 'demos/**'
+      - .github/workflows/meta.yaml
+      - demos/**
 
 defaults:
   run:
@@ -36,7 +37,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: Checking each commit to be properly formatted
-        run: nix run .#check-commits -- nix fmt -- --ci
+        run: nix run .#check-commits -- nix build --option log-lines 1000000 .\#checks.x86_64-linux.formatting
   check-licenses:
     name: Check licenses using reuse
     runs-on: ubuntu-latest
