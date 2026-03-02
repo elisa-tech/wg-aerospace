@@ -1,5 +1,4 @@
 # SPDX-License-Identifier: MIT
-
 ---
 name: REUSE Compliance Check
 
@@ -13,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
 
       - name: REUSE Compliance Check
-        uses: fsfe/reuse-action@v6
+        uses: fsfe/reuse-action@3ae3c6bdf1257ab19397fab11fd3312144692083 # v6.0.0
