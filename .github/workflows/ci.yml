@@ -1,11 +1,11 @@
 # SPDX-License-Identifier: MIT
-
+---
 name: CI
 
 on:
   push:
     paths:
-      - 'demos/**'
+      - "demos/**"
     branches:
       - "*" # This will trigger the workflow on all branches
 
@@ -13,9 +13,17 @@ jobs:
   clone-and-build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: read
+      # To report GitHub Actions status checks
+      statuses: write
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        with:
+          persist-credentials: false
 
       - name: Prep
         run: |
@@ -55,7 +63,7 @@ jobs:
 
       # Docs - https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#github-action-to-publish-test-results
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: EnricoMi/publish-unit-test-result-action@567cc7f8dcea3eba5da355f6ebc95663310d8a07 # v2.17.0
         if: always()
         with:
           files: |
