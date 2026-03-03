@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - "demos/**"
+      - ".github/workflows/ci.yml"
     branches:
       - "*" # This will trigger the workflow on all branches
 
@@ -17,6 +18,7 @@ jobs:
       contents: read
       packages: read
       # To report GitHub Actions status checks
+      checks: write
       statuses: write
 
     steps:
