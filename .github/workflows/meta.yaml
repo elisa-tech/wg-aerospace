@@ -27,8 +27,11 @@ jobs:
         with:
           # checkout full tree
           fetch-depth: 0
-      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
-      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
+      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+        with:
+          name: elisa-wg-aerospace
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Checking each commit to have its derivations covered by CI
         run: nix run .#check-commits -- nix run .#update-ci -- --check
   check-fmt:
@@ -39,8 +42,11 @@ jobs:
         with:
           # checkout full tree
           fetch-depth: 0
-      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
-      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
+      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+        with:
+          name: elisa-wg-aerospace
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Checking each commit to be properly formatted
         run: nix run .#check-commits -- nix build --option log-lines 1000000 .\#checks.x86_64-linux.formatting
   check-licenses:
@@ -52,8 +58,11 @@ jobs:
           # checkout full tree
           persist-credentials: false
           fetch-depth: 0
-      - uses: DeterminateSystems/nix-installer-action@da36cb69b1c3247ad7a1f931ebfd954a1105ef14 # v14
-      - uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
+      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+        with:
+          name: elisa-wg-aerospace
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - name: Checking each commit to be merged for proper declaration of licenses
         run: >
           nix shell .#check-commits nixpkgs#reuse --command
