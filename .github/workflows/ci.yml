@@ -3,12 +3,13 @@
 name: CI
 
 on:
-  push:
+  pull_request:
     paths:
-      - "demos/**"
       - ".github/workflows/ci.yml"
+      - "demos/**"
+  push:
     branches:
-      - "*" # This will trigger the workflow on all branches
+      - master
 
 permissions:
   contents: read
@@ -23,6 +24,8 @@ jobs:
       # To report GitHub Actions status checks
       checks: write
       statuses: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout

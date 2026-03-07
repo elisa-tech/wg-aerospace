@@ -4,15 +4,16 @@
 
 on:
   pull_request:
-    branches: [main]
     paths:
       - .github/workflows/meta.yaml
       - demos/**
+  push:
+    branches:
+      - master
 
 permissions:
   contents: read
   packages: read
-  statuses: write
 
 defaults:
   run:
@@ -27,6 +28,7 @@ jobs:
         with:
           # checkout full tree
           fetch-depth: 0
+          persist-credentials: false
       - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
       - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
         with:
@@ -38,10 +40,11 @@ jobs:
     name: Check formatting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           # checkout full tree
           fetch-depth: 0
+          persist-credentials: false
       - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
       - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
         with:
