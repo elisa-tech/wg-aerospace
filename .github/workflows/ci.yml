@@ -24,6 +24,8 @@ jobs:
       # To report GitHub Actions status checks
       checks: write
       statuses: write
+      issues: write
+      pull-requests: write
 
     steps:
       - name: Checkout
