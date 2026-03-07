@@ -7,6 +7,9 @@ on:
     paths:
       - .github/workflows/nix.yaml
       - demos/**
+  push:
+    branches:
+      - master
 
 defaults:
   run:

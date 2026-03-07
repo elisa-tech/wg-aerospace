@@ -7,6 +7,9 @@ on:
     paths:
       - .github/workflows/meta.yaml
       - demos/**
+  push:
+    branches:
+      - master
 
 permissions:
   contents: read
