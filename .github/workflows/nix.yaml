@@ -36,27 +36,75 @@ jobs:
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix flake check
   build-package:
-    name: ${{ matrix.PACKAGE }} for ${{ matrix.SYSTEM }}
-    runs-on: ubuntu-latest
+    name: ${{ format('{0} for {1} on {2}', matrix.cfg.PACKAGE, matrix.cfg.SYSTEM
+      , matrix.cfg.OS) }}
+    runs-on: ${{ matrix.cfg.OS }}
     strategy:
       matrix:
-        SYSTEM:
+        cfg:
           # TODO make this work well
-          # - "aarch64-linux"
-          - x86_64-linux
-        # Generated using
-        # nix run .#update-ci
-        PACKAGE:
-          - check-commits
-          - dtb-edit
-          - elf-to-sloc
-          - elisa-demo-copilot-light
-          - elisa-demo-python-light
-          - elisa-wg-boeing-5x-minimal-kernel
-          - elisa-wg-lfscs-minimal-kernel
-          - elisa-wg-lfscs-minimal-kernel-cross-aarch64
-          - minimal-linux-kernel
-          - update-ci
+          # Generated using
+          # nix run .#update-ci
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: check-commits
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: dtb-edit
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elf-to-sloc
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elisa-demo-copilot-light
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elisa-demo-python-light
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elisa-wg-boeing-5x-minimal-kernel
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elisa-wg-lfscs-minimal-kernel
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: elisa-wg-lfscs-minimal-kernel-cross-aarch64
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: minimal-linux-kernel
+          - SYSTEM: x86_64-linux
+            OS: ubuntu-latest
+            PACKAGE: update-ci
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: check-commits
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: dtb-edit
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elf-to-sloc
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elisa-demo-copilot-light
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elisa-demo-python-light
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elisa-wg-boeing-5x-minimal-kernel
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elisa-wg-lfscs-minimal-kernel
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: elisa-wg-lfscs-minimal-kernel-cross-aarch64
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: minimal-linux-kernel
+          - SYSTEM: aarch64-linux
+            OS: ubuntu-24.04-arm
+            PACKAGE: update-ci
     steps:
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
@@ -66,28 +114,28 @@ jobs:
         with:
           name: elisa-wg-aerospace
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - id: supported-system
-        name: Skip unsupported builds
-        continue-on-error: true
-        run: |
-          nix eval --json --impure .#packages.${{ matrix.SYSTEM }}.${{ matrix.PACKAGE }} --apply '{system, ...}: if system == builtins.currentSystem then null else abort "incompatible build OS"'
-      - if: steps.supported-system.outcome == 'success'
+      - name: ${{ matrix.cfg.PACKAGE }}
         run: |
           # shellcheck disable=SC2086
-          nix build $EXTRA_NIX_FLAGS .#packages.${{ matrix.SYSTEM }}.${{ matrix.PACKAGE }}
+          nix build $EXTRA_NIX_FLAGS .#packages.${{ matrix.cfg.SYSTEM }}.${{ matrix.cfg.PACKAGE }}
 
   build-nixosConfiguration:
-    name: NixOS on ${{ matrix.NIXOS_CONFIGURATION }}
-    runs-on: ubuntu-latest
+    name: ${{ format('NixOS {0} on {1} - build', matrix.cfg.NIXOS_CONFIGURATION
+      , matrix.cfg.OS) }}
+    runs-on: ${{ matrix.cfg.OS }}
     strategy:
       matrix:
-        # Generated using
-        # nix run .#update-ci
-        NIXOS_CONFIGURATION:
-          - elisa-demo
-          - elisa-demo-cross-aarch64-x86_64
-          - elisa-demo-cross-x86_64-aarch64
-          - elisa-demo-cross-x86_64-armv7l
+        cfg:
+          # Generated using
+          # nix run .#update-ci
+          - NIXOS_CONFIGURATION: elisa-demo
+            OS: ubuntu-latest
+          - NIXOS_CONFIGURATION: elisa-demo-cross-x86_64-aarch64
+            OS: ubuntu-latest
+          - NIXOS_CONFIGURATION: elisa-demo-cross-x86_64-armv7l
+            OS: ubuntu-latest
+          - NIXOS_CONFIGURATION: elisa-demo-cross-aarch64-x86_64
+            OS: ubuntu-24.04-arm
     steps:
       # The default image contains dozens of gigabytes of tools. NixOS config builds get big. Thus,
       # remove unused tools (Nix provides for all we need!) to get some space.
@@ -103,12 +151,7 @@ jobs:
         with:
           name: elisa-wg-aerospace
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - id: supported-system
-        name: Skip unsupported builds
-        continue-on-error: true
-        run: |
-          nix eval --json --impure .#nixosConfigurations.${{ matrix.NIXOS_CONFIGURATION }}.config.system.build.toplevel --apply '{system, ...}: if system == builtins.currentSystem then null else abort "incompatible build OS"'
-      - if: steps.supported-system.outcome == 'success'
+      - name: ${{ matrix.cfg.NIXOS_CONFIGURATION }}
         run: |
           # shellcheck disable=SC2086
-          nix build $EXTRA_NIX_FLAGS .#nixosConfigurations.${{ matrix.NIXOS_CONFIGURATION }}.config.system.build.toplevel
+          nix build $EXTRA_NIX_FLAGS .#nixosConfigurations.${{ matrix.cfg.NIXOS_CONFIGURATION }}.config.system.build.toplevel

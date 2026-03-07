@@ -1,0 +1,8 @@
+SPDX-License-Identifier: CC-BY-SA-4.0
+
+This project uses the free tier of runners provided by GitHub.
+
+https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job#standard-github-hosted-runners-for-public-repositories
+
+More background on the images:
+https://github.com/actions/runner-images/tree/main?tab=readme-ov-file#available-images
