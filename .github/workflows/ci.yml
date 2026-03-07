@@ -7,6 +7,9 @@ on:
     paths:
       - ".github/workflows/ci.yml"
       - "demos/**"
+  push:
+    branches:
+      - master
 
 permissions:
   contents: read
