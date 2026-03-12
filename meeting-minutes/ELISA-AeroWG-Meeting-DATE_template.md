@@ -47,6 +47,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Douglas Landgraf - Red Hat
 - Emmanuel Gravel - Skytrac
 - Gabriele Paoloni - Red Hat
+- Ganapathi N
 - Gaston Gonzalez - VENG
 - Gary Crum - Voyager
 - Iain Galloway - NXP Semiconductors
