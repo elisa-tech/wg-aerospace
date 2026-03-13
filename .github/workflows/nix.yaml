@@ -48,6 +48,7 @@ jobs:
           - check-commits
           - dtb-edit
           - elf-to-sloc
+          - elisa-demo-cfs
           - elisa-demo-copilot-light
           - elisa-demo-python-light
           - elisa-wg-boeing-5x-minimal-kernel
