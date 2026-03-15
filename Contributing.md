@@ -59,16 +59,31 @@ Include a description of your changes and reference any related issues.
 Please follow the project's coding style enforced by the lint checks on your pull request.
 If an exception is needed, note that in the pull request details.
 
-The following is an example to locally run the linter to allow auto-fixing and direct feedback.
+The super linter project is one option to help with consistency and security of repository content.
+The following can be setup locally to lint material before pushing to the repository (this assumes the defaults in the [configuration env file](./.github/super-linter.env).)
+This hook isn't a default so re-cloning the repository would require you to again setup the hook.
 
 ```bash
-docker run -e RUN_LOCAL=true  -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint   --rm   ghcr.io/super-linter/super-linter:latest
-```
+# Run once after checkout to setup the hook
+cat > .git/hooks/pre-push <<'EOM'
+#!/bin/sh
 
-```bash
-# Only run on changes in this branch (changes must be committed to GIT)
-sed -i 's/^VALIDATE_ALL_CODEBASE=true$/VALIDATE_ALL_CODEBASE=false/' ./.github/super-linter.env
-docker run -e RUN_LOCAL=true  -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint   --rm   ghcr.io/super-linter/super-linter:latest
+# Run the super-linter Docker container as a pre-push hook
+
+echo "Running Super-Linter via Docker pre-push hook..."
+docker run -e RUN_LOCAL=true -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint --rm ghcr.io/super-linter/super-linter:latest
+
+# Check the exit status of the docker command.
+# If it is non-zero, the linter failed and the push should be aborted.
+if [ $? -ne 0 ]; then
+  echo "Super-Linter failed. Push aborted."
+  exit 1
+else
+  echo "Super-Linter passed. Proceeding with push."
+  exit 0
+fi
+EOM
+chmod +x .git/hooks/pre-push
 ```
 
 ## License
