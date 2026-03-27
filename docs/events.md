@@ -14,7 +14,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - Deadline Paper: April 4, 2026
     - Post quantum crypto (Leonidas) - (RISC-V crypto focused) (touching on ELISA)
     - QEMU models for space processors (Leonidas)
-    - Friday work?  Systematically benchmarking or other aspects to expose/capture? - Paper call?
+    - Friday work? Systematically benchmarking or other aspects to expose/capture? - Paper call?
   - Workshop on V&V of multicore systems (prior topics cert / practical issues / interferenace mgmt) - Ivan has a contact if interested.
 - **Sept 13-17** ICAS (International Council of Aeronautical Sciences) Congress in Sydney,Australia -> [Link](https://icas2026.com/)
 - **Sept 13-17** DASC (Digital Avionics Systems Conference) Congress in Orlando,USA -> [Link](https://dasconline.org/2026/)
