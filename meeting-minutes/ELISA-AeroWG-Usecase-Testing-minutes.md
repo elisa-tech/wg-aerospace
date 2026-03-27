@@ -11,11 +11,75 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 **Parking lot:**
 
 - ELISA blog post - what do we want to do for this? demo? what content, what doc work do we need to finish first
-
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
+- Presentation on QEMU (Future call - Leonidas)
+- Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
+- Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
+- Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
+- Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+
+---
+
+## 20260327
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Ivan Perez (KBR @ NASA ARC)
+- Brian Wood (Boeing)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Naga (Timesys / Lynx)
+- Ivan Rodriguez (Coros Space)
+- Rob Woolley (Wind Rvier Systems, Inc)
+
+**Discussion topics**
+
+Presentation on Nix - Matt mentioned there is email traffic to do as a ELISA seminar
+
+Minimal kernel work - <https://github.com/elisa-tech/wg-aerospace/issues/139>
+- (Ivan) What state is this in?  Where would we start?
+- (Rob) Should decide the use case we're going to hit with it
+  - Confirm what part of what we already defined as a case to scope it?
+  - What processor arch?  (microcontroller or processor?)
+  - Define the limitations we assume which could frame the use case as we have noted capability but not 
+    - Do we model after a profile to get limitations and apply against the basic use case demo? https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md
+- Monitor around a behavior (maybe build on formal proof of scheduler or memory allocator bounding)
+  - What about integrating with ftrace to have copilot monitoring trace?
+- Real time topics / proofs might be something to ask other ELISA groups for interest on building cross group
+  - ACTION: Matt invite features WG group leads to discuss monitoring kernel (Ivan making example for discussion - 4/24 call???)
+  - https://lists.elisa.tech/g/linux-features/topic/monitoring_and_measuring/118537431
+  - https://fosdem.org/2026/schedule/event/A9QEXB-externally-verifying-linux-scheduling/
+  - https://flint.cs.yale.edu/certikos/publications/cav19.pdf
+  - https://docs.kernel.org/trace/rv/monitor_synthesis.html
+  - 
+- Use case development and requirements
+  - Take a cabin profile example, adjust cabin light use case to use (rehost)
+      - How do we doc the changes? [Yocto has an example methodology](https://docs.yoctoproject.org/kernel-dev/advanced.html#scc-description-file-reference)
+  - Draw up use case and profile
+  - ACTIONS: Next time figure out prior research around Min kernel approach and prior research? <https://lists.elisa.tech/g/linux-features/topic/state_of_the_minimal_kernel/118537049>
+  - ACTION: Matt asked Linux features group and ELISA leads --> The AeroWG use case call discussed where we should start when reviewing the current state of minimizing the Linux kernel. Who would be best to invite to our Friday calls to refresh the team on where to contribute/start on this topic?  Plus, how does this work between teams? E.g. should we get a use case together, minimized config and demo within AeroWG or a combination?
+  - ACTION: Matt asked --> Kate, with respect to some of the research, a document “Analysis of Linux real time in safety critical systems draft” was mentioned.  Was this ever published in some form?  There are tables in that talking about kernel configuration and detailed aspects of things to disable + why.
+- Brainstorming on how to look at minimal kernel work
+  -	Establish builds (done)
+  -	Builds can be measured for SLOC and image size (done)
+  -	Organize the research to inform starting config (started in https://github.com/elisa-tech/wg-aerospace/issues/139)
+  -	Define a product that uses our “cabin light” demo to set the specific constrains on the system - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md#software-level-d
+  -	If needed, clarify the “cabin lights use case” to operate within product profile - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights.md
+  -	Start Minimal Kernel documentation / requirements (there are a few examples of how this has been done in markdown tables / Yocto SCC)
+  -	Build Linux Kernel config to match requirements and measure
+  -	Rehost “cabin light” demo on defined “minimal” Linux Kernel.
+
+Slides from Flight Software Workshop
+
+- https://drive.google.com/drive/folders/1D3R9HSWGSUVk7yKNpEKenLaNMhtphAbL
+
+## 20260320 and 20260313
+
+Paper discussions
+
+---
 
 ## 20260306
-
 
 **Attendance**
 
