@@ -12,11 +12,41 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - ELISA blog post - what do we want to do for this? demo? what content, what doc work do we need to finish first
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
-- Presentation on QEMU (Future call - Leonidas)
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+
+---
+
+## 20260403
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Benjamin Pellieux (Coros Space)
+- Ivan Perez (KBR @ NASA ARC)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+
+**Discussion topics**
+
+Presentation on QEMU (Future call - Leonidas)
+
+- May 8th (starting in Use case call) - ACTION: Invite others from SGL and AeroWG
+
+Presentation on Nix
+
+- TSC discussed it would be a great idea to have a seminar on Nix with the Avionics demonstration as part of it.  Dates proposed
+  - Tues, May 5th at 9am Central
+  - Wed, May 6th at 9am Central
+  - Wed, May 13th at 9am Central
+
+QEMU fault injection framework - https://lists.elisa.tech/g/aerospace/topic/qemu_fault_injection/118597179
+
+Brainstorming on how to look at minimal kernel work - https://github.com/elisa-tech/wg-aerospace/issues/168
+
+- ACTION: Matt folded the discussion into a planning ticket for comments
 
 ---
 
