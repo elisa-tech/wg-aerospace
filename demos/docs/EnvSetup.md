@@ -44,4 +44,4 @@ The last step is to try out the [Basic Demo](../copilot/BasicDemo.md) using this
 
 ### Recreating our Prebuilt Docker image
 
-The [Dockerfile](./Dockerfile) was used in the [AeroWG CICD](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/-/blob/main/.gitlab-ci.yml?ref_type=heads) to compose and publish the image into the [registry](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/container_registry). The CICD yml offers an example of how to compose and publish.
+The [Dockerfile](../env/Dockerfile) was used in the [AeroWG CICD](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/-/blob/main/.gitlab-ci.yml?ref_type=heads) to compose and publish the image into the [registry](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/container_registry). The CICD yml offers an example of how to compose and publish.
