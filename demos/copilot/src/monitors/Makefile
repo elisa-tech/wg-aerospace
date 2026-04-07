@@ -108,7 +108,7 @@ clean:
 
 run: main_syslog_time
 	# Start a new tmux session
-	# Split the window into 3 panes
+	# Split the window into 4 panes
 	# Run commands in each pane
 	# Attach to the tmux session
 	$(RUN_IT_PREFIX) sh -c "$(DEMO_CHDIR) echo \
