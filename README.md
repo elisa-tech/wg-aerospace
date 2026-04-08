@@ -11,7 +11,12 @@ For more information, contact the working group chair, [Matthew Weber](mailto:ma
 Further information on specific topics can be found here:
 
 - [Meeting Minutes](meeting-minutes)
+- [Annual updates](https://directory.elisa.tech/annual-update/index.html#february-2026)
 - [Document / resource register](docs/register.md)
+
+The ELISA project has added a terminology decoder call - [What do you mean when you say...?](https://elisa.tech/ambassadors/2026/03/04/what-do-you-mean-when-you-say/)
+
+Got questions? Catch us on the Aerospace channel! - <https://chat.elisa.tech>
 
 ## Schedule
 
@@ -21,7 +26,7 @@ Monthly meeting schedule - 10-11am CST (UTC-06)
 
 - 1st week - Open slot
 - 2nd week - Aerospace WG (General Call) - [[Minutes]](meeting-minutes)
-- 3rd week - Space Grade Linux - [[Minutes]](https://github.com/elisa-tech/sig-sgl/tree/main/meeting-minutes)
+- 3rd week - Space Grade Linux - [[Latest Minutes]](https://hackmd.io/@yQAyqQaBSrCT2YGqySXo0A/Sy7GujioZl) [[Archive]](https://github.com/elisa-tech/sig-sgl/tree/main/meeting-minutes)
 - 4th week - Aerospace Industry Papers (Authoring Call) - [[Minutes](meeting-minutes) (suffix is "paper")]
 
 Weekly use case demo development - 9-10am CST (UTC-06) - [[Minutes]](meeting-minutes/ELISA-AeroWG-Usecase-Testing-minutes.md)

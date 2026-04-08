@@ -7,17 +7,20 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **Mar 23-26** Flight Software Workshop, Laurel, MD [link](https://flightsoftware.org/)
-  - Post quantum crypto (Leonidas) - (RISC-V crypto focused)
-- **Aug 03-07** IEEE SMC-IT/SCC IEEE International Conference on Space Mission Challenges for Information Technology (SMC-IT)
-  17th International Conference on Space Computing (SCC) <https://2026.smcit-scc.space/> in Pasadena, California, US
+- **Apr 4** IEEE SMC-IT/SCC IEEE International Conference on Space Mission Challenges for Information Technology (SMC-IT)
+  17th International Conference on Space Computing (SCC) in Pasadena, California, US -> [link](https://2026.smcit-scc.space)
   - Deadline Paper: April 4, 2026
     - Post quantum crypto (Leonidas) - (RISC-V crypto focused) (touching on ELISA)
     - QEMU models for space processors (Leonidas)
-    - Friday work? Systematically benchmarking or other aspects to expose/capture? - Paper call?
   - Workshop on V&V of multicore systems (prior topics cert / practical issues / interferenace mgmt) - Ivan has a contact if interested.
-- **Sept 13-17** ICAS (International Council of Aeronautical Sciences) Congress in Sydney,Australia -> [Link](https://icas2026.com/)
-- **Sept 13-17** DASC (Digital Avionics Systems Conference) Congress in Orlando,USA -> [Link](https://dasconline.org/2026/)
+- **May 18-20** Open Source Summit North America -> [link](https://events.linuxfoundation.org/open-source-summit-north-america/)
+- **May 27-28** Embedded Recipes, Nice France -> [link](https://embedded-recipes.org/2026/)
+- **May 29** Yocto Project Summit, Nice, France -> [link](https://pretalx.com/yocto-embedded-recipes-2026/)
+- **June 8-12** RISC-V Summit Europe, Bologna, Italy
+  - Special session for RISC-V in Space
+- **Aug 03-07** IEEE SMC-IT/SCC in Pasadena, California, US -> [link](https://2026.smcit-scc.space/)
+- **Sept 13-17** ICAS Congress in Sydney, Australia -> [link](https://icas2026.com/)
+- **Sept 13-17** DASC Congress in Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
 - **Oct 2026** High Integrity Systems Conference [Link](https://www.his-conference.co.uk/)
   - full presentations open **April 2026**, deadline likely end of May
@@ -53,3 +56,5 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - (2026) ~Feb MCFA (NXP sponsors) - annual material but didn't present: [link](https://www.rapitasystems.com/events/nxps-multicore-avionics-mcfa-conference)
   - MultiCore for Avionics
   - Matt to add links and background
+- **Mar 23-26** Flight Software Workshop, Laurel, MD [link](https://flightsoftware.org/)
+  - Post quantum crypto (Leonidas) - (RISC-V crypto focused)
