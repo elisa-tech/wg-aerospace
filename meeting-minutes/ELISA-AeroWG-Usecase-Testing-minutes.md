@@ -17,6 +17,56 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
 
+## 20260410
+
+**Attendance**
+
+- Matt Weber (Boeing)
+- Brian Wood (Boeing)
+- Martin Halle (TUHH)
+- Ivan Perez (KBR @ NASA ARC)
+- Leonidas Kosmidis (Barcelona Supercomputing Center)
+- Ivan Rodriguez (Coros Space)
+- Rob Woolley (Wind River Ssytems, Inc.)
+
+**Discussion topics**
+
+GitHub PRs - https://github.com/elisa-tech/wg-aerospace/pulls
+
+- (will merge) docs: Basic demo update (from 3 to 4 Tmux panes) - https://github.com/elisa-tech/wg-aerospace/pull/171
+- (will merge) docs: Update Dockerfile reference in EnvSetup.md - https://github.com/elisa-tech/wg-aerospace/pull/170
+- package cFS demo app in Nix - https://github.com/elisa-tech/wg-aerospace/pull/164
+
+DASC - Wanja proposed a Nix overview talk
+
+- Weber mentioned as part of the Nix overview in ELISA we could get OK on material reuse/mention for DASC talk
+
+VMA / page discussion (radiation observations and complexity of behavior)
+
+- VMA work
+  - <https://github.com/elisa-tech/wg-lfscs>
+  - <https://directory.elisa.tech/annual-update/2026-02/Linux_Features_WG_Updates_2026.pdf>
+- Here's the Nvidia talk on Linux memory safe allocation - <https://www.phoronix.com/news/NVIDIA-ASIL-B-Linux-Kernel>
+
+
+Discussed how to look at minimal kernel work - https://github.com/elisa-tech/wg-aerospace/issues/168
+
+- ACTION: Martin is going to look at doc how to change a kernel with Nix
+- ACTION: Open call for help on refining the existing config research found in the ticket 168 links to
+
+Kernel config parser - https://git.afnix.fr/rokc/rokc
+
+NIX example of expressing configuration
+
+- https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77-L196
+https://git.afnix.fr/rokc/rokc
+- `nix build .\#minimal-linux-kernel.configfile`
+
+System call / application dependency tracing refs
+
+- Official doc - https://docs.kernel.org/admin-guide/workload-tracing.html
+- https://elisa.tech/blog/2022/02/02/discovery-linux-kernel-subsystems-used-by-openaps/
+
 ---
 
 ## 20260403
