@@ -112,11 +112,11 @@ Presentations
 
 **Discussion topics**
 
-GitHub PRs - https://github.com/elisa-tech/wg-aerospace/pulls
+GitHub PRs - <https://github.com/elisa-tech/wg-aerospace/pulls>
 
-- (will merge) docs: Basic demo update (from 3 to 4 Tmux panes) - https://github.com/elisa-tech/wg-aerospace/pull/171
-- (will merge) docs: Update Dockerfile reference in EnvSetup.md - https://github.com/elisa-tech/wg-aerospace/pull/170
-- package cFS demo app in Nix - https://github.com/elisa-tech/wg-aerospace/pull/164
+- (will merge) docs: Basic demo update (from 3 to 4 Tmux panes) - <https://github.com/elisa-tech/wg-aerospace/pull/171>
+- (will merge) docs: Update Dockerfile reference in EnvSetup.md - <https://github.com/elisa-tech/wg-aerospace/pull/170>
+- package cFS demo app in Nix - <https://github.com/elisa-tech/wg-aerospace/pull/164>
 
 DASC - Wanja proposed a Nix overview talk
 
@@ -129,24 +129,23 @@ VMA / page discussion (radiation observations and complexity of behavior)
   - <https://directory.elisa.tech/annual-update/2026-02/Linux_Features_WG_Updates_2026.pdf>
 - Here's the Nvidia talk on Linux memory safe allocation - <https://www.phoronix.com/news/NVIDIA-ASIL-B-Linux-Kernel>
 
-
-Discussed how to look at minimal kernel work - https://github.com/elisa-tech/wg-aerospace/issues/168
+Discussed how to look at minimal kernel work - <https://github.com/elisa-tech/wg-aerospace/issues/168>
 
 - ACTION: Martin is going to look at doc how to change a kernel with Nix
 - ACTION: Open call for help on refining the existing config research found in the ticket 168 links to
 
-Kernel config parser - https://git.afnix.fr/rokc/rokc
+Kernel config parser - <https://git.afnix.fr/rokc/rokc>
 
 NIX example of expressing configuration
 
-- https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77-L196
-https://git.afnix.fr/rokc/rokc
+- <https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77-L196>
+  <https://git.afnix.fr/rokc/rokc>
 - `nix build .\#minimal-linux-kernel.configfile`
 
 System call / application dependency tracing refs
 
-- Official doc - https://docs.kernel.org/admin-guide/workload-tracing.html
-- https://elisa.tech/blog/2022/02/02/discovery-linux-kernel-subsystems-used-by-openaps/
+- Official doc - <https://docs.kernel.org/admin-guide/workload-tracing.html>
+- <https://elisa.tech/blog/2022/02/02/discovery-linux-kernel-subsystems-used-by-openaps/>
 
 ---
 
@@ -168,14 +167,14 @@ Presentation on QEMU (Future call - Leonidas)
 
 Presentation on Nix
 
-- TSC discussed it would be a great idea to have a seminar on Nix with the Avionics demonstration as part of it.  Dates proposed
+- TSC discussed it would be a great idea to have a seminar on Nix with the Avionics demonstration as part of it. Dates proposed
   - Tues, May 5th at 9am Central
   - Wed, May 6th at 9am Central
   - Wed, May 13th at 9am Central
 
-QEMU fault injection framework - https://lists.elisa.tech/g/aerospace/topic/qemu_fault_injection/118597179
+QEMU fault injection framework - <https://lists.elisa.tech/g/aerospace/topic/qemu_fault_injection/118597179>
 
-Brainstorming on how to look at minimal kernel work - https://github.com/elisa-tech/wg-aerospace/issues/168
+Brainstorming on how to look at minimal kernel work - <https://github.com/elisa-tech/wg-aerospace/issues/168>
 
 - ACTION: Matt folded the discussion into a planning ticket for comments
 
@@ -198,41 +197,45 @@ Brainstorming on how to look at minimal kernel work - https://github.com/elisa-t
 Presentation on Nix - Matt mentioned there is email traffic to do as a ELISA seminar
 
 Minimal kernel work - <https://github.com/elisa-tech/wg-aerospace/issues/139>
-- (Ivan) What state is this in?  Where would we start?
+
+- (Ivan) What state is this in? Where would we start?
 - (Rob) Should decide the use case we're going to hit with it
   - Confirm what part of what we already defined as a case to scope it?
-  - What processor arch?  (microcontroller or processor?)
-  - Define the limitations we assume which could frame the use case as we have noted capability but not 
-    - Do we model after a profile to get limitations and apply against the basic use case demo? https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md
+  - What processor arch? (microcontroller or processor?)
+  - Define the limitations we assume which could frame the use case as we have noted capability but not
+    - Do we model after a profile to get limitations and apply against the basic use case demo? <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md>
 - Monitor around a behavior (maybe build on formal proof of scheduler or memory allocator bounding)
   - What about integrating with ftrace to have copilot monitoring trace?
 - Real time topics / proofs might be something to ask other ELISA groups for interest on building cross group
   - ACTION: Matt invite features WG group leads to discuss monitoring kernel (Ivan making example for discussion - 4/24 call???)
-  - https://lists.elisa.tech/g/linux-features/topic/monitoring_and_measuring/118537431
-  - https://fosdem.org/2026/schedule/event/A9QEXB-externally-verifying-linux-scheduling/
-  - https://flint.cs.yale.edu/certikos/publications/cav19.pdf
-  - https://docs.kernel.org/trace/rv/monitor_synthesis.html
-  - 
+  - <https://lists.elisa.tech/g/linux-features/topic/monitoring_and_measuring/118537431>
+  - <https://fosdem.org/2026/schedule/event/A9QEXB-externally-verifying-linux-scheduling/>
+  - <https://flint.cs.yale.edu/certikos/publications/cav19.pdf>
+  - <https://docs.kernel.org/trace/rv/monitor_synthesis.html>
+  -
 - Use case development and requirements
   - Take a cabin profile example, adjust cabin light use case to use (rehost)
-      - How do we doc the changes? [Yocto has an example methodology](https://docs.yoctoproject.org/kernel-dev/advanced.html#scc-description-file-reference)
+    - How do we doc the changes? [Yocto has an example methodology](https://docs.yoctoproject.org/kernel-dev/advanced.html#scc-description-file-reference)
   - Draw up use case and profile
   - ACTIONS: Next time figure out prior research around Min kernel approach and prior research? <https://lists.elisa.tech/g/linux-features/topic/state_of_the_minimal_kernel/118537049>
-  - ACTION: Matt asked Linux features group and ELISA leads --> The AeroWG use case call discussed where we should start when reviewing the current state of minimizing the Linux kernel. Who would be best to invite to our Friday calls to refresh the team on where to contribute/start on this topic?  Plus, how does this work between teams? E.g. should we get a use case together, minimized config and demo within AeroWG or a combination?
-  - ACTION: Matt asked --> Kate, with respect to some of the research, a document “Analysis of Linux real time in safety critical systems draft” was mentioned.  Was this ever published in some form?  There are tables in that talking about kernel configuration and detailed aspects of things to disable + why.
+  - ACTION: Matt asked Linux features group and ELISA leads --> The AeroWG use case call discussed where we should start when reviewing the current state of minimizing the Linux
+    kernel. Who would be best to invite to our Friday calls to refresh the team on where to contribute/start on this topic? Plus, how does this work between teams?
+    E.g. should we get a use case together, minimized config and demo within AeroWG or a combination?
+  - ACTION: Matt asked --> Kate, with respect to some of the research, a document “Analysis of Linux real time in safety critical systems draft” was mentioned. Was this ever
+    published in some form? There are tables in that talking about kernel configuration and detailed aspects of things to disable + why.
 - Brainstorming on how to look at minimal kernel work
-  -	Establish builds (done)
-  -	Builds can be measured for SLOC and image size (done)
-  -	Organize the research to inform starting config (started in https://github.com/elisa-tech/wg-aerospace/issues/139)
-  -	Define a product that uses our “cabin light” demo to set the specific constrains on the system - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md#software-level-d
-  -	If needed, clarify the “cabin lights use case” to operate within product profile - https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights.md
-  -	Start Minimal Kernel documentation / requirements (there are a few examples of how this has been done in markdown tables / Yocto SCC)
-  -	Build Linux Kernel config to match requirements and measure
-  -	Rehost “cabin light” demo on defined “minimal” Linux Kernel.
+  - Establish builds (done)
+  - Builds can be measured for SLOC and image size (done)
+  - Organize the research to inform starting config (started in <https://github.com/elisa-tech/wg-aerospace/issues/139>)
+  - Define a product that uses our “cabin light” demo to set the specific constrains on the system - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/product-profiles.md#software-level-d>
+  - If needed, clarify the “cabin lights use case” to operate within product profile - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights.md>
+  - Start Minimal Kernel documentation / requirements (there are a few examples of how this has been done in markdown tables / Yocto SCC)
+  - Build Linux Kernel config to match requirements and measure
+  - Rehost “cabin light” demo on defined “minimal” Linux Kernel.
 
 Slides from Flight Software Workshop
 
-- https://drive.google.com/drive/folders/1D3R9HSWGSUVk7yKNpEKenLaNMhtphAbL
+- <https://drive.google.com/drive/folders/1D3R9HSWGSUVk7yKNpEKenLaNMhtphAbL>
 
 ## 20260320 and 20260313
 
@@ -256,26 +259,26 @@ Paper discussions
 
 Merged PRs
 
-- Securing per email from LXF - https://github.com/elisa-tech/wg-aerospace/pull/155
-  - Fix bug this created with test results - https://github.com/elisa-tech/wg-aerospace/pull/156
+- Securing per email from LXF - <https://github.com/elisa-tech/wg-aerospace/pull/155>
+  - Fix bug this created with test results - <https://github.com/elisa-tech/wg-aerospace/pull/156>
   - [Security Advisory details](https://github.com/elisa-tech/wg-aerospace/issues/160)
-  - Security bump super-linter - https://github.com/elisa-tech/wg-aerospace/pull/154
-- Lint clean up - https://github.com/elisa-tech/wg-aerospace/pull/149
-  - Added lint rules to Contributing - https://github.com/elisa-tech/wg-aerospace/blob/main/Contributing.md#style-guide
-  - Set to fail but excluded a few folders - https://github.com/elisa-tech/wg-aerospace/blob/main/.github/super-linter.env#L4
+  - Security bump super-linter - <https://github.com/elisa-tech/wg-aerospace/pull/154>
+- Lint clean up - <https://github.com/elisa-tech/wg-aerospace/pull/149>
+  - Added lint rules to Contributing - <https://github.com/elisa-tech/wg-aerospace/blob/main/Contributing.md#style-guide>
+  - Set to fail but excluded a few folders - <https://github.com/elisa-tech/wg-aerospace/blob/main/.github/super-linter.env#L4>
 
-Open PRs - https://github.com/elisa-tech/wg-aerospace/pulls
+Open PRs - <https://github.com/elisa-tech/wg-aerospace/pulls>
 
-- Wanja - https://github.com/elisa-tech/wg-aerospace/pull/150
+- Wanja - <https://github.com/elisa-tech/wg-aerospace/pull/150>
   - Github CI action caching - rate limited, falls back to full build
-  - Background on options - https://github.com/elisa-tech/wg-aerospace/pull/150#issuecomment-3997840436
-  - ACTION: Option3 - Setting up https://www.cachix.org/  - Weber has set the token
+  - Background on options - <https://github.com/elisa-tech/wg-aerospace/pull/150#issuecomment-3997840436>
+  - ACTION: Option3 - Setting up <https://www.cachix.org/> - Weber has set the token
 
 Ivan
 
 - Lunar missions with Linux and Rust
 - ACTION: Checking on getting more information and mission name + kernel config
-- https://erau.edu/eaglecam
+- <https://erau.edu/eaglecam>
 
 Martin
 
@@ -781,7 +784,9 @@ NASA vs DO-178C standards comparison (older action)
 - Ivan discussed internally - feedback was that they are overlapping and 1:1
 - Leonidas shared minor differences that could be mapped out (Action, sharing a link)
   - <https://flightsoftware.org/workshop/FSW2024> Andoni Arregui, Enhancing Safety-Critical Class-A FSW through MC/DC and Object-to-Source Traceability Verification Guidelines, tools, and examples <https://drive.google.com/drive/folders/1SNGQFT-EEIl_uJ282Apv3MtwJkjrURpC>
-- Ivan - NPR7150 says: "If a project has safety-critical software, the project manager shall ensure that there is 100 percent code test coverage using the Modified Condition/Decision Coverage (MC/DC) criterion for all identified safety-critical software components." I would not consider that you've achieved coverage of the safety-crticial component if you don't do it on the object code unless your compiler is certified.
+- Ivan - NPR7150 says: "If a project has safety-critical software, the project manager shall ensure that there is 100 percent code test coverage using the Modified Condition/Decision
+  Coverage (MC/DC) criterion for all identified safety-critical software components." I would not consider that you've achieved coverage of the safety-crticial component if you don't
+  do it on the object code unless your compiler is certified.
   - Added this to: <https://github.com/elisa-tech/wg-aerospace/discussions/102>
 
 cFS demo
@@ -1100,7 +1105,7 @@ The group met and progress was shared on previous actions.
 
 ## 20251017
 
-- Discussed OGMA template. Ivan has captured the template [here](https://github.com/nasa/ogma/tree/develop-update-cfs-template/updated_template/%7B%7Bapp_name_lc%7D%7D).
+- Discussed OGMA template. Ivan has [captured the template here](https://github.com/nasa/ogma/tree/develop-update-cfs-template/updated_template/%7B%7Bapp_name_lc%7D%7D).
 
 - Calling Ogma with the following invocation generates an app that is the same as the sample app (under the directory output, the location can be adjusted), so it should just work in the emulator with the setup that Salim prepared.
 
