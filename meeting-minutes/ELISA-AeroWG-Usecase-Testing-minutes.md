@@ -17,6 +17,87 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
 
+## 20260417
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Brian Wood (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Daniel Riechers (Collins Aerospace)
+- Ivan Perez (KBR @ NASA)
+- Pawel Wodnicki (32bitmicro)
+- Rob Woolley (Wind River Systems, Inc)
+- Benjamin Pellieux (Coros Space)
+
+**Discussion topics**
+
+The draft schedule for the ELISA Workshop in London (June 9-11), co-hosted by Canonical, is now available: <https://elisa.tech/event/elisa-workshop-london-2026/> . You can start to register for virtual and in-person.
+
+GitHub PRs - <https://github.com/elisa-tech/wg-aerospace/pulls>
+
+- (merged) package cFS demo app in Nix - <https://github.com/elisa-tech/wg-aerospace/pull/164>
+  - Ivan and Wanja worked through a file UTF encoding issue [(upstream Ogma fix pending)](https://github.com/nasa/ogma/issues/390)
+- Add nix-based kernel config documentation - <https://github.com/elisa-tech/wg-aerospace/pull/174>
+  - Rework lint/signoff after call to merge for contributions
+
+New members - Welcome!
+
+- Discussed scope of main call (req/concept definition) / wkly (taking the concept to a tangible demo or ref system)
+- Discussed new member topics - university outreach
+  - example project - <https://git.ece.iastate.edu/sddec21-02>
+  - could stitch together an existing demo, our docs/practice as a basis to then have a university project focused on a new scenario (example measurement approach, kernel minimalization, or some analysis concepts).
+  - Martin mentioned a thesis opportunity
+
+Next paper meeting is Apr 23rd - Martin will be out, still continue to assemble material (Martin is sending a summary pre-call)
+
+SGL roadmap alignment (from Apr SGL call discussion)
+
+- Using a cfs image in a AeroWG demo
+  - Mostly a vanilla OE, so customization approach is a ?
+  - We could PR an application via a doc/manual based demo
+    - This would drive items to remove from the SGL build
+    - Doesn't change the SGL build initially, just shows use
+    - We could pull our cFS+sample app directly over (QEMU ARM64) and tailor docs
+    - Future: Target hardware or QEMU RISC-V?
+- visibility to minimal kernel work
+- add a mixed functionality/criticality example for space (like SoDev) to the Xen workshop talk
+
+**Possible topics? (did not discuss these)**
+
+Continue minimal kernel discussion - <https://github.com/elisa-tech/wg-aerospace/issues/168>
+
+- ACTION: Open call for help on refining the existing config research found in the ticket 168 links to
+
+Refs from last time
+
+- Kernel config parser - <https://git.afnix.fr/rokc/rokc>
+- NIX example of expressing configuration
+  - <https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77-L196>
+  - `nix build .\#minimal-linux-kernel.configfile`
+
+- System call / application dependency tracing refs
+  - Official doc - <https://docs.kernel.org/admin-guide/workload-tracing.html>
+  - <https://elisa.tech/blog/2022/02/02/discovery-linux-kernel-subsystems-used-by-openaps/>
+  - <https://github.com/elisa-tech/ELISA-White-Papers/blob/master/Processes/Discovering_Linux_kernel_subsystems_used_by_a_workload.md>
+
+Presentations
+
+- QEMU (Future call - Leonidas) - May 8th (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+- Nix
+  - TSC discussed it would be a great idea to have a seminar on Nix with the Avionics demonstration as part of it. Dates proposed
+    - Tues, May 5th at 9am Central
+    - Wed, May 6th at 9am Central
+    - Wed, May 13th at 9am Central
+  - ACTION: (Weber) following up with Wanja and Erin
+
+- Xen seminar
+  - ACTION: Weber and AMD setting something up in May before the June workshop
+
+---
+
 ## 20260410
 
 **Attendance**
