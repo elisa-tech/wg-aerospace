@@ -27,12 +27,17 @@ make       # Runs Haskell & Builds demo applications
 make run
 ```
 
-- This will open a window in a TMUX environment with 3 sub-windows:
-  - The monitoring application
-  - The light server application
-  - The switch application
-  - It should look like this:
-  - ![TMUX environment of Basic Demo](images/tmux.png)
+- This will open a window in a TMUX environment with 4 sub-windows:
+  - The monitoring application: `./main_syslog_time; exec </dev/tty`
+  - The light server application: `python3 ../python/lightServer.py`
+  - The switch application: `python3 ../python/switch.py`
+  - The syslog file output: `tail -f syslog_file`
+
+
+> It should look like this:
+>
+> ![TMUX environment of Basic Demo](images/tmux.png)
+  
 - In the latter, the command to run is already prepared as:
   - `python3 ../python/switch.py`
   - Switch between windows using `CTRL+b` and the arrow keys
