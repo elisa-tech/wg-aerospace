@@ -29,6 +29,8 @@ This document register shall help to find the information you are looking for. D
 - [Aerospace Use Cases - Cabin Lights using NASA cFS](./use-cases/use-case-cabin-lights-cfs.md)
 - [Use-case related items in discussions](https://github.com/elisa-tech/wg-aerospace/discussions?discussions_q=is%3Aopen%20label%3Ause-case)
 
+[Minimal Linux Kernel](./minimal-kernel/minimal-kernel-plan.md)
+
 ## Demos (with respect to use-cases)
 
 [Demos landing page](./../demos/Readme.md)
