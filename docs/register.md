@@ -29,6 +29,10 @@ This document register shall help to find the information you are looking for. D
 - [Aerospace Use Cases - Cabin Lights using NASA cFS](./use-cases/use-case-cabin-lights-cfs.md)
 - [Use-case related items in discussions](https://github.com/elisa-tech/wg-aerospace/discussions?discussions_q=is%3Aopen%20label%3Ause-case)
 
+[Mixed Criticality](./mixed-criticality/xen-mixed-criticality-workshop.md)
+
+- [Requirements](./mixed-criticality/xen-fusa-requirements.md)
+
 ## Demos (with respect to use-cases)
 
 [Demos landing page](./../demos/Readme.md)
