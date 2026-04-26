@@ -11,11 +11,95 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 **Parking lot:**
 
 - ELISA blog post - what do we want to do for this? demo? what content, what doc work do we need to finish first
+  - 2/23 - demo videos? Min and Maemalynn Meanor <maemalynn@linuxfoundation.org> asked about based on the annual update material.
+    _"During your update last week, you mentioned the cabin lights demo. We were wondering if you'd be interested in sharing more
+    details about it in a blog and the collaboration under the ELISA Project. We'd love to publish more details in the next few
+    weeks - we can even embed your video in it."_
 - Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+
+## 20260424
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Brian Wood (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Rob Woolley (Wind River Systems, Inc)
+- Benjamin Pellieux (Coros Space)
+- Ivan Rodriguez (Coros Space)
+- Wanja Zaeske (German Aerospace Center, DLR)
+
+**Discussion topics**
+
+Paper
+
+- 4/23 call on survey to determine if DASC deadline is still possible
+- Plan to continue work but withdraw from the event at this point
+  - Looking at minimal scope/content to get to a complete draft
+  - Do we change the target event / audience
+  - Is there another paper that would make sense to do in parallel (gives a place to move content and advance a focused paper where people might have more interest)
+- Do we do a tracking outside of overleaf? Could use a discussion thread outside of that environment. example - <https://github.com/elisa-tech/wg-aerospace/discussions/94>
+- ACTION: Need help with finding people with examples that can be cited
+
+GitHub PRs - <https://github.com/elisa-tech/wg-aerospace/pulls>
+
+- Add nix-based kernel config documentation - <https://github.com/elisa-tech/wg-aerospace/pull/174>
+  - Rework lint/signoff after call to merge for contributions
+  - ACTION: weber to work with Martin offline
+- Ivan looking at the [cfs demo doc](https://github.com/elisa-tech/wg-aerospace/pull/134) as the embedded demo PR that pulls the build-cfs.md instructions together with running the lights demo, e,g. embedded demo <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md> would allow you to run the cfs based lights demo. ACTION: @martin did you have a start on this doc?
+
+HPSC QEMU status - Weber ping'd the SGL email thread
+
+SystemsWG copilot monitoring Linux - ACTION: Ivan is preparing example (2wks?)
+
+Mixed criticality with xen
+
+- May 13th virtual seminar - <https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/>
+- London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+- Ongoing working sessions (See mailing list for invite)
+
+Nix presentation - June 23
+
+- Erin provides an introduction to Nix (concept, principals, 30,000 feet view on the implementation), I surely can jump in and demo how this works for the WG-Aerospace use-case.
+- Topics of interest that I would like to get into: (Wanja)
+  - Building a package
+  - Building a kernel
+  - Estimating SLoC via elf-to-sloc
+  - Changing the kernel config
+  - Rebuilding, gauging impact to SLoC
+  - Configuring a whole userspace via NixOS
+  - Building
+  - Running & debugging the kernel via GDB
+  - Cross compiling (x86 to aarch64)
+
+Continue minimal kernel discussion - <https://github.com/elisa-tech/wg-aerospace/issues/168>
+
+- Refined steps in the ticket
+
+**Possible topics? (didn't cover these)**
+
+Presentations
+
+- QEMU (Future call - Leonidas) - May 8th (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+SGL roadmap alignment (from Apr SGL call discussion)
+
+- Using a cfs image in a AeroWG demo
+  - Mostly a vanilla OE, so customization approach is a ?
+  - We could PR an application via a doc/manual based demo
+    - This would drive items to remove from the SGL build
+    - Doesn't change the SGL build initially, just shows use
+    - We could pull our cFS+sample app directly over (QEMU ARM64) and tailor docs
+    - Future: Target hardware or QEMU RISC-V?
+- visibility to minimal kernel work
+- add a mixed functionality/criticality example for space (like SoDev) to the Xen workshop talk
+
+---
 
 ## 20260417
 
