@@ -15,11 +15,74 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
     _"During your update last week, you mentioned the cabin lights demo. We were wondering if you'd be interested in sharing more
     details about it in a blog and the collaboration under the ELISA Project. We'd love to publish more details in the next few
     weeks - we can even embed your video in it."_
-- Present to ELISA SystemWG Xen reference system for Aerospace (docs, builds, testing)
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+
+## 20260501
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Ivan Perez (KBR @ NASA)
+- Arthur Melo Cruz (Mathworks)
+- Rob Woolley (Wind River Systems, Inc)
+- Pawel Wodnicki (32bitmicro)
+- Brian Wood (The Boeing Company)
+
+**Discussion topics**
+
+- Nix - Who to use beyond the practice captured so far for, e.g. bringing an application to the environment. (Wanja and Martin discussion)
+  - build flow plus possibly targeting hardware
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- ACTION: Weber - Fork force pushing doesn't work - start debug with LXF team
+  - e.g., `git remote add martin git://github.com/martin/myfork`
+  - `git push -f -u martin ab12kdl:pr-branch`
+  - <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork>
+
+- [Add nix-based kernel config documentation](https://github.com/elisa-tech/wg-aerospace/pull/174)
+  - Rework lint/signoff after call to merge for contributions
+  - ACTION: ? some progress since last week
+- Ivan looking at the [cfs demo doc](https://github.com/elisa-tech/wg-aerospace/pull/134) as the embedded demo PR that pulls the build-cfs.md instructions together with running the lights demo, e,g. [embedded demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md) would allow you to run the cfs based lights demo.
+  - ACTIONs:
+  - Pinged Salim on the PR for any existing docs and to redo the demo
+  - @martin and other: Reproduce the steps, enhance (link) documentation so each step is properly documented
+  - References:
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md>
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights-cfs.md>
+- [Minimal Kernel Plan](https://github.com/elisa-tech/wg-aerospace/pull/179) [[Issue Link]](https://github.com/elisa-tech/wg-aerospace/issues/168)
+  - **ACTION: Weber to update the ticket and breakout into sub tickets. Also clarified the scope at this point to workflow capture for feedback.**
+- [Mixed Criticality Material](https://github.com/elisa-tech/wg-aerospace/pull/177) supporting:
+  - May 13th virtual seminar - <https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/>
+  - London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+
+SystemsWG copilot monitoring Linux - ACTION: Ivan is preparing example (2wks?)
+
+**Presentations**
+
+QEMU (Future call - Leonidas) - May 8th (starting in Use case call)
+
+- Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+**Possible topics?**
+
+SGL roadmap alignment (from Apr SGL call discussion)
+
+- Using a cfs image in a AeroWG demo
+  - Mostly a vanilla OE, so customization approach is a ?
+  - We could PR an application via a doc/manual based demo
+    - This would drive items to remove from the SGL build
+    - Doesn't change the SGL build initially, just shows use
+    - We could pull our cFS+sample app directly over (QEMU ARM64) and tailor docs
+    - Future: Target hardware or QEMU RISC-V?
+- visibility to minimal kernel work
+- add a mixed functionality/criticality example for space (like SoDev) to the Xen workshop talk
+
+---
 
 ## 20260424
 
