@@ -20,6 +20,107 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
 
+**Presentations**
+
+- May 8th - QEMU (Future call - Leonidas) - (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+- May 13th virtual seminar - <https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/>
+- June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+
+## 20260508
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Ivan Perez (KBR @ NASA)
+- Pawel Wodnicki (32bitmicro)
+- Daniel Riechers (Collins Aerospace)
+- Salim Jalaleddine (Boeing)
+- Rob Woolley (Wind River Systems, Inc)
+- Wanja Zaeske (DLR)
+- Brian Wood (The Boeing Company)
+
+**Discussion topics**
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Ivan looking at the [cfs demo doc](https://github.com/elisa-tech/wg-aerospace/pull/134) as the embedded demo PR that pulls the build-cfs.md instructions together with running the lights demo, e,g. [embedded demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md) would allow you to run the cfs based lights demo.
+  - Goal: Reproduce the steps, enhance (link) documentation so each step is properly documented
+  - Pawel tried the build cfs directions from last time, debugged with Ivan and Salim to get the list of actions below.
+  - Weber mentioned that we kept the changes as a patch so far but we should figure out the right way to store the app / demo material for when it's folded into Nix and SGL like environments as a demonstration.
+  - References:
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md>
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights-cfs.md>
+  - ACTIONs:
+    - Back the Makefile up to 23de7a8bf7a7452088c4dd1a0bac9de9b4d597c5
+      - Drops us to Ubuntu 22 with old working cabal and tools (successfully demoed)
+      - ACTION: Weber need to get the U26 build to work and verify the tools are good. Also need to fix the permission issue that was blocking earlier this year.
+    - Update steps to patch
+    - Add command sequence to generate the apps
+    - Copy apps so they get into the emulation rootfs
+    - Update the docs for the embedded demo so it show cases the cFS apps deployment of the cabin lights demo
+    - Jump version of ogma, cabal based on needed updates - <https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/-/jobs/14091079727>
+    - Regenerate any content because of the new tools
+    - Do the demo and fix any docs
+    - We need to see if we point the user to follow the build cfs script or do we clean that up so it is user friendly in the [embedded demo page](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md)?
+
+- [Add nix-based kernel config documentation](https://github.com/elisa-tech/wg-aerospace/pull/176)
+  - Rework lint/signoff after call to merge for contributions
+  - ACTION: Weber - Fork force pushing doesn't work - start debug with LXF team
+    - e.g., `git remote add martin git://github.com/martin/myfork`
+    - `git push -f -u martin ab12kdl:pr-branch`
+    - <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/committing-changes-to-a-pull-request-branch-created-from-a-fork>
+    - Weber tried the fork force push from the discussion last time and still got a permission denied and Martin checked on his end that the checkbox was set.
+    - Weber sent a note to LXF support to see if they know why the permission error
+  - Live debug with Martin to try and run the formatter
+
+Wanja brought a topic on systemd startup issues with cfs
+
+```text
+May 08 14:19:03 nixos systemd[1]: Started elisa-demo-cfs.service.
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Default Reset Type = PO
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Default Reset SubType = 1
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Default CPU ID = 1
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Default Spacecraft ID = 42
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Default CPU Name: cpu1
+May 08 14:19:04 nixos core-cpu1[283]: CFE_PSP: Starting the cFE with a POWER ON reset.
+May 08 14:19:04 nixos systemd[1]: elisa-demo-cfs.service: Main process exited, code=exited, status=255/EXCEPTION
+May 08 14:19:04 nixos systemd[1]: elisa-demo-cfs.service: Failed with result 'exit-code'.
+```
+
+- Did some live Ivan/Wanja working to recreate
+- `nix run .\#nixosConfigurations.elisa-demo-cfs.config.system.build.standaloneRamdiskVm`
+- `systemctl status elisa-demo-cfs`
+- ACTION: Ivan investigating
+
+**Possible topics?**
+
+- Nix - Who to use beyond the practice captured so far for, e.g. bringing an application to the environment. (Wanja and Martin discussion)
+  - build flow plus possibly targeting hardware
+
+SystemsWG copilot monitoring Linux - ACTION: Ivan is preparing example (2wks?)
+
+SGL roadmap alignment (from Apr SGL call discussion)
+
+- Using a cfs image in a AeroWG demo
+  - Mostly a vanilla OE, so customization approach is a ?
+  - We could PR an application via a doc/manual based demo
+    - This would drive items to remove from the SGL build
+    - Doesn't change the SGL build initially, just shows use
+    - We could pull our cFS+sample app directly over (QEMU ARM64) and tailor docs
+    - Future: Target hardware or QEMU RISC-V?
+- visibility to minimal kernel work
+- add a mixed functionality/criticality example for space (like SoDev) to the Xen workshop talk
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- [Minimal Kernel Plan](https://github.com/elisa-tech/wg-aerospace/pull/179) [[Issue Link]](https://github.com/elisa-tech/wg-aerospace/issues/168)
+  - **ACTION: Weber to update the ticket and breakout into sub tickets. Also clarified the scope at this point to workflow capture for feedback.**
+- [Mixed Criticality Material](https://github.com/elisa-tech/wg-aerospace/pull/177) supporting:
+
+---
+
 ## 20260501
 
 **Attendance**
