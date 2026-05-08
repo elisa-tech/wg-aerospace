@@ -46,7 +46,7 @@ This document register shall help to find the information you are looking for. D
 
 [AvioNix Demo](./../demos/AvioNix-demo/README.md)
 
-- [How to measure Kernel SLoC impact of Kernel config changes](./NixBasedKernelConfig.md)
+- [How to measure Kernel SLoC impact of Kernel config changes](./../demos/AvioNix-demo/NixBasedKernelConfig.md)
 
 ## Embedded environments (with respect to use-cases)
 
