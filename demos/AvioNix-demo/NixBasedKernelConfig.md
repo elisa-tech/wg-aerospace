@@ -8,19 +8,19 @@ The goal of this document is to provide means to change the kernel config to an 
 There are many more dimensions to it like target hardware and/or kernel version, but this is a starting point.
 Switching on/off certain features of the kernel this way ensures that also dependencies are covered and reduced the amount of parameters to a minimum in the first place.
 
-## General workflow:
+## General workflow
 
 1. Assuming you have a Nix environment and checked out the wg-aerospace repository,
 2. Enable/disable kernel options in the `minimal-linux-kernel.configfile`
 3. Have Nix build the actual kernel configuration out of it
 
-## Exemplary workflow:
+## Exemplary workflow
 
 1. Checkout the repository from GIT to your home directory (into the wg-aerospace subfolder)
 2. Go to: `~/wg-aerospace/demos/AvioNix-demo`
 3. Inspect the file `pkgs/minimal-linux-kernel.nix`
 
-- (Repo-Link: https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77)
+- (Repo-Link: <https://github.com/elisa-tech/wg-aerospace/blob/c66da7a41bea478b34aef96db5a34d3e40b8381a/demos/AvioNix-demo/pkgs/minimal-linux-kernel.nix#L77>)
 - You will find in that file the section `structuredExtraConfig`, like:
 
 ```nix

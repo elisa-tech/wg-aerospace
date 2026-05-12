@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+
+Meeting Minutes Checklist
+=========================
+
+PRE-MEETING (before the call)
+-----------------------------
+1. Create the next meeting minutes file from template
+   - File: ELISA-AeroWG-Meeting-YYYYMMDD.md
+   - Date is the 2nd week of the month (General Call)
+   - Copy structure from DATE_template.md
+   - Copy events section from docs/events.md into the agenda
+   - Copy "Attended recently in the past" list from DATE_template.md into the agenda
+
+2. Propose agenda topics
+   - Read the most recent general call minutes for carry-over items / open ACTIONs
+   - Read the use case testing minutes (ELISA-AeroWG-Usecase-Testing-minutes.md) for
+     topics discussed since the last general call
+   - Carry forward unresolved ACTIONs from prior meeting
+   - Check open PRs (https://github.com/elisa-tech/wg-aerospace/pulls)
+   - Check events list for upcoming deadlines or debrief items
+
+3. Draft agenda email
+   - Subject: "ELISA Aerospace WG - [Month Day] Call Agenda (10am CST)"
+   - Highlight 2-3 key themes briefly
+   - List PRs needing review
+   - Note upcoming events/deadlines
+
+POST-MEETING (after the call)
+-----------------------------
+4. Incorporate chat text into minutes
+   - Cross-reference all shared links from Zoom chat against the minutes
+   - Add any missing links/references to the appropriate section
+   - Add contact info shared (emails) to relevant ACTION items
+
+5. Clean up events section
+   - Use shared links to clarify/correct dates and locations
+   - Add any new events mentioned during the call
+   - Consistent format: **Date** Name, Location -> [link](url)
+   - Move past events to "Recently Past" section if needed
+   - Sync updated events back into docs/events.md (canonical source)
+   - Remove the events section from the meeting minutes file (lives in docs/events.md)
+
+6. Update the template attendee list
+   - Compare today's attendees + recent use case call attendees against
+     ELISA-AeroWG-Meeting-DATE_template.md "Attended recently in the past"
+   - Add any new names (alphabetical order)
+   - Normalize format: "Name - Organization" (no parentheses)
+   - Sync updated list back into DATE_template.md (canonical source)
+   - Remove "Attended recently in the past" list from the meeting minutes file (lives in template) (leave the header and the link to the list)
+
+7. Run super-linter on full codebase
+   - Set VALIDATE_ALL_CODEBASE=true in .github/super-linter.env
+   - Run: docker run -e RUN_LOCAL=true -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint --rm ghcr.io/super-linter/super-linter:latest
+   - Fix any issues found
+   - Revert VALIDATE_ALL_CODEBASE=false in .github/super-linter.env
+
+8. Verify SPDX license headers in any new files
+   - All .md files need: <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+   - All .txt/code files need: # SPDX-License-Identifier: CC-BY-SA-4.0
+   - See Contributing.md "License" section for details and reuse tool usage
+
+NOTES
+-----
+- General Call = 2nd week of month, 10-11am CST
+- Paper Call = 4th week of month (suffix "-paper")
+- Use case call = weekly, minutes in ELISA-AeroWG-Usecase-Testing-minutes.md
+- The schedule reference is in the repo README.md

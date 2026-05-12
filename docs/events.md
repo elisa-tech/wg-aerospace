@@ -7,27 +7,32 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **Apr 4** IEEE SMC-IT/SCC IEEE International Conference on Space Mission Challenges for Information Technology (SMC-IT)
-  17th International Conference on Space Computing (SCC) in Pasadena, California, US -> [link](https://2026.smcit-scc.space)
-  - Deadline Paper: April 4, 2026
-    - Post quantum crypto (Leonidas) - (RISC-V crypto focused) (touching on ELISA)
-    - QEMU models for space processors (Leonidas)
-  - Workshop on V&V of multicore systems (prior topics cert / practical issues / interferenace mgmt) - Ivan has a contact if interested.
-- **May 18-20** Open Source Summit North America -> [link](https://events.linuxfoundation.org/open-source-summit-north-america/)
-- **May 27-28** Embedded Recipes, Nice France -> [link](https://embedded-recipes.org/2026/)
+- **May 18-20** Open Source Summit North America, Denver, CO -> [link](https://events.linuxfoundation.org/open-source-summit-north-america/)
+- **May 27-28** Embedded Recipes, Nice, France -> [link](https://embedded-recipes.org/2026/)
 - **May 29** Yocto Project Summit, Nice, France -> [link](https://pretalx.com/yocto-embedded-recipes-2026/)
 - **June 8-12** RISC-V Summit Europe, Bologna, Italy
   - Special session for RISC-V in Space
-- **Aug 03-07** IEEE SMC-IT/SCC in Pasadena, California, US -> [link](https://2026.smcit-scc.space/)
-- **Sept 13-17** ICAS Congress in Sydney, Australia -> [link](https://icas2026.com/)
-- **Sept 13-17** DASC Congress in Orlando, USA -> [link](https://dasconline.org/2026/)
+- **June 9-11** ELISA Workshop London (virtual) -> [link](https://elisa.tech/event/elisa-workshop-london-2026/)
+- **Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
+  - 17th International Conference on Space Computing (SCC)
+  - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
+  - Workshop on V&V of multicore systems - **Submissions open until May 23** -> [VVCiSS](https://2026.smcit-scc.space/home/vvciss-2026)
+    - Prior topics: cert / practical issues / interference mgmt - Ivan has a contact if interested
+- **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
+- **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
-- **Oct 2026** High Integrity Systems Conference [Link](https://www.his-conference.co.uk/)
-  - full presentations open **April 2026**, deadline likely end of May
-  - posters much later, not selected full presentations can be also considered for posters
-  - safe/secure lang focus for high-integ (in-person)
+- **Sept 22-25** SafeComp 2026, Valencia, Spain -> [link](https://safecomp2026.webs.upv.es/)
+  - Call for Position Papers deadline: July 10, 2026
+  - Leonidas keynoting
+- **Oct 2026** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
+  - Full presentations deadline likely end of May
+  - Posters much later; not-selected full presentations can be considered for posters
+  - Safe/secure lang focus for high-integrity (in-person)
   - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
   - **ACTION:** Leonidas checking on if he can attend
+- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
+  - CFP Closes: June 24, 2026
+- **Nov** Xen Summit, Munich - Date TBD
 - NASA SPARK submissions -> [link](https://spark.nasa.gov/)
 
 ## Recently Past Deadlines/Events
