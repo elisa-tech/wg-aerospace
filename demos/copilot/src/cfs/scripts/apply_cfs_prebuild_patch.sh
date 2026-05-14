@@ -21,7 +21,7 @@ sed -i 's|SET(CMAKE_C_COMPILER.*|SET(CMAKE_C_COMPILER                    "'"$SDK
 sed -i 's|SET(CMAKE_CXX_COMPILER.*|SET(CMAKE_CXX_COMPILER                  "'"$SDK_DIR"'/bin/aarch64-linux-g++")|' sample_defs/toolchain-arm-linux-gnu.cmake
 sed -i 's|SET(CMAKE_FIND_ROOT_PATH.*|SET(CMAKE_FIND_ROOT_PATH                "'"$SDK_DIR"'/aarch64-buildroot-linux-musl/sysroot")|' sample_defs/toolchain-arm-linux-gnu.cmake
 
-# 3. Patch sample_defs/targets.cmake
+# 3. Patch sample_defs/targets.cmake and sample_defs/cpu1_cfe_es_startup.scr
 echo "Patching sample_defs/targets.cmake..."
 sed -i 's|SET(cpu1_SYSTEM.*|SET(cpu1_SYSTEM arm-linux-gnu)|' sample_defs/targets.cmake
 sed -i 's|\(SET(cpu1_APPLIST[^)]\+\)|\1 copilot_app lights_app switch_app|' sample_defs/targets.cmake
