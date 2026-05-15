@@ -14,7 +14,7 @@ else ifeq ($(ARCH), aarch64)
     CROSS_PREFIX=aarch64-none-linux-gnu
 endif
 
-CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2284164686
+CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2528325132
 CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
 CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
 
@@ -46,7 +46,7 @@ prep_cross: prep prep_cross_clean
 	fi
 	tar xf archive.tar
 	tar xf $(CROSS_TOOLCHAIN).tar.gz && rm -f $(CROSS_TOOLCHAIN).tar.gz
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/$(CROSS_TOOLCHAIN) && sudo apt update && sudo apt install -y file && ./relocate-sdk.sh'
+	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/$(CROSS_TOOLCHAIN) && ./relocate-sdk.sh'
 
 prep_cross_clean:
 	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf $(CROSS_TOOLCHAIN)* Image rootfs.cpio* extracted_cpio archive.tar'
@@ -131,7 +131,7 @@ test: test_monitors systemtest main_syslog_time_cross_test
 
 test_monitors: main_syslog_test
 	./test.sh
-		
+
 systemtest: main_syslog_time
 	$(RUN_PREFIX_TEST) sudo sh -c "cd /demo/copilot/src/monitors \
 		&& ../tests/runtests.sh"

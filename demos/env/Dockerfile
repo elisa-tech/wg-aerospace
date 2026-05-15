@@ -23,6 +23,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       build-essential=* \
       cpio=* \
+      file=* \
       git=* \
       git-lfs=* \
       less=* \
@@ -44,16 +45,19 @@ RUN apt-get update && \
 # Install Copilot / Haskell via Ogma as depends
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-      alex=3.5.* \
-      happy=1.20.* \
-      ghc=9.6.* \
-      libbz2-dev=1.0.* \
-      libexpat1-dev=2.7.* \
-      libghc-copilot-dev=4.* \
-      zlib1g-dev=1:1.3.dfsg+really1.3.* \
-      ogma=1.10.* \
-      pkg-config=1.8.* \
-      software-properties-common=0.119 \
+      alex=* \
+      cabal-install=* \
+      happy=* \
+      ghc=* \
+      libbz2-dev=* \
+      libexpat1-dev=* \
+      libghc-copilot-dev=* \
+      make=* \
+      cmake=* \
+      zlib1g-dev=* \
+      ogma=* \
+      pkg-config=* \
+      software-properties-common=* \
       && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -83,22 +87,20 @@ RUN echo "Creation Date: $(date -u +'%Y-%m-%dT%H:%M:%SZ')" > /.VERSION && \
     cat /.VERSION
 
 # Stage default user
-RUN deluser --remove-home ubuntu || true
-RUN useradd -ms /bin/bash user
-RUN echo "user ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/user \
-    && chmod 0440 /etc/sudoers.d/user
+RUN echo "ubuntu ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ubuntu \
+    && chmod 0440 /etc/sudoers.d/ubuntu
 # hadolint ignore=SC2016
-RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/user/.cabal/bin/:$PATH' >> /home/user/.bashrc && \
-    chown -R user:user /home/user
-USER user
-WORKDIR /home/user
+RUN echo 'export PATH=/opt/ghc/8.6.5/bin:/opt/cabal/2.4/bin:/home/ubuntu/.cabal/bin/:$PATH' >> /home/ubuntu/.bashrc && \
+    chown -R ubuntu:ubuntu /home/ubuntu
+USER ubuntu
+WORKDIR /home/ubuntu
 
 # Transparent uid:gid setup for manual container use
 # Moved here as the copy will always reset cached history for everything that follows
 USER root
 COPY entry.sh /entry.sh
 RUN chmod 777 /entry.sh && chown root:root /entry.sh
-USER user
+USER ubuntu
 
 # Check that tools seem to run as normal user
 RUN ghci --version && \
