@@ -4,11 +4,11 @@
 
 set -e
 
-NON_ROOT_USER="user"
+NON_ROOT_USER="ubuntu"
 if [[ -n "$HOST_UID" ]]; then
-	USER_UID=$(id -u user)
+	USER_UID=$(id -u ubuntu)
 	if [[ "$USER_UID" -eq "$HOST_UID" ]]; then
-		echo "NOT overriding UID/GID, UID of user 'user' matches HOST_UID."
+		echo "NOT overriding UID/GID, UID of user 'ubuntu' matches HOST_UID."
 	else
 		if [[ -z "$HOST_GID" ]]; then
 			echo "ERROR: please set HOST_GID" >&2
@@ -18,8 +18,8 @@ if [[ -n "$HOST_UID" ]]; then
 		NON_ROOT_USER="mappedUser"
 		sudo groupadd -g "$HOST_GID" "$NON_ROOT_USER"
 		sudo useradd -m -u "$HOST_UID" -g "$HOST_GID" -s /bin/bash "$NON_ROOT_USER"
-		sudo cp -a /home/user/.bash* \
-			/home/user/.profile \
+		sudo cp -a /home/ubuntu/.bash* \
+			/home/ubuntu/.profile \
 			/home/$NON_ROOT_USER/
 		sudo chown $NON_ROOT_USER:$NON_ROOT_USER /home/$NON_ROOT_USER/ -R
 		sudo sh -c 'echo "mappedUser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/mappedUser'
