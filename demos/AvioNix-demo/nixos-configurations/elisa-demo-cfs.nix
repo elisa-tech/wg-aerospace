@@ -74,7 +74,7 @@
       pkgs.zstd
 
       # debugging aids
-      pkgs.gdb
+      # pkgs.gdb
       # pkgs.iproute2
       # pkgs.netcat
       # pkgs.socat
@@ -82,22 +82,6 @@
 
       # ELISA demo software
       pkgs.elisa-demo-python-light
-
-      # add source to rootfs
-      (pkgs.writeShellApplication {
-        # break exit
-        # up
-        name = "debug-cfs";
-        text = ''
-          set -x
-          CPU="''${1:-cpu1}"
-
-          pushd -- "${pkgs.enableDebugging pkgs.elisa-demo-cfs}/exe/$CPU"
-          gdb --eval-command='set substitute-path /build/src/cfs ${pkgs.srcOnly pkgs.elisa-demo-cfs}' \
-            "core-$CPU"
-        '';
-      })
-
     ];
 
     # use this to add packages to the early boot stage
@@ -115,7 +99,7 @@
     # add our applications
     systemd.services.elisa-demo-cfs =
       let
-        cfsPkg = pkgs.enableDebugging pkgs.elisa-demo-cfs;
+        cfsPkg = pkgs.elisa-demo-cfs;
       in
       {
         wantedBy = [ "multi-user.target" ];
