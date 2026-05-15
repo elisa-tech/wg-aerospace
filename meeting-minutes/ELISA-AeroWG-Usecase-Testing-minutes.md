@@ -15,6 +15,13 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
     _"During your update last week, you mentioned the cabin lights demo. We were wondering if you'd be interested in sharing more
     details about it in a blog and the collaboration under the ELISA Project. We'd love to publish more details in the next few
     weeks - we can even embed your video in it."_
+  - ACTION: **Next call we do the demo and record it**
+  - Demo: Starting with the Basic Demo
+  - Audience: Students (Martin: Try to have students review our video/post before published)
+  - [FUTURE: Do all demos, ACTION: Clean up docs/links we point at for demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md#getting-started)
+    - Need to figure out how to document the cFS integration
+      - Do we simplify the practice or create a larger learning/example path
+      - Already integrated with Nix and some of the integration is visible, but we could also try to run the example with SGL which would force a framework to reflect on the demo.
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
@@ -22,10 +29,71 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Presentations**
 
-- May 8th - QEMU (Future call - Leonidas) - (starting in Use case call)
+- Date? - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
-- May 13th virtual seminar - <https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/>
 - June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+
+## 20260515
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Wanja Zaeske (DLR)
+- Pawel Wodnicki (32bitmicro)
+- Ivan Perez (KBR @ NASA)
+- Benjamin Pellieux
+- Brian Wood (The Boeing Company)
+
+**Discussion topics**
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- [cfs demo doc](https://github.com/elisa-tech/wg-aerospace/pull/134) updates the cFS build instructions
+  - TODO the Cabin Lights embedded demo instructions need created
+  - Then a Cabin lights version of the instructions that pulls the build-cfs.md instructions together with running the lights demo, e,g. [embedded demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md).
+  - References:
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md>
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights-cfs.md>
+  - ACTIONs:
+    - Container is fixed in - <https://github.com/elisa-tech/wg-aerospace/pull/188> and updates to instructions commented on <https://github.com/elisa-tech/wg-aerospace/pull/134>
+    - Make embedded demo instructions
+    - Make embedded demo plus cFS cabin lights instructions
+      - Update steps to patch
+      - Add command sequence to generate the apps
+      - Copy apps so they get into the emulation rootfs
+      - Update the docs for the embedded demo so it show cases the cFS apps deployment of the cabin lights demo
+      - Do the demo and fix any docs
+      - We need to see if we point the user to follow the build cfs script or do we clean that up so it is user friendly in the [embedded demo page](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md)?
+
+(From last call)Wanja brought a topic on systemd startup issues with cfs
+
+- The group did live debug and found kernel dependencies at fault.
+
+**Possible topics?**
+
+- Nix - Who to use beyond the practice captured so far for, e.g. bringing an application to the environment. (Wanja and Martin discussion)
+  - build flow plus possibly targeting hardware
+
+[Minimal Kernel Plan](https://github.com/elisa-tech/wg-aerospace/pull/179) [[Issue Link]](https://github.com/elisa-tech/wg-aerospace/issues/168)
+
+[Mixed Criticality Material](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+SystemsWG copilot monitoring Linux - ACTION: Ivan is preparing example (2wks?)
+
+SGL roadmap alignment (from Apr SGL call discussion)
+
+- Using a cfs image in a AeroWG demo
+  - Mostly a vanilla OE, so customization approach is a ?
+  - We could PR an application via a doc/manual based demo
+    - This would drive items to remove from the SGL build
+    - Doesn't change the SGL build initially, just shows use
+    - We could pull our cFS+sample app directly over (QEMU ARM64) and tailor docs
+    - Future: Target hardware or QEMU RISC-V?
+- visibility to minimal kernel work
+- add a mixed functionality/criticality example for space (like SoDev) to the Xen workshop talk
+
+---
 
 ## 20260508
 
