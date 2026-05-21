@@ -25,22 +25,12 @@ endif()
 add_cfe_app({{app_name_lc}} ${APP_SRC_FILES})
 
 add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/cabal.sandbox.config
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/
-    COMMAND cabal v1-sandbox init
-    COMMAND cabal update
-    COMMAND cabal v1-install copilot
-    COMMENT "Installing Copilot"
-)
-
-add_custom_command(
-   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/cabal.sandbox.config
    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/Properties.hs
    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/copilot.c
           ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/copilot.h
           ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/copilot_types.h
    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/fsw/src/
-   COMMAND cabal v1-exec "--" runhaskell Properties.hs
+   COMMAND runhaskell Properties.hs
    COMMENT "Compiling Copilot code"
 )
 
