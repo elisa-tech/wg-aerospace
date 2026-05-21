@@ -24,16 +24,12 @@ The following instructions assume that you've completed the [Development Setup](
    make dev
    ```
 4) At this point you're in the docker container with all the tools to do testing and rebuild of the demos.
-5) Install required packages inside the container
-   ```bash
-   sudo apt update && sudo apt install -y  vim git file wget make cmake
-   ```
-6) If you wish to have the cFS build to persist on the docker container
+5) If you wish to have the cFS build to persist on the docker container
    ```bash
    cd /demo/
    ELISA_DEMO=$(pwd)/elisa_emulation
    ```
-7) Make the directory where cFS will be cloned into
+6) Make the directory where cFS will be cloned into
    ```bash
    mkdir -p $ELISA_DEMO && cd $ELISA_DEMO
    ```
@@ -44,8 +40,11 @@ The following instructions assume that you've completed the [Development Setup](
    ```bash
    cd $ELISA_DEMO
    ```
-2) Clone cFS from github with submodules (patch is for cFS commit 9c786d2536821aae608560e0d75835e3637b499d): 
-   ```
+2) Clone cFS from github with submodules (patch is for cFS commit 9c786d2536821aae608560e0d75835e3637b499d):
+
+   > **Note:** If you have already cloned cFS, you can skip this step.
+
+   ```bash
     git clone https://github.com/nasa/cFS.git
     cd cFS
     git checkout 9c786d2536821aae608560e0d75835e3637b499d
@@ -53,6 +52,9 @@ The following instructions assume that you've completed the [Development Setup](
     git submodule update
    ```
 3. Copy sample_defs and Makefile to cFS main directory
+
+   > **Note:** If you have already cloned cFS, you can skip this step.
+
    ```bash
    cp -r cfe/cmake/sample_defs .
    cp cfe/cmake/Makefile.sample Makefile
@@ -83,7 +85,7 @@ The following instructions assume that you've completed the [Development Setup](
    ```
 
 5) Build cFS with following commands (note: the first build may take 5-10 minutes as the Copilot app downloads and compiles Haskell dependencies from scratch)
-```
+```bash
 make SIMULATION=arm-linux-gnu O=build-elisa prep
 make SIMULATION=arm-linux-gnu O=build-elisa
 ```
