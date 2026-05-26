@@ -40,21 +40,21 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Leonidas Kosmidis (Barcelona Supercomputing Center)
 
 **Discussion topics**
-  - Adressing demo videos: Min and Maemalynn Meanor <maemalynn@linuxfoundation.org> asked about based on the annual update material.
-    _"During your update last week, you mentioned the cabin lights demo. We were wondering if you'd be interested in sharing more
-    details about it in a blog and the collaboration under the ELISA Project. We'd love to publish more details in the next few
-    weeks - we can even embed your video in it."_
-    - Prepared and did the demo and recorded it to the cloud (short snippet for trial beforehand)
-    - Demo used: Starting with the Basic Demo
-    - We did not find out how to acess/dhwoload the vikdeo which is supposed to be recorded in the cloud
-    - Action: Ask Min and review next week
-    - From the audience it seems to be feasible well done
-    - ToSo: Descritpion of the video should link the two pages shown in the browser
+
+- Addressing demo videos: Min and Maemalynn Meanor <maemalynn@linuxfoundation.org> asked about based on the annual update material.
+  _"During your update last week, you mentioned the cabin lights demo. We were wondering if you'd be interested in sharing more
+  details about it in a blog and the collaboration under the ELISA Project. We'd love to publish more details in the next few
+  weeks - we can even embed your video in it."_
+  - Prepared and did the demo and recorded it to the cloud (short snippet for trial beforehand)
+  - Demo used: Starting with the Basic Demo
+  - We did not find out how to access/download the video which is supposed to be recorded in the cloud
+  - Action: Ask Min and review next week
+  - From the audience it seems to be feasible well done
+  - ToSo: Description of the video should link the two pages shown in the browser
 
 [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
 
 - [integrate cfs into AvioNix NixOS config and Debugging steps](https://github.com/elisa-tech/wg-aerospace/pull/190) discussed and merged
-
 
 ## 20260515
 
@@ -247,7 +247,7 @@ SGL roadmap alignment (from Apr SGL call discussion)
     - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md>
     - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/use-cases/use-case-cabin-lights-cfs.md>
 - [Minimal Kernel Plan](https://github.com/elisa-tech/wg-aerospace/pull/179) [[Issue Link]](https://github.com/elisa-tech/wg-aerospace/issues/168)
-  - **ACTION: Weber to upda^te the ticket and breakout into sub tickets. Also clarified the scope at this point to workflow capture for feedback.**
+  - **ACTION: Weber to update the ticket and breakout into sub tickets. Also clarified the scope at this point to workflow capture for feedback.**
 - [Mixed Criticality Material](https://github.com/elisa-tech/wg-aerospace/pull/177) supporting:
   - May 13th virtual seminar - <https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/>
   - London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
