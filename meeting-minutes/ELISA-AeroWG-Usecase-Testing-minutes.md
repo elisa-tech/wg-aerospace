@@ -27,6 +27,30 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 - June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
 
+## 20260529
+
+**Attendance**
+
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Pawel Wodnicki (32bitmicro)
+- Ivan Perez (KBR @ NASA)
+- Brian Wood (The Boeing Company)
+- Ivan Rodriguez (Coros Space)
+
+**Discussion topics**
+
+- Addressing demo videos
+  - Watching video as a group. Decision: Fine to be released
+  - Prepared appendix material (will be sent via email)
+  - Open topics:
+    - Final compilation and upload of the video/content (Min?)
+    - Do we need a front-page (looks like this from the video series) - template to be used?
+    - Transition to Matt to have a look
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- None addressed in this call
+
 ## 20260522
 
 **Attendance**
@@ -50,7 +74,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
   - We did not find out how to access/download the video which is supposed to be recorded in the cloud
   - Action: Ask Min and review next week
   - From the audience it seems to be feasible well done
-  - ToSo: Description of the video should link the two pages shown in the browser
+  - ToDo: Description of the video should link the two pages shown in the browser
 
 [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
 
