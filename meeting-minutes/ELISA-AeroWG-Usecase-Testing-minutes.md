@@ -10,12 +10,6 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Parking lot:**
 
-- ELISA blog post - what do we want to do for this? demo? what content, what doc work do we need to finish first
-  - Audience: Students (Martin: Try to have students review our video/post before published)
-  - [FUTURE: Do all demos, ACTION: Clean up docs/links we point at for demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md#getting-started)
-    - Need to figure out how to document the cFS integration
-      - Do we simplify the practice or create a larger learning/example path
-      - Already integrated with Nix and some of the integration is visible, but we could also try to run the example with SGL which would force a framework to reflect on the demo.
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
@@ -26,6 +20,65 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Date? - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 - June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+
+## 20260605
+
+**Attendance**
+
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Pawel Wodnicki (32bitmicro)
+- Ivan Perez (KBR @ NASA)
+- Leonidas Kosmidis (BSC)
+- Brian Wood (The Boeing Company)
+- Ivan Rodriguez (Coros Space)
+- Matt Weber (The Boeing Company)
+
+**Discussion topics**
+
+- **ACTION:** (Weber) review post and follow up with Marketing email to work on posting
+
+- ELISA blog post - what do we want to do after the first one?
+  - What content, what doc work do we need to finish?
+    - [Example: Clean up docs/links we point at for demo](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/Readme.md#getting-started)
+  - Audience: Students (Martin: Try to have students review our video/post before published)
+  - Sharing future concepts / blog post ideas (builds on current demos)
+    - Nix seminar showing applicability to safety systems and how it's used to build the cFS Lights demo (June 2026)
+      - Could do a post later this summer for this
+    - Copilot cFS approach for development of applications on a Linux system - Is this on top of a SGL stack/build? (See if we can ask Rob next time)
+    - Nix analysis (measurable aspects) of how configuration dependencies impact the Linux kernel
+      - Playground to test different configurations - boot time, size, reliability, recoverability
+      - Do with Lights example
+      - Observe the footprint of python use and how lang/API use in userspace propagates to build time, img size, complexity and scheduling? (python garbage collection, etc)
+    - Some concept of how systems or partitions communicate with each other (looking at aspects of how you'd design and constrain it?)
+      - How deep do we go with a complex system or do we keep concepts more system level?
+    - Copilot monitoring of Lights process(s) execution w/ RT priority
+      - Show scheduling is enforced
+      - Have a non-RT process causes an intentional OOM event (could be tmpfs overrun)
+      - Convert demo code away from python to C
+    - Linux Kernel eBPF Copilot monitors
+    - WCET with eBPF: BPF-Prime <https://drive.google.com/file/d/1pC442s_kTjPOh7SsPzbpZ4zhxManvTtl/view> from FSW 2026, suggestion to use eBPF for critical/real-time scenarios. <https://github.com/fprime-bpf>
+    - Interpreter languages and impacts to embedded products (blog post?) , mem / scheduling / fault approach / size / ...
+    - WASM for embedded and safety - similar impact list for the system with this approach
+      - How would we run our demo in this env? (which parts would be use it for and how does comms work?)
+    - Same is likely true for other languages like RUST
+  - What environments are we looking to do these concepts on top of?
+    - Basic native demo on container env (current blog post)
+      - Embedded (Keep for a cross-build test case of native example and not demo use)
+        - Buildroot-based Linux Kernel and busybox env
+    - **ACTION:** Embedded cFS demo - Migrate to SGL and then document for usability
+    - Nix builds
+      - Embedded build for testing kernel configurations
+      - Embedded cFS light demo
+    - SGL cFS build w/ Yocto
+      - Uses cFS layer
+      - **ACTION:** Port over our embedded cFS demo
+  - **ACTION:** Weber - Add to [ideas](https://github.com/elisa-tech/wg-aerospace/discussions) and group things by labels so we can get a list to vote on
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- None to address in this call
+
+**Next time** - What's missing for documentation of demos and needed actions?
 
 ## 20260529
 
