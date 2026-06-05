@@ -72,7 +72,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
     - SGL cFS build w/ Yocto
       - Uses cFS layer
       - **ACTION:** Port over our embedded cFS demo
-  - **ACTION:** Weber - Add to [ideas](https://github.com/elisa-tech/wg-aerospace/discussions) and group things by labels so we can get a list to vote on
+  - [Vote on these ideas by clicking the up arrow to the left of the idea](https://github.com/elisa-tech/wg-aerospace/discussions?discussions_q=is%3Aopen+label%3Ademo+)
 
 [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
 
