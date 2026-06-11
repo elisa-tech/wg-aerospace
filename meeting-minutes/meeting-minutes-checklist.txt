@@ -9,31 +9,51 @@ PRE-MEETING (before the call)
    - File: ELISA-AeroWG-Meeting-YYYYMMDD.md
    - Date is the 2nd week of the month (General Call)
    - Copy structure from DATE_template.md
-   - Copy events section from docs/events.md into the agenda
-   - Copy "Attended recently in the past" list from DATE_template.md into the agenda
+   - Copy full "## Upcoming Events" from docs/events.md into the "# Events" section
+   - Copy "Attended recently in the past" list from DATE_template.md into the Roll Call
 
 2. Propose agenda topics
    - Read the most recent general call minutes for carry-over items / open ACTIONs
    - Read the use case testing minutes (ELISA-AeroWG-Usecase-Testing-minutes.md) for
      topics discussed since the last general call
+   - Check the parking lot section of use case minutes for ongoing items
    - Carry forward unresolved ACTIONs from prior meeting
    - Check open PRs (https://github.com/elisa-tech/wg-aerospace/pulls)
    - Check events list for upcoming deadlines or debrief items
+   - Summarize use case call updates into a single agenda section with sub-bullets
 
 3. Draft agenda email
    - Subject: "ELISA Aerospace WG - [Month Day] Call Agenda (10am CST)"
-   - Highlight 2-3 key themes briefly
-   - List PRs needing review
-   - Note upcoming events/deadlines
+   - One-line summary of key themes (2-3)
+   - Bullet list of agenda topics (keep concise)
+   - PRs needing review (inline links, can be one line)
+   - Upcoming deadlines (compact, pipe-separated on one line)
+   - Zoom + live minutes links at the end
+
+4. Populate the HackMD live minutes pad
+   - See meeting-minutes/hackmd-tool/README.md for setup and usage
+   - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py push <minutes-file>
+   - The pad has a persistent 3-line footer - content is placed above it
+   - Verify by opening the HackMD link in browser
 
 POST-MEETING (after the call)
 -----------------------------
-4. Incorporate chat text into minutes
+5. Pull updated notes from HackMD into local minutes file
+   - See meeting-minutes/hackmd-tool/README.md for setup and usage
+   - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py pull <minutes-file>
+   - Merge any live edits (attendees, discussion notes, new ACTIONs, links) into
+     the local ELISA-AeroWG-Meeting-YYYYMMDD.md
+
+6. Clear the HackMD pad
+   - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py clear
+   - Leaves only the 3-line footer, ready for the next meeting
+
+7. Incorporate chat text into minutes
    - Cross-reference all shared links from Zoom chat against the minutes
    - Add any missing links/references to the appropriate section
    - Add contact info shared (emails) to relevant ACTION items
 
-5. Clean up events section
+8. Clean up events section
    - Use shared links to clarify/correct dates and locations
    - Add any new events mentioned during the call
    - Consistent format: **Date** Name, Location -> [link](url)
@@ -41,7 +61,7 @@ POST-MEETING (after the call)
    - Sync updated events back into docs/events.md (canonical source)
    - Remove the events section from the meeting minutes file (lives in docs/events.md)
 
-6. Update the template attendee list
+9. Update the template attendee list
    - Compare today's attendees + recent use case call attendees against
      ELISA-AeroWG-Meeting-DATE_template.md "Attended recently in the past"
    - Add any new names (alphabetical order)
@@ -49,16 +69,14 @@ POST-MEETING (after the call)
    - Sync updated list back into DATE_template.md (canonical source)
    - Remove "Attended recently in the past" list from the meeting minutes file (lives in template) (leave the header and the link to the list)
 
-7. Run super-linter on full codebase
+10. Run super-linter on full codebase
    - Set VALIDATE_ALL_CODEBASE=true in .github/super-linter.env
    - Run: docker run -e RUN_LOCAL=true -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint --rm ghcr.io/super-linter/super-linter:latest
    - Fix any issues found
    - Revert VALIDATE_ALL_CODEBASE=false in .github/super-linter.env
 
-8. Verify SPDX license headers in any new files
-   - All .md files need: <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
-   - All .txt/code files need: # SPDX-License-Identifier: CC-BY-SA-4.0
-   - See Contributing.md "License" section for details and reuse tool usage
+11. Verify SPDX license headers in any new files
+   - See Contributing.md "License" section for requirements and reuse tool usage
 
 NOTES
 -----
