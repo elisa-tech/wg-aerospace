@@ -45,7 +45,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Carole Garrison - NASA Langley
 - Chuck Wolber - Boeing
 - Cyril Jean - Microchip Technology Inc.
-- Daniel Riechers - Collins (Security)
+- Daniel Riechers - Collins Aerospace
 - Daniel Witte - Astro Mechanica
 - David Graziano - Collins (Security)
 - Don V Black
