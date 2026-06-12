@@ -84,3 +84,22 @@ NOTES
 - Paper Call = 4th week of month (suffix "-paper")
 - Use case call = weekly, minutes in ELISA-AeroWG-Usecase-Testing-minutes.md
 - The schedule reference is in the repo README.md
+
+USE CASE CALL (weekly)
+----------------------
+PRE-CALL:
+  1. Push the use case minutes file to the HackMD pad (up through last dated section)
+     - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py push <temp-file>
+     - The temp file should contain: header/parking lot, a new dated section placeholder
+       (## YYYYMMDD with attendance copied from prior week + empty Discussion topics),
+       then the previous meeting section for reference
+     - See meeting-minutes/hackmd-tool/README.md for tool usage
+
+POST-CALL:
+  2. Pull updated notes from HackMD
+     - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py pull <temp-file>
+     - Insert the new dated section into ELISA-AeroWG-Usecase-Testing-minutes.md
+       (new sections go at the top, below the header/parking lot)
+  3. Clear the HackMD pad
+     - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py clear
+  4. Check if any event info was added - sync into docs/events.md if so

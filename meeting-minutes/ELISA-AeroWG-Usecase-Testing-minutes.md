@@ -21,6 +21,49 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 - June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
 
+## 20260612
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Brian Wood (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Ivan Rodriguez (Coros Space)
+
+**Discussion topics**
+
+ACTION: Embedded cFS demo - Migrate to SGL and then document
+
+- Rob mentioned in AeroWG call that SGL is starting cFS recipe work soon
+- [Vote on these ideas by clicking the up arrow to the left of the idea](https://github.com/elisa-tech/wg-aerospace/discussions?discussions_q=is%3Aopen+label%3Ademo+)
+  - Reflection on engagement and votes
+    - Think about smaller updates
+    - Short content that drives brief engagement
+    - Review the barrier to entry and our audience....
+    - Can marketing help with pictures and diagrams?
+      - Idea to improve image quality (e.g. of demos) to attract more people visually
+        - Tried: [this AI tool](https://canvus.ai/tools/sketch-to-image)
+        - ...but it does not generate great images out of sketches.
+  - The focus on SGL demo of the cFS would give a student and other company stakeholders builds to extend and target to hardware (<https://github.com/elisa-tech/meta-sgl/tree/main>)
+    - Thesis ideas around driving this work
+      - Minimal kernel iterating on impacts of configuration change plus retargeting to SGL for re-evaluation
+        - Using ideas we captured about aspects of [Min Kernel plan](https://github.com/elisa-tech/wg-aerospace/issues/168)
+      - Bring it to life on hardware (RPi, should be cheap/available) and "measure" performance, in comparison to an alternative
+        - SGL would have interest in this as well (they have some HW target ideas too)
+        - NVIDIA modules or some hardened hardware already evaluated for radiation use? LX2160?
+      - Minimal vs normal distro kernels impacts when faults are injected (targeted to some hardware)
+        - SGL would have interest as well, they have talked about redundancy/fault injection testing
+      - ACTION: Next time talk about how to make proposals and timeline
+    - ACTION: Email Ramon about discussing in next SGL call 1) SGL hardware targets, 2) Talk through SGL cFS demo and what build it would start from.
+
+- ACTION: (Weber) review blog post and follow up with Marketing email to work on posting
+  - No update but they were supporting the workshop this week. Expecting details next week.
+
+Next time revisit parking lot items as well
+
+---
+
 ## 20260605
 
 **Attendance**
