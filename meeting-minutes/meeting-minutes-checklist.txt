@@ -103,3 +103,8 @@ POST-CALL:
   3. Clear the HackMD pad
      - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py clear
   4. Check if any event info was added - sync into docs/events.md if so
+  5. Generate a call summary for email
+     - Brief paragraph on main topic(s) discussed
+     - Key decisions or direction agreed upon (bullet points)
+     - ACTION items with owners
+     - Any notable links or references shared
