@@ -17,9 +17,91 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Presentations**
 
-- Date? - QEMU (Future call - Leonidas) - (starting in Use case call)
+- Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
-- June 9-11th London (virtual) workshop - <https://elisa.tech/event/elisa-workshop-london-2026/> (advanced topics beyond the seminar talk)
+
+## 20260619
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Brian Wood (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Ivan Rodriguez (Coros Space)
+- Wanja Zaeske - DLR
+- Rob Woolley - Wind River
+- Leonidas Kosmidis - Barcelona Supercomputing Center
+
+**Discussion topics**
+
+- Thesis proposals and timeline discussion (carried from 20260612)
+
+- Embedded cFS demo - Migrate to SGL and document (carried from 20260612)
+  - Yocto "scarthgap"
+  - Could branch off meta-sgl `main` and evolve the concept before pulling into official??
+    - Initially work this dev in this call and find points to tie into SGL when we can (plus through the PRs and mailing list discussion)
+    - BSP - (default support in SGL) - would someone like to add this?
+      - Which meta to start from? <https://layers.openembedded.org/layerindex/branch/master/machines/?q=beaglebone&search=1>
+      - ACTION: Pawel checking into it
+    - cFS - recipe addition to SGL
+      - requires a profile / options approach
+    - Phase 1
+      - Demo - create recipe so demo is built and included in target images
+        - Docs and user experience could build on this so they pull images and go
+      - Target BB Black and QEMU(generic)
+      - Stretch goal - [QEMU (BB Black)](https://github.com/marwan475/Qemu-Beagle)
+      - Could look at ptest (headless testing of the demo) of cFS using this
+    - Phase 2
+      - Support a build flow outside of the Yocto build
+      - Users can build a cFS application
+      - Docs around composing this into a rootfs to run the demo
+      - Alternate approaches (through SGL docs but not folded into SGL material), e.g. Nix, Buildroot
+    - Phase 3
+      - Build on prior work and start look at the minimizing an other aspects of the demo
+      - Align to [profiles](https://github.com/elisa-tech/meta-sgl/issues/53)
+  - Docs - try to add under <https://sgl.elisa.tech/what-is-sgl.html>
+  - Hardware
+    - Ramon mentioned SGL has plans for a hardware farm
+    - QEMU AARCH64 virt target
+      - QEMU ARM Versatile/vexpress virt target (if we use the BeagleboneBlack)
+    - [TI Beaglebone Black ARMv7](https://www.beagleboard.org/boards/beaglebone-black) (accessible as a start) - Would be a new image target to SGL (SGL is RISC-V focused today)
+      - Ideally images still boot in QEMU as well
+      - 32bit so maybe we look for targets 64bit as well?
+    - ? Xilinx Ultrascale+ - boot complication may not be worth starting with this (advoid multistage boot to start)
+    - RPI (less ideal to start with)
+      - Falls into the less standard boot flow
+      - Ethernet is via USB, ideally we have a direct attached GPIO and Ethernet to start
+      - Determinisum will need tuning
+    - x86_64 PC?
+      - Would need to define tuning, bound power/clk dyn configurations
+      - Find a. [embedded flavor](https://www.advantech.com/en-us/products/pc-104-cpu-boards-i-o-modules/sub_1-2jkltu)
+        - [Further board options](https://www.advantech.com/en-us/products/embedded-single-board-computers/sub_c427052f-f55f-4d47-9a84-3a11ed5295df)
+    - Nvidia
+      - <https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/nano-super-developer-kit/>
+      - <https://developer.nvidia.com/embedded/jetson-nano>
+      - The Jetson Nano (2019) and Jetson Orin Nano (2023) are NVIDIA's entry-level edge AI platforms, but they target very different performance needs and lifecycles.
+      - Would need to evaluate what is supported and what kernels/revs things are on
+      - May have out of tree code that would add Xen/Linux support
+    - [Ardunio Uno Q](https://docs.arduino.cc/hardware/uno-q/)
+      - 64bit, has interfaces, recent silicon - "Quad-core Arm® Cortex®-A53 @ 2.0 GHz"
+    - [Ardunio Nano](https://store-usa.arduino.cc/products/arduino-nano-33-iot)
+      - Could be a mmu-less retarget
+      - Might not be used / adopted to relate to SGL audience as initial target
+      - There are TSN enabled Nano, for time-sync communication between devices
+    - Microchip HPSC (Assuming this target support will come through future SGL efforts)
+
+- System simulation - <https://pterolabs.ai/>
+
+- Blog post status - (Weber) review post and follow up with Marketing (STILL pending...)
+
+[GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+- ACTION: Weber - Send out a doodle poll for further conversation on mixed criticaily and DO-178 topics (post workshop and seminar)
+
+---
 
 ## 20260612
 
