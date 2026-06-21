@@ -15,143 +15,90 @@ defaults:
   run:
     working-directory: demos/AvioNix-demo
 
-env:
-  EXTRA_NIX_FLAGS: --log-format raw-with-logs --print-build-logs
-
 permissions:
   contents: read
 
 jobs:
-  check:
-    name: Nix flake check
+  flake-show:
+    name: nix flake show
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
-      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+          # checkout full tree
+          fetch-depth: 0
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: elisa-wg-aerospace
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Show flake outputs
+        run: nix flake show --quiet
+
+  check-commits:
+    name: Check commits
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        CHECK_COMMAND:
+          - nix fmt -- --ci
+          - reuse lint
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+          # checkout full tree
+          fetch-depth: 0
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
+        with:
+          name: elisa-wg-aerospace
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      - name: Checking each commit
+        run: nix shell --inputs-from . .#check-commits nixpkgs#reuse --command ${{ matrix.CHECK_COMMAND }}
+
+  flake-check:
+    name: nix flake check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+      # The default image contains dozens of gigabytes of tools. NixOS config builds get big. Thus,
+      # remove unused tools (Nix provides for all we need!) to get some space.
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: elisa-wg-aerospace
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - run: nix flake check
-  build-package:
-    name: ${{ format('{0} for {1} on {2}', matrix.cfg.PACKAGE, matrix.cfg.SYSTEM
-      , matrix.cfg.OS) }}
-    runs-on: ${{ matrix.cfg.OS }}
-    strategy:
-      matrix:
-        cfg:
-          # TODO make this work well
-          # Generated using
-          # nix run .#update-ci
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: check-commits
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: dtb-edit
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elf-to-sloc
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elisa-demo-copilot-light
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elisa-demo-python-light
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elisa-wg-boeing-5x-minimal-kernel
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elisa-wg-lfscs-minimal-kernel
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: elisa-wg-lfscs-minimal-kernel-cross-aarch64
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: minimal-linux-kernel
-          - SYSTEM: x86_64-linux
-            OS: ubuntu-latest
-            PACKAGE: update-ci
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: check-commits
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: dtb-edit
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elf-to-sloc
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elisa-demo-copilot-light
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elisa-demo-python-light
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elisa-wg-boeing-5x-minimal-kernel
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elisa-wg-lfscs-minimal-kernel
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: elisa-wg-lfscs-minimal-kernel-cross-aarch64
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: minimal-linux-kernel
-          - SYSTEM: aarch64-linux
-            OS: ubuntu-24.04-arm
-            PACKAGE: update-ci
-    steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-        with:
-          persist-credentials: false
-      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
-      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
-        with:
-          name: elisa-wg-aerospace
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - name: ${{ matrix.cfg.PACKAGE }}
-        run: |
-          # shellcheck disable=SC2086
-          nix build $EXTRA_NIX_FLAGS .#packages.${{ matrix.cfg.SYSTEM }}.${{ matrix.cfg.PACKAGE }}
 
-  build-nixosConfiguration:
-    name: ${{ format('NixOS {0} on {1} - build', matrix.cfg.NIXOS_CONFIGURATION
-      , matrix.cfg.OS) }}
-    runs-on: ${{ matrix.cfg.OS }}
+  build:
+    name: nix build
+    needs: [check-commits, flake-check]
     strategy:
       matrix:
-        cfg:
-          # Generated using
-          # nix run .#update-ci
-          - NIXOS_CONFIGURATION: elisa-demo
-            OS: ubuntu-latest
-          - NIXOS_CONFIGURATION: elisa-demo-cross-x86_64-aarch64
-            OS: ubuntu-latest
-          - NIXOS_CONFIGURATION: elisa-demo-cross-x86_64-armv7l
-            OS: ubuntu-latest
-          - NIXOS_CONFIGURATION: elisa-demo-cross-aarch64-x86_64
-            OS: ubuntu-24.04-arm
+        RUNNER:
+          - macos-latest
+          - ubuntu-24.04-arm
+          - ubuntu-latest
+    runs-on: ${{ matrix.RUNNER }}
     steps:
-      # The default image contains dozens of gigabytes of tools. NixOS config builds get big. Thus,
-      # remove unused tools (Nix provides for all we need!) to get some space.
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
-        with:
-          tool-cache: true
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: cachix/install-nix-action@19effe9fe722874e6d46dd7182e4b8b7a43c4a99 # v31.10.0
-      - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+      - uses: wimpysworld/nothing-but-nix@687c797a730352432950c707ab493fcc951818d7 # v10
+      - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+      - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
         with:
           name: elisa-wg-aerospace
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - name: ${{ matrix.cfg.NIXOS_CONFIGURATION }}
-        run: |
-          # shellcheck disable=SC2086
-          nix build $EXTRA_NIX_FLAGS .#nixosConfigurations.${{ matrix.cfg.NIXOS_CONFIGURATION }}.config.system.build.toplevel
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --flake .#ciJobs --no-nom --skip-cached --result-file result-junit.xml --result-format junit
+      - name: Test Summary
+        uses: test-summary/action@37b508cfee6d4d080eedd00b5bb240a6a784a6a5 # v2.6
+        with:
+          paths: "demos/AvioNix-demo/result-junit.xml"
+        if: always()
