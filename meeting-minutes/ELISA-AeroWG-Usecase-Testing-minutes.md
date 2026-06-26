@@ -20,6 +20,76 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260703
+
+**NO call 7/3/2026 (US on holiday)**
+
+## 20260626
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Brian Wood (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Pawel Wodnicki (32bitmicro)
+- Ivan Rodriguez (Coros Space)
+- Benjamin Pellieux
+- Shefali Sharma
+- Rob Woolley - Wind River
+
+**Discussion topics**
+
+- Nix seminar debrief (June 23 - AvioNix seminar happened this week)
+  - Should we wait for the main AeroWG call or any points to mention today?
+  - Very technical / deep dive - good tie of a practical example
+  - Good clarifications on intentions of what Nix is trying to solve (Q/A from audience)
+    - Talk split overview / concept with the example from AeroWg
+  - Action: Do we look at a blog post (part of the talk video/demo portion with a post)?
+    - We had discussed using Nix for kernel tailoring / analysis as a blog post, this could be that post.
+  - Action: Link to video and seminar information after posted in our docs
+
+- Embedded cFS demo - Migrate to SGL (continued)
+  - Pawel BSP status update [(BeagleBone meta layer selection)](https://github.com/elisa-tech/wg-aerospace/issues/228)
+    - Action: Pawel is looking into adding the build for a hw target: `BeagleY-AI`
+    - Add a [new board config](https://github.com/elisa-tech/meta-sgl/tree/main/kas/machine)
+    - Update workflow to include in [CI testing (new file similar to these in this folder)](https://github.com/elisa-tech/meta-sgl/tree/main/.github/workflows)
+  - cFS/demo recipe addition to meta-sgl (Action: Rob mentioned walking through this in 7/10 call)
+    - Move this [existing raw sequence](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md) as a recipe to assemble the demo on top of QEMU
+    - Demo - create recipe so demo is built and included in target images
+      - Docs and user experience could build on this so they pull images and go
+    - Target QEMU(generic)
+    - Run per current directions after QEMU is launched
+    - Wanja did a similar [example to this with Nix](https://github.com/elisa-tech/wg-aerospace/tree/main/demos/AvioNix-demo/pkgs)
+
+  - PhD thesis topics (brainstorming)
+    - GPU-driven acceleration in a safety critical environment (cert included)
+    - Partitioning on GPUs, Resource Management (safe, convenient, certifiable)
+    - Interference management on GPU, scheduling - clock speed modification?
+    - Energy management on GPUs (probably including thermal, cooling?)
+    - WCET estimation / guarantees on GPU, different jobs of different levels of criticality
+    - Re-configuration of priorities to achieve timing guarantees / deadlines to control deadline misses dynamically
+      - Note Ivan: cFS would allow to measure / move / change application priorities and similar parameters
+      - Space: Related to battery usage / mission needs
+    - Compression on GPUs - pre-processing of information before sending to ground / telemetry
+    - (To be considered: GPUs are likely always in relation to CPUs as master controller)
+
+  - Michael Monaghan is discussing additional NASA collaboration on this (contacts/interest pending)
+
+- Thesis proposals and timeline (carried from 20260619)
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+  - Action: testing of the Nix instructions after the recent PR that updated the build workflow (i.e. does it build and do the docs match the changes)
+
+- Revisit parking lot items
+
+- Blog post status - (Weber) still pending
+
+- ACTION: Weber - Send out a doodle poll for further conversation on mixed criticality and DO-178 topics (post workshop and seminar)
+  - Will try <https://terminplaner6.dfn.de/en> instead of doodle
+
+---
+
 ## 20260619
 
 **Attendance**
