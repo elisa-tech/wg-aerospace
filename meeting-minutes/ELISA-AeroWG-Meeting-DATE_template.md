@@ -55,6 +55,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Ganapathi N
 - Gaston Gonzalez - VENG
 - Gary Crum - Voyager
+- Hihara Hiroki
 - Iain Galloway - NXP Semiconductors
 - Ivan Perez - KBR @ NASA Ames Research Center
 - Ivan Rodriguez - Coros Space
@@ -88,10 +89,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Rob Woolley - Wind River
 - Salim Jalaleddine - Boeing
 - Sam Thompson - Rapita Systems
+- Sandipan Ghosh
 - Sascha Wise - Elodin
 - Scott Salmon - Cesium
 - Shefali Sharma
 - Steve VanderLeest - Boeing
+- Subhajit Ghosh - Tweaklogic
 - Tim Bird - Sony
 - Tomas Novotny - Czech Aerospace Research Centre
 - Vikash Kodati
