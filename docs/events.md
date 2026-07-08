@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **June 23** ELISA Seminar: AvioNix - Infrastructure as Code for Linux in Avionics (Erin + Wanja) -> [link](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/)
+- **July 23** ELISA Seminar: "WHAT-WHY-HOW: A practical model for understanding software requirements" - Stanislav Pankevich (Reflex Aerospace GmbH) -> [link](https://elisa.tech/event/elisa-seminar-what-why-how-a-practical-model-for-understanding-software-requirements/)
 - **Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
   - 17th International Conference on Space Computing (SCC)
   - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
@@ -36,14 +36,18 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - **ACTION:** Leonidas checking on if he can attend
 - **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
   - CFP Closes: June 24, 2026
+  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
+    - CFP coming to solicit speakers and session topics
 - NASA SPARK submissions -> [link](https://spark.nasa.gov/)
 - **Feb 23 2027** AvioSE 2027, Dortmund, Germany (as part of Software Engineering Workshop)
   - Call to be published soon
 
 ## Recently Past Deadlines/Events
 
+- **(2026) June 23** ELISA Seminar: AvioNix - Infrastructure as Code for Linux in Avionics (Erin + Wanja) -> [link](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/)
+  - Video recording: <https://youtu.be/D8H4dBtKCYM>
 - **(2026) June 9-11** ELISA Workshop London (virtual) -> [link](https://elisa.tech/event/elisa-workshop-london-2026/)
-  - Workshop videos: TODO share links
+  - Workshop material: <https://directory.elisa.tech/workshops/index.html#june-2026-london>
   - AMD + ELISA mixed criticality presentation (DO-178C lifecycle tied to automotive)
   - NVIDIA safe Linux concepts
   - AI talks (sw lifecycle vs AI vs Human)
