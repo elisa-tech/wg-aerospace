@@ -4,7 +4,7 @@
 
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     flake-utils.url = "github:numtide/flake-utils";
     minimal-nixos.inputs.flake-utils.follows = "flake-utils";
     minimal-nixos.inputs.nixpkgs.follows = "nixpkgs";
@@ -81,7 +81,10 @@
       in
       {
         # generate local packages + goodies
-        packages = pkgs.zornpkgs // pkgs.elisapkgs;
+        packages = {
+          inherit (pkgs.zornpkgs) check-commits dtb-edit elf-to-sloc;
+        }
+        // pkgs.elisapkgs;
 
         # for `nix fmt`
         formatter = treefmtEval.config.build.wrapper;
