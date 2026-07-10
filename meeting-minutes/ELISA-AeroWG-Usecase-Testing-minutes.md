@@ -8,6 +8,8 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Holiday / Vacations**
 
+- Martin off until Aug
+
 **Parking lot:**
 
 - Radiation testing - <https://github.com/elisa-tech/wg-aerospace/issues/151>
@@ -19,6 +21,49 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20260710
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Martin Halle (Hamburg University of Technology, TUHH)
+- Rob Woolley - Wind River
+- Pawel Wodnicki (32bitmicro)
+- Ivan Perez (KBR @ NASA)
+- Benjamin Pellieux
+- Wanja Zaeske (DLR)
+- Shefali Sharma
+
+**Discussion topics**
+
+- Demo cFS recipe addition to meta-sgl (Rob demo'd)
+  - See the last call's notes for more details on this
+  - [Recording from today](https://zoom.us/rec/play/YlvWNGvCFU8nmu9vfFevlR7BgqiNbZF8WQ_85qNL5jDICubI4-PZiXQMGrYCto6N3L80csZXW1QLB32Y.6y-BWDRxvEZT0Vnu)
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - Working through pkg dependencies to get to a point of build
+
+- Copilot had a new release (Ogma release is coming July 21st)
+
+**Possible topics**
+
+- Pawel BSP status update [(BeagleY-AI)](https://github.com/elisa-tech/wg-aerospace/issues/228)
+
+- [Mixed criticality meeting time poll](https://terminplaner6.dfn.de/en/p/a56b64ee888e0c0f528fc4aaa86ba5e7-1835668)
+
+- Blog post status
+  - Basic demo
+    - [Updated draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - New: Nix kernel tailoring/analysis blog post (ask Wanja?)
+
+- Items to discuss on mailing list (ACTION: Weber to make posts)
+  - New use case / demo: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - New use case / product capture: Linux RT capabilities - RTL webinar idea
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+---
 
 ## 20260703
 
