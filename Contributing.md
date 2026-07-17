@@ -13,6 +13,9 @@ Please follow the guidelines below to ensure a smooth contribution process.
   - [How to Contribute](#how-to-contribute)
   - [Reporting Issues](#reporting-issues)
   - [Submitting Changes](#submitting-changes)
+  - [AI-Assisted Contributions](#ai-assisted-contributions)
+    - [Attribution with `Assisted-by`](#attribution-with-assisted-by)
+    - [Signed-off-by and Developer Certificate of Origin](#signed-off-by-and-developer-certificate-of-origin)
   - [Style Guide](#style-guide)
   - [License](#license)
     - [How to use the license checker](#how-to-use-the-license-checker)
@@ -53,6 +56,84 @@ Be sure to include as much detail as possible.
 
 When you're ready to submit your changes, please create a pull request.
 Include a description of your changes and reference any related issues.
+
+## AI-Assisted Contributions
+
+Contributors may use AI tools (e.g., GitHub Copilot, ChatGPT, Claude) to
+assist with writing code, documentation, or other contributions. When doing
+so, please follow these guidelines.
+
+This guidance is modeled on the Linux kernel's
+[coding-assistants](https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst)
+documentation.
+
+### Attribution with `Assisted-by`
+
+When AI tools contribute to development, proper attribution helps track
+the evolving role of AI in the project. Contributions must include an
+`Assisted-by` trailer in the commit message using the following format:
+
+```text
+Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
+```
+
+Where:
+
+- `AGENT_NAME` is the name of the AI tool or framework
+- `MODEL_VERSION` is the specific model version used
+- `[TOOL1] [TOOL2]` are optional specialized analysis tools used
+  (e.g., coccinelle, sparse, clang-tidy)
+
+Basic development tools (git, gcc, make, editors) should not be listed.
+
+Examples:
+
+```text
+Assisted-by: Claude:claude-sonnet-4-20250514
+Assisted-by: GitHub Copilot:gpt-4o
+Assisted-by: Claude:claude-sonnet-4-20250514 cppcheck
+```
+
+There is no specific model version requirement. Use whatever version
+identifier the tool provides for traceability purposes.
+
+### Signed-off-by and Developer Certificate of Origin
+
+AI tools MUST NOT add `Signed-off-by` tags. Only humans can legally
+certify the Developer Certificate of Origin (DCO). AI tools must not
+autonomously commit, push, or create pull requests without explicit
+human review and direction. The human submitter is responsible for:
+
+- Reviewing all AI-generated code
+- Ensuring compliance with licensing requirements
+- Adding their own `Signed-off-by` tag to certify the DCO
+- Taking full responsibility for the contribution
+
+### License compliance
+
+Ensure AI-generated content does not introduce license-incompatible
+material. You are responsible for verifying that contributions comply
+with the project's licensing (see [License](#license) below).
+
+When using AI tools to generate code, you can ask the tool to provide
+citations or sources for its suggestions to help assess licensing
+compliance. For example:
+
+> "Please provide citations or references for the code you suggested.
+> Is this based on any existing open source project, and if so, under
+> what license?"
+
+### Review expectations
+
+AI-generated content should receive greater level of review
+as hand-written contributions. Do not submit AI output without
+understanding and validating it.
+
+This guidance ensures traceability and transparency while welcoming the
+productivity benefits of AI tooling. The repository maintainers reserve
+the right to temporarily or permanently ban a contributor from the
+project for violating these guidelines, in accordance with the
+[Code of Conduct](#code-of-conduct) enforcement provisions.
 
 ## Style Guide
 
