@@ -24,6 +24,73 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260723
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Rob Woolley - Wind River
+- Pawel Wodnicki (32bitmicro)
+- Benjamin Pellieux
+
+**Discussion topics**
+
+- cFS recipe on meta-sgl
+  - Created - <https://github.com/elisa-tech/meta-aerospace>
+  - [quick start and example cmdUtil app](https://github.com/robwoolley/meta-aerospace/pull/1)
+  - (Ivan) talked through cFS question feedback
+    - Doc workflows (update readme?)
+      - SDK based approach for dev (formal final build may go to the full Yocto perspective to have a clean production image)
+        - Is the first step, showing how to incrementally do this (vs doc'n it)?
+        - Case (0) - Builds all of cFS plus mission apps (outside yocto)
+      - Yocto based (kickstart, Yocto has a larger role)
+        - Case (1) - cFS not designed to build as libs used generically by missions without cFS improvements to accommodate that style
+        - Case (2) - cFS plus mission apps could be all wrapped within Yocto to output complete system image
+  - Next steps
+    - px4 split and then look towards migration to <https://github.com/elisa-tech/meta-aerospace>
+    - (SDK flow - Case 1) Package / build existing demo application (ACTION: Rob taking a look at this to discuss a workflow next time)
+      - Based on doc steps - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md#apply-necessary-prebuild-patch-build-cfs-and-load-cfs-build-to-qemu-emulation>
+      - Scripts - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/scripts>
+      - App files - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/apps>
+      - Env for ogma/depends - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/env/Dockerfile#L58>
+    - What simulators would we want to hookup?
+      - Is there an existing demo / scripts that could be added as examples on top of this? Not a new demo but a re-pkg'n.
+    - Support for devcontainer sandboxing the user's dev env? (Yocto build, customization workflow)
+
+- TSN hardware support? Is there a possible concept demo that could be interesting with this? (Ivan)
+  - <https://docs.beagleboard.org/boards/beagleplay/01-introduction.html> ?
+  - <https://www.beagleboard.org/boards/beagleplay>
+
+- Pawel BSP status [(BeagleY-AI)](https://github.com/elisa-tech/wg-aerospace/issues/228)
+  - CI build size challenges (custom runners)
+  - <https://www.beagleboard.org/boards/pocketbeagle-2>
+  - <https://www.beagleboard.org/boards/beagley-ai>
+  - <https://www.beagleboard.org/boards/beaglev-fire>
+
+- Ogma
+  - New release (cFS updated to 7.0.1)
+  - Active vs passive signals concept for monitor evaluation
+  - Demo could be built for all apps from one template
+  - ACTION: Ivan - plans to make an update to the current demo
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+**Items for Aug**
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+
+- Blog post status
+  - Basic demo: [Updated draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - Nix kernel tailoring/analysis blog post timeline
+
+- Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+---
+
 ## 20260717
 
 **Attendance**
