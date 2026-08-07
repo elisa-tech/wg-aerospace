@@ -24,6 +24,63 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260807
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Martin Halle - Hamburg University of Technology
+- Brian Wood - Boeing
+- Rob Woolley - Wind River
+
+**Discussion topics**
+
+- Ogma
+  - ACTION: Ivan - plans to make an update to the current demo
+  - Draft PR <https://github.com/elisa-tech/wg-aerospace/pull/237>
+  - Version update plus cfs bump
+  - 1 of our 3 apps is auto-gen (trying to get other two as well using new Ogma feature)
+
+- DASC
+  - Wanja has a NixOS-talk for embedded Linux in Avionics as a tutorial session
+
+- cfs on Min Linux (starting to hear more interest from NASA to look at a concept) (Possible demo?)
+  - Action:
+    - Ivan checking to see if there is opportunity for NASA contribution to help us build it
+    - Matt can help NASA fill out scenarios and use case details to help us set reqt for this (plus set prior research known constraints)
+
+- cFS recipe on meta-sgl
+  - Moved PX4 into [another repo](https://github.com/robwoolley/meta-px4) - Has a on target build workflow and renode/qemu hardware sim
+  - Rob's ready to PR over into ELISA meta-aerospace
+  - Matt needs to merge PR after resolving comments from Ramon - [PR: meta-aerospace - CI, Contrib and licensing](https://github.com/elisa-tech/meta-aerospace/pull/4/changes)
+  - Next time
+    - (SDK flow - Case 1) Package / build existing demo application (ACTION: Rob taking a look at this to discuss a workflow next time)
+    - Hardware builds
+
+- Blog post status (Basic demo)
+  - [Draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - Action: Matt to reply to LXF to release
+  - Next post idea - meta-sgl work once we have a hardware target ready
+
+- Re: PREEMPT-RT - ELISA Online Seminar - Aerospace-focused
+  - [AeroWG discussion](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/ELISA-AeroWG-Meeting-20260709.md#new-topics)
+  - Action was to survey the list, no feedback from that.
+  - What's next step?
+  - A comparison scenario like "Linux stable vs Xenomai/RTEMS" (e.g., jitter, other items to compare/contrast, porting)
+  - Embedded perspective - system tuning, state of the art for real-time tooling (e.g., analyzers) and virtualized systems with guest/partitions achieving real-time performance
+  - Designing for I/O Drivers (are there multiple suggested approaches that could be compared?)
+
+**Next time**
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
+
 ## 20260723
 
 **Attendance**
