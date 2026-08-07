@@ -16,6 +16,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
 - **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
+  - Wanja: NixOS-talk for embedded Linux in Avionics (tutorial session)
 - **Sept 15-17** Xen Summit 2026, Munich, Germany (hybrid) -> [link](https://beta.xenproject.org/resources/summit-2026/)
   - Two days of talks + one day of design sessions
   - CFP now open, closes June 30 -> [submit](https://lnkd.in/esdtpbYr)
