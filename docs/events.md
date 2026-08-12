@@ -7,12 +7,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **July 23** ELISA Seminar: "WHAT-WHY-HOW: A practical model for understanding software requirements" - Stanislav Pankevich (Reflex Aerospace GmbH) -> [link](https://elisa.tech/event/elisa-seminar-what-why-how-a-practical-model-for-understanding-software-requirements/)
-- **Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
-  - 17th International Conference on Space Computing (SCC)
-  - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
-  - Workshop on V&V of multicore systems - **Submissions open until May 23** -> [VVCiSS](https://2026.smcit-scc.space/home/vvciss-2026)
-    - Prior topics: cert / practical issues / interference mgmt - Ivan has a contact if interested
 - **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
 - **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
@@ -40,11 +34,17 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
     - CFP coming to solicit speakers and session topics
 - NASA SPARK submissions -> [link](https://spark.nasa.gov/)
-- **Feb 23 2027** AvioSE 2027, Dortmund, Germany (as part of Software Engineering Workshop)
-  - Call to be published soon
+- **Feb 23, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
+  - Paper Deadline: Oct 21, 2026
 
 ## Recently Past Deadlines/Events
 
+- **(2026) Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
+  - 17th International Conference on Space Computing (SCC)
+  - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
+  - Workshop on V&V of multicore systems
+  - Outbrief - Interest in Minimal Kernel (num funcs), HPSC
+- **(2026) July 23** ELISA Seminar: "WHAT-WHY-HOW: A practical model for understanding software requirements" - Stanislav Pankevich (Reflex Aerospace GmbH) -> [link](https://elisa.tech/event/elisa-seminar-what-why-how-a-practical-model-for-understanding-software-requirements/)
 - **(2026) June 23** ELISA Seminar: AvioNix - Infrastructure as Code for Linux in Avionics (Erin + Wanja) -> [link](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/)
   - Video recording: <https://youtu.be/D8H4dBtKCYM>
 - **(2026) June 9-11** ELISA Workshop London (virtual) -> [link](https://elisa.tech/event/elisa-workshop-london-2026/)
