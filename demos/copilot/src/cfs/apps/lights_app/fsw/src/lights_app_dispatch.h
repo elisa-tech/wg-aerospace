@@ -21,7 +21,7 @@
 /**
  * @file
  *
- * Main header file for the SAMPLE application
+ * Main header file for the LIGHTS application
  */
 
 #ifndef LIGHTS_APP_DISPATCH_H

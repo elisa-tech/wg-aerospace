@@ -20,7 +20,7 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App utility functions
+ *   This file contains the prototypes for the Lights App utility functions
  */
 
 #ifndef LIGHTS_APP_UTILS_H

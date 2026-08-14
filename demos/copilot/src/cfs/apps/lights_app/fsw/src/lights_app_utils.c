@@ -20,7 +20,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App utility functions
+ *   This file contains the source code for the Lights App utility functions
  */
 
 /*
@@ -42,7 +42,7 @@ CFE_Status_t LIGHTS_APP_TblValidationFunc(void *TblData)
     LIGHTS_APP_ExampleTable_t *TblDataPtr = (LIGHTS_APP_ExampleTable_t *)TblData;
 
     /*
-    ** Sample Example Table Validation
+    ** Lights Example Table Validation
     */
     if (TblDataPtr->Int1 > LIGHTS_APP_TBL_ELEMENT_1_MAX)
     {
@@ -67,11 +67,11 @@ void LIGHTS_APP_GetCrc(const char *TableName)
     status = CFE_TBL_GetInfo(&TblInfoPtr, TableName);
     if (status != CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Error Getting Example Table Info");
+        CFE_ES_WriteToSysLog("Lights App: Error Getting Example Table Info");
     }
     else
     {
         Crc = TblInfoPtr.Crc;
-        CFE_ES_WriteToSysLog("Sample App: CRC: 0x%08lX\n\n", (unsigned long)Crc);
+        CFE_ES_WriteToSysLog("Lights App: CRC: 0x%08lX\n\n", (unsigned long)Crc);
     }
 }
