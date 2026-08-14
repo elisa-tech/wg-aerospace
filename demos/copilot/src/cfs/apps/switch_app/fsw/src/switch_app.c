@@ -92,7 +92,7 @@ void SWITCH_APP_Main(void)
         else
         {
             CFE_EVS_SendEvent(SWITCH_APP_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE APP: SB Pipe Read Error, App Will Exit");
+                              "SWITCH APP: SB Pipe Read Error, App Will Exit");
 
             SWITCH_APP_Data.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }

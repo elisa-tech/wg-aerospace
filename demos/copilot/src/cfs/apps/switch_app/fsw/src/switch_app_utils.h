@@ -20,7 +20,7 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App utility functions
+ *   This file contains the prototypes for the Switch App utility functions
  */
 
 #ifndef SWITCH_APP_UTILS_H

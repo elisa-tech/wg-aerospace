@@ -30,7 +30,7 @@
 
 -->
 <PackageFile xmlns="http://www.ccsds.org/schema/sois/seds">
-  <Package name="SWITCH_APP" shortDescription="Sample Application Package">
+  <Package name="SWITCH_APP" shortDescription="Switch Application Package">
 
     <DataTypeSet>
 
@@ -44,7 +44,7 @@
         </EntryList>
       </ContainerDataType>
 
-      <ContainerDataType name="HkTlm_Payload" shortDescription="Sample App Housekeeping Content">
+      <ContainerDataType name="HkTlm_Payload" shortDescription="Switch App Housekeeping Content">
         <EntryList>
           <Entry name="CommandCounter" type="BASE_TYPES/uint8" />
           <Entry name="CommandErrorCounter" type="BASE_TYPES/uint8" />
