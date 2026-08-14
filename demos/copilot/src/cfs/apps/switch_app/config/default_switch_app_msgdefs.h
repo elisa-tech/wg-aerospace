@@ -40,7 +40,7 @@ typedef struct SWITCH_APP_DisplayParam_Payload
 
 /*************************************************************************/
 /*
-** Type definition (Sample App housekeeping)
+** Type definition (Switch App housekeeping)
 */
 
 typedef struct SWITCH_APP_HkTlm_Payload

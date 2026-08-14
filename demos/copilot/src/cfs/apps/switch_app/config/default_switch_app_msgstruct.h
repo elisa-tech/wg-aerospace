@@ -70,7 +70,7 @@ typedef struct
 
 /*************************************************************************/
 /*
-** Type definition (Sample App housekeeping)
+** Type definition (Switch App housekeeping)
 */
 
 typedef struct
