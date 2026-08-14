@@ -8,8 +8,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Holiday / Vacations**
 
-- Martin off until Aug
-- Matt Weber (July 31st)
+- (none currently)
 
 **Parking lot:**
 
@@ -23,6 +22,50 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20260814
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Martin Halle - Hamburg University of Technology
+- Brian Wood - Boeing
+- Pawel Wodnicki - 32bitmicro
+- Wanja Zaeske - DLR
+- Shefali Sharma
+
+**Discussion topics**
+
+- Ogma demo update status
+  - Draft PR <https://github.com/elisa-tech/wg-aerospace/pull/237>
+  - Ivan's progress on getting other 2 apps auto-gen'd
+  - Shared PR material and doc updates to support (couple quick MRs for generated naming updates)
+  - Ivan did a ogma walk through
+  - ACTION: Weber: for these changes to work - need to bump to ubuntu latest and not locking to release such that we get Ogma
+    - We'll need to bump this in the Makefile to pickup the container with 1.15+
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/monitors/Makefile#L17>
+    - This change maintains existing demos (definitely other envs pulling Ogma in not using the Container would also need updates.)
+
+- cFS recipe on meta-aerospace
+  - Complete
+    - Rob's [PR: layer move to ELISA meta-aerospace](https://github.com/elisa-tech/meta-aerospace/pull/5)
+    - Matt's pjt files update [PR: CI, Contrib and licensing](https://github.com/elisa-tech/meta-aerospace/pull/4/changes)
+  - (Next time) (SDK flow - Case 1) Package / build existing demo application (Rob's workflow discussion)
+  - Hardware builds
+    - New: SGL discord had a thread started on HPSC support, Matt published this - <https://github.com/elisa-tech/meta-sgl/pull/61>
+    - Mentioned to Pawel that opening a PR on meta-sgl will use their CI runners and could help with rebuild testing
+
+- Idea: Roundtable or approach on main call for brainstorming / innovative discussions? (Wanja/Martin)
+
+- (Next time) cfs on Min Linux concept
+  - Ivan: assuming direct cFS start from setting as bootargs init=<cFS start application>
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
 
 ## 20260807
 

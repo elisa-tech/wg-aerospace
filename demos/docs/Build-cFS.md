@@ -133,6 +133,7 @@ make SIMULATION=arm-linux-gnu O=build-elisa
    ```
 
 3. Run QEMU to emulate ARM 64-bit virtual machine ('ctrl-a x' to stop QEMU)
+
    ```bash
    qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel /demo/monitors/Image -initrd rootfs.cpio.gz_new -append "root=/dev/ram0 console=ttyAMA0"
    ```
