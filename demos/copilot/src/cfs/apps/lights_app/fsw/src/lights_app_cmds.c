@@ -20,7 +20,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App Ground Command-handling functions
+ *   This file contains the source code for the Lights App Ground Command-handling functions
  */
 
 /*
@@ -75,14 +75,14 @@ CFE_Status_t LIGHTS_APP_SendHkCmd(const LIGHTS_APP_SendHkCmd_t *Msg)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* SAMPLE NOOP commands                                                       */
+/* LIGHTS NOOP commands                                                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 CFE_Status_t LIGHTS_APP_NoopCmd(const LIGHTS_APP_NoopCmd_t *Msg)
 {
     LIGHTS_APP_Data.CmdCounter++;
 
-    CFE_EVS_SendEvent(LIGHTS_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: NOOP command %s",
+    CFE_EVS_SendEvent(LIGHTS_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "LIGHTS: NOOP command %s",
                       LIGHTS_APP_VERSION);
 
     return CFE_SUCCESS;
@@ -100,7 +100,7 @@ CFE_Status_t LIGHTS_APP_ResetCountersCmd(const LIGHTS_APP_ResetCountersCmd_t *Ms
     LIGHTS_APP_Data.CmdCounter = 0;
     LIGHTS_APP_Data.ErrCounter = 0;
 
-    CFE_EVS_SendEvent(LIGHTS_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: RESET command");
+    CFE_EVS_SendEvent(LIGHTS_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "LIGHTS: RESET command");
 
     return CFE_SUCCESS;
 }
@@ -118,24 +118,24 @@ CFE_Status_t LIGHTS_APP_ProcessCmd(const LIGHTS_APP_ProcessCmd_t *Msg)
     LIGHTS_APP_ExampleTable_t *TblPtr;
     const char *               TableName = "LIGHTS_APP.ExampleTable";
 
-    /* Sample Use of Example Table */
+    /* Lights Use of Example Table */
     LIGHTS_APP_Data.CmdCounter++;
     Status = CFE_TBL_GetAddress(&TblAddr, LIGHTS_APP_Data.TblHandles[0]);
     if (Status < CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Fail to get table address: 0x%08lx", (unsigned long)Status);
+        CFE_ES_WriteToSysLog("Lights App: Fail to get table address: 0x%08lx", (unsigned long)Status);
     }
     else
     {
         TblPtr = TblAddr;
-        CFE_ES_WriteToSysLog("Sample App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
+        CFE_ES_WriteToSysLog("Lights App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
 
         LIGHTS_APP_GetCrc(TableName);
 
         Status = CFE_TBL_ReleaseAddress(LIGHTS_APP_Data.TblHandles[0]);
         if (Status != CFE_SUCCESS)
         {
-            CFE_ES_WriteToSysLog("Sample App: Fail to release table address: 0x%08lx", (unsigned long)Status);
+            CFE_ES_WriteToSysLog("Lights App: Fail to release table address: 0x%08lx", (unsigned long)Status);
         }
         else
         {
