@@ -4,10 +4,10 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Environment building notes
 
-The information talks about the process and background notes used to develop the Docker environment used to run the demos.
+The information talks about the process and background notes used to develop the Docker environment used to run the demos and devcontainer.
 The specific emulated environments are [described in detail.](../docs/embedded-environments/Readme.md)
 
-CI that builds and stores our images - <https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci>
+CI now builds the environment locally from the same Dockerfile instead of depending on a published image.
 
 ## Development
 

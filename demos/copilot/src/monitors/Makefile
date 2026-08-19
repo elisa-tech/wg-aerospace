@@ -14,74 +14,77 @@ else ifeq ($(ARCH), aarch64)
     CROSS_PREFIX=aarch64-none-linux-gnu
 endif
 
-CONTAINER_IMG = registry.gitlab.com/elisa-tech/aero-wg/aero-wg-ci/copilot:2528466992
-CONTAINER_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../:/demo
-CONTAINER_TEST_ARGS = -e HOST_UID="$(shell id -u)" -e HOST_GID="$(shell id -g)" -v $(PWD)/../../../:/demo
+REPO_ROOT := $(abspath ../../../..)
+DEVCONTAINER_CLI ?= devcontainer
+IN_DEVCONTAINER := $(shell if [ -n "$$DEVCONTAINER" ] || [ -n "$$REMOTE_CONTAINERS" ] || [ -f /.dockerenv ]; then echo 1; else echo 0; fi)
+RUN_CWD := $(if $(filter 1,$(IN_DEVCONTAINER)),.,demos/copilot/src/monitors)
+COMMA := ,
+QEMU_SERIAL_PORT ?= 45450
 
-RUN_PREFIX := docker run --rm $(CONTAINER_ARGS) $(CONTAINER_IMG)
-RUN_PREFIX_TEST := docker run --rm $(CONTAINER_TEST_ARGS) $(CONTAINER_IMG)
-RUN_IT_PREFIX := docker run --rm -it $(CONTAINER_ARGS) $(CONTAINER_IMG)
-DEMO_CHDIR := cd /demo/monitors
-DEMO_CHDIR_TEST := cd /demo/copilot/src/monitors
+ifeq ($(IN_DEVCONTAINER),1)
+EXEC := bash -lc
+else
+EXEC := $(DEVCONTAINER_CLI) exec --workspace-folder "$(REPO_ROOT)" bash -lc
+endif
 
-CMD_PREFIX := $(DEMO_CHDIR) &&
-CMD_PREFIX_TEST := $(DEMO_CHDIR_TEST) &&
+define exec_in_env
+$(EXEC) 'cd $(RUN_CWD) && $(1)'
+endef
 
-# TODO add CICD adjustments to prefix and when detecting that we're running inside a container (for the `make dev` case)
-
-.PHONY: default clean prep runs test test_monitors
+.PHONY: default clean prep run test test_monitors main_syslog_time_cross_stop
 
 default: main_syslog main_syslog_local main_syslog_time
 
-# Defaulting to docker as preferred because of the setup complexities with environments.
-# See CoPilot docs for manually configuring an environment which supports haskell.
-# The Container build is documented under <toplevel>/demos/env/Readme.md
 prep:
-	docker pull $(CONTAINER_IMG)
+	@if [ "$(IN_DEVCONTAINER)" = "1" ]; then \
+		echo "Already inside the devcontainer; nothing to prepare."; \
+	else \
+		if ! command -v $(DEVCONTAINER_CLI) >/dev/null 2>&1; then \
+			echo "devcontainer CLI is required for host-side use. Open the repo in VS Code Dev Containers or install the CLI." >&2; \
+			exit 1; \
+		fi; \
+		$(DEVCONTAINER_CLI) up --workspace-folder "$(REPO_ROOT)"; \
+	fi
 
 # The embedded builds are documented under <toplevel>/demos/docs/embedded-environments/Readme.md
 prep_cross: prep prep_cross_clean
-	@if [ ! -e "archive.tar" ]; then \
-		wget "$(MIN_OS_URL)/$(MIN_ARCHIVE)" -O archive.tar; \
-	fi
-	tar xf archive.tar
-	tar xf $(CROSS_TOOLCHAIN).tar.gz && rm -f $(CROSS_TOOLCHAIN).tar.gz
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/$(CROSS_TOOLCHAIN) && ./relocate-sdk.sh'
+	$(call exec_in_env,if [ ! -e archive.tar ]; then wget "$(MIN_OS_URL)/$(MIN_ARCHIVE)" -O archive.tar; fi && tar xf archive.tar && tar xf $(CROSS_TOOLCHAIN).tar.gz && rm -f $(CROSS_TOOLCHAIN).tar.gz)
+	$(call exec_in_env,cd $(CROSS_TOOLCHAIN) && ./relocate-sdk.sh)
 
 prep_cross_clean:
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf $(CROSS_TOOLCHAIN)* Image rootfs.cpio* extracted_cpio archive.tar'
+	$(call exec_in_env,sudo rm -rf $(CROSS_TOOLCHAIN)* Image rootfs.cpio* extracted_cpio archive.tar)
 
 env-debug:
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) export'
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc --version'
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell --version'
+	$(call exec_in_env,export)
+	$(call exec_in_env,gcc --version)
+	$(call exec_in_env,runhaskell --version)
 
 dev:
-	$(RUN_IT_PREFIX) sh -c 'cat /.VERSION && bash'
+	$(call exec_in_env,cat /.VERSION && exec bash -l)
 
 # To debug haskell dependencies, add a -v before any *.hs
 elisa-v2.c elisa-v2.h elisa-v2_types.h: Main.hs Auxiliary.hs
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell Main.hs'
+	$(call exec_in_env,runhaskell Main.hs)
 
 elisa-time.c elisa-time.h elisa-time_types.h: MainSyslogClock.hs Auxiliary.hs
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) runhaskell MainSyslogClock.hs'
+	$(call exec_in_env,runhaskell MainSyslogClock.hs)
 
 main_syslog: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc main_syslog.c elisa-v2.c -o $@'
+	$(call exec_in_env,gcc main_syslog.c elisa-v2.c -o $@)
 
 main_syslog_local: main_syslog.c elisa-v2.c elisa-v2.h elisa-v2_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"log_file\" -DNOTAIL main_syslog.c elisa-v2.c -o $@'
+	$(call exec_in_env,gcc -DLOG_PATH=\"log_file\" -DNOTAIL main_syslog.c elisa-v2.c -o $@)
 
 main_syslog_time: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
+	$(call exec_in_env,gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@)
 
 main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && /demo/monitors/$(CROSS_TOOLCHAIN)/bin/$(CROSS_PREFIX)-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@'
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && sudo rm -rf extracted_cpio && mkdir -p extracted_cpio && gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed && cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio || true'
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cp -rf  ../python ../tests  ./extracted_cpio/root/'
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && mkdir ./extracted_cpio/root/monitors && cp -f  main_syslog_time_cross  ./extracted_cpio/root/monitors/main_syslog_time && 	chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time'
+	$(call exec_in_env,$(CROSS_TOOLCHAIN)/bin/$(CROSS_PREFIX)-gcc -DLOG_PATH=\"syslog_file\" main_syslog_time.c elisa-time.c -o $@)
+	$(call exec_in_env,sudo rm -rf extracted_cpio && mkdir -p extracted_cpio && gunzip -c rootfs.cpio.gz > rootfs.cpio_uncompressed && cpio -i -R +0:+0 -n -F rootfs.cpio_uncompressed --make-directories --preserve-modification-time --no-absolute-filenames --directory=./extracted_cpio || true)
+	$(call exec_in_env,cp -rf ../python ../tests ./extracted_cpio/root/)
+	$(call exec_in_env,mkdir -p ./extracted_cpio/root/monitors && cp -f main_syslog_time_cross ./extracted_cpio/root/monitors/main_syslog_time && chmod 0755 ./extracted_cpio/root/monitors/main_syslog_time)
 	# Could add other content to the `./extracted_cpio` at this point before making the new image in the next line
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && cd extracted_cpio && sudo chown root:root . -R && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new'
+	$(call exec_in_env,cd extracted_cpio && sudo chown root:root . -R && sudo find . | sudo cpio -H newc -o | gzip -c > ../rootfs.cpio.gz_new)
 
 # To use the serial port this emulation sets up
 # 1) Execute the below make target to start the container
@@ -91,14 +94,17 @@ main_syslog_time_cross: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_
 #          sudo apt update && sudo apt install -y socat netcat && nc localhost 45450
 # 4) In the emulation, login and run the following to send example message to Netcat that's listening
 #          echo "Hi" > /dev/ttyS0
-main_syslog_time_cross_run: main_syslog_time_cross
-	$(RUN_IT_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -chardev socket,id=ttyS0,host=localhost,port=45450,server,nowait -device pci-serial,chardev=ttyS0 -append "root=/dev/ram0 console=ttyAMA0"'
+main_syslog_time_cross_run: main_syslog_time_cross_stop main_syslog_time_cross
+	$(call exec_in_env,qemu-system-aarch64 -M virt -m 512M -cpu cortex-a57 -smp 4 -nographic -kernel Image -initrd rootfs.cpio.gz_new -chardev socket$(COMMA)id=ttyS0$(COMMA)host=localhost$(COMMA)port=$(QEMU_SERIAL_PORT)$(COMMA)server=on$(COMMA)wait=off -device pci-serial$(COMMA)chardev=ttyS0 -append "root=/dev/ram0 console=ttyAMA0")
 
-main_syslog_time_cross_run_ci: main_syslog_time_cross
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) cd /demo/monitors/ && python3 ../tests/test-qemu-launch.py'
+main_syslog_time_cross_stop:
+	-$(call exec_in_env,pkill -f "qemu-system-aarch64.*rootfs.cpio.gz_new" || true)
+
+main_syslog_time_cross_run_ci: main_syslog_time_cross_stop main_syslog_time_cross
+	$(call exec_in_env,python3 ../tests/test-qemu-launch.py)
 
 main_syslog_test: main_syslog_time.c elisa-time.c elisa-time.h elisa-time_types.h
-	$(RUN_PREFIX) sh -c '$(CMD_PREFIX) gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@'
+	$(call exec_in_env,gcc -DLOG_PATH=\"syslog_file\" -DCLOSE_AT_END -DNOTAIL main_syslog_time.c elisa-time.c -o $@)
 
 clean_cross: prep_cross_clean clean prep_cross  main_syslog_time_cross main_syslog_time_cross_run
 
@@ -111,30 +117,16 @@ run: main_syslog_time
 	# Split the window into 4 panes
 	# Run commands in each pane
 	# Attach to the tmux session
-	$(RUN_IT_PREFIX) sh -c "$(DEMO_CHDIR) echo \
-		&& touch log_file syslog_file \
-		&& export TERM=xterm-256color \
-		&& tmux new-session -d -s my_session \
-		&& tmux split-window -h \
-		&& tmux split-window -v \
-		&& tmux select-pane -L \
-		&& tmux split-window -v \
-		&& tmux send-keys -t my_session:0.1 \"tail -f syslog_file\" C-m \
-		&& tmux send-keys -t my_session:0.2 \"python3 ../python/lightServer.py\" C-m \
-		&& sleep 1 \
-		&& tmux send-keys -t my_session:0.0 \"bash -i <<< './main_syslog_time; exec </dev/tty'\" C-m \
-		&& tmux send-keys -t my_session:0.3 \"python3 ../python/switch.py\" \
-		&& tmux attach-session -t my_session"
+	$(call exec_in_env,touch log_file syslog_file && export TERM=xterm-256color && tmux kill-session -t my_session >/dev/null 2>&1 || true && tmux new-session -d -s my_session && tmux split-window -h && tmux split-window -v && tmux select-pane -L && tmux split-window -v && tmux send-keys -t my_session:0.1 "tail -f syslog_file" C-m && tmux send-keys -t my_session:0.2 "python3 ../python/lightServer.py" C-m && sleep 1 && tmux send-keys -t my_session:0.0 "printf \"%s\\n\" \"./main_syslog_time; exec </dev/tty\" | bash -i" C-m && tmux send-keys -t my_session:0.3 "python3 ../python/switch.py" && tmux attach-session -t my_session)
 	# To kill session, `Ctrl-b` then type `:kill-session` <enter>
 
 test: test_monitors systemtest main_syslog_time_cross_test
 
 test_monitors: main_syslog_test
-	./test.sh
+	$(call exec_in_env,./test.sh)
 
 systemtest: main_syslog_time
-	$(RUN_PREFIX_TEST) sudo sh -c "cd /demo/copilot/src/monitors \
-		&& ../tests/runtests.sh"
+	$(call exec_in_env,sudo sh -c "cd . && ../tests/runtests.sh")
 
-main_syslog_time_cross_test: main_syslog_time_cross
-	$(RUN_PREFIX_TEST) sh -c '$(CMD_PREFIX_TEST) python3 ../tests/wrap-qemu.py'
+main_syslog_time_cross_test: main_syslog_time_cross_stop main_syslog_time_cross
+	$(call exec_in_env,python3 ../tests/wrap-qemu.py)

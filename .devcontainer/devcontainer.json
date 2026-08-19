@@ -1,0 +1,13 @@
+{
+  "name": "wg-aerospace-copilot",
+  "build": {
+    "dockerfile": "../demos/env/Dockerfile",
+    "context": ".."
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/wg-aerospace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/wg-aerospace",
+  "remoteUser": "ubuntu",
+  "updateRemoteUserUID": true,
+  "overrideCommand": true,
+  "postCreateCommand": "git config --global --add safe.directory /workspaces/wg-aerospace"
+}

@@ -14,41 +14,43 @@ The following instructions assume that you've completed the [Environment Setup](
 
 1. Similar to [Environment Start Here](./EnvSetup.md#start-here) get a Linux shell in your respective environment.
 2. Navigate to your clone of this project and [cd demos/copilot/src/monitors/](../copilot/src/monitors/).
-3. Execute the following to get a `development environment shell` within our container.
+3. Execute the following to start the devcontainer locally on first use.
+
+   ```bash
+   make prep
+   ```
+
+4. Then execute the following to open a shell in the devcontainer.
 
    ```bash
    make dev
    ```
 
-4. At this point you're in the docker container with all the tools to do testing and rebuild of the demos.
-5. The `copilot` folder has been mounted as `/demo/` within the container. This is the only persistent folder between invocations of the container.
-6. To verify you're still in the container you can check existence, e.g., `ls /demo`.
-7. To exit the container, type `exit` in the shell and it will close the shell and shutdown.
+5. At this point you're in the devcontainer with all the tools to do testing and rebuild of the demos.
+6. The repository is mounted as the workspace in the container, so changes persist across sessions.
+7. To verify you're still in the container you can check existence, e.g., `ls demos/copilot/src/monitors`.
+8. To exit the container, type `exit` in the shell and it will close the shell and shutdown.
 
 #### Setup the development shell cross compiling (emulated target apps)
 
-1. Before entering the `make dev` environment, navigate to your clone of this project and [cd demos/copilot/src/monitors/](../copilot/src/monitors/).
-2. Execute `make prep_cross` to retrieve the latest pre-built Linux images and cross toolchain. This stores the archives and extracted form of these in the `monitors` folder. It also invokes the toolchains relocation logic that needs to setup cross tool's LDPATH(s).
-3. Enter the `make dev` containerized environment.
+1. Before opening the devcontainer shell, navigate to your clone of this project and [cd demos/copilot/src/monitors/](../copilot/src/monitors/).
+2. Execute `make prep_cross` to retrieve the Linux images and cross toolchain. This stores the archives and extracted form of these in the `monitors` folder. It also invokes the toolchain relocation logic that needs to set up cross tool LDPATH values.
+3. Run `make prep` and then `make dev` to enter the devcontainer environment.
 4. If you want the cross tools to become the default (i.e., "CC, LD, ARCH" env vars), navigate to the following folder and run a environment script to export all the variables in the local shell for use.
 
    ```bash
-   cd /demo/monitors/aarch64-buildroot-linux-musl_sdk-buildroot/
+   cd ./aarch64-buildroot-linux-musl_sdk-buildroot/
    . environment-setup
    ```
 
-5. If you're on Windows and have VSCode open + attached to a WSL distro (WSL and Docker Extensions), you can attach to the now running container to do GUI development. (Similar on Linux minus the WSL distro portion. VSCode should be able to attach using the Docker extension.)
+5. If you're on Windows and have VS Code open plus attached to a WSL distro, you can attach to the running container to do GUI development. The same applies on Linux without the WSL layer.
 6. To exit the container, type `exit` in the shell and it will close the shell and shutdown. If you were attached with VSCode, that will also terminate.
 
-#### Using VSCode with the active development container
+#### Using VS Code or the CLI with the active development container
 
-1. Environment pre-req
-   1. Windows: Open VSCode and have the `WSL + Docker Extensions`
-      1. Attached to a WSL distro you're using for this work using `><` icon in bottom left.
-   2. Linux: Open VSCode and have the `Docker Extension`.
-2. Attach to the now running container to do GUI development using `><` icon in bottom left and picking it from the list.
-3. At this point you can open folders, workspaces and start additional shells within the GUI.
-4. If you exit the container in your non-VSCode shell, it will terminate the VSCode attachment. Vs. If you stop VSCode, the container will continue to run until the non-VSCode original shell is exited.
+1. VS Code: Install the Dev Containers extension, open the repository, and choose the Dev Containers command to reopen in the container.
+2. CLI: From the host, run `make prep` in `demos/copilot/src/monitors` to start the devcontainer, then run the build or test targets from the same directory.
+3. In both cases, the Makefile now executes inside the container instead of pulling a prebuilt image.
 
 ### Using the Linux emulation
 

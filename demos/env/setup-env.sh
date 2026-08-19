@@ -32,11 +32,22 @@ fi
 echo "Installing prerequisites ..."
 {
 	sudo apt-get update &&
-		sudo apt-get install -y make ca-certificates passwd curl
+		sudo apt-get install -y make ca-certificates passwd curl nodejs npm
 } || {
 	echo "Failed to setup Demo prerequisites"
 	exit 1
 }
+
+# Install devcontainer CLI if missing
+if ! command -v devcontainer &>/dev/null; then
+	echo "Installing devcontainer CLI ..."
+	sudo npm install -g @devcontainers/cli || {
+		echo "Failed to install devcontainer CLI"
+		exit 1
+	}
+else
+	echo "devcontainer CLI already installed..."
+fi
 
 # Setup user permissions for using Docker
 echo "Adding user to docker group ..."
