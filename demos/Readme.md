@@ -15,7 +15,7 @@ This folder contains a series of examples, documentation, and reference builds t
 ## Environment Setup
 
 The [Environment Setup](./docs/EnvSetup.md) is a dependency for the demo examples.
-It will has notes on tool setup and how to retrieve the Docker image.
+It has notes on tool setup and how to open the devcontainer that builds the environment locally.
 
 Alternatively, [AvioNix Demo](./AvioNix-demo/README.md) contains a Nix based build infrastructure compile and run demos.
 
@@ -29,8 +29,8 @@ Alternatively, [AvioNix Demo](./AvioNix-demo/README.md) contains a Nix based bui
 
 The [Development Guide](docs/Development.md) is a good place to start if you need to get a shell within our environment to debug or expand on the demonstration material.
 
-The demos use a few pre-built [Embedded Environments](docs/embedded-environments/Readme.md).
-Each demo is assembled using the necessary tooling and base images.
+The demos use a few [Embedded Environments](docs/embedded-environments/Readme.md).
+Each demo is assembled using the necessary tooling and base images, with the Copilot environment built locally through the devcontainer workflow.
 
 ## Contributing
 

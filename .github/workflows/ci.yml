@@ -33,41 +33,66 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Prep
+      - name: Build devcontainer image
         run: |
-          cd demos/copilot/src/monitors
-          make prep
-          make prep_cross
-          make env-debug
+          docker build \
+            --file demos/env/Dockerfile \
+            --tag wg-aerospace-copilot-dev \
+            .
+
+      - name: Prep cross environment
+        run: |
+          docker run --rm \
+            -e HOST_UID="$(id -u)" \
+            -e HOST_GID="$(id -g)" \
+            -v "${{ github.workspace }}:/workspaces/wg-aerospace" \
+            -w /workspaces/wg-aerospace/demos/copilot/src/monitors \
+            wg-aerospace-copilot-dev \
+            make prep_cross env-debug
 
       - name: Build
         run: |
-          cd ${{ github.workspace }}
-          cd demos/copilot/src/monitors
-          make
-          file main_syslog_time # Verify built file exists
+          docker run --rm \
+            -e HOST_UID="$(id -u)" \
+            -e HOST_GID="$(id -g)" \
+            -v "${{ github.workspace }}:/workspaces/wg-aerospace" \
+            -w /workspaces/wg-aerospace/demos/copilot/src/monitors \
+            wg-aerospace-copilot-dev \
+            make
+          file demos/copilot/src/monitors/main_syslog_time # Verify built file exists
 
       - name: Build Cross Target
         run: |
-          cd ${{ github.workspace }}
-          cd demos/copilot/src/monitors
-          make main_syslog_time_cross
-          file main_syslog_time_cross # Verify built file exists
+          docker run --rm \
+            -e HOST_UID="$(id -u)" \
+            -e HOST_GID="$(id -g)" \
+            -v "${{ github.workspace }}:/workspaces/wg-aerospace" \
+            -w /workspaces/wg-aerospace/demos/copilot/src/monitors \
+            wg-aerospace-copilot-dev \
+            make main_syslog_time_cross
+          file demos/copilot/src/monitors/main_syslog_time_cross # Verify built file exists
 
       - name: Test Cross Target
         run: |
-          cd ${{ github.workspace }}
-          cd demos/copilot/src/monitors
-          file main_syslog_time_cross # Verify built file exists
+          file demos/copilot/src/monitors/main_syslog_time_cross # Verify built file exists
           # Internal wrapper script for CI run is set to 30sec timeout so this should force a fail set to 20s
-          timeout 20 make main_syslog_time_cross_run_ci
+          timeout 20 docker run --rm \
+            -e HOST_UID="$(id -u)" \
+            -e HOST_GID="$(id -g)" \
+            -v "${{ github.workspace }}:/workspaces/wg-aerospace" \
+            -w /workspaces/wg-aerospace/demos/copilot/src/monitors \
+            wg-aerospace-copilot-dev \
+            make main_syslog_time_cross_run_ci
 
       - name: Test
         run: |
-          cd ${{ github.workspace }}
-          cd demos/copilot/src/monitors
-          make
-          make test
+          docker run --rm \
+            -e HOST_UID="$(id -u)" \
+            -e HOST_GID="$(id -g)" \
+            -v "${{ github.workspace }}:/workspaces/wg-aerospace" \
+            -w /workspaces/wg-aerospace/demos/copilot/src/monitors \
+            wg-aerospace-copilot-dev \
+            make test
 
       # Docs - https://github.com/EnricoMi/publish-unit-test-result-action?tab=readme-ov-file#github-action-to-publish-test-results
       - name: Publish Test Results

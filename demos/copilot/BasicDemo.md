@@ -17,7 +17,7 @@ Build the demo
 
 ```
 cd ~/wg-aerospace/demos/copilot/src/monitors
-make prep  # Retrieves the container with tooling
+make prep  # Starts the devcontainer locally on first use
 make       # Runs Haskell & Builds demo applications
 ```
 
