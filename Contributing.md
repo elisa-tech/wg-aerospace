@@ -14,8 +14,11 @@ Please follow the guidelines below to ensure a smooth contribution process.
   - [Reporting Issues](#reporting-issues)
   - [Submitting Changes](#submitting-changes)
   - [AI-Assisted Contributions](#ai-assisted-contributions)
+    - [Scope](#scope)
     - [Attribution with `Assisted-by`](#attribution-with-assisted-by)
     - [Signed-off-by and Developer Certificate of Origin](#signed-off-by-and-developer-certificate-of-origin)
+    - [License compliance](#license-compliance)
+    - [Review expectations](#review-expectations)
   - [Style Guide](#style-guide)
   - [License](#license)
     - [How to use the license checker](#how-to-use-the-license-checker)
@@ -64,8 +67,21 @@ assist with writing code, documentation, or other contributions. When doing
 so, please follow these guidelines.
 
 This guidance is modeled on the Linux kernel's
-[coding-assistants](https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst)
-documentation.
+[coding-assistants](https://docs.kernel.org/process/coding-assistants.html)
+and [generated-content](https://docs.kernel.org/process/generated-content.html)
+documentation, and aligns with the
+[Linux Foundation Generative AI Policy](https://www.linuxfoundation.org/legal/generative-ai)
+and the
+[OpenJS Foundation Policy on Use of AI Coding Assistants](https://openjsf.cdn.prismic.io/openjsf/acqiJpGXnQHGZGtq_OpenJSAICodingAssistantsPolicy.pdf).
+
+### Scope
+
+The `Assisted-by` trailer and these guidelines apply when AI tools
+generate meaningful content (code, documentation prose, analysis).
+Trivial suggestions such as identifier completion, spelling corrections,
+or common boilerplate do not require attribution. See the kernel's
+[generated-content: Out of Scope](https://docs.kernel.org/process/generated-content.html#out-of-scope)
+section for detailed examples of what is and is not in scope.
 
 ### Attribution with `Assisted-by`
 
@@ -97,6 +113,12 @@ Assisted-by: Claude:claude-sonnet-4-20250514 cppcheck
 There is no specific model version requirement. Use whatever version
 identifier the tool provides for traceability purposes.
 
+For contributions where AI generated a substantial portion of the
+content, include a summary of prompts or session context in the commit
+message or PR description per the kernel's
+[generated-content: Guidelines](https://docs.kernel.org/process/generated-content.html#guidelines)
+recommendations.
+
 ### Signed-off-by and Developer Certificate of Origin
 
 AI tools MUST NOT add `Signed-off-by` tags. Only humans can legally
@@ -109,15 +131,27 @@ human review and direction. The human submitter is responsible for:
 - Adding their own `Signed-off-by` tag to certify the DCO
 - Taking full responsibility for the contribution
 
+This aligns with the OpenJS Foundation's
+[Duty of Care](https://openjsf.cdn.prismic.io/openjsf/acqiJpGXnQHGZGtq_OpenJSAICodingAssistantsPolicy.pdf)
+principle: every submitter remains responsible for their submission
+regardless of the degree to which they employ AI tools.
+
 ### License compliance
 
 Ensure AI-generated content does not introduce license-incompatible
 material. You are responsible for verifying that contributions comply
 with the project's licensing (see [License](#license) below).
 
+Contributors should also verify that the terms and conditions of their
+AI tool do not restrict how its output can be used in ways inconsistent
+with the project's CC-BY-SA-4.0 license, per the
+[Linux Foundation Generative AI Policy](https://www.linuxfoundation.org/legal/generative-ai).
+
 When using AI tools to generate code, you can ask the tool to provide
 citations or sources for its suggestions to help assess licensing
-compliance. For example:
+compliance. Note that this is a best-effort step — AI tools cannot
+guarantee complete provenance of their output, and the contributor
+accepts IP risk when using AI-generated content. For example:
 
 > "Please provide citations or references for the code you suggested.
 > Is this based on any existing open source project, and if so, under
@@ -125,9 +159,13 @@ compliance. For example:
 
 ### Review expectations
 
-AI-generated content should receive greater level of review
-as hand-written contributions. Do not submit AI output without
-understanding and validating it.
+AI-generated content should receive a greater level of review than
+hand-written contributions. Do not submit AI output without
+understanding and validating it. Maintainers may apply additional
+scrutiny proportional to the degree of AI involvement, as described in
+the kernel's
+[generated-content: Guidelines](https://docs.kernel.org/process/generated-content.html#guidelines)
+section.
 
 This guidance ensures traceability and transparency while welcoming the
 productivity benefits of AI tooling. The repository maintainers reserve
