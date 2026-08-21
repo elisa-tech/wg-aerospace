@@ -21,7 +21,7 @@
 /**
  * @file
  *
- * Define Sample App Events IDs
+ * Define Lights App Events IDs
  */
 
 #ifndef LIGHTS_APP_EVENTS_H

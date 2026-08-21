@@ -8,7 +8,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Holiday / Vacations**
 
-- Martin off until Aug
+- (none currently)
 
 **Parking lot:**
 
@@ -16,11 +16,297 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Clean up landing page structure - <https://github.com/elisa-tech/wg-aerospace/issues/159>
 - Further NASA flight support - <https://github.com/elisa-tech/wg-aerospace/issues/158>
 - Python and Makefile structure - <https://github.com/elisa-tech/wg-aerospace/issues/157>
+- [Mixed criticality discussions](https://terminplaner6.dfn.de/en/p/a56b64ee888e0c0f528fc4aaa86ba5e7-1835668)
 
 **Presentations**
 
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20260821
+
+**Attendance**
+
+- Martin Halle - Hamburg University of Technology
+- Ivan Perez - KBR @ NASA
+- Brian Wood - Boeing
+- Leonidas Kosmidis - BSC
+- Shefali Sharma
+- Rob Woolley - WRS
+
+**Discussion topics**
+
+- Progress on Simulink to OGMA application transitions
+  - Ivan presented Simulink to model implementation implement din Haskell
+  - Discussion of what should be generated:
+    - Full generation incl. function vs. partial generation (container)
+    - Possible partial container generation workflow
+      - Create functions from Simulink blocks
+      - Create interfaces between blocks (can be scalar signals/vectors/matrices or more complex structs)
+      - Auto-connect what's possible
+      - Leave detailed implementation / special interfaces to the user (structs could be added out of code generation)
+      - Ivan implemented a possible solution stub live, looks promising
+  - Discussion on containers and links between them, what’s possible / needed in Simulink
+    - Identification that there are 1:1 relations between Simulink and OGMA items (like constants) that may be useful
+     
+- cFS recipe on meta-aerospace
+  - (Postponed to next time) (SDK flow - Case 1) Package / build existing demo application (Rob's workflow discussion)
+  - Discussion for what target: HW or QEMU (ARM/???):
+    - Decision: Rob can setup the demo to show
+      - Yocto SDK to build cFS and
+      - deploy cFS application to a QEMU instance,
+      - alternatively (via pivot) to HW, likely Beaglebone,
+      - but other HW would be possible
+
+- Information if we want to continue on hypervisors (likely not any time soon)
+  - (Martin) Read about PRTOS Hypervisor: https://github.com/prtos-project/prtos-hypervisor
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+## 20260814
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Martin Halle - Hamburg University of Technology
+- Brian Wood - Boeing
+- Pawel Wodnicki - 32bitmicro
+- Wanja Zaeske - DLR
+- Shefali Sharma
+
+**Discussion topics**
+
+- Ogma demo update status
+  - Draft PR <https://github.com/elisa-tech/wg-aerospace/pull/237>
+  - Ivan's progress on getting other 2 apps auto-gen'd
+  - Shared PR material and doc updates to support (couple quick MRs for generated naming updates)
+  - Ivan did a ogma walk through
+  - ACTION: Weber: for these changes to work - need to bump to ubuntu latest and not locking to release such that we get Ogma
+    - We'll need to bump this in the Makefile to pickup the container with 1.15+
+    - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/copilot/src/monitors/Makefile#L17>
+    - This change maintains existing demos (definitely other envs pulling Ogma in not using the Container would also need updates.)
+
+- cFS recipe on meta-aerospace
+  - Complete
+    - Rob's [PR: layer move to ELISA meta-aerospace](https://github.com/elisa-tech/meta-aerospace/pull/5)
+    - Matt's pjt files update [PR: CI, Contrib and licensing](https://github.com/elisa-tech/meta-aerospace/pull/4/changes)
+  - (Next time) (SDK flow - Case 1) Package / build existing demo application (Rob's workflow discussion)
+  - Hardware builds
+    - New: SGL discord had a thread started on HPSC support, Matt published this - <https://github.com/elisa-tech/meta-sgl/pull/61>
+    - Mentioned to Pawel that opening a PR on meta-sgl will use their CI runners and could help with rebuild testing
+
+- Idea: Roundtable or approach on main call for brainstorming / innovative discussions? (Wanja/Martin)
+
+- (Next time) cfs on Min Linux concept
+  - Ivan: assuming direct cFS start from setting as bootargs init=<cFS start application>
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
+
+## 20260807
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Martin Halle - Hamburg University of Technology
+- Brian Wood - Boeing
+- Rob Woolley - Wind River
+
+**Discussion topics**
+
+- Ogma
+  - ACTION: Ivan - plans to make an update to the current demo
+  - Draft PR <https://github.com/elisa-tech/wg-aerospace/pull/237>
+  - Version update plus cfs bump
+  - 1 of our 3 apps is auto-gen (trying to get other two as well using new Ogma feature)
+
+- DASC
+  - Wanja has a NixOS-talk for embedded Linux in Avionics as a tutorial session
+
+- cfs on Min Linux (starting to hear more interest from NASA to look at a concept) (Possible demo?)
+  - Action:
+    - Ivan checking to see if there is opportunity for NASA contribution to help us build it
+    - Matt can help NASA fill out scenarios and use case details to help us set reqt for this (plus set prior research known constraints)
+
+- cFS recipe on meta-sgl
+  - Moved PX4 into [another repo](https://github.com/robwoolley/meta-px4) - Has a on target build workflow and renode/qemu hardware sim
+  - Rob's ready to PR over into ELISA meta-aerospace
+  - Matt needs to merge PR after resolving comments from Ramon - [PR: meta-aerospace - CI, Contrib and licensing](https://github.com/elisa-tech/meta-aerospace/pull/4/changes)
+  - Next time
+    - (SDK flow - Case 1) Package / build existing demo application (ACTION: Rob taking a look at this to discuss a workflow next time)
+    - Hardware builds
+
+- Blog post status (Basic demo)
+  - [Draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - Action: Matt to reply to LXF to release
+  - Next post idea - meta-sgl work once we have a hardware target ready
+
+- Re: PREEMPT-RT - ELISA Online Seminar - Aerospace-focused
+  - [AeroWG discussion](https://github.com/elisa-tech/wg-aerospace/blob/main/meeting-minutes/ELISA-AeroWG-Meeting-20260709.md#new-topics)
+  - Action was to survey the list, no feedback from that.
+  - What's next step?
+  - A comparison scenario like "Linux stable vs Xenomai/RTEMS" (e.g., jitter, other items to compare/contrast, porting)
+  - Embedded perspective - system tuning, state of the art for real-time tooling (e.g., analyzers) and virtualized systems with guest/partitions achieving real-time performance
+  - Designing for I/O Drivers (are there multiple suggested approaches that could be compared?)
+
+**Next time**
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
+
+## 20260723
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Ivan Perez (KBR @ NASA)
+- Rob Woolley - Wind River
+- Pawel Wodnicki (32bitmicro)
+- Benjamin Pellieux
+
+**Discussion topics**
+
+- cFS recipe on meta-sgl
+  - Created - <https://github.com/elisa-tech/meta-aerospace>
+  - [quick start and example cmdUtil app](https://github.com/robwoolley/meta-aerospace/pull/1)
+  - (Ivan) talked through cFS question feedback
+    - Doc workflows (update readme?)
+      - SDK based approach for dev (formal final build may go to the full Yocto perspective to have a clean production image)
+        - Is the first step, showing how to incrementally do this (vs doc'n it)?
+        - Case (0) - Builds all of cFS plus mission apps (outside yocto)
+      - Yocto based (kickstart, Yocto has a larger role)
+        - Case (1) - cFS not designed to build as libs used generically by missions without cFS improvements to accommodate that style
+        - Case (2) - cFS plus mission apps could be all wrapped within Yocto to output complete system image
+  - Next steps
+    - px4 split and then look towards migration to <https://github.com/elisa-tech/meta-aerospace>
+    - (SDK flow - Case 1) Package / build existing demo application (ACTION: Rob taking a look at this to discuss a workflow next time)
+      - Based on doc steps - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md#apply-necessary-prebuild-patch-build-cfs-and-load-cfs-build-to-qemu-emulation>
+      - Scripts - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/scripts>
+      - App files - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/apps>
+      - Env for ogma/depends - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/env/Dockerfile#L58>
+    - What simulators would we want to hookup?
+      - Is there an existing demo / scripts that could be added as examples on top of this? Not a new demo but a re-pkg'n.
+    - Support for devcontainer sandboxing the user's dev env? (Yocto build, customization workflow)
+
+- TSN hardware support? Is there a possible concept demo that could be interesting with this? (Ivan)
+  - <https://docs.beagleboard.org/boards/beagleplay/01-introduction.html> ?
+  - <https://www.beagleboard.org/boards/beagleplay>
+
+- Pawel BSP status [(BeagleY-AI)](https://github.com/elisa-tech/wg-aerospace/issues/228)
+  - CI build size challenges (custom runners)
+  - <https://www.beagleboard.org/boards/pocketbeagle-2>
+  - <https://www.beagleboard.org/boards/beagley-ai>
+  - <https://www.beagleboard.org/boards/beaglev-fire>
+
+- Ogma
+  - New release (cFS updated to 7.0.1)
+  - Active vs passive signals concept for monitor evaluation
+  - Demo could be built for all apps from one template
+  - ACTION: Ivan - plans to make an update to the current demo
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+**Items for Aug**
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+
+- Blog post status
+  - Basic demo: [Updated draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - Nix kernel tailoring/analysis blog post timeline
+
+- Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+---
+
+## 20260717
+
+**Attendance**
+
+- Matt Weber (The Boeing Company)
+- Rob Woolley - Wind River
+- Pawel Wodnicki (32bitmicro)
+- Ivan Perez (KBR @ NASA)
+- Brian Wood (The Boeing Company)
+- Benjamin Pellieux
+
+**Discussion topics**
+
+- <https://elisa.tech/community/meetings/> now has video links on the respective call
+
+- cFS recipe on meta-sgl - follow-up from Rob's demo last week
+  - [Recording from 7/10](https://zoom.us/rec/play/YlvWNGvCFU8nmu9vfFevlR7BgqiNbZF8WQ_85qNL5jDICubI4-PZiXQMGrYCto6N3L80csZXW1QLB32Y.6y-BWDRxvEZT0Vnu)
+  - <https://github.com/robwoolley/meta-aerospace>
+  - I created 3 recipes:
+    - `cfs-native-std-native` - Builds the native_std target config for the host machine using the documented steps in the README
+    - `cfs-hosttools-native` - Builds cfeconfig_platformdata_tool and elf2cfetbl as host tools
+    - `cfs` - Creates a sgl-linux target config using the CMake toolchain file from bitbake - Builds the sample missionconfig example against sgl-linux using simple.mk.
+  - The end result is that I was able to run the core-cpu1 demo on both my build machine (using cfs-native-std-native) and inside QEMU (using cfs).
+  - It now includes PX4 and F Prime as well. It also has kas configuration files that demonstrate how to build each framework for SGL on qemuarm64.
+  - I have booted each framework in QEMU and tested them. The only thing holding me back from publishing it to a wider audience is that I want to be respectful to the NASA folks that work on cFS and F Prime. I would like to make sure that I am directing new users to use the correct target configurations and sample applications.
+  - ACTION: (All) - feedback on trying this from us before moving to ELISA
+    - [Weber's cmdUtil addition](https://github.com/robwoolley/meta-aerospace/pull/1)
+  - ACTION: (Specific project stakeholders) - feedback that projects recipe assumptions are correct for configuration and build targets
+    - Stakeholders (Ivan P to take questions to fprime & cfs)
+    - Questions:
+      - cFS
+        - Recipes described here: <https://github.com/robwoolley/meta-aerospace/blob/main/README.cfs.md>
+        - Currently hardcoded for MISSIONCONFIG=sample; Both sample_defs and simple_defs (symlink to cFE) are present; which is preferred?
+        - Is there perhaps a more suitable way of overriding TBLTOOL? (see <https://github.com/robwoolley/meta-aerospace/blob/main/recipes-cfs/cfs/cfs/override-tbltool.patch>)
+        - Added a custom target config "sgl-linux" to directly ingest the CMake Toolchain file from Yocto. Does NASA approve of this approach?
+        - Does this approach for creating sgl-linux look appropriate for cFS? (<https://github.com/robwoolley/meta-aerospace/blob/main/recipes-cfs/cfs/cfs-7.0.1.inc#L89>)
+          - Currently, the Yocto CMake toolchain file has to be copied in to create a cFS toolchain file: <https://github.com/robwoolley/meta-aerospace/blob/main/recipes-cfs/cfs/cfs-7.0.1.inc#L94>
+          - As an alternative, would an override in cFE (<https://github.com/nasa/cFE/blob/1e74317f06eee26974f7a3c6ab2d9a24593ea193/cmake/mission_build.cmake#L626>) for setting CMAKE_TOOLCHAIN_CMAKE for non-native builds be acceptable? This would negate needing the copy as -DCMAKE_TOOLCHAIN_FILE=${WORKDIR}/toolchain.cmake would be used instead.
+      - F Prime:
+        - Recipes described here: <https://github.com/robwoolley/meta-aerospace/blob/main/README.fprime.md>
+        - Created a native host tool that downloads the Scala + GraalVM PyPI package and runs it as a host tool: fprime-fpp-native_3.2.0.bb
+        - Build the Ref app by default, is that the correct example to present as the default?
+        - Are there any other tutorials or examples we should include? (<https://fprime.jpl.nasa.gov/latest/docs/tutorials/>)
+  - ACTION: (Weber)
+    - ELISA repo for [meta-aerospace](https://github.com/elisa-tech/meta-aerospace/)
+    - [Todo, when migrated, add a visual of our assumed CI workflow and how it integrates with SGL for hardware access](https://github.com/elisa-tech/meta-aerospace/issues/1)
+  - Next steps
+    - Package / build existing demo application (ACTION: Rob taking a look at this to discuss a workflow next time)
+      - Based on doc steps - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/docs/Build-cFS.md#apply-necessary-prebuild-patch-build-cfs-and-load-cfs-build-to-qemu-emulation>
+      - Scripts - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/scripts>
+      - App files - <https://github.com/elisa-tech/wg-aerospace/tree/main/demos/copilot/src/cfs/apps>
+      - Env for ogma/depends - <https://github.com/elisa-tech/wg-aerospace/blob/main/demos/env/Dockerfile#L58>
+    - What simulators would we want to hookup?
+      - Is there an existing demo / scripts that could be added as examples on top of this? Not a new demo but a re-pkg'n.
+    - Support for devcontainer sandboxing the user's dev env? (Yocto build, customization workflow)
+
+- Pawel BSP status [(BeagleY-AI)](https://github.com/elisa-tech/wg-aerospace/issues/228)
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+**Items for Aug**
+
+- PR: [ARINC 615a dataloader](https://github.com/elisa-tech/wg-aerospace/pull/231)
+
+- Blog post status
+  - Basic demo: [Updated draft from LXF marketing](https://docs.google.com/document/d/1wh-UV0HaqnnQbdP7qGcR7SJOn62R570HHTBfbi7wcCs/edit?usp=sharing)
+  - Nix kernel tailoring/analysis blog post timeline
+
+- Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
+  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+
+---
 
 ## 20260710
 

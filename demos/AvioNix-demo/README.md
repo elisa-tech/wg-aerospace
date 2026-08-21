@@ -77,7 +77,7 @@ It features a slimmed down Linux kernel (<300 kSLoC) and slimmed down systemd, b
   - [Nix pills](https://nixos.org/guides/nix-pills/): A guide gradually pulling away the curtain behind the technical foundation and core design of Nix
   - [Nixpkgs manual](https://nixos.org/manual/nixpkgs/stable/): Very formal, lengthy, detailed explanation of the nixpkgs and most relevant conventions within it
   - [NixOS manual](https://nixos.org/manual/nixos/stable/): Very formal, lengthy, detailed explanation of NixOS; this is what explains all the configuration options set within [`nixos-configurations`](./nixos-configurations)
-  - [Nix vs. Docker](https://www.devzero.io/blog/nix-vs-docker/): A fair comparison between Nix and Docker, comparing overlap and divergence in operation and capabilities
+  - [Nix vs. Docker](https://web.archive.org/web/20250517213629/https://www.devzero.io/blog/nix-vs-docker/): A fair comparison between Nix and Docker, comparing overlap and divergence in operation and capabilities
   - [What to expect (good and bad) from using Nix/NixOS](https://pierrezemb.fr/posts/nixos-good-bad-ugly/): An experience report from a new user on perceived advantages and frustrations going the Nix way
 
 ## Build Instructions

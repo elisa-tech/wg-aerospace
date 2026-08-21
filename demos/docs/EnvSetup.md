@@ -4,10 +4,12 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Environment Setup
 
-This environment utilizes a Docker container.
-This gives us the benefit of a consistent environment where applications can run the same way in development, testing, and production.
-Containers provide isolation, preventing dependencies from interfering with each other, and simplify setup.
-This approach integrates well with CI/CD pipelines, and fosters collaboration by enabling developers to share environments easily.
+This environment uses a Dev Container backed by Docker.
+That gives us a consistent environment where applications run the same way in development, testing, and CI.
+The container is built locally on demand from the repo's Dockerfile instead of being pulled from a prebuilt registry image.
+
+Before opening the devcontainer, make sure Docker is installed on the host. If you are using the command-line flow, the [environment setup script](../env/setup-env.sh) is still the host bootstrap for Docker, local permissions, and devcontainer CLI prerequisites.
+If you prefer, you can still install the devcontainer CLI manually with `npm install -g @devcontainers/cli`, or install the Dev Containers extension in VS Code and use its built-in command.
 
 Compatible with Docker release/API v27+ in the following Operating Environments.
 
@@ -32,16 +34,20 @@ The first step is to get a shell/terminal.
 
 Next, in the shell started above
 
+- If you want the VS Code flow, install the Dev Containers extension first.
+- If you want the command-line flow, run the environment setup script first to set up Docker and the `devcontainer` CLI.
+
 - Change directory to your home `cd ~`
 - Clone use case codebase `git clone https://github.com/elisa-tech/wg-aerospace.git` and `cd wg-aerospace`.
-- Navigate to `./demos/env`, run our [environment setup script](../env/setup-env.sh) as a normal user `bash ./setup-env.sh`. If this script failed with a "Sudo is disabled on that computer" error. For Windows 11 WSL, to enable Sudo, navigate to Settings > System > For Developers and toggle on the Enable sudo option.
-- Start a new shell so that your user gains Docker rights (e.g., could just type `bash` enter).
-- Then run a test container `docker run hello-world`. This will download a container and you should see Hello world printed to the screen.
+- Navigate to `./demos/env` and run `bash ./setup-env.sh` as a normal user. If this script failed with a "Sudo is disabled on that computer" error, enable Sudo in Windows 11 WSL under Settings > System > For Developers.
+- Open the repository in VS Code and use the Dev Containers command, or use the command-line `devcontainer` CLI.
+- The first start builds the environment locally from [the devcontainer definition](../../.devcontainer/devcontainer.json) and [Dockerfile](../env/Dockerfile).
+- Then open a shell in the container and run the demo commands from there.
 
 The last step is to try out the [Basic Demo](../copilot/BasicDemo.md) using this new environment.
 
 ## References
 
-### Recreating our Prebuilt Docker image
+### Recreating the devcontainer
 
-The [Dockerfile](../env/Dockerfile) was used in the [AeroWG CICD](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/-/blob/main/.gitlab-ci.yml?ref_type=heads) to compose and publish the image into the [registry](https://gitlab.com/elisa-tech/aero-wg/aero-wg-ci/container_registry). The CICD yml offers an example of how to compose and publish.
+The [Dockerfile](../env/Dockerfile) backs the repo's [devcontainer configuration](../../.devcontainer/devcontainer.json) and the GitHub Actions workflow. It is built locally on first use instead of pulling a prepublished registry image.
