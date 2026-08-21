@@ -23,6 +23,48 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
   - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260821
+
+**Attendance**
+
+- Martin Halle - Hamburg University of Technology
+- Ivan Perez - KBR @ NASA
+- Brian Wood - Boeing
+- Leonidas Kosmidis - BSC
+- Shefali Sharma
+- Rob Woolley - WRS
+
+**Discussion topics**
+
+- Progress on Simulink to OGMA application transitions
+  - Ivan presented Simulink to model implementation implement din Haskell
+  - Discussion of what should be generated:
+    - Full generation incl. function vs. partial generation (container)
+    - Possible partial container generation workflow
+      - Create functions from Simulink blocks
+      - Create interfaces between blocks (can be scalar signals/vectors/matrices or more complex structs)
+      - Auto-connect what's possible
+      - Leave detailed implementation / special interfaces to the user (structs could be added out of code generation)
+      - Ivan implemented a possible solution stub live, looks promising
+  - Discussion on containers and links between them, what’s possible / needed in Simulink
+    - Identification that there are 1:1 relations between Simulink and OGMA items (like constants) that may be useful
+     
+- cFS recipe on meta-aerospace
+  - (Postponed to next time) (SDK flow - Case 1) Package / build existing demo application (Rob's workflow discussion)
+  - Discussion for what target: HW or QEMU (ARM/???):
+    - Decision: Rob can setup the demo to show
+      - Yocto SDK to build cFS and
+      - deploy cFS application to a QEMU instance,
+      - alternatively (via pivot) to HW, likely Beaglebone,
+      - but other HW would be possible
+
+- Information if we want to continue on hypervisors (likely not any time soon)
+  - (Martin) Read about PRTOS Hypervisor: https://github.com/prtos-project/prtos-hypervisor
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
 ## 20260814
 
 **Attendance**
