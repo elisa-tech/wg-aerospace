@@ -1,6 +1,7 @@
 { "inputs":
-     [ { "name": "lights"
-       , "type": "bool"
+     [ { "name":   "lights"
+       , "type":   "bool"
+       , "active": true
        , "connections":
            [ { "scope": "cfs"
              , "topic": "LIGHTS_COMMAND"
@@ -8,8 +9,9 @@
              }
            ]
        }
-     , { "name": "lightSwitch"
-       , "type": "bool"
+     , { "name":   "lightSwitch"
+       , "type":   "bool"
+       , "active": true
        , "connections":
            [ { "scope": "cfs"
              , "topic": "LIGHTS_STATUS"
