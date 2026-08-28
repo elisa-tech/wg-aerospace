@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: CC-BY-SA-4.0
+-->
+
 # AGENTS.md — ELISA Aerospace Working Group
 
 Guidance for AI agents working in this repository.

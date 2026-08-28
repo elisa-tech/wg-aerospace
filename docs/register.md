@@ -8,6 +8,8 @@ This document register shall help to find the information you are looking for. D
 
 ## Resources and papers
 
+[AI agent guidance (AGENTS.md)](./../AGENTS.md)
+
 [Resources about ELISA, journals and articles / publications](./resources.md)
 [Landing page for various paper ideas](./survey/README.md)
 
