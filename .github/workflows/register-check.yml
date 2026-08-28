@@ -2,7 +2,10 @@
 ---
 name: Check all markdown files are linked in register.md
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  pull_request:
 
 permissions:
   contents: read
