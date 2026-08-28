@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/95688254268?password=d7353f64-663f-4b53-8a8f-1e7b2ab7aa05>
 
-**Holiday / Vacations**
+**Holiday / Vacations / Conflicts**
 
 - (none currently)
 
@@ -20,8 +20,62 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Presentations**
 
-- Soon (talk accepted that will make the slides) - QEMU (Future call - Leonidas) - (starting in Use case call)
-  - Once this is firm, ACTION: (Weber) Invite others from SGL and AeroWG
+- Oct 2nd - QEMU (Leonidas) - (in Use case call)
+  - ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20260828
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Ivan Perez - KBR @ NASA
+- Martin Halle - Hamburg University of Technology
+- Rob Woolley - Wind River System
+- Leonidas Kosmidis - BSC
+- Pawel Wodnicki - 32bitmicro
+- Wanja Zaeske - DLR
+
+**Discussion topics**
+
+- QEMU pre-built for HPSC - would this be beneficial?
+  - bound environment? devcontainer / build and then instructions to use it
+  - license violation with binary distro???? need to check
+  - Action: Weber to follow up with Microchip
+
+- Ogma and nix - template expansion error - change is complete and staged for next release (end of Sept)
+
+- Ivan still looking into Ogma block diagram gen for cFS
+
+- Action: Weber to prepare for next time to present the devcontainer approach to starting up the env (more / less walk the docs). Record this for adding to our instructions.
+
+- SGL talked a bit about CI challenges with fork'n and proposing updates to meta-sgl
+  - A fork should be able to locally run on CI resources they manage (or have less limitation opening a PR upstream and use the project's runners)
+  - CI workflows should have more conditions such that large rebuilds only occur then needed for non-common items
+
+- Rob shared a space grade linux set of steps to build a SDK to later use for a cFS build
+  - TBD add docs to meta-aerospace
+  - [Recording of Draft Instructions walk through](TBD add from <https://elisa.tech/community/meetings/> for this call)
+  - [Draft instructions](https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64#file-gistfile1-txt)
+  - TBD targeting initial hardware once demo/instructions are stable
+
+- Discussed university / research groups joining ELISA (pointed people towards sending Min a note)
+
+- Presentation on QEMU (Leonidas)
+  - Targeting Oct 2nd in this use case call
+
+**Next time?**
+
+- cFS on Min Linux concept
+  - Ivan: assuming direct cFS start from setting as bootargs init=<cFS start application>
+
+- Roundtable / brainstorming approach for main call (Wanja/Martin)
+  - What topic should we bring next call?
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
 
 ## 20260821
 
@@ -48,7 +102,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
       - Ivan implemented a possible solution stub live, looks promising
   - Discussion on containers and links between them, what’s possible / needed in Simulink
     - Identification that there are 1:1 relations between Simulink and OGMA items (like constants) that may be useful
-     
+
 - cFS recipe on meta-aerospace
   - (Postponed to next time) (SDK flow - Case 1) Package / build existing demo application (Rob's workflow discussion)
   - Discussion for what target: HW or QEMU (ARM/???):
@@ -59,7 +113,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
       - but other HW would be possible
 
 - Information if we want to continue on hypervisors (likely not any time soon)
-  - (Martin) Read about PRTOS Hypervisor: https://github.com/prtos-project/prtos-hypervisor
+  - (Martin) Read about PRTOS Hypervisor: <https://github.com/prtos-project/prtos-hypervisor>
 
 - [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
 
