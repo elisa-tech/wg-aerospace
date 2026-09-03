@@ -40,7 +40,7 @@ Next, in the shell started above
 - Change directory to your home `cd ~`
 - Clone use case codebase `git clone https://github.com/elisa-tech/wg-aerospace.git` and `cd wg-aerospace`.
 - Navigate to `./demos/env` and run `bash ./setup-env.sh` as a normal user. If this script failed with a "Sudo is disabled on that computer" error, enable Sudo in Windows 11 WSL under Settings > System > For Developers.
-- Open the repository in VS Code and use the Dev Containers command, or use the command-line `devcontainer` CLI.
+- Open the repository in VS Code and use the Dev Containers command (or select to "Open in..." when prompted) or from the console `code .` in the clone folder. There is another option to stay CLI based with the command-line `devcontainer` [CLI](https://github.com/devcontainers/cli#install-script).
 - The first start builds the environment locally from [the devcontainer definition](../../.devcontainer/devcontainer.json) and [Dockerfile](../env/Dockerfile).
 - Then open a shell in the container and run the demo commands from there.
 
