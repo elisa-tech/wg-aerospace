@@ -6,17 +6,13 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Build
 
-Assuming the code base was previously cloned during [Environment Setup](../copilot/EnvSetup.md) as follows.
-
-```
-cd ~
-git clone https://github.com/elisa-tech/wg-aerospace.git
-```
+Assuming the code base was previously cloned during [Environment Setup](../copilot/EnvSetup.md) and a devcontainer approach is used.
 
 Build the demo
 
 ```
-cd ~/wg-aerospace/demos/copilot/src/monitors
+# Within the devcontainer, started by opening the repo via the VSCode GUI or executing `code .` within the clone.
+cd /workspaces/wg-aerospace/demos/copilot/src/monitors
 make prep  # Starts the devcontainer locally on first use
 make       # Runs Haskell & Builds demo applications
 ```
