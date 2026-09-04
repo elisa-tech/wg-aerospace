@@ -14,6 +14,22 @@ in safety-critical aerospace systems (DO-178C, DO-297, AMC 20-193).
 
 Content is primarily Markdown documentation, not executable code.
 
+## Meeting minutes workflow
+
+- Recurring meeting-minutes tasks follow a defined checklist:
+  [meeting-minutes/meeting-minutes-checklist.txt](./meeting-minutes/meeting-minutes-checklist.txt).
+  It covers the pre- and post-meeting steps for the General Call (2nd
+  week), Paper Call (4th week), and weekly Use Case Call. Read it before
+  running any pre-call or post-call meeting task.
+- Live minutes are drafted on a shared HackMD pad. Use the helper tool
+  and its usage notes at
+  [meeting-minutes/hackmd-tool/README.md](./meeting-minutes/hackmd-tool/README.md)
+  to push, pull, and clear the pad.
+- Canonical sources: events live in [docs/events.md](./docs/events.md)
+  and the recurring attendee list lives in the meeting template
+  (`meeting-minutes/ELISA-AeroWG-Meeting-DATE_template.md`). Sync updates
+  back into these, not just the per-meeting file.
+
 ## Making changes
 
 - Use **GitHub Pull Requests** for all contributions.
