@@ -65,6 +65,43 @@ RUN apt-get update && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Host packages required to build the ELISA meta-aerospace layer (cFS on
+# Space Grade Linux) via kas. Based on the Yocto Project required host
+# packages plus kas (see meta-aerospace/README.cfs.md and
+# https://sgl.elisa.tech/building.html).
+# hadolint ignore=DL3008
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      gawk=* \
+      diffstat=* \
+      texinfo=* \
+      chrpath=* \
+      socat=* \
+      python3=* \
+      python3-pip=* \
+      python3-venv=* \
+      python3-pexpect=* \
+      python3-git=* \
+      python3-jinja2=* \
+      python3-subunit=* \
+      debianutils=* \
+      iputils-ping=* \
+      xz-utils=* \
+      zstd=* \
+      lz4=* \
+      libacl1=* \
+      && \
+    apt-get -y autoremove && \
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Install kas into an isolated venv and expose it on PATH (PEP 668 safe).
+# Mirrors the SGL PIC64-HPSC build instructions' use of pip-installed kas.
+RUN python3 -m venv /opt/kas && \
+    /opt/kas/bin/pip install --no-cache-dir kas && \
+    ln -s /opt/kas/bin/kas /usr/local/bin/kas && \
+    kas --version
+
 # To be able to generate a toolchain with locales, enable one UTF-8 locale
 RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     /usr/sbin/locale-gen
