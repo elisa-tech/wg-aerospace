@@ -23,6 +23,77 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Oct 2nd - QEMU (Leonidas) - (in Use case call)
   - ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260904
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Martin Halle - Hamburg University of Technology
+- Shefali Sharma
+- Benjamin Pellieux - Coros Space
+- Yassine Cherni - GoMyRobot
+- Ivan Perez - KBR @ NASA
+- Leonidas Kosmidis - BSC
+
+**Discussion topics**
+
+- Demo of the change in workflow to use a devcontainer
+  - Starting from a [new user's perspective here](https://github.com/elisa-tech/wg-aerospace#elisa-aerospace-working-group)
+  - Action: add the prior video demos and such to our resources as well as this one
+
+- SGL SDK -> cFS build instructions
+  - TBD add docs to meta-aerospace
+  - Martin tried to follow [Draft instructions](https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64#file-gistfile1-txt)
+    - Action: Matt to add to devcontainer the pre-reqs so this runs.
+    - Suggestion: Open the wg-aerospace project in vscode and then click "open in devcontainer" when prompted. Use the terminal from this perspective within the vscode and you'll have the dependencies needed.
+  - Matt got this error
+
+  ```bash
+  | DEBUG: Executing shell function do_configure
+  | cp: failed to get current directory No such file or directory (os error 2)
+  | WARNING: exit code 1 from a shell command.
+  ERROR: Task (virtual:native:/workspaces/wg-aerospace/meta-aerospace/cfs-sgl-qemuriscv64/build/../layers/openembedded-core/meta/recipes-devtools/perl/perl_5.38.4.bb:do_configure) failed with exit code '1'
+  NOTE: Tasks Summary: Attempted 1162 tasks of which 216 didn't need to be rerun and 1 failed.
+  ```
+
+- Discussed Ogma generation
+
+- Check if the Xen summit will be recorded - <https://xenproject.org/resources/summit-2026/>
+  - Ask Matt for vouchers for free virtual attendance (live)
+
+- Wendi shared public work from the LLVM Qualification Working Group and asked whether anyone might have capacity to provide a functional safety review.
+  The group is developing generic workflows, templates, and guidance for establishing confidence in the use of software tools.
+  Although this work originates in the LLVM community, it is intended to be reusable for other open-source projects and tools and across IEC 61508, EN 50716, ISO 26262, IEC 62304, and DO-178C/DO-330. <https://llvm.org/docs/QualGroup.html>
+  - Current contributions: <https://github.com/llvm/llvm-wgs/pulls>
+    - PR #38 – Workflow views and graph generator
+    - PR #46 – TPL-001: Need for Tool Confidence (already merged)
+    - PR #47 – TPL-006: Safety Considerations
+    - PR #48 – TPL-002: Tool Usage Plan
+    - PR #57 – TPL-003: Tool Classification Report
+    - PR #73 – TPL-004: Tool Qualification Report
+    - TPL-005, a Safety Manual template with accompanying guidance, is planned next.
+  - Now that TPL-001 has been merged, it can serve as the starting version for evaluating GCC, QEMU, and OpenFastTrace usage in the Xen FuSa WG. Templates have not yet been applied to those tools, so this is not a request to review completed Xen examples. At this stage, review of the generic templates and guidance themselves is sought.
+  - Review of TPL-003 and TPL-004 would be especially valuable (most substantial artifacts; cover tool-malfunction analysis and classification, qualification approaches, evidence, supporting controls, and differences among standards).
+  - Even feedback limited to one template, one standard, or a few specific sections would be helpful.
+  - Already shared with the ELISA Tools Working Group, plus Eclipse and AGL ecosystems. Direct review through GitHub is preferred for transparency; confidential technical comments by email can also be considered.
+
+**Next time**
+
+- cFS on Min Linux concept
+  - Ivan: Getting traction/discussion on this
+
+- (carried from 20260828) Roundtable / brainstorming approach for main call (Wanja/Martin)
+  - What topic should we bring next call?
+
+- (carried from 20260828) QEMU pre-built for HPSC follow-up
+  - Action: Weber to follow up with Microchip (license/binary distro check)
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
+
 ## 20260828
 
 **Attendance**
