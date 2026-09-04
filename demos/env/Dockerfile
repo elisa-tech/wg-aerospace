@@ -71,12 +71,15 @@ RUN apt-get update && \
 # https://sgl.elisa.tech/building.html).
 # hadolint ignore=DL3008
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+   apt-get remove -y --allow-remove-essential coreutils-from-uutils && \
+   apt-get install -y coreutils-from-gnu && \
+   apt-get install -y --no-install-recommends \
       gawk=* \
       diffstat=* \
       texinfo=* \
       chrpath=* \
       socat=* \
+      libcrypt-dev=* \
       python3=* \
       python3-pip=* \
       python3-venv=* \
