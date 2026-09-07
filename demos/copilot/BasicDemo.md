@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Build
 
-Assuming the code base was previously cloned during [Environment Setup](../copilot/EnvSetup.md) and a devcontainer approach is used.
+Assuming the code base was previously cloned during [Environment Setup](../docs/EnvSetup.md) and a devcontainer approach is used.
 
 Build the demo
 
