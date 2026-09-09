@@ -29,6 +29,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - Safe/secure lang focus for high-integrity (in-person)
   - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
   - **ACTION:** Leonidas checking on if he can attend
+- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
 - **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
   - CFP Closes: June 24, 2026
   - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
