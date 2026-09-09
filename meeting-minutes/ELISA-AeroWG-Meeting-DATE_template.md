@@ -41,6 +41,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Benjamin Pellieux - Coros Space
 - Brennan Hay - NASA
 - Brennan Stewart - NASA
+- Brian Vandegriend - Microchip
 - Brian Wood - Boeing
 - Carole Garrison - NASA Langley
 - Chuck Wolber - Boeing
@@ -100,6 +101,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Vikash Kodati
 - Walt Miner - Linux Foundation
 - Wanja Zaeske - DLR
+- Yassine Cherni - GoMyRobot
 - Yasushi SHOJI - Space Cubics
 
 ---
