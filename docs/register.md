@@ -49,6 +49,16 @@ This document register shall help to find the information you are looking for. D
 [AvioNix Demo](./../demos/AvioNix-demo/README.md)
 
 - [How to measure Kernel SLoC impact of Kernel config changes](./../demos/AvioNix-demo/NixBasedKernelConfig.md)
+- ELISA Seminar: [AvioNix - Infrastructure as Code for Linux in Avionics](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/) (Erin + Wanja, June 23 2026)
+  - [Video recording](https://youtu.be/D8H4dBtKCYM)
+
+## Seminars, talks, and blog posts
+
+- ELISA Seminar: [AvioNix - Infrastructure as Code for Linux in Avionics](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/) (June 23 2026) -> [recording](https://youtu.be/D8H4dBtKCYM)
+- ELISA Seminar: [Functional safety with Xen, Zephyr and Linux for avionics, automotive and industrial](https://elisa.tech/event/elisa-seminar-functional-safety-with-xen-zephyr-and-linux-for-avionics-automotive-and-industrial/)
+- ELISA Seminar: [Xen Safety Certification: progress so far and plans for the future](https://elisa.tech/event/elisa-seminar-xen-safety-certification-progress-so-far-and-plans-for-the-future/)
+- ELISA Blog: [Letting Linux Fly: First Steps Towards Using Linux in Flight](https://elisa.tech/blog/2026/08/12/letting-linux-fly-first-steps-towards-using-linux-in-flight/) (Aug 12 2026)
+- Tutorial: [Creating a cFS Yocto Recipe](https://zoom.us/rec/share/8oE0FJthqmxsqYm4khGJdDX269hsvoM4LfVuL_A9U2iS1LMAxyOdwBY360F4OVtY.-JLKFbH7SVXogUv-)
 
 ## Embedded environments (with respect to use-cases)
 
