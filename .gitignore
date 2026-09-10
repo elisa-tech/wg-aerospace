@@ -33,3 +33,6 @@ demos/env/test/host-ubuntu/.terraform*
 *.pem
 .mypy_cache*
 Next-call.txt
+build*
+meta-aerospace*
+.kas*
