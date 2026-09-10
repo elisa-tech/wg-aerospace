@@ -182,12 +182,27 @@ The super linter project is one option to help with consistency and security of 
 The following can be setup locally to lint material before pushing to the repository (this assumes the defaults in the [configuration env file](./.github/super-linter.env).)
 This hook isn't a default so re-cloning the repository would require you to again setup the hook.
 
+The hook shells out to Docker. If you push from an environment without a
+usable Docker daemon (for example, inside a devcontainer), the hook detects
+this and skips gracefully rather than aborting the push. The same
+Super-Linter runs in CI on every push and pull request, so lint enforcement
+is not lost when the local hook is skipped.
+
 ```bash
 # Run once after checkout to setup the hook
 cat > .git/hooks/pre-push <<'EOM'
 #!/bin/sh
 
 # Run the super-linter Docker container as a pre-push hook
+
+# Skip gracefully when Docker is not usable (e.g. inside a devcontainer
+# without Docker access). CI runs the same Super-Linter on push/PR, so
+# skipping locally does not lose lint enforcement.
+if ! docker info >/dev/null 2>&1; then
+  echo "Docker not available (e.g. inside a devcontainer); skipping Super-Linter pre-push hook."
+  echo "CI will still run Super-Linter on the pull request."
+  exit 0
+fi
 
 echo "Running Super-Linter via Docker pre-push hook..."
 docker run -e RUN_LOCAL=true -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint --rm ghcr.io/super-linter/super-linter:latest
