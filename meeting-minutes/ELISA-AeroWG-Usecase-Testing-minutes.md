@@ -8,7 +8,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Holiday / Vacations / Conflicts**
 
-- Leonidas and Martin at conference 9/18
+- None
 
 **Parking lot:**
 
@@ -22,6 +22,71 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Oct 2nd - QEMU (Leonidas) - (in Use case call)
   - ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20260918
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Ivan Perez - KBR @ NASA
+- Brian Wood - The Boeing Company
+- Pawel Wodnicki - 32bitmicro
+- Rob Woolley - Wind River System
+- Shefali Sharma
+- Yassine Cherni - GoMyRobot
+- Benjamin Pellieux - Coros Space
+
+**Discussion topics**
+
+- Added videos to register ("Devcontainer", "cFS SGL prebuilt")
+  - <https://github.com/elisa-tech/wg-aerospace/blob/main/docs/register.md#seminars-talks-and-blog-posts>
+
+- SGL SDK -> cFS build instructions
+  - Matt added findings to - <https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64?permalink_comment_id=6352526#gistcomment-6352526>
+
+- Ogma simulink diagram -> tree of files/dirs w/ spec (figures out component layout based on a set of models)
+  - Next step wiring them together
+  - Need diagram with enough complexity to get mapped to functions
+
+- cFS on Min Linux concept
+  - SLOC, function counts metrics (distro generic)
+    - Kernel APIs
+    - Assuming direct cFS start from setting as bootargs init=<cFS start application> (minimal user space libs)
+  - How do we resume working this topic?
+    - More of a sell from Ivan's perspective to drive interest
+      - Could use counts and cfg that Nix refined for the Kernel
+      - Add a image build for the meta-aerospace cFS using measurement kernel config - iterate from this removing user space
+      - Landing page - doc that talks about current state of minimizing, how to get counts, how to try it and/or get general feedback
+        - [Nix minimizing doc](https://github.com/elisa-tech/wg-aerospace/blob/main/demos/AvioNix-demo/NixBasedKernelConfig.md)
+          - Covers most steps but not completely user friendly
+        - [Minimizing plan](https://github.com/elisa-tech/wg-aerospace/issues/168)
+        - [Linux Kernel minimized config refs](https://github.com/elisa-tech/wg-aerospace/issues/139)
+        - [(draft)Minimal linux kernel plan](https://github.com/elisa-tech/wg-aerospace/pull/179)
+    - Process we use - iteration on change / test / doc of the exercise (distro generic)
+    - Clear userspace application support / integration approaches for understanding if a Kernel is missing a config feature
+    - ACTION: Ivan was going to start an outline and we work parts of the existing material in
+      - <https://github.com/elisa-tech/wg-aerospace/pull/257/changes>
+      - Structured assuming a new user that built Linux for the first time and was tasked to minimize it
+      - Ties the basics together
+      - Separate template to capture a workload like cFS
+    - ACTION: Matt
+      - [Grab basic process example to add to the doc / qemu launch](https://github.com/elisa-tech/wg-aerospace/pull/257/changes#r4049822174)
+      - [See if I can get the sloc counter as well to for metrics part](https://github.com/unikraft/unikraft/pull/1880/changes)
+    - Should note in the basic example the assumptions
+      - Do we adhere to any of the POSIX standards as a requirement?
+      - Do we assume multiuser system or init system
+    - Next time - walk the progression as a new user to Linux
+      - Removing networking stack
+      - Measuring
+      - Review progression so far
+
+**Next time**
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
 
 ## 20260911
 
