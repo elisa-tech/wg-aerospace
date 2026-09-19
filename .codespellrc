@@ -1,4 +1,8 @@
 # SPDX-License-Identifier: MIT
 
 [codespell]
-skip = *.pdf,*.pptx
+# List of words to ignore (comma-separated, no spaces)
+ignore-words-list = Fron
+
+# broken because superlinter runs with a different workspace prefix
+#skip = */*.pdf,*/*.pptx,*.svg
