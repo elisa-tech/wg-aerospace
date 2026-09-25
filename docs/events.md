@@ -11,10 +11,6 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 - **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
   - Wanja: NixOS-talk for embedded Linux in Avionics (tutorial session)
-- **Sept 15-17** Xen Summit 2026, Munich, Germany (hybrid) -> [link](https://xenproject.org/resources/summit-2026/)
-  - Two days of talks + one day of design sessions
-  - CFP now open, closes June 30 -> [submit](https://lnkd.in/esdtpbYr)
-  - Registration not yet open
 - **Sept 22-25** SafeComp 2026, Valencia, Spain -> [link](https://safecomp2026.webs.upv.es/)
   - Call for Position Papers deadline: July 10, 2026
   - Leonidas keynoting
@@ -40,6 +36,9 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Recently Past Deadlines/Events
 
+- **(2026) Sept 15-17** Xen Summit 2026, Munich, Germany (hybrid) -> [link](https://xenproject.org/resources/summit-2026/)
+  - Weber presented: [ARINC 653 on Xen - A Unikraft Safety Architecture](https://xensummit2026.sched.com/event/2RDrH/arinc-653-on-xen-a-unikraft-safety-architecture) (slide + video links soon)
+  - ACTION: Matt to work on [merging material supporting that talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
 - **(2026) Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
   - 17th International Conference on Space Computing (SCC)
   - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
