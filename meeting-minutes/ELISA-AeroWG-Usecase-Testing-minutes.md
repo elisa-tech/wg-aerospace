@@ -23,6 +23,41 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Oct 2nd - QEMU (Leonidas) - (in Use case call)
   - ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20260925
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Ivan Perez - KBR @ NASA
+- Martin Halle - Hamburg University of Technology
+- Benjamin Pellieux - Coros Space
+
+**Discussion topics**
+
+- (Weber) [Presented at Xen Summit last week](https://xensummit2026.sched.com/event/2RDrH/arinc-653-on-xen-a-unikraft-safety-architecture) - has slide and video (soon) links
+  - ACTION: Matt - Going to work on [merging material supporting that talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+- [Starting point for kernel minimization effort - #257](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - Practice to trace userspace and identify kernel dead code? (glues evaluation practice against a minimized config)
+    - Could be a steering file and/or to get to a tool that glues it together?
+  - Another example of code base size for userspace framework [a653lib](https://github.com/airbus/a653lib)
+    - Could cross check size against other open impl to add to the userspace table
+
+- New releases of Copilot <https://github.com/Copilot-Language/copilot/releases/tag/v4.8.1> and Ogma <https://github.com/nasa/ogma/releases/tag/v1.16.0>
+
+- Raphel interested in giving Hypervisor talk
+  - ACTION: Weber to ask Min about a seminar (use Martin's email to open the discussion)
+
+- Ogma simulink diagram -> tree of files/dirs w/ spec
+
+**Next time**
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+---
+
 ## 20260918
 
 **Attendance**
