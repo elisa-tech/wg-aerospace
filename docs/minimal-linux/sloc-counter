@@ -1,0 +1,146 @@
+#!/bin/bash
+# SPDX-License-Identifier: CC-BY-SA-4.0
+#
+# sloc-counter - Count SLOC (source lines of code) with cloc for the
+# minimal-linux walkthrough.
+#
+# Adapted from the Unikraft build-time SLOC reporting approach
+# (https://github.com/unikraft/unikraft/pull/1880), which counts only the
+# sources that are actually compiled rather than the whole source tree.
+#
+# Modes:
+#   kernel  <build_dir>   Count only the kernel sources actually compiled, using
+#                         compile_commands.json (generated from the .o.cmd files
+#                         the kernel build records). This reflects what a given
+#                         .config actually builds, not the whole tree. Uses cloc,
+#                         so it counts every non-comment line of each compiled
+#                         file (an upper bound).
+#   dwarf   <vmlinux>     Count distinct source lines that actually emitted
+#                         object code, via the DWARF line table (the elf-to-sloc
+#                         approach). Requires the kernel built with
+#                         CONFIG_DEBUG_INFO. This is the closer proxy for
+#                         structural-coverage effort and is typically ~half the
+#                         cloc number. Override the disassembler with $OBJDUMP
+#                         (default: aarch64-linux-gnu-objdump, then objdump).
+#   tree    <dir>         Count a whole source tree (C/C++ only). Useful for a
+#                         quick userspace comparison (BusyBox, systemd, ...).
+#   files   <file...>     Count one or more source files passed directly.
+#
+# All modes print a single SLOC number on stdout (plus a human summary on
+# stderr), so they can be dropped straight into a metrics table.
+
+set -euo pipefail
+
+die() {
+	echo "ERROR: $*" >&2
+	exit 1
+}
+
+need_cloc() {
+	command -v cloc >/dev/null 2>&1 ||
+		die "cloc not found. Install with: sudo apt-get install -y cloc"
+}
+
+usage() {
+	sed -n '3,34p' "$0"
+	echo
+	echo "Usage:"
+	echo "  $0 kernel <kernel_build_dir>   # e.g. a built linux tree"
+	echo "  $0 dwarf  <vmlinux>            # elf-to-sloc via DWARF line table"
+	echo "  $0 tree   <source_dir>"
+	echo "  $0 files  <file...>"
+	exit 1
+}
+
+# Extract the SLOC ("code") SUM from a cloc CSV run over a file list.
+cloc_sum_from_list() {
+	local list="$1"
+	[[ -s "$list" ]] || {
+		echo 0
+		return
+	}
+	cloc --list-file="$list" --csv --quiet 2>/dev/null |
+		awk -F',' '$2=="SUM"{print $5}' | tail -1 | sed 's/^$/0/'
+}
+
+mode="${1:-}"
+target="${2:-}"
+[[ -n "$mode" && -n "$target" ]] || usage
+
+case "$mode" in
+kernel)
+	need_cloc
+	[[ -d "$target" ]] || die "kernel build dir not found: $target"
+	ccj="$target/compile_commands.json"
+	if [[ ! -f "$ccj" ]]; then
+		gen="$target/scripts/clang-tools/gen_compile_commands.py"
+		[[ -f "$gen" ]] || die "no compile_commands.json and no gen_compile_commands.py in $target (build the kernel first)"
+		echo "generating compile_commands.json ..." >&2
+		(cd "$target" && python3 "$gen") || die "gen_compile_commands.py failed"
+	fi
+	# Pull the compiled source files out of compile_commands.json.
+	list="$(mktemp)"
+	trap 'rm -f "$list"' EXIT
+	python3 - "$ccj" >"$list" <<'PY'
+import json, sys, os
+cc = json.load(open(sys.argv[1]))
+seen = set()
+for e in cc:
+    f = e.get("file")
+    if not f:
+        continue
+    d = e.get("directory", "")
+    p = f if os.path.isabs(f) else os.path.normpath(os.path.join(d, f))
+    if p not in seen:
+        seen.add(p)
+        print(p)
+PY
+	n="$(cloc_sum_from_list "$list")"
+	echo "kernel compiled sources: $(wc -l <"$list") files, ${n} SLOC" >&2
+	echo "${n:-0}"
+	;;
+dwarf)
+	# elf-to-sloc: count distinct source lines that emitted object code, from
+	# the DWARF line table of a vmlinux built with CONFIG_DEBUG_INFO.
+	[[ -f "$target" ]] || die "vmlinux not found: $target (build with CONFIG_DEBUG_INFO)"
+	OBJDUMP="${OBJDUMP:-}"
+	if [[ -z "$OBJDUMP" ]]; then
+		if command -v aarch64-linux-gnu-objdump >/dev/null 2>&1; then
+			OBJDUMP=aarch64-linux-gnu-objdump
+		else
+			OBJDUMP=objdump
+		fi
+	fi
+	command -v "$OBJDUMP" >/dev/null 2>&1 || die "objdump not found: $OBJDUMP"
+	n="$("$OBJDUMP" --dwarf=decodedline "$target" 2>/dev/null |
+		awk 'NF>=3 && $2 ~ /^[0-9]+$/ {print $1":"$2}' |
+		sort -u | wc -l)"
+	[[ "$n" -gt 0 ]] || die "no DWARF line info found — was the kernel built with CONFIG_DEBUG_INFO?"
+	echo "dwarf distinct source lines (elf-to-sloc): ${n}" >&2
+	echo "${n}"
+	;;
+tree)
+	need_cloc
+	[[ -d "$target" ]] || die "source dir not found: $target"
+	n="$(cloc --include-lang=C,'C/C++ Header' --csv --quiet "$target" 2>/dev/null |
+		awk -F',' '$2=="SUM"{print $5}' | tail -1)"
+	echo "source tree $target (C/C++): ${n:-0} SLOC" >&2
+	echo "${n:-0}"
+	;;
+files)
+	need_cloc
+	# Count one or more source files passed directly as arguments.
+	#   sloc-counter files ainit.c
+	#   sloc-counter files a.c b.c include/*.h
+	shift # drop the mode word, leaving the file arguments
+	list="$(mktemp)"
+	trap 'rm -f "$list"' EXIT
+	printf '%s\n' "$@" >"$list"
+	n="$(cloc_sum_from_list "$list")"
+	echo "files: $# path(s), ${n} SLOC" >&2
+	echo "${n:-0}"
+	;;
+*)
+	usage
+	;;
+esac
