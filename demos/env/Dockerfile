@@ -105,6 +105,14 @@ RUN python3 -m venv /opt/kas && \
     ln -s /opt/kas/bin/kas /usr/local/bin/kas && \
     kas --version
 
+# Install the HackMD meeting-minutes helper's Python dependencies into an
+# isolated venv and expose the interpreter on PATH (PEP 668 safe). See
+# meeting-minutes/hackmd-tool/README.md for the tool and its usage.
+RUN python3 -m venv /opt/hackmd && \
+    /opt/hackmd/bin/pip install --no-cache-dir \
+      "python-socketio[client]" requests websocket-client && \
+    ln -s /opt/hackmd/bin/python /usr/local/bin/hackmd-python
+
 # To be able to generate a toolchain with locales, enable one UTF-8 locale
 RUN sed -i 's/# \(en_US.UTF-8\)/\1/' /etc/locale.gen && \
     /usr/sbin/locale-gen

@@ -20,8 +20,43 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Presentations**
 
-- Oct 2nd - QEMU (Leonidas) - (in Use case call)
+- Oct 16th - QEMU (Leonidas) - (in Use case call)
   - ACTION: (Weber) Invite others from SGL and AeroWG
+
+## 20261002
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Ivan Perez - KBR @ NASA
+- Martin Halle - Hamburg University of Technology
+- Rob Wooley - Wind River Systems, Inc.
+- Yassine Cherni - GoMyRobot
+- Benjamin Pellieux - Coros Space
+- Leonidas Kosmidis - BSC
+
+**Discussion topics**
+
+- SGL SDK -> cFS build instructions
+  - Matt added findings to - <https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64?permalink_comment_id=6352526#gistcomment-6352526>
+  - Martin doing a live walk through
+
+**Not discussed but FYI**
+
+- Raphel interested in giving Hypervisor talk
+  - ACTION: Weber asked Min about a seminar and email thread with Martin + Raphel is started
+
+- [Starting point for kernel minimization effort - #257](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - Weber mentioned in SGL call and shared a link for others to review
+  - ACTION: Weber reaching out to Shefali who contributed to the workflow tracing docs
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+
+  - ACTION: Matt - Going to work on [merging material supporting the Xen summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+---
 
 ## 20260925
 

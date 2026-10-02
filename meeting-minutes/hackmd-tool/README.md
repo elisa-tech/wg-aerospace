@@ -8,7 +8,15 @@ A command-line tool for managing the shared HackMD pad used during ELISA Aerospa
 
 ## Setup
 
-Requires Python 3.6+ and these packages:
+In the project devcontainer these dependencies are pre-installed in an
+isolated virtual environment (see `demos/env/Dockerfile`). Use the
+`hackmd-python` interpreter on PATH, e.g.:
+
+```bash
+hackmd-python meeting-minutes/hackmd-tool/hackmd_helper.py pull <file>
+```
+
+Outside the devcontainer, requires Python 3.6+ and these packages:
 
 ```bash
 pip install python-socketio[client] requests websocket-client
