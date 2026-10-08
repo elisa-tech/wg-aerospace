@@ -53,7 +53,6 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
 
 - Revisit parking lot items
-
   - ACTION: Matt - Going to work on [merging material supporting the Xen summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
 
 ---

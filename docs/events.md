@@ -7,6 +7,27 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
+- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
+- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
+  - CFP Closes: June 24, 2026
+  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
+    - CFP coming to solicit speakers and session topics
+- **Oct 13** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
+  - Full presentations deadline likely end of May - did anyone submit?
+  - Posters much later; not-selected full presentations can be considered for posters
+  - Safe/secure lang focus for high-integrity (in-person)
+  - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
+  - **ACTION:** Leonidas checking on if he can attend
+- NASA SPARK submissions -> [link](https://spark.nasa.gov/)
+- **Feb 23, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
+  - Paper Deadline: Oct 21, 2026
+- **Mar 6-13 2027** 48th International IEEE Aerospace Conference 2027, Yellowstone Conference Center, Big Sky MT, USA -> [link](https://www.aeroconf.org/)
+- **Sept 12-16, 2027** DASC Congress, Belfast, Northern Ireland, Europe -> [link](https://dasconline.org/2027/) (Links to be available soon)
+- **Nov 3-6, 2027** iSpaRo / i-SAIRAS Conference, Cologne, Germany
+  - Workshop on Open Space Robotics: <https://openrobotics.space/>, deadline 21st October (2min-video or PDF Poster)
+
+## Recently Past Deadlines/Events
+
 - **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
 - **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
@@ -19,23 +40,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
   - Links: <https://sgl.elisa.tech>, <https://space-ros.org>, <https://px4.io>, <https://atmos.discower.io>
   - BeagleV-Fire SGL + Space ROS demo: <https://vimeo.com/1136204579>
   - ATMOS in IEEE TFR 2025: <https://doi.org/10.1109/TFR.2025.3632772>
-- **Oct 2026** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
-  - Full presentations deadline likely end of May - did anyone submit?
-  - Posters much later; not-selected full presentations can be considered for posters
-  - Safe/secure lang focus for high-integrity (in-person)
-  - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
-  - **ACTION:** Leonidas checking on if he can attend
-- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
-- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
-  - CFP Closes: June 24, 2026
-  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
-    - CFP coming to solicit speakers and session topics
-- NASA SPARK submissions -> [link](https://spark.nasa.gov/)
-- **Feb 23, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
-  - Paper Deadline: Oct 21, 2026
-
-## Recently Past Deadlines/Events
-
+  - ACTION: Get video links
 - **(2026) Sept 15-17** Xen Summit 2026, Munich, Germany (hybrid) -> [link](https://xenproject.org/resources/summit-2026/)
   - Weber presented: [ARINC 653 on Xen - A Unikraft Safety Architecture](https://xensummit2026.sched.com/event/2RDrH/arinc-653-on-xen-a-unikraft-safety-architecture) (slide + video links soon)
   - ACTION: Matt to work on [merging material supporting that talk](https://github.com/elisa-tech/wg-aerospace/pull/177)

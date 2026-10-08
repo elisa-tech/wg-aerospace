@@ -39,6 +39,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Andrew Wilson - L3Harris, BYU, FPGA Zealot
 - Arthur Melo Cruz - Mathworks
 - Benjamin Pellieux - Coros Space
+- Bob Pulju - Collins Aerospace
 - Brennan Hay - NASA
 - Brennan Stewart - NASA
 - Brian Vandegriend - Microchip
@@ -75,11 +76,13 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
 - Naga - Timesys/Lynx
+- Nick Zajerko-McKee
 - Olivier Charrier - Wind River
 - Paul Greenwood - Vorago Technologies
 - Paul Mani - Collins India
 - Pavel Roskin
 - Pawel Wodnicki - 32bitmicro
+- Pedro Roque - Caltech
 - Phaedrus Leeds - Aerospace Corp
 - Philip Balister - OpenEmbedded
 - Philipp Ahmann - ETAS GmbH
@@ -96,6 +99,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Shefali Sharma
 - Steve VanderLeest - Boeing
 - Subhajit Ghosh - Tweaklogic
+- Thomas Gleixner
 - Tim Bird - Sony
 - Tomas Novotny - Czech Aerospace Research Centre
 - Vikash Kodati
