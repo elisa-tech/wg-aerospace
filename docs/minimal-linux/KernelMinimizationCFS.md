@@ -4,54 +4,54 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Hello cFS
 
-This document applies the kernel-minimization method from
-[Kernel Minimization](../KernelMinimization.md) to a real flight workload, the
-NASA Core Flight System (cFS). Read the base walkthrough first — the baseline
-assumption (no-init, PID 1 application, reduced POSIX/user-space surface), the
-kernel build and iterate steps, and the evaluation/metrics approach all carry
-over here.
+This document proposes applying the [kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+to the NASA Core Flight System (cFS). Read that guide first for the build,
+iterate, and measurement steps; this page adds cFS-specific considerations.
+The draft is a review preview from the personal Linux fork, not merged upstream.
+See [Kernel Minimization](../KernelMinimization.md) for the devcontainer setup,
+aerospace framing, and baseline observations.
 
 ## Kernel options
 
-cFS is the concrete flight workload we apply the same no-init, PID 1 baseline
-to. Its user-space needs are modest — it links `<stdint.h>`, `<stdbool.h>`,
-`<string.h>`, `<stdlib.h>`, and `<math.h>` from the C library — which fits the
-"application + minimal libc, no init" model well.
+cFS is the proposed flight workload for the same no-init, PID 1 launch model.
+Its C library, OS Abstraction Layer (OSAL), and platform configuration determine
+the actual syscall, threading, storage, and networking requirements. Header
+usage alone does not establish the required kernel configuration.
 
 Approach:
 
-- Launch cFS directly as PID 1 (`init=<cFS start application>`), consistent with
-  the baseline — no service manager in front of it.
+- Evaluate launching cFS directly as PID 1, without a service manager. Use
+  `/init` or `rdinit=<path>` for an initramfs, or `init=<path>` for a mounted
+  root filesystem, and validate the application's PID 1 responsibilities.
 - Start from a measurement kernel config (e.g. the config the Nix work refined)
   and build a meta-aerospace cFS image against it.
 - Iterate by removing kernel and user-space features cFS does not exercise,
   re-testing each step.
-- Where a removal breaks cFS, document the boundary — that is a requirement
-  artifact showing the kernel feature cFS actually depends on. Expect cFS to
-  require a slightly larger set than the [Hello World init](./HelloWorldInit.md)
-  (e.g. more of the libc surface, possibly threading), and capture that delta
-  explicitly.
+- Where a removal breaks cFS, investigate and record the failure and recovery
+  before treating the option as a workload requirement.
 
 ## Evaluation
 
-Apply the workload-tracing method to cFS running as PID 1 to confirm the
-subsystems it exercises, then reconcile against the enabled config. Because
-there is no init system to mask dependencies, anything cFS needs shows up
-directly as a kernel/libc requirement. Note any option that had to be re-enabled
-to keep cFS running, and why — this closes the loop between userspace
-application support and "is the kernel missing a config feature."
+Follow the [workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
+for discovery, then validate cFS in its intended launch environment and reconcile
+observations with Kconfig. Record the actual workload inputs, any option restored,
+and the outcome. Unobserved boot, recovery, or asynchronous paths can still be
+required; tracing alone does not establish a complete configuration.
 
 ## Metrics
 
-Reuse the [Kernel Minimization metrics table](../KernelMinimization.md#metrics)
-so the cFS workload can be compared directly against the trivial baseline — same
-SLOC/function-count method, image size, boot check, and a cFS-specific "workload
-passes" criterion (e.g. the sample app runs and the expected telemetry/behavior
-is observed).
+Reuse the draft guide's
+[metrics approach](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+(`scripts/kernel-sloc` for kernel/userspace SLOC, image size, boot check) so
+the cFS workload can be compared directly against the trivial baseline, plus a
+cFS-specific "workload passes" criterion (e.g. the sample app runs and the
+expected telemetry/behavior is observed).
 
 ## References
 
-- [Kernel Minimization](../KernelMinimization.md) — base method, kernel build,
-  iterate, evaluate, and metrics.
-- [Hello World init](./HelloWorldInit.md) — building the minimal static PID 1
-  init and packing it into an initramfs for QEMU.
+- [Kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  — base build, iterate, evaluate, and measurement method.
+- [Workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
+  — syscall and kernel-path discovery, including minimal user space.
+- [Kernel Minimization](../KernelMinimization.md) — devcontainer setup,
+  aerospace framing, and [observations](../KernelMinimization.md#observations).
