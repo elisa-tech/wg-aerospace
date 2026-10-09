@@ -56,7 +56,6 @@ This document register shall help to find the information you are looking for. D
 
 [Kernel Minimization walkthrough](./KernelMinimization.md)
 
-- [Hello World init (static PID 1 + initramfs + QEMU boot)](./minimal-linux/HelloWorldInit.md)
 - [Hello cFS (minimization applied to NASA cFS)](./minimal-linux/KernelMinimizationCFS.md)
 - [Minimal Kernel Config Analysis (vs Boeing/LFSCS configs)](./minimal-linux/KernelConfigAnalysis.md)
 - [Measuring Linux Kernel Complexity](./minimal-linux/KernelComplexity.md)

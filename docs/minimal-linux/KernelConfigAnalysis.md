@@ -4,18 +4,18 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Minimal Kernel Config Analysis
 
-A companion to the [Kernel Minimization](../KernelMinimization.md) guide. The
+A companion to the draft
+[kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+and this repo's [aerospace framing](../KernelMinimization.md). The draft
 guide is the clean, iterate-through-it walkthrough; this page collects the
 deeper comparison against published minimal configs and prior measurements, so
 the guide stays focused.
 
-All numbers here were produced with the same
-[`sloc-counter`](./sloc-counter) script (see
-[Kernel Minimization → Counting kernel SLOC](../KernelMinimization.md#counting-kernel-sloc)),
-measured on LTS v6.18.52, arm64, built with `CONFIG_DEBUG_INFO`. The DWARF /
-elf-to-sloc count (source lines that actually emitted object code) is the
-headline; the `cloc` count (every compiled source line) is a secondary upper
-bound.
+The following figures are retained from earlier LTS v6.18.52 arm64 notes,
+not revalidated with the current `scripts/kernel-sloc`. DWARF estimates and
+compiled-file counts have different scope; the latter includes inactive
+branches but omits included headers, so it is not a strict upper bound. See
+the draft guide's "Counting kernel SLOC" section for the current method.
 
 ## Reference configs
 
@@ -35,26 +35,23 @@ bootable target.
 Sources: Boeing arm64 `minimal_defconfig` from
 [Boeing/linux@f5d4b42](https://github.com/Boeing/linux/commit/f5d4b42051b045fb667d69eeb0272a89dde6ba20);
 ELISA LFSCS minimal from
-[`min_prog_trace/kernel.config`](https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace).
+[`min_prog_trace/kernel.config`](https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace),
+produced by the LFSCS ftrace study of a minimal application
+([`min_prog_trace/README.md`](https://github.com/elisa-tech/wg-lfscs/blob/main/min_prog_trace/README.md)),
+which traces the kernel functions a near-empty C program actually reaches.
 
 ## How close are we to the #139 measurements?
 
-The **method** reproduces faithfully: on the same tiny + serial v6.18 `vmlinux`,
-`sloc-counter kernel` (cloc) reports 342,997 and `sloc-counter dwarf`
-(elf-to-sloc) reports 171,739 — a steady **2.0x** ratio, exactly the
-"whole-compiled-file vs object-code-traceable" difference the ELISA researchers
-described. Our DWARF numbers are therefore directly comparable in _kind_ to the
-elf-to-sloc figures published in #139.
+The earlier tiny-config notes report 342,997 compiled-file SLOC and 171,739
+DWARF SLOC, roughly a 2:1 ratio. This illustrates the difference between the
+metrics, not proof that all counting implementations produce equivalent results.
 
-The **absolute numbers are higher than #139's**, and the dominant reason is
-**kernel version**, not method: #139 measured on 5.x (Boeing) and 6.6.39 (LFSCS)
-and `tinyconfig` on v6.12 (80,936), whereas we measure on v6.18.52, and the
-kernel grows materially between releases. A secondary factor is that mapping an
-older `defconfig`/`.config` onto v6.18 with `olddefconfig` pulls in newer
-defaults. To reproduce #139's numbers exactly you would build at their kernel
-versions; to track _our_ baseline going forward, use the progression table in
-the guide. This analysis supersedes the ad-hoc measurements collected in
-[issue #139](https://github.com/elisa-tech/wg-aerospace/issues/139).
+The figures in [issue #139](https://github.com/elisa-tech/wg-aerospace/issues/139)
+use different kernel versions and configurations. Kernel version, resolved
+defaults, compiler, debug information, and counting-tool revision can all affect
+the result. Re-run with matched inputs before attributing a difference to one
+cause. The [parent page's observations](../KernelMinimization.md#observations)
+retain the reported progression for orientation.
 
 ## Notes on specific configs
 

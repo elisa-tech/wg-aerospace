@@ -4,8 +4,10 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Measuring Linux Kernel Complexity — Build-Time and Runtime Approaches
 
-This is a companion to the [Kernel Minimization](../KernelMinimization.md)
-walkthrough. Minimization reduces _size_; this document is about measuring
+This is a companion to the draft
+[kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+(see this repo's [aerospace framing](../KernelMinimization.md)).
+Minimization reduces _size_; this document is about measuring
 _complexity_, which is a related but distinct concern and needs its own
 definition before it is measured.
 
@@ -39,15 +41,15 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 
 ### 1. Size and configuration surface
 
-- Lines of code / compiled object size for the _configured_ kernel, not the
-  whole tree. The right denominator is "what is in your image," gated by your
-  Kconfig.
+- Use the [kernel guide's measurements](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring)
+  for SLOC and image size, including their scope limitations. These describe
+  build size, not structural complexity or the code reachable from a partition.
 - Kconfig option count and dependency graph. Tooling: `scripts/kconfig`, and
-  research tools such as Undertaker, KernelHaven, and kmax for analyzing
+  research tools such as Undertaker and `kmax` (see References) for analyzing
   configuration-conditional (`#ifdef`) variability. This is often the dominant
   complexity axis for the kernel and is underappreciated.
-- Feature/attack-surface reduction is the practical lever: a minimized config
-  directly shrinks the complexity you must argue about.
+- Configuration reduction can narrow the code and interfaces to analyze;
+  fewer options or lines do not by themselves establish lower complexity.
 
 ### 2. Classic code metrics (per function/file)
 
@@ -80,10 +82,13 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 
 ### 1. Coverage of what is actually used
 
-- `gcov`/kernel GCOV and `kcov` to observe which paths execute under
-  representative workloads. The gap between "code present" and "code exercised"
-  is itself a complexity/dead-code metric and supports deactivated-code
-  arguments in DO-178C.
+- Follow the [workload-tracing guide](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
+  and the kernel guide's [present-versus-observed discussion](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#separating-code-that-is-present-from-code-that-runs)
+  for collection methods and their limits. For aerospace analysis, use the
+  observations to focus requirements and reachability review. Unobserved code
+  is not a dead-code metric and does not establish dead or deactivated status
+  under DO-178C; that requires requirements, configuration, and reachability
+  analysis, including paths outside the collection scope.
 
 ### 2. Path / control-flow behavior
 
@@ -111,15 +116,15 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 
 ## Practical recommendation
 
-1. **Anchor everything to the configured, reachable kernel**, not the upstream
-   tree. Config minimization is both a complexity metric and the main
-   mitigation.
-1. **Pair one static and one dynamic metric per concern** — e.g., reachable-code
-   size (static) + `kcov` coverage (runtime); cyclomatic hotspots (static) +
-   ftrace hot paths (runtime); indirect-call/loop structure (static) +
-   `cyclictest`/interference variability (runtime). The static/runtime pairing is
-   what makes the argument credible: static bounds the space, runtime shows what
-   is real.
+1. **Anchor everything to the configured kernel and the reachability question**,
+   not the whole upstream tree. Minimization can reduce the analysis scope;
+   configuration size is not itself a complexity metric.
+1. **Pair static analysis and runtime observations per concern** — e.g.,
+   reachability analysis + task-scoped coverage; cyclomatic hotspots + observed
+   call paths; indirect-call/loop structure + timing under interference.
+   Review each method's assumptions and limits. A sampled or task-filtered trace
+   does not establish every feasible path, worst-case timing, or an assurance
+   argument by itself.
 1. **Beware Goodhart's law.** Once a complexity number becomes a target, people
    optimize the number rather than the verifiability. Use these as guides for
    focusing review and reducing surface, not as pass/fail gates.
@@ -129,9 +134,18 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 - McCabe, T. J. "A Complexity Measure." _IEEE Transactions on Software
   Engineering_, 1976.
 - Linux kernel documentation — Kconfig, `gcov`, `kcov`, ftrace, and tracing:
-  <https://docs.kernel.org/> (see dev-tools/gcov, dev-tools/kcov, trace/ftrace).
-- Undertaker / KernelHaven / kmax (Kconfig variability analysis) — academic
-  tooling from the VAMOS/KernelHaven research groups.
+  <https://matthew-l-weber.github.io/linux/> (see dev-tools/gcov, dev-tools/kcov, trace/ftrace).
+- Tartler, R., Lohmann, D., Sincero, J., Schröder-Preikschat, W. "Feature
+  Consistency in Compile-Time-Configurable System Software: Facing the Linux
+  10,000 Feature Problem." _EuroSys_, 2011.
+  <https://doi.org/10.1145/1966445.1966451> — the Undertaker/VAMOS work on
+  Kconfig variability and configuration-conditional dead code.
+- `kmax` — static extraction of Kconfig/Kbuild configuration constraints:
+  <https://github.com/paulgazz/kmax>.
+- Kernel Size Reduction Work (the tinification effort that added
+  `make tinyconfig`): <https://elinux.org/Kernel_Size_Reduction_Work>.
+- `syzkaller` — the origin of `kcov`, for the executed-versus-present code
+  evidence: <https://github.com/google/syzkaller>.
 - `lizard` cyclomatic-complexity analyzer: <https://github.com/terryyin/lizard>.
 - Linux `perf`, `lockdep`, and `cyclictest` (rt-tests) — standard kernel/RT
   tooling documentation.
