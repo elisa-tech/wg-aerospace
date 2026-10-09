@@ -24,12 +24,22 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
       build-essential=* \
       bash-completion=* \
+      bc=* \
+      bison=* \
+      cloc=* \
       cpio=* \
       file=* \
+      flex=* \
+      gcc-aarch64-linux-gnu=* \
+      libc6-dev-arm64-cross=* \
+      libelf-dev=* \
+      libncurses-dev=* \
+      libssl-dev=* \
       git=* \
       git-lfs=* \
       less=* \
       locales=* \
+      ipxe-qemu=* \
       screen=* \
       sudo=* \
       qemu-system-arm=* \
@@ -93,6 +103,7 @@ RUN apt-get update && \
       zstd=* \
       lz4=* \
       libacl1=* \
+      graphviz=* \
       && \
     apt-get -y autoremove && \
     apt-get -y clean && \
