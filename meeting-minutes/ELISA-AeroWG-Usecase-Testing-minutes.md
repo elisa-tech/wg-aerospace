@@ -23,6 +23,44 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 - Oct 16th - QEMU (Leonidas) - (in Use case call)
   - ACTION: (Weber) Invite others from SGL and AeroWG
 
+## 20261009
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Martin Halle - Hamburg University of Technology
+- Rob Woolley - Wind River Systems, Inc.
+- Ivan Perez - KBR @ NASA
+- Shefali Sharma
+- Yassine Cherni - GoMyRobot
+- Benjamin Pellieux - Coros Space
+
+**Discussion topics**
+
+- QEMU instruction introspection for coverage
+  - Discussed a possible automation approach to distinguish enabled kernel subsystems from those actually observed in execution.
+  - ACTION: Rob - Look for the video link on QEMU instruction introspection.
+  - ACTION: Matt - Get the EPAM Xen information on a similar approach.
+  - Yassine shared [QEMU with cache-aware fault injection support](https://github.com/radshield/qemu-hce).
+
+- SGL SDK -> cFS build instructions
+  - Martin continued the live walkthrough of the [updated instructions](https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64).
+  - Direction: Add the instructions to a `docs/` folder in [meta-aerospace](https://github.com/elisa-tech/meta-aerospace).
+
+- [Starting point for kernel minimization effort - #257](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - Shared a [medical-device workload tracing example](https://elisa.tech/blog/2023/05/03/what-happens-when-openaps-commands-run-on-linux/) using the workload documentation added to the kernel docs.
+  - ACTION: Matt - Try Ivan's Dockerfile steps; Ivan reported no output when he tried them.
+  - Goal: Use and improve the existing workload documentation. Keep the working group's example focused on the basics without additional userspace tooling, for example using QEMU/GDB.
+
+**Not discussed but FYI**
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+  - ACTION: Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177).
+
+---
+
 ## 20261002
 
 **Attendance**
