@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 This is a companion to the draft
 [kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-(see this repo's [aerospace framing](../KernelMinimization.md)).
+(see this repo's [aerospace framing](../SoftwareMinimization.md)).
 Minimization reduces _size_; this document is about measuring
 _complexity_, which is a related but distinct concern and needs its own
 definition before it is measured.

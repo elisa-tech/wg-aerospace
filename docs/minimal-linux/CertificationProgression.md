@@ -7,7 +7,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 A **separate track** from the draft
 [kernel-minimization](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
 build/measure/boot workflow (see this repo's
-[aerospace framing](../KernelMinimization.md)): once a minimized kernel exists,
+[aerospace framing](../SoftwareMinimization.md)): once a minimized kernel exists,
 moving it toward higher assurance levels is a distinct effort. This page is a
 short set of references for that progression rather than a procedure.
 
@@ -32,4 +32,4 @@ Moving up software levels adds verification obligations. In DO-178C terms:
 - [Capability Maturity Model (CMM)](https://en.wikipedia.org/wiki/Capability_Maturity_Model).
 - Draft [kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
   — the workflow this track builds on; see
-  [aerospace framing](../KernelMinimization.md).
+  [aerospace framing](../SoftwareMinimization.md).

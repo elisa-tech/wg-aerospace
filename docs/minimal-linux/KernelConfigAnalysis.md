@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 A companion to the draft
 [kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-and this repo's [aerospace framing](../KernelMinimization.md). The draft
+and this repo's [aerospace framing](../SoftwareMinimization.md). The draft
 guide is the clean, iterate-through-it walkthrough; this page collects the
 deeper comparison against published minimal configs and prior measurements, so
 the guide stays focused.
@@ -50,7 +50,7 @@ The figures in [issue #139](https://github.com/elisa-tech/wg-aerospace/issues/13
 use different kernel versions and configurations. Kernel version, resolved
 defaults, compiler, debug information, and counting-tool revision can all affect
 the result. Re-run with matched inputs before attributing a difference to one
-cause. The [parent page's observations](../KernelMinimization.md#observations)
+cause. The [parent page's general observations](../SoftwareMinimization.md#general-observations)
 retain the reported progression for orientation.
 
 ## Notes on specific configs

@@ -52,11 +52,12 @@ This document register shall help to find the information you are looking for. D
 - ELISA Seminar: [AvioNix - Infrastructure as Code for Linux in Avionics](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/) (Erin + Wanja, June 23 2026)
   - [Video recording](https://youtu.be/D8H4dBtKCYM)
 
-## Kernel minimization
+## Software minimization
 
-[Kernel Minimization walkthrough](./KernelMinimization.md)
+[Software Minimization walkthrough](./SoftwareMinimization.md)
 
-- [Hello cFS (minimization applied to NASA cFS)](./minimal-linux/KernelMinimizationCFS.md)
+- [Hello Init (Practice)](./minimal-linux/HelloInit.md)
+- [Hello cFS (minimization applied to NASA cFS)](./minimal-linux/HelloCFS.md)
 - [Minimal Kernel Config Analysis (vs Boeing/LFSCS configs)](./minimal-linux/KernelConfigAnalysis.md)
 - [Measuring Linux Kernel Complexity](./minimal-linux/KernelComplexity.md)
 - [Certification Progression](./minimal-linux/CertificationProgression.md)
