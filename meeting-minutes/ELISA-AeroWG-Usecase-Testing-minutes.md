@@ -20,8 +20,50 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Presentations**
 
-- Oct 16th - QEMU (Leonidas) - (in Use case call)
-  - ACTION: (Weber) Invite others from SGL and AeroWG
+- None
+
+## 20261016
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Martin Halle - Hamburg University of Technology
+- Rob Woolley - Wind River Systems, Inc.
+- Ivan Perez - KBR @ NASA
+- Shefali Sharma
+- Yassine Cherni - GoMyRobot
+- Leonidas Kosmidis - BSC
+- Wanja Zaeske - DLR
+- Nick Zajerko-McKee - VORAGO Technologies
+- Benjamin Pellieux - Coros Space
+
+**Discussion topics**
+
+- QEMU instruction introspection for coverage
+  - Link to EPAM Xen fault injection [plus all the coverage discussion videos](https://wiki.xenproject.org/wiki/FuSa_SIG/Meetings) (Search for coverage and/or EPAM to find patches plus videos)
+  - ACTION: Rob - Look for the video link on QEMU instruction introspection.
+    - [Instrumenting, Introspection, and Debugging with QEMU](http://events17.linuxfoundation.org/sites/events/files/slides/presentation_9.pdf)
+
+- Kernel minimization effort
+  - ACTION: Need to decide if we look at coverage at the instruction or source code level
+  - ACTION: TESTING!!!  Start here to review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  - ACTION: Matt to demo basic app using instructions
+
+- Leonidas presented on ["Faithful Emulation of Space Processors SoCs using Open Source Technologies"](https://onedrive.live.com/?id=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026%2FKosmidis%5FSpace%5FProcessors%5FQEMU%5FELISA%5FOct%5F2026%2Epdf&listurl=%2Fpersonal%2F01b8647ed2301e95%2FDocuments&ithint=file%2Cpdf&e=taUegA&migratedtospo=true&parent=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy8wMWI4NjQ3ZWQyMzAxZTk1L0lRRG1wemF2NkFpdlNvenZoR0FsbnpDcUFjYTlTYmlwaFN0cWx6VTE1VTlTdFZFP2U9dGFVZWdB&ga=1)
+
+- FYI from Matt - Haoda Wang <haoda.wang@columbia.edu>  contacted me with HPSC and fault tolerant research interest.  I've invited him to our weekly calls.
+
+**Not discussed but FYI**
+
+- SGL SDK -> cFS build instructions
+  - Direction: Add the instructions to a `docs/` folder in [meta-aerospace](https://github.com/elisa-tech/meta-aerospace).
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+
+- Revisit parking lot items
+  - ACTION: Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177).
+
+---
 
 ## 20261009
 
