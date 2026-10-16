@@ -19,8 +19,8 @@ known workload are documented in the upstream kernel guides:
   — Covers discovering kernel subsystems and tracing syscalls/functions exercised
   by a target application using tools like `strace`, `cscope`, and `ftrace`.
 
-*(Note: These links reflect the latest review previews hosted on GitHub Pages;
-see the [upstream PR for comments](https://github.com/matthew-l-weber/linux/pull/1/changes).)*
+_(Note: These links reflect the latest review previews hosted on GitHub Pages;
+see the [upstream PR for comments](https://github.com/matthew-l-weber/linux/pull/1/changes).)_
 
 These upstream guides intentionally stay with general software engineering
 mechanics and omit domain-specific compliance standards (such as RTCA DO-178C,
@@ -32,6 +32,7 @@ In high-assurance aerospace systems, smaller kernels reduce the scope of code
 that must be reviewed, analyzed, and justified. However, minimization metrics
 (such as unobserved execution in a trace) do not constitute certification evidence
 by themselves. Under DO-178C:
+
 - An absence of observed execution does not prove code is dead or deactivated.
 - Boot paths, interrupt handlers, background tasks, and error recovery routines
   must be accounted for through explicit requirements and reachability analysis.
@@ -66,13 +67,13 @@ We provide two concrete scenarios executing this discipline:
 
 ## How this maps to the kernel.org draft guides
 
-| Draft (practice-only) | Aerospace-specific here |
-| --- | --- |
-| Application as PID 1, no init system | Same proposed launch model for [Hello Init (Practice)](./minimal-linux/HelloInit.md) and [Hello cFS](./minimal-linux/HelloCFS.md) |
-| Rebuild and check the workload after configuration changes | Apply our change → build → test → measure → record loop |
-| Trace workload → map to Kconfig → prune → re-test | Investigate failed removals as possible dependencies |
-| Present-vs-observed code (gcov/kcov) | Focus requirements and reachability analysis, not code classification |
-| SLOC / image metrics | Compare configurations with consistent measurement scope |
+| Draft (practice-only)                                      | Aerospace-specific here                                                                                                           |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Application as PID 1, no init system                       | Same proposed launch model for [Hello Init (Practice)](./minimal-linux/HelloInit.md) and [Hello cFS](./minimal-linux/HelloCFS.md) |
+| Rebuild and check the workload after configuration changes | Apply our change → build → test → measure → record loop                                                                           |
+| Trace workload → map to Kconfig → prune → re-test          | Investigate failed removals as possible dependencies                                                                              |
+| Present-vs-observed code (gcov/kcov)                       | Focus requirements and reachability analysis, not code classification                                                             |
+| SLOC / image metrics                                       | Compare configurations with consistent measurement scope                                                                          |
 
 ## General Observations
 
@@ -83,13 +84,13 @@ acceptance targets.
 
 ### Kernel progression (reported LTS v6.18.52, arm64)
 
-| Configuration | DWARF SLOC | Compiled-file SLOC | Image (raw) | Reported boot |
-| --- | --- | --- | --- | --- |
-| tinyconfig + boot/serial options | 171,739 | 342,997 | 2.9 MiB | yes |
-| + networking | 273,678 | 521,825 | 4.1 MiB | yes |
-| + block / EXT4 | 319,767 | 597,973 | 4.6 MiB | yes |
-| + PCI / USB | 346,568 | 649,022 | 5.1 MiB | yes |
-| defconfig | 1,212,643 | 2,748,291 | 47 MiB | yes |
+| Configuration                    | DWARF SLOC | Compiled-file SLOC | Image (raw) | Reported boot |
+| -------------------------------- | ---------- | ------------------ | ----------- | ------------- |
+| tinyconfig + boot/serial options | 171,739    | 342,997            | 2.9 MiB     | yes           |
+| + networking                     | 273,678    | 521,825            | 4.1 MiB     | yes           |
+| + block / EXT4                   | 319,767    | 597,973            | 4.6 MiB     | yes           |
+| + PCI / USB                      | 346,568    | 649,022            | 5.1 MiB     | yes           |
+| defconfig                        | 1,212,643  | 2,748,291          | 47 MiB      | yes           |
 
 The tiny baseline requests `TTY`, `SERIAL_AMBA_PL011`,
 `SERIAL_AMBA_PL011_CONSOLE`, `PRINTK`, `BLK_DEV_INITRD`, and `BINFMT_ELF`;
@@ -98,22 +99,22 @@ compares published Boeing and ELISA LFSCS configurations.
 
 ### Hello-world user space (reported arm64, static glibc)
 
-| Metric | Reported value | Scope |
-| --- | --- | --- |
-| Application source SLOC | 10 | Application only, not linked libc |
-| Static binary, unstripped | 634,000 B | On-disk ELF size |
-| Static binary, stripped | 532,408 B | After `aarch64-linux-gnu-strip` |
-| `size` text / data / bss | 498,513 / 22,164 / 21,600 B | Section sizes, not file size |
-| `initramfs.cpio.gz` | 279,571 B | Archive of just `/init` |
+| Metric                    | Reported value              | Scope                             |
+| ------------------------- | --------------------------- | --------------------------------- |
+| Application source SLOC   | 10                          | Application only, not linked libc |
+| Static binary, unstripped | 634,000 B                   | On-disk ELF size                  |
+| Static binary, stripped   | 532,408 B                   | After `aarch64-linux-gnu-strip`   |
+| `size` text / data / bss  | 498,513 / 22,164 / 21,600 B | Section sizes, not file size      |
+| `initramfs.cpio.gz`       | 279,571 B                   | Archive of just `/init`           |
 
 The linked libc dominates the small application's footprint. A smaller libc
 such as musl is a candidate to measure and re-test, not an automatic equivalent.
 
-| User space | Version | Reported source SLOC | Scope |
-| --- | --- | --- | --- |
-| Basic PID 1 example | — | 10 | Single application file, excludes libc |
-| BusyBox | 1.36.1 | 189,050 | Whole C/C++/header source tree |
-| systemd | 257 | 684,593 | Whole C/C++/header source tree |
+| User space          | Version | Reported source SLOC | Scope                                  |
+| ------------------- | ------- | -------------------- | -------------------------------------- |
+| Basic PID 1 example | —       | 10                   | Single application file, excludes libc |
+| BusyBox             | 1.36.1  | 189,050              | Whole C/C++/header source tree         |
+| systemd             | 257     | 684,593              | Whole C/C++/header source tree         |
 
 Whole-tree counts include unused code and omit other languages; they are not
 comparable deployed footprints. See `scripts/kernel-sloc --help` for the

@@ -98,6 +98,7 @@ Test and evaluate candidate builds under QEMU emulation following the
 workload execution and probing discipline:
 
 ### 1. PID 1 cFS Workload Boot
+
 Package the target cFS executable as `/init` (or target via `rdinit=`) inside
 an initramfs or root filesystem image. Boot under QEMU:
 
@@ -108,14 +109,16 @@ qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
     -append 'console=ttyAMA0'
 ```
 
-*Pass criterion:* Kernel unpacks the rootfs, launches cFS directly as PID 1,
+_Pass criterion:_ Kernel unpacks the rootfs, launches cFS directly as PID 1,
 initializes OSAL and core applications (e.g., CFE Core, Executive Services,
 Event Services), and enters the steady-state housekeeping loop without triggering
 an init panic or unhandled exception.
 
 ### 2. Feature Probing (OSAL & Subsystem Probes)
+
 Validate isolated OSAL and networking dependencies using focused probe binaries
 before full application integration:
+
 - Socket / UDP network telemetry probing (`cfs-probe-net`).
 - POSIX message queue / shared memory probing (`cfs-probe-ipc`).
 - Timer and clock monotonic precision probing (`cfs-probe-timer`).
@@ -131,6 +134,7 @@ Follow the upstream guides for measuring kernel image sizes, source lines of
 code (SLOC), and user space footprints:
 
 - **SLOC Counting:** Follow [Counting kernel SLOC](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#counting-kernel-sloc):
+
   ```sh
   # DWARF-based line estimate from linked vmlinux
   CROSS_COMPILE=aarch64-linux-gnu- scripts/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
@@ -141,6 +145,7 @@ code (SLOC), and user space footprints:
   ```
 
 - **Image Sizing:** Follow [Measuring the image](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-the-image):
+
   ```sh
   make Image.gz
   stat -c%s arch/arm64/boot/Image       # raw image byte size
@@ -148,6 +153,7 @@ code (SLOC), and user space footprints:
   ```
 
 - **User Space Footprints:** Follow [Measuring user space](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-user-space):
+
   ```sh
   # Application and OSAL source SLOC
   cloc cfs/
@@ -199,32 +205,32 @@ Log the findings across iterations in the following observation tables. In some 
 
 Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 
-| Parameter | Recorded Value / Anchor |
-| --- | --- |
-| **Repository Source** | *Record repository URL (e.g. kernel.org or meta-aerospace kernel reference)* |
-| **Release Tag / Commit** | *Record branch, tag, or commit SHA* |
-| **Target Architecture** | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`) |
-| **Compiler & Toolchain** | *Record toolchain version (GCC / Clang; ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)* |
-| **Emulator Environment** | *Record QEMU machine, CPU model, and emulator version (ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)* |
+| Parameter                | Recorded Value / Anchor                                                                                    |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------- |
+| **Repository Source**    | _Record repository URL (e.g. kernel.org or meta-aerospace kernel reference)_                               |
+| **Release Tag / Commit** | _Record branch, tag, or commit SHA_                                                                        |
+| **Target Architecture**  | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                 |
+| **Compiler & Toolchain** | _Record toolchain version (GCC / Clang; ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)_                |
+| **Emulator Environment** | _Record QEMU machine, CPU model, and emulator version (ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)_ |
 
 ### 2. Build & Sizing Iteration Record
 
-| Configuration Step | Adjustment / Kconfig Delta | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) | Workload Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| `0. Initial cFS baseline` | Baseline meta-aerospace kernel config | *Record* | *Record* | *Record* | *Record* | *Pass / Fail* |
-| `1. Prune unused drivers` | `-CONFIG_DRIVERS_UNUSED` | *Record* | *Record* | *Record* | *Record* | *Pass / Fail* |
-| `2. Prune network protocols` | Disable unused socket families | *Record* | *Record* | *Record* | *Record* | *Pass / Fail* |
+| Configuration Step           | Adjustment / Kconfig Delta            | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) | Workload Status |
+| ---------------------------- | ------------------------------------- | ---------- | -------------------- | --------- | ------------------------ | --------------- |
+| `0. Initial cFS baseline`    | Baseline meta-aerospace kernel config | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
+| `1. Prune unused drivers`    | `-CONFIG_DRIVERS_UNUSED`              | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
+| `2. Prune network protocols` | Disable unused socket families        | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
 
 ### 3. User Space Footprint (Static vs Deployed)
 
 Record user space sizes across application and OSAL components. Measure source SLOC (`cloc`), static unstripped/stripped ELF binaries (`stat`), and packaged rootfs archive sizes:
 
 | User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-cfs.cpio.gz` Archive |
-| --- | --- | --- | --- | --- | --- |
-| `core-cfs` | cFS Core & Apps | *Record* | *Record* | *Record* | *Record* |
-| `cfs-probe-net` | OSAL network probe | *Record* | *Record* | *Record* | *Record* |
-| `cfs-probe-ipc` | OSAL IPC probe | *Record* | *Record* | *Record* | *Record* |
-| `cfs-probe-timer` | OSAL timer probe | *Record* | *Record* | *Record* | *Record* |
+| -------------------- | --------------------- | ----------- | ----------------------- | --------------- | ------------------------------- |
+| `core-cfs`           | cFS Core & Apps       | _Record_    | _Record_                | _Record_        | _Record_                        |
+| `cfs-probe-net`      | OSAL network probe    | _Record_    | _Record_                | _Record_        | _Record_                        |
+| `cfs-probe-ipc`      | OSAL IPC probe        | _Record_    | _Record_                | _Record_        | _Record_                        |
+| `cfs-probe-timer`    | OSAL timer probe      | _Record_    | _Record_                | _Record_        | _Record_                        |
 
 ### 4. Runtime Coverage (KCOV) Symbolized Reachability
 
@@ -232,30 +238,30 @@ Symbolized reachability evaluating specific test scenarios by pairing a kernel c
 
 #### 4.0 Scenario 0: Initial cFS Baseline (`Step 0: Initial cFS baseline` + `core-cfs` / probes)
 
-*Record reachability for the steady-state cFS execution window on the baseline kernel config:*
+_Record reachability for the steady-state cFS execution window on the baseline kernel config:_
 
-| Kernel Subsystem / File | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| *Subsystem path* | *Function names* | *PC list* | *Line count* | *Percent* | Baseline cFS execution window |
-| **Total Syscall Window** | *PCs* | — | **Lines** | **%** | **Baseline reachability** |
+| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
+| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
+| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Baseline cFS execution window |
+| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Baseline reachability**     |
 
 #### 4.1 Scenario 1: Pruning Drivers (`Step 1: Prune unused drivers` + `core-cfs`)
 
-*Record reachability after eliminating unused driver groups:*
+_Record reachability after eliminating unused driver groups:_
 
-| Kernel Subsystem / File | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| *Subsystem path* | *Function names* | *PC list* | *Line count* | *Percent* | Task-scoped execution window |
-| **Total Syscall Window** | *PCs* | — | **Lines** | **%** | **Post-pruning reachability** |
+| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
+| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
+| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Task-scoped execution window  |
+| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Post-pruning reachability** |
 
 #### 4.2 Scenario 2: Pruning Networking (`Step 2: Prune network protocols` + `core-cfs` / `cfs-probe-net`)
 
-*Record reachability when evaluating socket and network protocol pruning:*
+_Record reachability when evaluating socket and network protocol pruning:_
 
-| Kernel Subsystem / File | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| *Subsystem path* | *Function names* | *PC list* | *Line count* | *Percent* | Task-scoped execution window |
-| **Total Syscall Window** | *PCs* | — | **Lines** | **%** | **Post-pruning reachability** |
+| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
+| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
+| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Task-scoped execution window  |
+| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Post-pruning reachability** |
 
 ## References
 

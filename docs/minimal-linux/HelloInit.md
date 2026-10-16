@@ -110,6 +110,7 @@ being followed to demonstrate incremental subsystem addition and evaluation. Tes
 and evaluate the resulting builds using QEMU emulation and feature probing:
 
 ### 1. PID 1 Static Workload Boot
+
 Save the minimal PID 1 application source (from the kernel guide's [A minimal PID 1 workload](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#a-minimal-pid-1-workload)) as `ainit.c`. Compile it statically and pack it into a gzip-compressed cpio archive:
 
 ```sh
@@ -119,6 +120,7 @@ mkdir -p rootfs && cp ainit rootfs/init && chmod 0755 rootfs/init
 ```
 
 Boot the kernel under QEMU:
+
 ```sh
 qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
     -kernel arch/arm64/boot/Image \
@@ -126,7 +128,10 @@ qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
     -append 'console=ttyAMA0'
 ```
 
+_(Note: Monolithic `defconfig` images require passing `-m 512M` or `-m 1024M` to QEMU to avoid memory exhaustion during large driver initialization)._
+
 Example console boot output:
+
 ```text
 Booting Linux on physical CPU 0x0000000000 [0x411fd070]
 Linux version 7.3.0-rc5+ (...) (aarch64-linux-gnu-gcc ...) #1 SMP PREEMPT ...
@@ -144,7 +149,7 @@ Run /init as init process
 hello world
 ```
 
-*Pass criterion:* The kernel unpacks the initramfs, executes `/init` as PID 1,
+_Pass criterion:_ The kernel unpacks the initramfs, executes `/init` as PID 1,
 prints `hello world`, and idles in `pause()` without triggering an
 `Attempted to kill init!` panic. Close QEMU with `Ctrl-a x`.
 
@@ -164,6 +169,7 @@ cp ainit-net rootfs/init && chmod 0755 rootfs/init
 Boot the kernel in QEMU passing `-initrd initramfs-net.cpio.gz`.
 
 Example output across configurations:
+
 ```text
 # On baseline tinyconfig (without networking):
 hello world
@@ -191,6 +197,7 @@ code (SLOC), and user space footprints:
 
 - **SLOC Counting:** Follow the kernel guide's [Counting kernel SLOC](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#counting-kernel-sloc)
   to generate DWARF line-table counts and compiled source counts:
+
   ```sh
   # DWARF-based line estimate from linked vmlinux
   CROSS_COMPILE=aarch64-linux-gnu- scripts/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
@@ -202,6 +209,7 @@ code (SLOC), and user space footprints:
 
 - **Image Sizing:** Follow [Measuring the image](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-the-image)
   to record raw and compressed kernel sizes:
+
   ```sh
   make Image.gz
   stat -c%s arch/arm64/boot/Image       # raw image byte size
@@ -210,6 +218,7 @@ code (SLOC), and user space footprints:
 
 - **User Space Footprints:** Follow [Measuring user space](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-user-space)
   to record application source lines, static binary sizes, and root filesystem archive sizes:
+
   ```sh
   # Application source SLOC
   cloc ainit.c
@@ -233,6 +242,7 @@ Follow the upstream kernel guide for the collection and symbolization workflow:
 
 1. **Enable KCOV & debug info:** Configure `CONFIG_KCOV=y`, `CONFIG_DEBUG_FS=y`, and
    DWARF debug info following [Dumping kernel coverage (kcov)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#dumping-kernel-coverage-kcov):
+
    ```sh
    ./scripts/config -e KCOV -e DEBUG_FS \
        -d DEBUG_INFO_NONE \
@@ -244,6 +254,7 @@ Follow the upstream kernel guide for the collection and symbolization workflow:
 2. **Build collector & capture trace:** Save the PID 1 collector source `ainit-kcov.c`
    (from [Dumping kernel coverage (kcov)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#dumping-kernel-coverage-kcov)),
    package the rootfs with debugfs mount point, and boot in QEMU passing `nokaslr`:
+
    ```sh
    aarch64-linux-gnu-gcc -static -O2 -o ainit-kcov ainit-kcov.c
    mkdir -p rootfs-kcov/sys/kernel/debug
@@ -263,6 +274,7 @@ Follow the upstream kernel guide for the collection and symbolization workflow:
    ```
 
 Example symbolized output (`kcov-symbols.txt` sample):
+
 ```text
 get_current
 .../arch/arm64/include/asm/current.h:19
@@ -301,30 +313,30 @@ Log the findings across iterations in the following observation tables. In some 
 
 Anchoring the baseline experiment parameters ensures reviewable and reproducible metrics:
 
-| Parameter | Recorded Value / Anchor |
-| --- | --- |
-| **Repository Source** | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` |
-| **Release Tag / Commit** | `v7.3-rc5` / commit `55e3331ed141` |
-| **Target Architecture** | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`) |
-| **Compiler & Linker** | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` *(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)* |
-| **Emulator Environment** | QEMU `qemu-system-aarch64` v8.2.2 (`-machine virt -cpu cortex-a57`) *(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)* |
+| Parameter                | Recorded Value / Anchor                                                                                                                     |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Repository Source**    | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git`                                                                   |
+| **Release Tag / Commit** | `v7.3-rc5` / commit `55e3331ed141`                                                                                                          |
+| **Target Architecture**  | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                                                  |
+| **Compiler & Linker**    | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` _(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)_               |
+| **Emulator Environment** | QEMU `qemu-system-aarch64` v8.2.2 (`-machine virt -cpu cortex-a57`) _(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)_ |
 
 ### 2. Build & Sizing Iteration Record (v7.3-rc5, arm64)
 
-| Configuration Step | Adjustment / Kconfig Delta | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) | Boot Status |
-| --- | --- | --- | --- | --- | --- | --- |
-| `0. tinyconfig baseline` | `tinyconfig` + PL011 serial, printk, initrd, elf | 124,938 | 352,672 (600 files) | 3,223,560 B (~3.07 MB) | 1,140,060 B (~1.09 MB) | Pass |
-| `1. + Networking` | `+NET`, `+INET` | 197,490 | 527,040 (784 files) | 4,495,368 B (~4.3 MB) | 1,810,185 B (~1.7 MB) | Pass |
-| `2. defconfig (monolithic)` | `defconfig`, `-MODULES` | 1,959,778 | 5,721,697 (9,157 files) | 101,362,176 B (~96.67 MB) | 31,000,849 B (~29.56 MB) | Pass |
+| Configuration Step          | Adjustment / Kconfig Delta                       | DWARF SLOC | Compiled Source SLOC    | Raw Image                 | Compressed Image (`.gz`) | Boot Status |
+| --------------------------- | ------------------------------------------------ | ---------- | ----------------------- | ------------------------- | ------------------------ | ----------- |
+| `0. tinyconfig baseline`    | `tinyconfig` + PL011 serial, printk, initrd, elf | 124,938    | 352,672 (600 files)     | 3,223,560 B (~3.07 MB)    | 1,140,060 B (~1.09 MB)   | Pass        |
+| `1. + Networking`           | `+NET`, `+INET`                                  | 197,490    | 527,040 (784 files)     | 4,495,368 B (~4.3 MB)     | 1,810,185 B (~1.7 MB)    | Pass        |
+| `2. defconfig (monolithic)` | `defconfig`, `-MODULES`                          | 1,959,778  | 5,721,697 (9,157 files) | 101,362,176 B (~96.67 MB) | 31,000,849 B (~29.56 MB) | Pass        |
 
 ### 3. User Space Footprint (Static vs Deployed)
 
-| User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-*.cpio.gz` Archive |
-| --- | --- | --- | --- | --- | --- |
-| `ainit` (glibc static) | Minimal PID 1 hello world | 10 lines | 634,000 B (~619 KB) | 532,408 B (~520 KB) | 279,570 B (~273 KB) |
-| `ainit-net` (glibc static) | Socket feature probe | 23 lines | 634,984 B (~620 KB) | 532,408 B (~520 KB) | 280,384 B (~274 KB) |
-| `ainit-kcov` (glibc static) | KCOV syscall coverage collector | 69 lines | 704,296 B (~688 KB) | 597,944 B (~584 KB) | 294,778 B (~288 KB) |
-| `ainit-net-kcov` (glibc static) | Combined socket probe + KCOV collector | 73 lines | 704,768 B (~688 KB) | 597,944 B (~584 KB) | 295,720 B (~289 KB) |
+| User Space Component            | Purpose / Description                  | Source SLOC | Static ELF (unstripped) | Stripped Binary     | `initramfs-*.cpio.gz` Archive |
+| ------------------------------- | -------------------------------------- | ----------- | ----------------------- | ------------------- | ----------------------------- |
+| `ainit` (glibc static)          | Minimal PID 1 hello world              | 10 lines    | 634,000 B (~619 KB)     | 532,408 B (~520 KB) | 279,570 B (~273 KB)           |
+| `ainit-net` (glibc static)      | Socket feature probe                   | 23 lines    | 634,984 B (~620 KB)     | 532,408 B (~520 KB) | 280,384 B (~274 KB)           |
+| `ainit-kcov` (glibc static)     | KCOV syscall coverage collector        | 69 lines    | 704,296 B (~688 KB)     | 597,944 B (~584 KB) | 294,778 B (~288 KB)           |
+| `ainit-net-kcov` (glibc static) | Combined socket probe + KCOV collector | 73 lines    | 704,768 B (~688 KB)     | 597,944 B (~584 KB) | 295,720 B (~289 KB)           |
 
 ### 4. Runtime Coverage (KCOV) Symbolized Reachability
 
@@ -334,43 +346,43 @@ Symbolized reachability evaluating specific test scenarios by pairing a kernel c
 
 Target syscall `read(-1, NULL, 0)` on the instrumented `tinyconfig baseline` (133,136 instrumented linked DWARF SLOC / 124,938 uninstrumented base):
 
-| Kernel Source File | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| `arch/arm64/kernel/syscall.c` | `get_current`, `el0_svc_common`, `do_el0_svc`, `invoke_syscall` | `0xffff80008001e81c`, `0xffff80008001e85c` | 4 lines | ~0.0030% | Syscall dispatch entry & return paths |
-| `fs/read_write.c` & `fs/file.c` | `__do_sys_read`, `ksys_read`, `__fget_light`, `fdget_pos` | `0xffff8000801245e4`, `0xffff800080123b48` | 5 lines | ~0.0038% | Target syscall handler & descriptor lookup |
-| *Supporting headers* | `current.h`, `file.h`, `syscall.h` | — | 20 lines | ~0.0150% | Inlined current task & file descriptor helpers |
-| **Total Syscall Window** | *29 unique source lines across 21 PCs* | — | **29 lines** | **~0.0218%** | **In-kernel read() baseline reachability** |
+| Kernel Source File              | Activated Functions                                             | Sample Instruction Addresses               | Unique Lines | Kernel Coverage Share (%) | Observation Scope                              |
+| ------------------------------- | --------------------------------------------------------------- | ------------------------------------------ | ------------ | ------------------------- | ---------------------------------------------- |
+| `arch/arm64/kernel/syscall.c`   | `get_current`, `el0_svc_common`, `do_el0_svc`, `invoke_syscall` | `0xffff80008001e81c`, `0xffff80008001e85c` | 4 lines      | ~0.0030%                  | Syscall dispatch entry & return paths          |
+| `fs/read_write.c` & `fs/file.c` | `__do_sys_read`, `ksys_read`, `__fget_light`, `fdget_pos`       | `0xffff8000801245e4`, `0xffff800080123b48` | 5 lines      | ~0.0038%                  | Target syscall handler & descriptor lookup     |
+| _Supporting headers_            | `current.h`, `file.h`, `syscall.h`                              | —                                          | 20 lines     | ~0.0150%                  | Inlined current task & file descriptor helpers |
+| **Total Syscall Window**        | _29 unique source lines across 21 PCs_                          | —                                          | **29 lines** | **~0.0218%**              | **In-kernel read() baseline reachability**     |
 
 #### 4.1 Scenario 1: Network Feature Probe (`Step 1: + Networking` + `ainit-net-kcov`)
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyconfig + NET + INET` build (197,490 total linked DWARF SLOC):
 
-| Kernel Source File / Subsystem | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| `net/socket.c` | `__sys_socket_create`, `sock_alloc_file`, `__sock_create`, `sock_map_fd` | `0xffff8000802296d0`, `0xffff800080228160` | 34 lines | ~0.0172% | Socket abstraction & syscall entry |
-| `net/ipv4/af_inet.c` | `inet_create` | `0xffff80008031332c`, `0xffff800080312900` | 25 lines | ~0.0127% | IPv4 protocol family socket creation |
-| `net/core/sock.c` | `sk_alloc`, `sock_init_data`, `sk_prot_alloc` | `0xffff80008022dc84`, `0xffff80008022c698` | 25 lines | ~0.0127% | Core socket allocation and state initialization |
-| `fs/file_table.c` & `fs/file.c` | `alloc_file_pseudo`, `alloc_file`, `fd_install`, `get_unused_fd_flags` | `0xffff800080128c24`, `0xffff800080126574` | 50 lines | ~0.0253% | VFS file allocation & descriptor binding |
-| `fs/dcache.c` & `fs/inode.c` | `d_alloc_pseudo`, `new_inode_pseudo` | `0xffff80008011f158`, `0xffff80008012bc68` | 37 lines | ~0.0187% | Socket pseudo filesystem dentry/inode creation |
-| `arch/arm64/kernel/syscall.c` | `el0_svc_common`, `do_el0_svc`, `invoke_syscall` | `0xffff80008001e81c`, `0xffff80008001e85c` | 12 lines | ~0.0061% | ARM64 syscall entry, dispatch & return paths |
-| `net/ipv4/udp.c` | `udp_init_sock` | `0xffff8000803135dc`, `0xffff800080313620` | 5 lines | ~0.0025% | UDP protocol socket initialization |
-| *Supporting headers & libraries* | Per-CPU counters, atomic bitops, timer init | — | 100 lines | ~0.0506% | Inline helpers & reference counting |
-| **Total Syscall Window** | *288 unique source lines across 250 PCs* | — | **288 lines** | **~0.1458%** | **In-kernel socket() reachability** |
+| Kernel Source File / Subsystem   | Activated Functions                                                      | Sample Instruction Addresses               | Unique Lines  | Kernel Coverage Share (%) | Observation Scope                               |
+| -------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------ | ------------- | ------------------------- | ----------------------------------------------- |
+| `net/socket.c`                   | `__sys_socket_create`, `sock_alloc_file`, `__sock_create`, `sock_map_fd` | `0xffff8000802296d0`, `0xffff800080228160` | 34 lines      | ~0.0172%                  | Socket abstraction & syscall entry              |
+| `net/ipv4/af_inet.c`             | `inet_create`                                                            | `0xffff80008031332c`, `0xffff800080312900` | 25 lines      | ~0.0127%                  | IPv4 protocol family socket creation            |
+| `net/core/sock.c`                | `sk_alloc`, `sock_init_data`, `sk_prot_alloc`                            | `0xffff80008022dc84`, `0xffff80008022c698` | 25 lines      | ~0.0127%                  | Core socket allocation and state initialization |
+| `fs/file_table.c` & `fs/file.c`  | `alloc_file_pseudo`, `alloc_file`, `fd_install`, `get_unused_fd_flags`   | `0xffff800080128c24`, `0xffff800080126574` | 50 lines      | ~0.0253%                  | VFS file allocation & descriptor binding        |
+| `fs/dcache.c` & `fs/inode.c`     | `d_alloc_pseudo`, `new_inode_pseudo`                                     | `0xffff80008011f158`, `0xffff80008012bc68` | 37 lines      | ~0.0187%                  | Socket pseudo filesystem dentry/inode creation  |
+| `arch/arm64/kernel/syscall.c`    | `el0_svc_common`, `do_el0_svc`, `invoke_syscall`                         | `0xffff80008001e81c`, `0xffff80008001e85c` | 12 lines      | ~0.0061%                  | ARM64 syscall entry, dispatch & return paths    |
+| `net/ipv4/udp.c`                 | `udp_init_sock`                                                          | `0xffff8000803135dc`, `0xffff800080313620` | 5 lines       | ~0.0025%                  | UDP protocol socket initialization              |
+| _Supporting headers & libraries_ | Per-CPU counters, atomic bitops, timer init                              | —                                          | 100 lines     | ~0.0506%                  | Inline helpers & reference counting             |
+| **Total Syscall Window**         | _288 unique source lines across 250 PCs_                                 | —                                          | **288 lines** | **~0.1458%**              | **In-kernel socket() reachability**             |
 
 #### 4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 2: defconfig (monolithic)` + `ainit-net-kcov`)
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the monolithic `defconfig` build (1,959,778 linked DWARF SLOC):
 
-| Kernel Source File / Subsystem | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope |
-| --- | --- | --- | --- | --- | --- |
-| `net/socket.c` | `__sys_socket_create`, `sock_alloc_file`, `__sock_create`, `sock_map_fd` | `0xffff800082a0092c`, `0xffff8000829fd340` | 34 lines | ~0.0017% | Socket layer syscall entry & allocation |
-| `fs/file_table.c`, `dcache.c`, `file.c`, `inode.c` | `alloc_file_pseudo`, `d_alloc_pseudo`, `fd_install`, `new_inode_pseudo` | `0xffff80008047dbf4`, `0xffff80008047b5f8` | 97 lines | ~0.0049% | VFS file, dentry & pseudo inode creation |
-| `net/core/sock.c` & `net/ipv4/af_inet.c` | `sk_alloc`, `sock_init_data`, `inet_create` | `0xffff800082bd674c`, `0xffff800082a07f50` | 55 lines | ~0.0028% | Core sock layer & IPv4 protocol init |
-| `kernel/user_namespace.c` & `security/security.c` | `ns_capable_common`, `security_socket_create`, LSM hooks | `0xffff8000801f1950`, `0xffff8000801e5dd0` | 29 lines | ~0.0015% | Namespace capability & LSM security checks |
-| `arch/arm64/kernel/syscall.c` | `el0_svc_common`, `do_el0_svc`, `invoke_syscall` | `0xffff800080030b10`, `0xffff8000800309e8` | 9 lines | ~0.0005% | ARM64 syscall entry & dispatch |
-| `net/ipv4/udp.c` | `udp_init_sock` | `0xffff800082a080d0`, `0xffff800082a08070` | 6 lines | ~0.0003% | UDP protocol state initialization |
-| *Supporting headers & libraries* | Per-CPU counters, atomic bitops, refcounts | — | 114 lines | ~0.0058% | Inline helpers & utility routines |
-| **Total Syscall Window** | *344 unique source lines across 255 PCs* | — | **344 lines** | **~0.0176%** | **In-kernel socket() monolithic reachability** |
+| Kernel Source File / Subsystem                     | Activated Functions                                                      | Sample Instruction Addresses               | Unique Lines  | Kernel Coverage Share (%) | Observation Scope                              |
+| -------------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------ | ------------- | ------------------------- | ---------------------------------------------- |
+| `net/socket.c`                                     | `__sys_socket_create`, `sock_alloc_file`, `__sock_create`, `sock_map_fd` | `0xffff800082a0092c`, `0xffff8000829fd340` | 34 lines      | ~0.0017%                  | Socket layer syscall entry & allocation        |
+| `fs/file_table.c`, `dcache.c`, `file.c`, `inode.c` | `alloc_file_pseudo`, `d_alloc_pseudo`, `fd_install`, `new_inode_pseudo`  | `0xffff80008047dbf4`, `0xffff80008047b5f8` | 97 lines      | ~0.0049%                  | VFS file, dentry & pseudo inode creation       |
+| `net/core/sock.c` & `net/ipv4/af_inet.c`           | `sk_alloc`, `sock_init_data`, `inet_create`                              | `0xffff800082bd674c`, `0xffff800082a07f50` | 55 lines      | ~0.0028%                  | Core sock layer & IPv4 protocol init           |
+| `kernel/user_namespace.c` & `security/security.c`  | `ns_capable_common`, `security_socket_create`, LSM hooks                 | `0xffff8000801f1950`, `0xffff8000801e5dd0` | 29 lines      | ~0.0015%                  | Namespace capability & LSM security checks     |
+| `arch/arm64/kernel/syscall.c`                      | `el0_svc_common`, `do_el0_svc`, `invoke_syscall`                         | `0xffff800080030b10`, `0xffff8000800309e8` | 9 lines       | ~0.0005%                  | ARM64 syscall entry & dispatch                 |
+| `net/ipv4/udp.c`                                   | `udp_init_sock`                                                          | `0xffff800082a080d0`, `0xffff800082a08070` | 6 lines       | ~0.0003%                  | UDP protocol state initialization              |
+| _Supporting headers & libraries_                   | Per-CPU counters, atomic bitops, refcounts                               | —                                          | 114 lines     | ~0.0058%                  | Inline helpers & utility routines              |
+| **Total Syscall Window**                           | _344 unique source lines across 255 PCs_                                 | —                                          | **344 lines** | **~0.0176%**              | **In-kernel socket() monolithic reachability** |
 
 ## References
 
