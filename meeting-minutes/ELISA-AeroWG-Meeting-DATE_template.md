@@ -76,7 +76,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
 - Naga - Timesys/Lynx
-- Nick Zajerko-McKee
+- Nick Zajerko-McKee - Vorago Technologies
 - Olivier Charrier - Wind River
 - Paul Greenwood - Vorago Technologies
 - Paul Mani - Collins India
