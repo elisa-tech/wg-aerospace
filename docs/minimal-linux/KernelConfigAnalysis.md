@@ -49,9 +49,37 @@ metrics, not proof that all counting implementations produce equivalent results.
 The figures in [issue #139](https://github.com/elisa-tech/wg-aerospace/issues/139)
 use different kernel versions and configurations. Kernel version, resolved
 defaults, compiler, debug information, and counting-tool revision can all affect
-the result. Re-run with matched inputs before attributing a difference to one
-cause. The [parent page's general observations](../SoftwareMinimization.md#general-observations)
-retain the reported progression for orientation.
+the result. Re-run with matched inputs before attributing a difference to one cause.
+For current, fully reproducible measurements and methodology on the v7.3-rc5 tree,
+see [Hello Init (Practice)](./HelloInit.md).
+
+## Historical Progression & User-Space Sizing (v6.18 Notes)
+
+The following figures reflect earlier exploratory notes on LTS v6.18.52 (ARM64), retained
+to document historical context and comparison with issue #139:
+
+### Subsystem addition progression (reported LTS v6.18.52, arm64)
+
+| Configuration | DWARF SLOC | Compiled-file SLOC | Image (raw) | Reported boot |
+| :--- | :--- | :--- | :--- | :--- |
+| `tinyconfig` + boot/serial options | 171,739 | 342,997 | 2.9 MiB | yes |
+| + networking | 273,678 | 521,825 | 4.1 MiB | yes |
+| + block / EXT4 | 319,767 | 597,973 | 4.6 MiB | yes |
+| + PCI / USB | 346,568 | 649,022 | 5.1 MiB | yes |
+| `defconfig` (monolithic) | 1,212,643 | 2,748,291 | 47 MiB | yes |
+
+### User-space footprint comparison (glibc static vs full trees)
+
+| User Space Component | Scope | Source SLOC | Static ELF (Stripped) |
+| :--- | :--- | :--- | :--- |
+| Basic PID 1 (`ainit`) | Single application file (excluding libc) | 10 lines | 532,408 B (~520 KB) |
+| BusyBox 1.36.1 | Whole C/header source tree | 189,050 lines | ~1.2 MiB |
+| systemd 257 | Whole C/header source tree | 684,593 lines | — |
+
+*Note on libc overhead:* In static binaries, linked libc dominates small application
+footprints (e.g. glibc adds ~532 KB of baseline code even for a 10-line `hello world`).
+Using an alternative C library like musl is a candidate optimization when minimizing
+user-space payload size.
 
 ## Notes on specific configs
 

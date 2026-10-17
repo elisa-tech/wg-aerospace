@@ -64,6 +64,11 @@ We provide two concrete scenarios executing this discipline:
 - **[Hello cFS](./minimal-linux/HelloCFS.md)** — Flight application
   scenario applying the same structure and observation tables to the NASA
   Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
+- **[Maximizing Kernel Coverage with Open-Source Test Suites](./minimal-linux/MaxCoverageMultiSuite.md)**
+  — a worked example of applying these concepts to maximize whole-kernel
+  structural coverage: it drives stress-ng, LTP, Syzkaller, and GCOV against a
+  GCOV-instrumented `tinyconfig` kernel, then audits and prunes the code that
+  remains unreached. Shows the reachability and pruning loop end to end.
 
 ## How this maps to the kernel.org draft guides
 
@@ -75,62 +80,17 @@ We provide two concrete scenarios executing this discipline:
 | Present-vs-observed code (gcov/kcov)                       | Focus requirements and reachability analysis, not code classification                                                             |
 | SLOC / image metrics                                       | Compare configurations with consistent measurement scope                                                                          |
 
-## General Observations
-
-The following figures are retained from earlier walkthrough notes for
-orientation, not revalidated measurements of the current draft/tool. Save the
-exact artifacts and versions when repeating them; do not use these numbers as
-acceptance targets.
-
-### Kernel progression (reported LTS v6.18.52, arm64)
-
-| Configuration                    | DWARF SLOC | Compiled-file SLOC | Image (raw) | Reported boot |
-| -------------------------------- | ---------- | ------------------ | ----------- | ------------- |
-| tinyconfig + boot/serial options | 171,739    | 342,997            | 2.9 MiB     | yes           |
-| + networking                     | 273,678    | 521,825            | 4.1 MiB     | yes           |
-| + block / EXT4                   | 319,767    | 597,973            | 4.6 MiB     | yes           |
-| + PCI / USB                      | 346,568    | 649,022            | 5.1 MiB     | yes           |
-| defconfig                        | 1,212,643  | 2,748,291          | 47 MiB      | yes           |
-
-The tiny baseline requests `TTY`, `SERIAL_AMBA_PL011`,
-`SERIAL_AMBA_PL011_CONSOLE`, `PRINTK`, `BLK_DEV_INITRD`, and `BINFMT_ELF`;
-`RD_GZIP` defaults to enabled. The [config analysis](./minimal-linux/KernelConfigAnalysis.md)
-compares published Boeing and ELISA LFSCS configurations.
-
-### Hello-world user space (reported arm64, static glibc)
-
-| Metric                    | Reported value              | Scope                             |
-| ------------------------- | --------------------------- | --------------------------------- |
-| Application source SLOC   | 10                          | Application only, not linked libc |
-| Static binary, unstripped | 634,000 B                   | On-disk ELF size                  |
-| Static binary, stripped   | 532,408 B                   | After `aarch64-linux-gnu-strip`   |
-| `size` text / data / bss  | 498,513 / 22,164 / 21,600 B | Section sizes, not file size      |
-| `initramfs.cpio.gz`       | 279,571 B                   | Archive of just `/init`           |
-
-The linked libc dominates the small application's footprint. A smaller libc
-such as musl is a candidate to measure and re-test, not an automatic equivalent.
-
-| User space          | Version | Reported source SLOC | Scope                                  |
-| ------------------- | ------- | -------------------- | -------------------------------------- |
-| Basic PID 1 example | —       | 10                   | Single application file, excludes libc |
-| BusyBox             | 1.36.1  | 189,050              | Whole C/C++/header source tree         |
-| systemd             | 257     | 684,593              | Whole C/C++/header source tree         |
-
-Whole-tree counts include unused code and omit other languages; they are not
-comparable deployed footprints. See `scripts/kernel-sloc --help` for the
-optional `files` and `tree` modes.
-
 ## Related aerospace work
 
-- [Hello Init (Practice)](./minimal-linux/HelloInit.md) — foundational
-  practice walkthrough and measured baseline.
-- [Hello cFS](./minimal-linux/HelloCFS.md) — proposed flight workload.
 - [Kernel Complexity](./minimal-linux/KernelComplexity.md) — complexity and
   verification effort, distinct from size.
 - [Certification progression](./minimal-linux/CertificationProgression.md) —
   the separate assurance track.
 - [Nix-based kernel configuration](../demos/AvioNix-demo/NixBasedKernelConfig.md) —
   reproducible configuration using the same iterate-and-measure loop.
+- [AI Testing Steering Notes](./minimal-linux/TestingSteeringNotes.md) — reviewer /
+  agent checklist for re-running and validating the measured claims in these
+  walkthroughs and this page.
 
 ## References
 
@@ -144,5 +104,4 @@ optional `files` and `tree` modes.
 - ELISA [kconfig-safety-check](https://github.com/elisa-tech/kconfig-safety-check) —
   cyber/quality hardening, not DO-178C minimization.
 - Prior measurements and configuration research:
-  [Config Analysis](./minimal-linux/KernelConfigAnalysis.md) and
-  [Kernel Complexity references](./minimal-linux/KernelComplexity.md#references).
+  [Config Analysis](./minimal-linux/KernelConfigAnalysis.md).

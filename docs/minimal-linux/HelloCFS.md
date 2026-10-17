@@ -270,4 +270,4 @@ _Record reachability when evaluating socket and network protocol pruning:_
 - [Workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
   — syscall and kernel-path discovery, including minimal user space.
 - [Software Minimization](../SoftwareMinimization.md) — devcontainer setup,
-  aerospace framing, and [general observations](../SoftwareMinimization.md#general-observations).
+  aerospace framing, and assurance boundaries.

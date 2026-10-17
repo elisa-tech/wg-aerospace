@@ -23,6 +23,10 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
       build-essential=* \
+      autoconf=* \
+      automake=* \
+      autotools-dev=* \
+      m4=* \
       bash-completion=* \
       bc=* \
       bison=* \
@@ -31,6 +35,7 @@ RUN apt-get update && \
       file=* \
       flex=* \
       gcc-aarch64-linux-gnu=* \
+      golang-go=* \
       libc6-dev-arm64-cross=* \
       libelf-dev=* \
       libncurses-dev=* \

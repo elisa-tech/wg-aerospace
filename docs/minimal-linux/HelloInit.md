@@ -12,25 +12,32 @@ execution sequence, verification checks, and baseline measurements.
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Environment](#environment)
-- [Get the kernel sources](#get-the-kernel-sources)
-- [Change: Kernel options & configuration](#change-kernel-options--configuration)
-- [Build & Test: Workload execution & probing](#build--test-workload-execution--probing)
-  - [1. PID 1 Static Workload Boot](#1-pid-1-static-workload-boot)
-  - [2. Example Feature Probing (`ainit-net.c`)](#2-example-feature-probing-ainit-netc)
-- [Measure & Record: Gather findings](#measure--record-gather-findings)
-  - [Metrics](#metrics)
-  - [Runtime Coverage Collection (KCOV)](#runtime-coverage-collection-kcov)
-    - [Calculating Kernel Coverage Percentage](#calculating-kernel-coverage-percentage)
-- [Measure & Record: Observation tables](#measure--record-observation-tables)
-  - [1. Experiment Artifacts & Provenance Anchor](#1-experiment-artifacts--provenance-anchor)
-  - [2. Build & Sizing Iteration Record (v7.3-rc5, arm64)](#2-build--sizing-iteration-record-v73-rc5-arm64)
-  - [3. User Space Footprint (Static vs Deployed)](#3-user-space-footprint-static-vs-deployed)
-  - [4. Runtime Coverage (KCOV) Symbolized Reachability](#4-runtime-coverage-kcov-symbolized-reachability)
-- [References](#references)
+- [Hello Init (Practice)](#hello-init-practice)
+  - [Table of Contents](#table-of-contents)
+  - [1. Prerequisites](#1-prerequisites)
+  - [2. Environment](#2-environment)
+  - [3. Get the kernel sources](#3-get-the-kernel-sources)
+  - [4. Change: Kernel options \& configuration](#4-change-kernel-options--configuration)
+  - [5. Build \& Test: Workload execution \& probing](#5-build--test-workload-execution--probing)
+    - [5.1 PID 1 Static Workload Boot](#51-pid-1-static-workload-boot)
+    - [5.2 Example Feature Probing (`ainit-net.c`)](#52-example-feature-probing-ainit-netc)
+    - [5.3 Combined Feature Probing \& Coverage Collector (`ainit-net-kcov.c`)](#53-combined-feature-probing--coverage-collector-ainit-net-kcovc)
+  - [6. Measure \& Record: Gather findings](#6-measure--record-gather-findings)
+    - [6.1 Metrics](#61-metrics)
+    - [6.2 Runtime Coverage Collection (KCOV)](#62-runtime-coverage-collection-kcov)
+      - [6.2.1 Calculating Kernel Coverage Percentage](#621-calculating-kernel-coverage-percentage)
+  - [7. Measure \& Record: Observation tables](#7-measure--record-observation-tables)
+    - [Measurement Denominators \& SLOC Accounting](#measurement-denominators--sloc-accounting)
+    - [7.1 Experiment Artifacts \& Provenance Anchor](#71-experiment-artifacts--provenance-anchor)
+    - [7.2 Build \& Sizing Iteration Record (v7.3-rc5, arm64)](#72-build--sizing-iteration-record-v73-rc5-arm64)
+    - [7.3 User Space Footprint (Static vs Deployed)](#73-user-space-footprint-static-vs-deployed)
+    - [7.4 Runtime Coverage (KCOV) Symbolized Reachability](#74-runtime-coverage-kcov-symbolized-reachability)
+      - [7.4.0 Scenario 0: Minimal PID 1 (`Step 0: tinyconfig baseline` + `ainit-kcov`)](#740-scenario-0-minimal-pid-1-step-0-tinyconfig-baseline--ainit-kcov)
+      - [7.4.1 Scenario 1: Network Feature Probe (`Step 1: + Networking` + `ainit-net-kcov`)](#741-scenario-1-network-feature-probe-step-1--networking--ainit-net-kcov)
+      - [7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 2: defconfig (monolithic)` + `ainit-net-kcov`)](#742-scenario-2-monolithic-baseline-network-feature-probe-step-2-defconfig-monolithic--ainit-net-kcov)
+  - [Appendix 1. References](#appendix-1-references)
 
-## Prerequisites
+## 1. Prerequisites
 
 Before running this walkthrough:
 
@@ -41,7 +48,7 @@ Before running this walkthrough:
 - **Aerospace context:** Review [Software Minimization](../SoftwareMinimization.md)
   for safety-critical framing and assurance boundaries.
 
-## Environment
+## 2. Environment
 
 Run the walkthrough inside the **ELISA AeroWG devcontainer**:
 
@@ -60,19 +67,25 @@ export ARCH=arm64
 export CROSS_COMPILE=aarch64-linux-gnu-
 ```
 
-## Get the kernel sources
+> **Environment & Emulation Notes:**
+> - **Toolchain variables:** Verify `export ARCH=arm64` and `export CROSS_COMPILE=aarch64-linux-gnu-` are set before invoking `make` or `./scripts/config`.
+> - **QEMU exit command:** Press `Ctrl-a` then `x` to exit a running QEMU console.
+> - **QEMU memory sizing:** While `tinyconfig` boots with default RAM (~128 MB), monolithic `defconfig` and all whole-kernel GCOV profiled images **require `-m 512M` or `-m 1024M`** to prevent early boot out-of-memory panics.
+> - **Clean tree discipline:** Run `make clean` or `make mrproper` when switching between baseline, KCOV, and GCOV configurations so stale object files do not distort SLOC or image size measurements.
 
-Shallow clone the target longterm/LTS branch (or release tag noted in the [Experiment Artifacts & Provenance Anchor](#1-experiment-artifacts--provenance-anchor) below) from kernel.org:
+## 3. Get the kernel sources
+
+Shallow clone the target longterm/LTS branch (or release tag noted in the [Experiment Artifacts & Provenance Anchor](#71-experiment-artifacts--provenance-anchor) below) from kernel.org:
 
 ```sh
-# Shallow clone the target LTS branch (e.g. linux-6.18.y)
-git clone --depth 1 --branch linux-6.18.y \
+# Shallow clone the target kernel release (e.g. v7.3-rc5)
+git clone --depth 1 --branch v7.3-rc5 \
     https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git \
     linux
 cd linux
 ```
 
-## Change: Kernel options & configuration
+## 4. Change: Kernel options & configuration
 
 The practice workload uses the simplest possible launch model: the kernel
 launches a static binary directly as PID 1 from an initramfs, with no service
@@ -103,13 +116,13 @@ Approach:
   `./scripts/config`, run `make olddefconfig`, clean, and rebuild. Inspect
   changes against the saved configuration using `scripts/diffconfig`.
 
-## Build & Test: Workload execution & probing
+## 5. Build & Test: Workload execution & probing
 
 For this worked example, we assume the **bottom-up (`tinyconfig`)** approach is
 being followed to demonstrate incremental subsystem addition and evaluation. Test
 and evaluate the resulting builds using QEMU emulation and feature probing:
 
-### 1. PID 1 Static Workload Boot
+### 5.1 PID 1 Static Workload Boot
 
 Save the minimal PID 1 application source (from the kernel guide's [A minimal PID 1 workload](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#a-minimal-pid-1-workload)) as `ainit.c`. Compile it statically and pack it into a gzip-compressed cpio archive:
 
@@ -153,7 +166,7 @@ _Pass criterion:_ The kernel unpacks the initramfs, executes `/init` as PID 1,
 prints `hello world`, and idles in `pause()` without triggering an
 `Attempted to kill init!` panic. Close QEMU with `Ctrl-a x`.
 
-### 2. Example Feature Probing (`ainit-net.c`)
+### 5.2 Example Feature Probing (`ainit-net.c`)
 
 This shows how you could toggle a Kernel feature and have userspace code handle it being enabled/disabled.
 
@@ -180,25 +193,124 @@ hello world
 NET-PROBE: IPv4/UDP socket available
 ```
 
-<!--
-Combined Probing & Coverage (`ainit-net-kcov.c`):
+### 5.3 Combined Feature Probing & Coverage Collector (`ainit-net-kcov.c`)
+
 Combining feature probing with KCOV tracing captures in-kernel execution reachability
-for enabled features (e.g. bounding `socket(AF_INET, SOCK_DGRAM, 0)` between KCOV_ENABLE
-and KCOV_DISABLE). On the `tinyconfig + NET + INET` kernel, this traces through VFS file/inode
-allocation, socket infrastructure, and the IPv4/UDP network stack (see observation tables below).
--->
+for enabled features by bounding target calls (e.g. `socket(AF_INET, SOCK_DGRAM, 0)`)
+between `KCOV_ENABLE` and `KCOV_DISABLE`. Save this source as `ainit-net-kcov.c`:
 
-## Measure & Record: Gather findings
+```c
+/* ainit-net-kcov.c */
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <sys/mount.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <unistd.h>
 
-### Metrics
+#define KCOV_INIT_TRACE _IOR('c', 1, unsigned long)
+#define KCOV_ENABLE     _IO('c', 100)
+#define KCOV_DISABLE    _IO('c', 101)
+#define KCOV_TRACE_PC   0
+#define COVER_SIZE      (64 * 1024)
+
+int main(void)
+{
+    printf("hello world\n");
+    if (mount("debugfs", "/sys/kernel/debug", "debugfs", 0, NULL) != 0) {
+        perror("mount debugfs");
+        return 1;
+    }
+    int fd = open("/sys/kernel/debug/kcov", O_RDWR);
+    if (fd < 0) {
+        perror("open /sys/kernel/debug/kcov");
+        return 1;
+    }
+    if (ioctl(fd, KCOV_INIT_TRACE, COVER_SIZE) != 0) {
+        perror("ioctl KCOV_INIT_TRACE");
+        close(fd);
+        return 1;
+    }
+    unsigned long *cover = (unsigned long *)mmap(NULL,
+        COVER_SIZE * sizeof(unsigned long),
+        PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    if (cover == MAP_FAILED) {
+        perror("mmap");
+        close(fd);
+        return 1;
+    }
+    if (ioctl(fd, KCOV_ENABLE, KCOV_TRACE_PC) != 0) {
+        perror("ioctl KCOV_ENABLE");
+        munmap(cover, COVER_SIZE * sizeof(unsigned long));
+        close(fd);
+        return 1;
+    }
+
+    __atomic_store_n(&cover[0], 0, __ATOMIC_RELAXED);
+
+    /* Target syscall: socket probe */
+    int s = socket(AF_INET, SOCK_DGRAM, 0);
+
+    if (ioctl(fd, KCOV_DISABLE, 0) != 0) {
+        perror("ioctl KCOV_DISABLE");
+    }
+
+    if (s >= 0) {
+        printf("NET-PROBE: IPv4/UDP socket available\n");
+        close(s);
+    } else {
+        printf("NET-PROBE: failed: errno=%d (%s)\n", errno, strerror(errno));
+    }
+
+    unsigned long n = __atomic_load_n(&cover[0], __ATOMIC_RELAXED);
+    printf("KCOV captured %lu PCs:\n", n);
+    for (unsigned long i = 0; i < n; i++) {
+        printf("0x%lx\n", cover[i + 1]);
+    }
+
+    munmap(cover, COVER_SIZE * sizeof(unsigned long));
+    close(fd);
+
+    for (;;)
+        pause();
+    return 0;
+}
+```
+
+Compile and package for QEMU:
+
+```sh
+aarch64-linux-gnu-gcc -static -O2 -o ainit-net-kcov ainit-net-kcov.c
+mkdir -p rootfs-net-kcov/sys/kernel/debug
+cp ainit-net-kcov rootfs-net-kcov/init && chmod 0755 rootfs-net-kcov/init
+( cd rootfs-net-kcov && find . | cpio -o -H newc ) | gzip > initramfs-net-kcov.cpio.gz
+```
+
+## 6. Measure & Record: Gather findings
+
+### 6.1 Metrics
 
 Follow the upstream guides for measuring kernel image sizes, source lines of
 code (SLOC), and user space footprints:
 
 - **SLOC Counting:** Follow the kernel guide's [Counting kernel SLOC](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#counting-kernel-sloc)
-  to generate DWARF line-table counts and compiled source counts:
+  to generate DWARF line-table counts and compiled source counts. The `dwarf`
+  count requires a `vmlinux` built with debug info; enable it and rebuild before
+  counting (this matches the debug-info policy used for the DWARF SLOC column in
+  [Section 7.2](#72-build--sizing-iteration-record-v73-rc5-arm64)):
 
   ```sh
+  # One-time: enable DWARF debug info, then rebuild before counting
+  ./scripts/config -d DEBUG_INFO_NONE \
+      -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+      -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT
+  make olddefconfig && make clean && make -j"$(nproc)" Image
+
   # DWARF-based line estimate from linked vmlinux
   CROSS_COMPILE=aarch64-linux-gnu- scripts/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
 
@@ -231,7 +343,7 @@ code (SLOC), and user space footprints:
   stat -c%s initramfs.cpio.gz
   ```
 
-### Runtime Coverage Collection (KCOV)
+### 6.2 Runtime Coverage Collection (KCOV)
 
 KCOV provides task-scoped runtime kernel call coverage specifically for the target
 system call bounded by the collection window (`read(-1, NULL, 0)` between `KCOV_ENABLE`
@@ -292,36 +404,54 @@ __arm64_sys_read
 .../fs/read_write.c:723
 ```
 
-#### Calculating Kernel Coverage Percentage
+#### 6.2.1 Calculating Kernel Coverage Percentage
 
 Follow the kernel guide's [Dumping kernel coverage (kcov)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#dumping-kernel-coverage-kcov)
 to calculate the proportion of the linked kernel codebase exercised by the target call:
 
 1. Extract unique `file:line` locations from `kcov-symbols.txt`:
    ```sh
-   grep -v '^[a-zA-Z_]' kcov-symbols.txt | sort -u > kcov-lines.txt
+   grep ':[0-9]' kcov-symbols.txt | sort -u > kcov-lines.txt
    wc -l kcov-lines.txt
    ```
-2. Compare the count of unique executed kernel source lines against the total linked DWARF SLOC (`sloc-dwarf.txt`):
+2. Compare the count of unique executed kernel source lines against the total linked DWARF SLOC (`sloc-dwarf.txt`) to calculate the single-syscall path reachability ratio:
    $$\text{Kernel Call Coverage (\%)} = \left(\frac{\text{Unique KCOV Executed Lines}}{\text{Total DWARF Linked SLOC}}\right) \times 100\%$$
 
-## Measure & Record: Observation tables
+> **Note on KCOV vs Whole-Kernel Coverage:** KCOV is task-scoped to the calling thread and measures only the lines executed during that specific system call window (e.g., 29 unique lines in `read()`). This percentage represents single-call reachability against the total binary, not whole-kernel structural code coverage (which is measured via GCOV across all processes, interrupts, and boot paths in [the Maximizing Kernel Coverage example](./MaxCoverageMultiSuite.md)).
+
+## 7. Measure & Record: Observation tables
+
+### Measurement Denominators & SLOC Accounting
+
+To ensure consistent comparison across tables, this guide distinguishes five distinct metrics:
+
+- **Base Linked DWARF SLOC (Uninstrumented):** Total unique source lines linked into `vmlinux` for the target configuration (`124,938` lines for `Step 0: tinyconfig baseline`, `197,490` for `Step 1: + Networking`, `1,959,778` for `Step 2: defconfig`).
+- **KCOV-Instrumented Linked DWARF SLOC:** Total linked lines with KCOV compiler trace callbacks (`133,136` lines for `tinyconfig + KCOV`).
+- **GCOV `.gcno` basic-block count:** Total basic-block executable lines registered in the GCC `.gcno` graphs across compiled units (~`143,167` for an unpruned `tinyconfig + GCOV` build). This is a *graph* metric and is **not** what `gcov` prints as "Lines executed … of N".
+- **GCOV `.gcov` executable source lines (the multi-suite coverage denominator):** Every source line `gcov` classifies as executed-or-`#####` across all `.gcda`-backed units, deduplicated by `(source, line)` and **including inlined header lines**: measured `201,125` for this `tinyconfig + GCOV` build. This is the denominator used in the [Maximizing Kernel Coverage example](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression--differential-table-tinyconfig) coverage table. Always state which of the two GCOV metrics a percentage uses — they are not interchangeable.
+- **Historical Reference Notes (LTS v6.18):** Earlier reference configurations documented in [Kernel Config Analysis](KernelConfigAnalysis.md) used older toolchain defaults and Kconfig sets (e.g., `171,739` DWARF SLOC for 6.18 tinyconfig baseline).
 
 Log the findings across iterations in the following observation tables. In some cases the information is current state and others a trending log of test observations.
 
-### 1. Experiment Artifacts & Provenance Anchor
+### 7.1 Experiment Artifacts & Provenance Anchor
 
 Anchoring the baseline experiment parameters ensures reviewable and reproducible metrics:
 
 | Parameter                | Recorded Value / Anchor                                                                                                                     |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Repository Source**    | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git`                                                                   |
-| **Release Tag / Commit** | `v7.3-rc5` / commit `55e3331ed141`                                                                                                          |
+| **Release Tag / Commit** | `v7.3-rc5`\* / tree HEAD commit `398a7781b2dd`                                                                                               |
 | **Target Architecture**  | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                                                  |
 | **Compiler & Linker**    | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` _(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)_               |
 | **Emulator Environment** | QEMU `qemu-system-aarch64` v8.2.2 (`-machine virt -cpu cortex-a57`) _(ELISA AeroWG Devcontainer, branch `pr-257` / `demos/env/Dockerfile`)_ |
 
-### 2. Build & Sizing Iteration Record (v7.3-rc5, arm64)
+\* _Note on release tag: the `v7.3-rc5` tag commit is `72d3fcf802c4` ("Linux
+7.3-rc5"); the worked example in this workspace builds from tree HEAD
+`398a7781b2dd`, which adds the minimization documentation on top of that tag.
+When replicating from upstream kernel.org, substitute your target release tag or
+longterm branch (e.g., `linux-6.18.y`)._
+
+### 7.2 Build & Sizing Iteration Record (v7.3-rc5, arm64)
 
 | Configuration Step          | Adjustment / Kconfig Delta                       | DWARF SLOC | Compiled Source SLOC    | Raw Image                 | Compressed Image (`.gz`) | Boot Status |
 | --------------------------- | ------------------------------------------------ | ---------- | ----------------------- | ------------------------- | ------------------------ | ----------- |
@@ -329,20 +459,29 @@ Anchoring the baseline experiment parameters ensures reviewable and reproducible
 | `1. + Networking`           | `+NET`, `+INET`                                  | 197,490    | 527,040 (784 files)     | 4,495,368 B (~4.3 MB)     | 1,810,185 B (~1.7 MB)    | Pass        |
 | `2. defconfig (monolithic)` | `defconfig`, `-MODULES`                          | 1,959,778  | 5,721,697 (9,157 files) | 101,362,176 B (~96.67 MB) | 31,000,849 B (~29.56 MB) | Pass        |
 
-### 3. User Space Footprint (Static vs Deployed)
+### 7.3 User Space Footprint (Static vs Deployed)
 
 | User Space Component            | Purpose / Description                  | Source SLOC | Static ELF (unstripped) | Stripped Binary     | `initramfs-*.cpio.gz` Archive |
 | ------------------------------- | -------------------------------------- | ----------- | ----------------------- | ------------------- | ----------------------------- |
 | `ainit` (glibc static)          | Minimal PID 1 hello world              | 10 lines    | 634,000 B (~619 KB)     | 532,408 B (~520 KB) | 279,570 B (~273 KB)           |
 | `ainit-net` (glibc static)      | Socket feature probe                   | 23 lines    | 634,984 B (~620 KB)     | 532,408 B (~520 KB) | 280,384 B (~274 KB)           |
-| `ainit-kcov` (glibc static)     | KCOV syscall coverage collector        | 69 lines    | 704,296 B (~688 KB)     | 597,944 B (~584 KB) | 294,778 B (~288 KB)           |
-| `ainit-net-kcov` (glibc static) | Combined socket probe + KCOV collector | 73 lines    | 704,768 B (~688 KB)     | 597,944 B (~584 KB) | 295,720 B (~289 KB)           |
+| `ainit-kcov` (glibc static)     | KCOV syscall coverage collector        | 68 lines    | 704,296 B (~688 KB)     | 597,944 B (~584 KB) | 294,778 B (~288 KB)           |
+| `ainit-net-kcov` (glibc static) | Combined socket probe + KCOV collector | 69 lines    | 704,592 B (~688 KB)     | 597,944 B (~584 KB) | 295,329 B (~288 KB)           |
 
-### 4. Runtime Coverage (KCOV) Symbolized Reachability
+### 7.4 Runtime Coverage (KCOV) Symbolized Reachability
 
-Symbolized reachability evaluating specific test scenarios by pairing a kernel configuration step (from [Section 2](#2-build--sizing-iteration-record-v73-rc5-arm64)) with a target workload application (from [Section 3](#3-user-space-footprint-static-vs-deployed)):
+Symbolized reachability evaluating specific test scenarios by pairing a kernel configuration step (from [Section 7.2](#72-build--sizing-iteration-record-v73-rc5-arm64)) with a target workload application (from [Section 7.3](#73-user-space-footprint-static-vs-deployed)):
 
-#### 4.0 Scenario 0: Minimal PID 1 (`Step 0: tinyconfig baseline` + `ainit-kcov`)
+> **Note on the combined collector:** Scenarios 7.4.1 and 7.4.2 use
+> `ainit-net-kcov.c`, whose full source is provided in
+> [Section 5.3](#53-combined-feature-probing--coverage-collector-ainit-net-kcovc).
+> Because that collector reads the KCOV buffer after `KCOV_DISABLE`, the captured
+> window also includes the `KCOV_DISABLE` `ioctl` path (e.g. `fs/ioctl.c`), so the
+> exact PC/line totals are slightly higher than a `socket()`-only window would
+> yield. The `read()` baseline in Scenario 7.4.0 below uses the upstream
+> `ainit-kcov.c` collector.
+
+#### 7.4.0 Scenario 0: Minimal PID 1 (`Step 0: tinyconfig baseline` + `ainit-kcov`)
 
 Target syscall `read(-1, NULL, 0)` on the instrumented `tinyconfig baseline` (133,136 instrumented linked DWARF SLOC / 124,938 uninstrumented base):
 
@@ -353,7 +492,7 @@ Target syscall `read(-1, NULL, 0)` on the instrumented `tinyconfig baseline` (13
 | _Supporting headers_            | `current.h`, `file.h`, `syscall.h`                              | —                                          | 20 lines     | ~0.0150%                  | Inlined current task & file descriptor helpers |
 | **Total Syscall Window**        | _29 unique source lines across 21 PCs_                          | —                                          | **29 lines** | **~0.0218%**              | **In-kernel read() baseline reachability**     |
 
-#### 4.1 Scenario 1: Network Feature Probe (`Step 1: + Networking` + `ainit-net-kcov`)
+#### 7.4.1 Scenario 1: Network Feature Probe (`Step 1: + Networking` + `ainit-net-kcov`)
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyconfig + NET + INET` build (197,490 total linked DWARF SLOC):
 
@@ -367,9 +506,9 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyc
 | `arch/arm64/kernel/syscall.c`    | `el0_svc_common`, `do_el0_svc`, `invoke_syscall`                         | `0xffff80008001e81c`, `0xffff80008001e85c` | 12 lines      | ~0.0061%                  | ARM64 syscall entry, dispatch & return paths    |
 | `net/ipv4/udp.c`                 | `udp_init_sock`                                                          | `0xffff8000803135dc`, `0xffff800080313620` | 5 lines       | ~0.0025%                  | UDP protocol socket initialization              |
 | _Supporting headers & libraries_ | Per-CPU counters, atomic bitops, timer init                              | —                                          | 100 lines     | ~0.0506%                  | Inline helpers & reference counting             |
-| **Total Syscall Window**         | _288 unique source lines across 250 PCs_                                 | —                                          | **288 lines** | **~0.1458%**              | **In-kernel socket() reachability**             |
+| **Total Syscall Window**         | _307 unique source lines across 268 PCs_                                 | —                                          | **307 lines** | **~0.1555%**              | **In-kernel socket() reachability (incl. `KCOV_DISABLE` ioctl window)** |
 
-#### 4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 2: defconfig (monolithic)` + `ainit-net-kcov`)
+#### 7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 2: defconfig (monolithic)` + `ainit-net-kcov`)
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the monolithic `defconfig` build (1,959,778 linked DWARF SLOC):
 
@@ -384,7 +523,7 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the monolithic `defconf
 | _Supporting headers & libraries_                   | Per-CPU counters, atomic bitops, refcounts                               | —                                          | 114 lines     | ~0.0058%                  | Inline helpers & utility routines              |
 | **Total Syscall Window**                           | _344 unique source lines across 255 PCs_                                 | —                                          | **344 lines** | **~0.0176%**              | **In-kernel socket() monolithic reachability** |
 
-## References
+## Appendix 1. References
 
 - [Kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
   — base build, iterate, evaluate, and measurement method.
@@ -392,3 +531,11 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the monolithic `defconf
   — syscall and kernel-path discovery, including minimal user space.
 - [Software Minimization](../SoftwareMinimization.md) — devcontainer setup,
   aerospace framing, and observations.
+- [Kernel Testing Guide](https://www.kernel.org/doc/html/latest/dev-tools/testing-overview.html)
+  (`Documentation/dev-tools/testing-overview.rst`) — comparison of unit tests, functional suites, dynamic sanitizers, and coverage tools.
+- [Linux Kernel GCOV Support](https://www.kernel.org/doc/html/latest/dev-tools/gcov.html)
+  (`Documentation/dev-tools/gcov.rst`) — GCC/Clang basic-block kernel profiling and debugfs extraction.
+- [Linux Kernel KCOV Support](https://www.kernel.org/doc/html/latest/dev-tools/kcov.html)
+  (`Documentation/dev-tools/kcov.rst`) — task-scoped syscall tracing interface.
+- [Kernel Self-Testing Framework (kselftest)](https://www.kernel.org/doc/html/latest/dev-tools/kselftest.html)
+  (`Documentation/dev-tools/kselftest.rst`) & [KUnit](https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html) — in-kernel unit testing.
