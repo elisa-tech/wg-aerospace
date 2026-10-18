@@ -203,6 +203,26 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    wget https://dl-cdn.alpinelinux.org/alpine/v3.20/community/aarch64/stress-ng-0.17.08-r0.apk
    tar -xzf stress-ng-0.17.08-r0.apk -C rootfs-alpine          # -> /usr/bin/stress-ng
 
+   # stress-ng is dynamically linked and needs shared libraries that the bare
+   # Alpine minirootfs does NOT ship. `tar -xzf` does not resolve .apk
+   # dependencies, so these must be staged explicitly or stress-ng aborts at
+   # load time with "Error relocating /usr/bin/stress-ng: <symbol> not found"
+   # (its NEEDED libs are libbsd.so.0, libJudy.so.1, libsctp.so.1, libmd.so.0).
+   # Without them Stage 2 contributes almost no coverage even though the harness
+   # still prints "complete". Pinned versions for v3.20/aarch64:
+   for dep in \
+       main/aarch64/libbsd-0.12.2-r0.apk \
+       main/aarch64/libmd-1.1.0-r0.apk \
+       main/aarch64/liblksctp-1.0.19-r5.apk \
+       community/aarch64/judy-1.0.5-r1.apk ; do
+       wget "https://dl-cdn.alpinelinux.org/alpine/v3.20/$dep"
+       tar -xzf "$(basename "$dep")" -C rootfs-alpine
+   done
+   # Verify every NEEDED lib now resolves before booting:
+   #   aarch64-linux-gnu-readelf -d rootfs-alpine/usr/bin/stress-ng | grep NEEDED
+   #   # then confirm each libbsd.so.0 / libJudy.so.1 / libsctp.so.1 / libmd.so.0
+   #   # exists under rootfs-alpine/usr/lib or rootfs-alpine/lib
+
    # (No iproute2 here: this NET-less baseline has no Netlink/tc stage. If you add
    #  the optional networking extension from Section 3, also stage both
    #  iproute2-minimal (-> /sbin/ip) and iproute2-tc (-> /sbin/tc); `tc` is NOT in
@@ -251,6 +271,14 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    ```
 
    > **Tool acquisition notes (verified in the ELISA AeroWG devcontainer):**
+   > - **stress-ng needs its shared-library dependencies staged.** The Alpine
+   >   `stress-ng` binary is dynamically linked against `libbsd.so.0`,
+   >   `libJudy.so.1`, `libsctp.so.1`, and `libmd.so.0`, none of which ship in the
+   >   bare minirootfs. Extracting only the `stress-ng` `.apk` leaves it unable to
+   >   load — every stressor aborts with `Error relocating /usr/bin/stress-ng:
+   >   <symbol> not found` and Stage 2 adds almost nothing, yet the harness still
+   >   reaches `=== All test stages complete ===`. Stage the four dependency
+   >   `.apk`s shown above and verify with `readelf -d` before booting.
    > - **(Optional networking extension only)** `tc` is **not** in
    >   `iproute2-minimal`; it ships in the separate `iproute2-tc` subpackage.
    >   Staging only `iproute2-minimal` leaves the optional `tc qdisc` commands
@@ -326,9 +354,13 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
        puts("=== Stage 1: Traversing /proc and /sys attributes ===");
        /* Read each pseudo-file's first block. Use `timeout -s KILL` so files
           that block and ignore SIGTERM cannot stall the stage, and skip
-          per-process (/proc/<pid>) trees and other known-blocking nodes. Under
-          a NET-enabled GCOV kernel a plain `timeout 2` here can hang the stage
-          indefinitely on a blocking read. */
+          per-process (/proc/<pid>) trees and other known-blocking nodes. This
+          traversal can still stall even on the NET-less baseline: a `dd`
+          blocked in an uninterruptible (D-state) kernel read cannot be killed
+          by any signal, so `timeout -s KILL` does not always bound it. If Stage
+          1 hangs, add the offending node to the skip list below (observed on
+          some runs) and/or boot with a watchdog timeout around the whole
+          harness. A plain `timeout 2` is even more prone to this. */
        system("find /proc /sys /sys/kernel/debug -type f 2>/dev/null | while read -r f; do "
               "  case \"$f\" in "
               "    */trace_pipe*|*/kcore|*/mem|*/kmsg|*/sysrq-trigger|*/null|*/zero|/proc/[0-9]*|*/clear_refs) ;; "
@@ -500,6 +532,20 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
 > figure in
 > [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting);
 > they are different metrics — always state which you use.)
+>
+> **Reproducibility caveat (verified).** These absolute executed-line counts and
+> the `201,125` denominator are **environment-sensitive** and will not reproduce
+> exactly on a different host/toolchain/payload — an independent re-run on the
+> same commit measured the same *shape* (Stage 0 + Stage 1 dominate; stress-ng
+> adds tens; the Syzkaller reproducer adds hundreds; subsystem ordering
+> `kernel > lib > mm > fs > drivers`) but whole-image absolutes roughly 15–20%
+> lower, because the set of `.gcda`-backed units that register at runtime varies
+> with timing on the single core. Treat the **progression shape and the stage
+> deltas' relative magnitudes** as the reproducible result and the exact line
+> counts as run-specific; regenerate them for your own run rather than citing
+> these as acceptance targets. By contrast, the **build**-side figures (DWARF
+> SLOC and raw `Image` bytes in Sections 8 and 9.2) are deterministic and *do*
+> reproduce exactly.
 >
 > **What the stages actually move.** The single-core boot self-tests (Stage 0) and
 > the `/proc`/`/sys` traversal (Stage 1, **+7,684**) dominate. stress-ng adds **+89**

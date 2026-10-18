@@ -55,7 +55,7 @@ Every scenario in this repository follows this exact structure:
 
 ## Example Scenarios
 
-We provide two concrete scenarios executing this discipline:
+We provide three concrete scenarios executing this discipline:
 
 - **[Hello Init (Practice)](./minimal-linux/HelloInit.md)** — Foundational
   practice baseline booting a static binary as PID 1 under QEMU `arm64`.

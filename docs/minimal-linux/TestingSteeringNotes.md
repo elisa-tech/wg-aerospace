@@ -24,6 +24,32 @@ reproducible.
 - **Monitor disk across builds.** Each clean kernel build adds a few GB; the
   `defconfig` and GCOV builds are the largest. Run `make clean` between
   configurations and `df -h .` after each build.
+- **Isolate each test run in its own build tree — never share one kernel tree
+  between concurrent runs.** The kernel build is stateful: `.config`, the
+  generated headers under `include/generated/` (for example `autoconf.h`), and
+  the `.cmd`/`.o` dependency files are all rewritten in place by `make
+  olddefconfig` and `make clean`. If two runs (two reviewers, two agents, or a
+  foreground run plus a background one) build in the same directory at the same
+  time, they corrupt each other's generated state and produce *phantom* compile
+  errors that are not real source defects — the classic signatures are
+  `struct task_struct has no member named 'io_uring'`, `unknown type name
+  'proc_write_t'`, `undefined symbol 'jiffies_64'`, or a vanished `.config`.
+  These are collision artifacts, not findings; do not record them as failures.
+  Give each run a dedicated, non-conflicting working directory, e.g. export a
+  pristine snapshot of the pinned commit and build there:
+
+  ```sh
+  # one independent tree per run; no shared .git, no shared build state
+  mkdir -p ~/build/minrun-$$/linux
+  git -C /path/to/linux archive --format=tar HEAD \
+      | tar -x -C ~/build/minrun-$$/linux
+  cd ~/build/minrun-$$/linux   # run every make/scripts/config here
+  ```
+
+  A `git worktree` is **not** sufficient isolation on its own: worktrees still
+  share one checkout per working directory, and a sibling run's `git clean
+  -fdx` can wipe your build. Keep each run's rootfs images and `*.json`/`*.log`
+  artifacts under that same per-run directory as well.
 - Record cores and wall-clock time for every run, per
   [Section 10](./MaxCoverageMultiSuite.md#10-measurement-environment-core-count--timing-record).
 
@@ -39,10 +65,23 @@ All "Section N" references in this table are sections of [Hello Init (Practice)]
 | 7.3 user space          | Section 6.1 user-space commands                              | `ainit` 10 SLOC / 634,000 B; `ainit-net` 23 SLOC; `ainit-kcov` 68 SLOC; `ainit-net-kcov` 69 SLOC / 704,592 B |
 | 7.4.0 `read()` KCOV     | Section 6.2 collector on the KCOV `tinyconfig`               | 29 unique lines across 21 PCs                                                                                |
 | 7.4.1 `socket()` KCOV   | Section 5.3 collector on the KCOV `+NET+INET` build          | ~307 lines / ~268 PCs (window includes the `KCOV_DISABLE` ioctl)                                             |
+| 7.4.2 `socket()` KCOV   | Section 5.3 collector on the KCOV `defconfig` build          | ~344 lines / ~255 PCs (adds defconfig-only LSM/namespace paths: `security_socket_create`, `ns_capable_common`) |
 
 > **Known-benign variance.** Compressed `Image.gz` sizes and `*.cpio.gz` archive
 > sizes differ by a few bytes between runs because `gzip` embeds a timestamp/OS
 > byte; compare the **raw** `Image` and the DWARF/compiled SLOC for exact matches.
+>
+> **Approximate rows are shape checks, not exact matches.** The `7.4.0 read()`
+> row (`21` PCs / `29` lines) and the per-step DWARF/compiled SLOC, file counts,
+> and raw `Image` bytes are **exact** and must reproduce exactly. The `socket()`
+> KCOV totals in `7.4.1`/`7.4.2` are marked `~` because `socket()` crosses
+> allocation, refcount, and (on `defconfig`) LSM/namespace paths whose exact
+> PC/line totals shift a few percent with toolchain and build details. Validate
+> them by **per-subsystem shape** — the named files and their approximate line
+> counts (`net/socket.c`, `net/core/sock.c`, `net/ipv4/af_inet.c`, `udp.c`, the
+> VFS `file*/dcache/inode` group, `arch/arm64/kernel/syscall.c`, and the
+> `fs/ioctl.c` `KCOV_DISABLE` window) — not by an exact total. A reproduced total
+> within roughly ±10% that keeps the same subsystem breakdown is a pass.
 
 ## 3. Validating the Maximizing-Kernel-Coverage example
 
@@ -53,6 +92,21 @@ Reproduce in order: [Section 3](./MaxCoverageMultiSuite.md#3-kernel-profiling-co
 [Section 4](./MaxCoverageMultiSuite.md#4-rootfs-assembly--sequential-multi-stage-execution-workflow) rootfs/boot →
 [Section 5](./MaxCoverageMultiSuite.md#5-host-side-checkpoint-extraction--differential-analysis) reconstruct →
 tables [Section 6](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression--differential-table-tinyconfig)/[Section 7](./MaxCoverageMultiSuite.md#7-identifying-uncovered-built-areas--pruning-candidates)/[Section 8](./MaxCoverageMultiSuite.md#8-iterative-kconfig-pruning--post-minimization-coverage-impact).
+
+> **This example is part of a full validation pass — do not skip it.** A review
+> that only re-runs [Hello Init](./HelloInit.md) has **not** validated the
+> walkthrough set. The Maximizing Kernel Coverage example is a separate, heavier
+> run and must be exercised too, in its **own isolated build tree**
+> ([Section 1](#1-how-to-use-these-notes)) so it never shares kernel state with a
+> concurrent Hello Init run. Before starting it, confirm the extra prerequisites
+> that Hello Init does not need: a **Go toolchain** (`go`) for real
+> `syz-prog2c`, host **autotools** (`aclocal`/`autoconf`/`automake`/`m4`/
+> `pkg-config`) if you re-add LTP (see [Section 6](#6-devcontainer-provisioning-for-ltp--syzkaller)),
+> network access to the Alpine CDN and GitHub for the rootfs and Syzkaller
+> sources, and `wget`/`base64`/`tar`/`aarch64-linux-gnu-gcov`. Keep the guest
+> **single-core at `-m 1024M`** for the NET-less baseline (the full-LTP variant
+> needs ~12 GiB — see Section 2); allow a few GB of disk for the GCOV build, the
+> largest in this material.
 
 Watch for these verified failure modes (each is called out at its step):
 
@@ -113,6 +167,11 @@ testing it, check structure and links rather than metrics:
 - **One variable at a time:** when a number moves, change only the config group or
   payload under test and keep `make clean` between builds so stale objects do not
   distort SLOC.
+- **One build tree per run:** run each configuration in its own dedicated
+  directory (see [Section 1](#1-how-to-use-these-notes)). Parallel runs that
+  share a tree race on `.config` and `include/generated/`, yielding phantom
+  build errors rather than real results. Isolation is what makes two runs (or
+  two reviewers) reproducible against each other instead of interfering.
 - **Single-core by default:** keep the guest at one vCPU (no `-smp`) for
   deterministic stage ordering; only add cores deliberately and re-record timing.
 - **Capture evidence:** save the serial log, the `linked.json`/`compiled.json`
