@@ -76,11 +76,11 @@ Watch for these verified failure modes (each is called out at its step):
 
 > **Environment sensitivity.** The Maximizing Kernel Coverage example's magnitudes
 > are reproducible *in method and shape*, but exact line counts depend on the
-> single-core guest, the toolchain, and the LTP/Syzkaller payloads. Its Section 4
-> steps build real LTP (a bounded subset) and a real `syz-prog2c` reproducer; the
-> full LTP suite, a richer corpus, or a live `syz-fuzzer` (its Section 2) moves the
-> edge-case numbers. Always regenerate the tables for your own payload set rather
-> than citing these values as acceptance targets.
+> single-core guest, the toolchain, and the payloads. Its active Section 4 stages are
+> **stress-ng + a real `syz-prog2c` reproducer** (LTP was measured as subsumed and
+> excluded — see its Section 2). A live `syz-fuzzer`, a richer corpus, or re-adding
+> LTP on a larger config moves the edge-case numbers. Always regenerate the tables
+> for your own payload set rather than citing these values as acceptance targets.
 
 ## 4. Validating the parent document (`SoftwareMinimization.md`)
 
@@ -121,9 +121,10 @@ testing it, check structure and links rather than metrics:
 
 ## 6. Devcontainer provisioning for LTP + Syzkaller
 
-The Maximizing Kernel Coverage example builds **real** LTP and **real** Syzkaller tooling, so the devcontainer
-image must carry their build prerequisites. These are added to
-`demos/env/Dockerfile`:
+The Maximizing Kernel Coverage example builds **real Syzkaller** tooling for its
+active harness, and **real LTP** was built to run the subsumption experiment (and
+remains the path for re-adding LTP on larger configs). The devcontainer image must
+carry both tools' build prerequisites. These are added to `demos/env/Dockerfile`:
 
 - **LTP** (`make autotools && ./configure && make`) needs host autotools:
   `autoconf`, `automake`, `autotools-dev`, `m4` (and `pkg-config`). Without them,
