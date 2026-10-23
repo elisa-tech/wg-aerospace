@@ -43,6 +43,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
   - Ivan did a walk through
     - Pre-built files for sequence with Dockerfile and then source file
     - kcov instruction flow is confusing
+    - instructions refer to sloc script that isn't in the ELISA PR as it was moved to Linux PR
     - TBD Weber to work with Ivan to add example files from call to a comment on the PR
   - Carryover ACTION: Decide if we look at coverage at the instruction or source code level
   - Carryover ACTION: TESTING - review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
