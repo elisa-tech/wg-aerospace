@@ -22,6 +22,49 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - None
 
+## 20261023
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Yassine Cherni - GoMyRobot
+- Ivan Perez - KBR @ NASA
+- Leonidas Kosmidis - BSC
+- Shefali Sharma
+- Martin Halle - Hamburg University of Technology
+
+**Discussion topics**
+
+- Leonidas presented on ["Faithful Emulation of Space Processors SoCs using Open Source Technologies"](https://onedrive.live.com/?id=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026%2FKosmidis%5FSpace%5FProcessors%5FQEMU%5FELISA%5FOct%5F2026%2Epdf&listurl=%2Fpersonal%2F01b8647ed2301e95%2FDocuments&ithint=file%2Cpdf&e=taUegA&migratedtospo=true&parent=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy8wMWI4NjQ3ZWQyMzAxZTk1L0lRRG1wemF2NkFpdlNvenZoR0FsbnpDcUFjYTlTYmlwaFN0cWx6VTE1VTlTdFZFP2U9dGFVZWdB&ga=1) -- [**Recording**](https://zoom.us/rec/share/042njoaTE_1LK4mfYFemextrY_ApO1v0V4axot-oFvYBRExAWa-X5NCPg6QsMwdN.jAftrhvUmBguxCZt)
+
+- Kernel minimization effort
+  - [Feedback on Kernel doc update](https://github.com/matthew-l-weber/linux/pull/1#issuecomment-6336553402)
+  - Ivan did a walk through
+    - Pre-built files for sequence with Dockerfile and then source file
+    - kcov instruction flow is confusing
+    - TBD Weber to work with Ivan to add example files from call to a comment on the PR
+  - Carryover ACTION: Decide if we look at coverage at the instruction or source code level
+  - Carryover ACTION: TESTING - review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  - PR: [Starting point for kernel minimization effort - #257](https://github.com/elisa-tech/wg-aerospace/pull/257)
+
+**Not discussed but FYI**
+
+- QEMU instruction introspection for coverage
+  - Carryover ACTION: Rob - Look for the video link on QEMU instruction introspection
+
+- SGL SDK -> cFS build instructions
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+  - [#257 Starting point for kernel minimization effort](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - [#237 Update cFS demo to use Ogma 1.15.0](https://github.com/elisa-tech/wg-aerospace/pull/237)
+  - [#231 ARINC 615A Tool Suite](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - [#177 Mixed crit workshop](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+- Revisit parking lot items
+  - ACTION: Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+---
+
 ## 20261016
 
 **Attendance**
