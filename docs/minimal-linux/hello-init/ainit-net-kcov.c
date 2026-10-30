@@ -21,9 +21,18 @@
 int main(void)
 {
     printf("hello world\n");
-    mkdir("/sys", 0755);
-    mkdir("/sys/kernel", 0755);
-    mkdir("/sys/kernel/debug", 0755);
+    if (mkdir("/sys", 0755) != 0 && errno != EEXIST) {
+        perror("mkdir /sys");
+        return 1;
+    }
+    if (mkdir("/sys/kernel", 0755) != 0 && errno != EEXIST) {
+        perror("mkdir /sys/kernel");
+        return 1;
+    }
+    if (mkdir("/sys/kernel/debug", 0755) != 0 && errno != EEXIST) {
+        perror("mkdir /sys/kernel/debug");
+        return 1;
+    }
     if (mount("debugfs", "/sys/kernel/debug", "debugfs", 0, NULL) != 0) {
         perror("mount debugfs");
         return 1;

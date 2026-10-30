@@ -34,9 +34,12 @@ int main(void)
     long result;
     unsigned long *cover, n, i;
 
-    mkdir("/sys", 0755);
-    mkdir("/sys/kernel", 0755);
-    mkdir("/sys/kernel/debug", 0755);
+    if (mkdir("/sys", 0755) && errno != EEXIST)
+        perror("mkdir /sys"), idle(1);
+    if (mkdir("/sys/kernel", 0755) && errno != EEXIST)
+        perror("mkdir /sys/kernel"), idle(1);
+    if (mkdir("/sys/kernel/debug", 0755) && errno != EEXIST)
+        perror("mkdir /sys/kernel/debug"), idle(1);
     if (mount("none", "/sys/kernel/debug", "debugfs", 0, NULL))
         perror("mount debugfs"), idle(1);
 
