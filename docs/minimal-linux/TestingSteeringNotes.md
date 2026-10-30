@@ -1,6 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
+<!-- markdownlint-disable MD013 -->
 
 # Steering Notes for Testing the Minimal-Linux Walkthroughs
 
@@ -113,15 +114,15 @@ olddefconfig` and `make clean`. If two runs (two reviewers, two agents, or a
 
 All "Section N" references in this table are sections of [Hello Init (Practice)](./HelloInit.md).
 
-| Claim to validate       | How to reproduce                                             | Pass criterion in the recorded environment                                                                              |
-| ----------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| 7.2 Step 0 `tinyconfig` | Section 3 (`Dockerfile.step0-tinyconfig`)                    | DWARF `124,938`, compiled `352,672` (600 files), raw `Image` `3,223,560` B; boots to `hello world`                      |
-| 7.2 Step 1 `+NET+INET`  | Section 4 (`Dockerfile.step1-net`)                           | DWARF `197,490`, compiled `527,040` (784 files); `NET-PROBE: IPv4/UDP socket available`                                 |
-| 7.2 Step 2 `+KCOV`      | Section 5 (`Dockerfile.step2-kcov`)                          | DWARF `209,321`, compiled `527,040` (784 files); KCOV instrumented binary                                               |
-| 7.2 Step 3 `defconfig`  | Section 6 (`Dockerfile.step3-defconfig`)                     | DWARF `2,070,838`, compiled `5,722,530` (9,157 files), raw `Image` `110,991,872` B; boots with `-m 512M`               |
-| 7.3 user space          | Section 3.3 / 4.3 / 5.3 / 6.3 user space sizing              | Step 0: `ainit` 10 SLOC / 634,000 B; Step 1: `ainit-net` 22 SLOC; Steps 2 & 3: `ainit-net-kcov` 73 SLOC / 704,704 B     |
-| 7.4.1 `socket()` KCOV   | Section 5 (`Dockerfile.step2-kcov` normalization)            | ~276 source lines; ~268 captured / 252 distinct PCs; instrumented DWARF 209,321                                         |
-| 7.4.2 `socket()` KCOV   | Section 6 (`Dockerfile.step3-defconfig` normalization)       | ~318 source lines; ~278 captured / 259 distinct PCs; instrumented DWARF 2,070,838; namespace and security paths present |
+| Claim to validate       | How to reproduce                                       | Pass criterion in the recorded environment                                                                              |
+| ----------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| 7.2 Step 0 `tinyconfig` | Section 3 (`Dockerfile.step0-tinyconfig`)              | DWARF `124,938`, compiled `352,672` (600 files), raw `Image` `3,223,560` B; boots to `hello world`                      |
+| 7.2 Step 1 `+NET+INET`  | Section 4 (`Dockerfile.step1-net`)                     | DWARF `197,490`, compiled `527,040` (784 files); `NET-PROBE: IPv4/UDP socket available`                                 |
+| 7.2 Step 2 `+KCOV`      | Section 5 (`Dockerfile.step2-kcov`)                    | DWARF `209,321`, compiled `527,040` (784 files); KCOV instrumented binary                                               |
+| 7.2 Step 3 `defconfig`  | Section 6 (`Dockerfile.step3-defconfig`)               | DWARF `2,070,838`, compiled `5,722,530` (9,157 files), raw `Image` `110,991,872` B; boots with `-m 512M`                |
+| 7.3 user space          | Section 3.3 / 4.3 / 5.3 / 6.3 user space sizing        | Step 0: `ainit` 10 SLOC / 634,000 B; Step 1: `ainit-net` 22 SLOC; Steps 2 & 3: `ainit-net-kcov` 73 SLOC / 704,704 B     |
+| 7.4.1 `socket()` KCOV   | Section 5 (`Dockerfile.step2-kcov` normalization)      | ~276 source lines; ~268 captured / 252 distinct PCs; instrumented DWARF 209,321                                         |
+| 7.4.2 `socket()` KCOV   | Section 6 (`Dockerfile.step3-defconfig` normalization) | ~318 source lines; ~278 captured / 259 distinct PCs; instrumented DWARF 2,070,838; namespace and security paths present |
 
 > **Known-benign variance.** Compressed `Image.gz` sizes and `*.cpio.gz` archive
 > sizes vary with timestamps and archive/build metadata. Compare the raw

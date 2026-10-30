@@ -1,6 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
+<!-- markdownlint-disable MD013 -->
 
 # Measuring Linux Kernel Complexity — Build-Time and Runtime Approaches
 
@@ -83,7 +84,7 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 ### 1. Coverage of what is actually used
 
 - Follow the [workload-tracing guide](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
-  and the kernel guide's [present-versus-observed discussion](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#separating-code-that-is-present-from-code-that-runs)
+  and the kernel guide's [present-versus-observed discussion](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring)
   for collection methods and their limits. For aerospace analysis, use the
   observations to focus requirements and reachability review. Unobserved code
   is not a dead-code metric and does not establish dead or deactivated status

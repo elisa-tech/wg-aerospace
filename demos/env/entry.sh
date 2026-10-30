@@ -18,9 +18,10 @@ if [[ -n "$HOST_UID" ]]; then
 		NON_ROOT_USER="mappedUser"
 		sudo groupadd -g "$HOST_GID" "$NON_ROOT_USER"
 		sudo useradd -m -u "$HOST_UID" -g "$HOST_GID" -s /bin/bash "$NON_ROOT_USER"
-		sudo cp -a /home/ubuntu/.bash* \
-			/home/ubuntu/.profile \
-			/home/$NON_ROOT_USER/
+		sudo cp -a /home/ubuntu/.bash* /home/$NON_ROOT_USER/ 2>/dev/null || true
+		if [[ -f /home/ubuntu/.profile ]]; then
+			sudo cp -a /home/ubuntu/.profile /home/$NON_ROOT_USER/
+		fi
 		sudo chown $NON_ROOT_USER:$NON_ROOT_USER /home/$NON_ROOT_USER/ -R
 		sudo sh -c 'echo "mappedUser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/mappedUser'
 		sudo chmod 0440 /etc/sudoers.d/mappedUser

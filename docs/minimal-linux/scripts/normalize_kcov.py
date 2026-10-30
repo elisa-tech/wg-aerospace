@@ -1,24 +1,32 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
+"""Normalize KCOV addr2line symbol output into unique source:line entries."""
 import os
 import re
 import sys
 
-symbols_file = sys.argv[1] if len(sys.argv) > 1 else "kcov-symbols.txt"
-output_file = sys.argv[2] if len(sys.argv) > 2 else "kcov-lines.txt"
 
-lines = set()
-with open(symbols_file, encoding="utf-8") as symbols:
-    for row in symbols:
-        match = re.fullmatch(
-            r"(.+):([0-9]+)(?: \(discriminator [0-9]+\))?", row.strip()
-        )
-        if match and match[1] != "??" and int(match[2]) > 0:
-            source = os.path.relpath(os.path.realpath(match[1]))
-            lines.add((source, int(match[2])))
+def main() -> None:
+    """Extract and normalize unique (file:line) coordinates."""
+    symbols_file = sys.argv[1] if len(sys.argv) > 1 else "kcov-symbols.txt"
+    output_file = sys.argv[2] if len(sys.argv) > 2 else "kcov-lines.txt"
 
-with open(output_file, "w", encoding="utf-8") as output:
-    for source, number in sorted(lines):
-        output.write(f"{source}:{number}\n")
+    lines: set[tuple[str, int]] = set()
+    with open(symbols_file, encoding="utf-8") as symbols:
+        for row in symbols:
+            match = re.fullmatch(
+                r"(.+):([0-9]+)(?: \(discriminator [0-9]+\))?", row.strip()
+            )
+            if match and match[1] != "??" and int(match[2]) > 0:
+                source = os.path.relpath(os.path.realpath(match[1]))
+                lines.add((source, int(match[2])))
 
-print(f"Normalized unique executed lines: {len(lines)}")
+    with open(output_file, "w", encoding="utf-8") as output:
+        for source, number in sorted(lines):
+            output.write(f"{source}:{number}\n")
+
+    print(f"Normalized unique executed lines: {len(lines)}")
+
+
+if __name__ == "__main__":
+    main()

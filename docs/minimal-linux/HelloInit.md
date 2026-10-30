@@ -1,6 +1,7 @@
 <!--
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
+<!-- markdownlint-disable MD013 -->
 
 # Hello Init (Practice)
 

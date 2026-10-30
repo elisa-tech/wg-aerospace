@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
+"""Compute differential coverage across sequential GCOV checkpoints."""
 import gzip
 import json
 import os
 from pathlib import Path
 
 
-def load_stage_lines(stage_dir):
-    executed = set()
-    executable = set()
+def load_stage_lines(
+    stage_dir: str | Path,
+) -> tuple[set[tuple[str, int]], set[tuple[str, int]]]:
+    """Load executed and executable lines from GCOV JSON archives."""
+    executed: set[tuple[str, int]] = set()
+    executable: set[tuple[str, int]] = set()
     reports = sorted(Path(stage_dir).rglob("*.gcov.json.gz"))
     if not reports:
         raise ValueError(f"no gcov inventories in {stage_dir}")
@@ -27,8 +31,9 @@ def load_stage_lines(stage_dir):
     return executed, executable
 
 
-if __name__ == "__main__":
-    previous = set()
+def main() -> None:
+    """Evaluate cumulative coverage and stage progression."""
+    previous: set[tuple[str, int]] = set()
     denominator = None
     inventory = None
     for stage in ("stage0_boot", "stage1_procsys",
@@ -52,3 +57,7 @@ if __name__ == "__main__":
         previous = executed
         denominator = executable
         inventory = units
+
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
 r1 = openat$dir(0xffffffffffffff9c, &(0x7f0000000100)='./file0\x00', 0x42, 0x1a4)
 write$binfmt_script(r1, &(0x7f0000000200)={'#! ', './file0'}, 0xb)
 lseek(r1, 0x0, 0x0)
