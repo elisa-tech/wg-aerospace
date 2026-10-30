@@ -41,6 +41,7 @@ execution sequence, verification checks, and baseline measurements.
       - [7.4.1 Scenario 1: Minimal Kernel Network Feature Probe](#741-scenario-1-minimal-kernel-network-feature-probe)
       - [7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe](#742-scenario-2-monolithic-baseline-network-feature-probe)
   - [Appendix 1. References](#appendix-1-references)
+  - [Appendix 2. Non-Intrusive Syscall Tracing via QEMU GDB Stub](#appendix-2-non-intrusive-syscall-tracing-via-qemu-gdb-stub)
 
 ## 1. Prerequisites
 
@@ -368,3 +369,40 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the KCOV-instrumented m
   (`Documentation/dev-tools/kcov.rst`) — task-scoped syscall tracing interface.
 - [Kernel Self-Testing Framework (kselftest)](https://www.kernel.org/doc/html/latest/dev-tools/kselftest.html)
   (`Documentation/dev-tools/kselftest.rst`) & [KUnit](https://www.kernel.org/doc/html/latest/dev-tools/kunit/index.html) — in-kernel unit testing.
+
+## Appendix 2. Non-Intrusive Syscall Tracing via QEMU GDB Stub
+
+For minimal PID 1 environments lacking in-guest debugging tools (like `strace` or `trace-cmd`), you can discover system calls non-intrusively from the host using QEMU's GDB stub as documented in the upstream [Workload Tracing Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html#tracing-a-minimal-user-space) (`Documentation/admin-guide/workload-tracing.rst`).
+
+### Containerized GDB Stub Execution
+
+A dedicated Dockerfile ([Dockerfile.gdb-stub-tracing](./hello-init/Dockerfile.gdb-stub-tracing)) boots `ainit` under QEMU with `-S -gdb tcp:127.0.0.1:1234` and connects `gdb-multiarch` to trap syscall entries at `do_el0_svc`:
+
+```sh
+# Build and execute the GDB stub syscall capture
+docker build -f docs/minimal-linux/hello-init/Dockerfile.gdb-stub-tracing -t helloinit-gdb .
+
+# Display captured syscall entries
+docker run --rm helloinit-gdb
+```
+
+### Expected Output (`pid1-syscalls.log`)
+
+```text
+Breakpoint 2 at 0xffff80008001b710: file arch/arm64/kernel/syscall.c, line 140.
+syscall=214 arg0=0             # brk (memory allocation probe)
+syscall=214 arg0=0x2c09aae8     # brk (heap expansion)
+syscall=96  arg0=0x2c09a0d0     # set_tid_address
+syscall=99  arg0=0x2c09a0e0     # set_robust_list
+syscall=293 arg0=0x2c09a720     # rseq (restartable sequences)
+syscall=261 arg0=0              # prlimit64
+syscall=78  arg0=0xffffffffffffff9c # readlinkat
+syscall=278 arg0=0x496690       # getrandom
+syscall=226 arg0=0x48c000       # mprotect
+syscall=80  arg0=0x1            # fstat (stdout descriptor check)
+syscall=29  arg0=0x1            # ioctl (TIOCGWINSZ console query)
+syscall=64  arg0=0x1            # write(1, "hello world\n", 12)
+syscall=73  arg0=0              # ppoll / pause (PID 1 idle loop)
+```
+
+This non-intrusive trace discovers the exact system calls invoked by user space (e.g. `write`, `fstat`, `brk`) without modifying the guest rootfs or altering PID 1 timing.
