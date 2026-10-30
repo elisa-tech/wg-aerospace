@@ -1,0 +1,124 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Hello Init - Step 3: Monolithic defconfig Baseline (+ KCOV Reachability)
+#
+# This Dockerfile reproduces the Step 3 monolithic defconfig comparison:
+# - Builds the default ARM64 defconfig kernel with loadable modules disabled (-d MODULES).
+# - Enables KCOV (CONFIG_KCOV=y) and debugfs (CONFIG_DEBUG_FS=y) with DWARF debug info.
+# - Packages the 'ainit-net-kcov.c' combined socket probe and coverage collector as PID 1.
+# - Executes under QEMU (-m 512M, nokaslr) to capture monolithic in-kernel socket() reachability.
+# - Symbolizes program counter (PC) trace and outputs normalized reached source lines.
+# - Measures linked DWARF SLOC and compiled source footprint across the full kernel tree.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install cross-compilation toolchain, QEMU emulator, and build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    vim \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned kernel tag and helper provenance anchor (v7.3-rc5 reference)
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+
+WORKDIR /workspace
+
+# Retrieve and install kernel-sloc globally (ensures availability even when bind-mounting an external linux tree)
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+# Shallow clone target kernel release into workspace
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+# Copy user-space source payloads and helper normalization script
+COPY docs/minimal-linux/hello-init /workspace/src
+COPY docs/minimal-linux/scripts/normalize_kcov.py /workspace/scripts/normalize_kcov.py
+
+# ------------------------------------------------------------------------------
+# Build KCOV Collector User Space (ainit-net-kcov) & Initramfs
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN mkdir -p rootfs-kcov/sys/kernel/debug \
+    && aarch64-linux-gnu-gcc -static -O2 -o rootfs-kcov/init /workspace/src/ainit-net-kcov.c \
+    && ( cd rootfs-kcov && find . | cpio -o -H newc ) | gzip > initramfs-kcov.cpio.gz
+
+# ------------------------------------------------------------------------------
+# Configure & Build Monolithic defconfig Kernel with KCOV & Debug Info
+# ------------------------------------------------------------------------------
+WORKDIR /workspace/linux
+RUN make defconfig \
+    && ./scripts/config -d MODULES \
+       -e KCOV -e DEBUG_FS \
+       -d DEBUG_INFO_NONE \
+       -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    && make olddefconfig \
+    && make -j"$(nproc)" Image Image.gz
+
+RUN CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
+
+# ------------------------------------------------------------------------------
+# Capture KCOV Trace in QEMU (-m 512M) & Symbolize Reachability
+# ------------------------------------------------------------------------------
+RUN timeout 30s qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 512M -nographic \
+    -kernel /workspace/linux/arch/arm64/boot/Image -initrd /workspace/initramfs-kcov.cpio.gz \
+    -append 'console=ttyAMA0 nokaslr' > /workspace/kcov.log 2>&1 || true
+
+# ------------------------------------------------------------------------------
+# Measure Metrics & Generate Summary Report
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN aarch64-linux-gnu-strip -o /tmp/ainit-kcov-stripped rootfs-kcov/init \
+    && cd /workspace/linux \
+    && python3 scripts/clang-tools/gen_compile_commands.py || true \
+    && ( /usr/local/bin/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt || true ) \
+    && cd /workspace \
+    && awk '{gsub(/\r/,""); if (NF == 1 && $1 ~ /^0x[0-9a-fA-F]+$/) print $1}' kcov.log > kcov-pcs.txt \
+    && aarch64-linux-gnu-addr2line -f -i -e linux/vmlinux < kcov-pcs.txt > kcov-symbols.txt \
+    && python3 /workspace/scripts/normalize_kcov.py kcov-symbols.txt kcov-lines.txt >/dev/null \
+    && { \
+        echo "=== Step 3: Monolithic defconfig Baseline Metrics ==="; \
+        printf "%-32s: %s\n" "User space source" "$(cloc --quiet --csv /workspace/src/ainit-net-kcov.c | awk -F, 'END{print $NF}') lines"; \
+        printf "%-32s: %s\n" "Raw static ELF size" "$(stat -c%s /workspace/rootfs-kcov/init) bytes"; \
+        printf "%-32s: %s\n" "Stripped static ELF size" "$(stat -c%s /tmp/ainit-kcov-stripped) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-kcov.cpio.gz) bytes"; \
+        printf "%-32s: %s\n" "Instrumented DWARF SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Compiled Source SLOC" "$(cat /workspace/linux/sloc-compiled.txt 2>/dev/null || echo 'N/A') lines"; \
+        printf "%-32s: %s\n" "Raw monolithic kernel Image" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Compressed Image.gz size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image.gz) bytes"; \
+        printf "%-32s: %s\n" "Captured Program Counters" "$(wc -l < /workspace/kcov-pcs.txt) addresses"; \
+        printf "%-32s: %s\n" "Unique Reached Source Lines" "$(wc -l < /workspace/kcov-lines.txt) lines"; \
+    } | tee /workspace/metrics.txt
+
+CMD ["sh", "-c", "cat /workspace/kcov-lines.txt && echo && echo \"Total unique reached source lines: $(wc -l < /workspace/kcov-lines.txt) lines\""]

@@ -13,9 +13,11 @@ The foundational approaches for trimming and analyzing a Linux kernel for a sing
 known workload are documented in the upstream kernel guides:
 
 - [Kernel Minimization Guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  (`Documentation/admin-guide/kernel-minimization.rst`)
   — Covers the core mechanics of top-down and bottom-up Kconfig trimming, monolithic builds,
   cross-compilation for QEMU, feature probing, and SLOC/image size measurement.
 - [Workload Tracing Guide](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
+  (`Documentation/admin-guide/workload-tracing.rst`)
   — Covers discovering kernel subsystems and tracing syscalls/functions exercised
   by a target application using tools like `strace`, `cscope`, and `ftrace`.
 
@@ -57,18 +59,20 @@ Every scenario in this repository follows this exact structure:
 
 We provide three concrete scenarios executing this discipline:
 
-- **[Hello Init (Practice)](./minimal-linux/HelloInit.md)** — Foundational
-  practice baseline booting a static binary as PID 1 under QEMU `arm64`.
-  Provides an end-to-end sandbox for team members to practice the mechanics
-  and record baseline metrics.
-- **[Hello cFS](./minimal-linux/HelloCFS.md)** — Flight application
-  scenario applying the same structure and observation tables to the NASA
-  Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
+New contributors and reviewers should follow the scenarios in order:
+
+- **[Hello Init (Practice Baseline)](./minimal-linux/HelloInit.md)** — Foundational
+   practice baseline booting a static binary as PID 1 under QEMU `arm64`.
+   Provides an end-to-end sandbox for team members to practice the mechanics
+   and record baseline metrics.
+- **[Hello cFS (Flight Application Workload)](./minimal-linux/HelloCFS.md)** — Flight application
+   scenario applying the same structure and observation tables to the NASA
+   Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
 - **[Maximizing Kernel Coverage with Open-Source Test Suites](./minimal-linux/MaxCoverageMultiSuite.md)**
-  — a worked example of applying these concepts to maximize whole-kernel
-  structural coverage: it drives stress-ng, LTP, Syzkaller, and GCOV against a
-  GCOV-instrumented `tinyconfig` kernel, then audits and prunes the code that
-  remains unreached. Shows the reachability and pruning loop end to end.
+   — a worked example of applying these concepts to maximize whole-kernel
+   structural coverage: it drives stress-ng, Syzkaller, and GCOV against a
+   GCOV-instrumented `tinyconfig` kernel, then audits and prunes the code that
+   remains unreached.
 
 ## How this maps to the kernel.org draft guides
 
@@ -94,8 +98,7 @@ We provide three concrete scenarios executing this discipline:
 
 ## References
 
-- [Kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  and [workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html).
+- [Kernel-minimization [DRAFT] (docs.kernel.org)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
 - ELISA [Discovering Linux kernel subsystems used by a workload](https://github.com/elisa-tech/ELISA-White-Papers/blob/master/Processes/Discovering_Linux_kernel_subsystems_used_by_a_workload.md).
 - ELISA LFSCS [minimal-application ftrace study](https://github.com/elisa-tech/wg-lfscs/blob/main/min_prog_trace/README.md)
   and [configuration](https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace).

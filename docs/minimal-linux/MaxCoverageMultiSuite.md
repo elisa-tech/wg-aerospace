@@ -4,7 +4,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Maximizing Kernel Coverage with Open-Source Test Suites
 
-_stress-ng, LTP, Syzkaller & GCOV — a worked example of applying the
+_stress-ng, Syzkaller & GCOV — a worked example of applying the
 [kernel-minimization](../SoftwareMinimization.md) coverage concepts._
 
 This is a worked example that extends the baseline practice walkthrough in
@@ -42,6 +42,7 @@ user processes.
   - [9.1 Advanced Research-Backed Pruning Recipe](#91-advanced-research-backed-pruning-recipe)
   - [9.2 Macro Minimization & Coverage Progression Across Configurations](#92-macro-minimization--coverage-progression-across-configurations)
 - [10. Measurement Environment, Core Count & Timing Record](#10-measurement-environment-core-count--timing-record)
+- [11. References & Navigation](#11-references--navigation)
 
 ## 1. Test Methodologies & Coverage Complementarity
 
@@ -61,77 +62,64 @@ each tool activates distinct code paths:
   transitions across interconnected kernel subsystems, including deliberate error paths
   (e.g. `execveat()` of a malformed binary).
 
-> **LTP is intentionally not an active stage in this baseline.** The Linux Test
-> Project (POSIX conformance and error-path validation) was measured and found to be
-> **fully subsumed** by stress-ng + Syzkaller on this NET-less kernel — it is moved to
-> the untried/deferred list with the supporting measurement in
-> [Section 2](#2-higher-altitude-levers--untried-coverage-extensions).
-
 ## 2. Higher-Altitude Levers & Untried Coverage Extensions
 
-While the deterministic stages above form the core acceptance gate on the `tinyconfig`
-baseline, several higher-leverage techniques remain untried in this initial walkthrough
-and are scoped for higher-altitude configurations (`+ networking`, `+ block/ext4`, `defconfig`):
+The stages above explore coverage on the `tinyconfig` baseline. Several
+techniques remain untried and are scoped for larger configurations
+(`+ networking`, `+ block/ext4`, `defconfig`):
 
-0. **LTP / Linux Test Project full syscall suite — measured and excluded as redundant:**
-   - *Status in this walkthrough:* **Built and measured (1,564 real cross-compiled
-     syscall testcases, pinned LTP `20260930`), then removed from the active harness.**
-   - *What we found (measured):* With the GCOV-instrumented NET-less `tinyconfig`, the
-     full LTP suite added only **21 net-new whole-image lines** on top of stress-ng, all
-     in exec-failure / credential paths: `fs/exec.c` (15 lines — `free_bprm()` and the
-     `bprm_execve()` error `out:` path), `kernel/cred.c` (5 lines — `abort_creds()`), and
-     `fs/binfmt_elf.c` (1 line — the ELF-magic reject). Everything else LTP exercises was
-     already reached by the boot self-tests and the `/proc`/`/sys` traversal.
-   - *Why it is excluded:* Those 21 lines are **fully reachable without LTP**. Adding one
-     `execveat()` of a malformed (non-ELF) file to the Syzkaller corpus made a no-LTP run
-     (stress-ng + Syzkaller) reach **21/21** of them, matching the with-LTP whole-image
-     coverage. LTP therefore contributes nothing stress-ng + Syzkaller cannot, while
-     costing **~2.7 GB of static binaries** in the initramfs — which forces the guest from
-     1 GiB to ~12 GiB RAM (a 1 GiB guest OOM-panics unpacking it). Dropping LTP keeps the
-     baseline at `-m 1024M` with a ~7.4 MB initramfs.
-   - *When to revisit:* LTP is worth re-adding on **larger configurations** (`+ networking`,
-     `+ block/ext4`, `defconfig`) where its socket/filesystem/IPC testcases exercise
-     subsystems absent from this minimal baseline, and where its error-path coverage is no
-     longer subsumed. Re-measure the net-new delta before trusting it as a distinct gate.
+0. **LTP / Linux Test Project full syscall suite — deferred comparison:**
+   - _Status in this walkthrough:_ Built earlier: 1,564 real cross-compiled
+     syscall testcases, pinned LTP `20260930`, then removed from the harness.
+   - _Earlier result, pending revalidation:_ LTP reportedly added 21 lines in
+     `fs/exec.c`, `kernel/cred.c`, and `fs/binfmt_elf.c`. The malformed-exec
+     reproducer reaches those paths, but the earlier pipeline lost coverage
+     data and did not establish complete stress-ng execution. Re-measure the
+     with-LTP and without-LTP runs before claiming subsumption.
+   - _When to revisit:_ Larger configurations with networking or block/filesystem
+     support. The earlier static LTP build adds ~2.7 GB to the initramfs and
+     needs ~12 GiB guest RAM.
 1. **Live Mutating Syzkaller Fuzzing (`syz-fuzzer` with `CONFIG_KCOV=y`):**
-   - *Status in this walkthrough:* Untried (only deterministic corpus replay was executed).
-   - *Impact & Tradeoff:* Live time-boxed random mutation (e.g. 10–30 minutes) discovers
+   - _Status in this walkthrough:_ Untried (only deterministic corpus replay was executed).
+   - _Impact & Tradeoff:_ Live time-boxed random mutation (e.g. 10–30 minutes) discovers
      deep edge-case paths a static corpus cannot reach. In aerospace environments,
      this is best isolated into an offline exploration track so non-deterministic fuzzer
      failures do not fail deterministic verification gates.
 2. **Filesystem Loop-Mount Matrix (`fsstress`, `fsx`, `xfstests`):**
-   - *Status in this walkthrough:* Untried on `tinyconfig` (requires `CONFIG_BLOCK=y`,
+   - _Status in this walkthrough:_ Untried on `tinyconfig` (requires `CONFIG_BLOCK=y`,
      `CONFIG_BLK_DEV_LOOP=y`, and filesystem drivers like `CONFIG_EXT4_FS=y` or `CONFIG_OVERLAY_FS=y`).
-   - *Impact:* Loop-mounting images and running `fsstress` exercises journaling, extent trees,
+   - _Impact:_ Loop-mounting images and running `fsstress` exercises journaling, extent trees,
      directory caching, and truncation across filesystem implementations.
 3. **Advanced Netlink, Traffic Control (`tc`), & Netfilter (`nft`):**
-   - *Status in this walkthrough:* Scoped for `+ networking` builds (requires `CONFIG_NET=y`,
+   - _Status in this walkthrough:_ Scoped for `+ networking` builds (requires `CONFIG_NET=y`,
      `CONFIG_NETFILTER=y`, `CONFIG_NET_SCHED=y`).
-   - *Impact:* Manipulating traffic-control qdiscs, packet classifiers, and firewall rulesets
+   - _Impact:_ Manipulating traffic-control qdiscs, packet classifiers, and firewall rulesets
      exercises extensive network stack control logic.
 4. **`io_uring` Asynchronous Engine (`liburing` test suite):**
-   - *Status in this walkthrough:* Untried (requires `CONFIG_IO_URING=y`).
-   - *Impact:* Thoroughly exercises the kernel asynchronous submission and completion ring queues.
+   - _Status in this walkthrough:_ Untried (requires `CONFIG_IO_URING=y`).
+   - _Impact:_ Thoroughly exercises the kernel asynchronous submission and completion ring queues.
 5. **eBPF Verifier, JIT, & Map Traversal (`bpftrace` / `libbpf`):**
-   - *Status in this walkthrough:* Untried (requires `CONFIG_BPF=y`, `CONFIG_BPF_SYSCALL=y`).
-   - *Impact:* Loading BPF programs, kprobes, and tracepoints exercises the bytecode verifier,
+   - _Status in this walkthrough:_ Untried (requires `CONFIG_BPF=y`, `CONFIG_BPF_SYSCALL=y`).
+   - _Impact:_ Loading BPF programs, kprobes, and tracepoints exercises the bytecode verifier,
      in-kernel JIT compiler, and map storage engines.
 6. **Performance & Tracing Subsystem (`perf` & `ftrace`):**
-   - *Status in this walkthrough:* Untried (requires `CONFIG_PERF_EVENTS=y`, `CONFIG_FTRACE=y`).
-   - *Impact:* Running `perf record` and enabling function graph tracing exercises event counters
+   - _Status in this walkthrough:_ Untried (requires `CONFIG_PERF_EVENTS=y`, `CONFIG_FTRACE=y`).
+   - _Impact:_ Running `perf record` and enabling function graph tracing exercises event counters
      and PMU drivers.
 
 ## 3. Kernel Profiling Configuration
 
 Start from the bootable `tinyconfig` baseline from [Section 4](./HelloInit.md#4-change-kernel-options--configuration)
 (`tinyconfig` + PL011 serial, printk, initrd, ELF, `-MODULES`), then enable
-whole-kernel GCOV profiling and the boot self-tests on ARM64:
+whole-kernel GCOV profiling, boot self-tests, and the workload prerequisites
+on ARM64. Use the pinned draft helper and record the actual tool versions as
+described in [Hello Init](./HelloInit.md#2-environment).
 
 ```sh
 ./scripts/config \
     -e DEBUG_FS -e SYSFS -e PROC_FS -e DEVTMPFS -e DEVTMPFS_MOUNT \
     -e GCOV_KERNEL -e GCOV_PROFILE_ALL \
-    -e FUTEX \
+    -e FUTEX -e POSIX_TIMERS -e SHMEM -e MEMFD_CREATE -e ADVISE_SYSCALLS \
     -e RUNTIME_TESTING_MENU \
     -e KUNIT \
     -e DEBUG_LOCKING_API_SELFTESTS \
@@ -150,10 +138,12 @@ whole-kernel GCOV profiling and the boot self-tests on ARM64:
     -d DEBUG_INFO_NONE -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
     -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
 make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 ```
 
 > **Required for the self-tests to survive `olddefconfig` (verified):**
+>
 > - `-e RUNTIME_TESTING_MENU` is **mandatory**. The `TEST_*` options and
 >   `ATOMIC64_SELFTEST` live under the `menuconfig RUNTIME_TESTING_MENU` guard,
 >   which is `n` in `tinyconfig`. Without it, `olddefconfig` **silently drops every
@@ -163,21 +153,29 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 >   `depends on KUNIT` (they are KUnit tests), so they are dropped without it.
 > - The DWARF debug-info options are added so the same `vmlinux` supports the
 >   linked-SLOC audit in [Section 7](#7-identifying-uncovered-built-areas--pruning-candidates).
+> - `POSIX_TIMERS=y` is required for stress-ng's `alarm()` timeout. Without it,
+>   `setitimer()` returns `ENOSYS` and the class sweep can hang despite
+>   `--timeout 1s`. The original recipe failed to finish within 900 seconds.
+> - `SHMEM=y` supplies shared-memory backing and `MEMFD_CREATE=y` enables
+>   the syscall itself; `SHMEM` alone does not select it on this kernel.
+>   `ADVISE_SYSCALLS=y` enables `madvise()`. Without these options, the corpus
+>   exercises syscall rejection paths and its memfd-backed mapping fails.
 >
 > Confirm the requests survived before building:
 >
 > ```sh
 > for c in GCOV_KERNEL GCOV_PROFILE_ALL RUNTIME_TESTING_MENU KUNIT \
->          ATOMIC64_SELFTEST TEST_MAPLE_TREE TEST_XARRAY TEST_SORT DEBUG_INFO; do
+>          ATOMIC64_SELFTEST TEST_MAPLE_TREE TEST_XARRAY TEST_SORT DEBUG_INFO \
+>          POSIX_TIMERS SHMEM MEMFD_CREATE ADVISE_SYSCALLS; do
 >     printf '%s=' "$c"; ./scripts/config -s "$c"
 > done
 > ```
 
-*(Optional, out of scope for this baseline: to add the Netlink/traffic-control
+_(Optional, out of scope for this baseline: to add the Netlink/traffic-control
 sweep listed in [Section 2](#2-higher-altitude-levers--untried-coverage-extensions),
 rebuild with `-e NET -e INET -e NETLINK_DIAG -e DUMMY -e VETH -e BRIDGE -e VLAN_8021Q -e NET_SCHED`.
 This pulls the large `net/` tree into the instrumented set and changes the
-denominator, so run and report it separately from the NET-less baseline below.)*
+denominator, so run and report it separately from the NET-less baseline below.)_
 
 ## 4. Rootfs Assembly & Sequential Multi-Stage Execution Workflow
 
@@ -185,8 +183,12 @@ To measure both total cumulative coverage and stage-by-stage differential gains,
 the static `/init` launcher runs the workload stages sequentially as one complete
 workload, emitting labeled checkpoints to the serial log between stages without
 clearing in-memory GCOV counters. The active stages are **boot self-tests →
-`/proc`/`/sys` traversal → stress-ng → Syzkaller** (LTP is deliberately excluded —
-see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
+`/proc`/`/sys` traversal → stress-ng → Syzkaller**:
+
+The class sweep includes optional APIs and networking stressors even with
+`CONFIG_NET=n`. Record unsupported stressors and failures; checkpoint export
+measures execution, not a suite pass. Traversal completion likewise does not
+mean every pseudo-file read succeeded.
 
 1. **Extract rootfs and stage test packages:** Retrieve Alpine ARM64 minirootfs and stage each tool suite directly into the rootfs filesystem tree:
 
@@ -207,9 +209,11 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    # Alpine minirootfs does NOT ship. `tar -xzf` does not resolve .apk
    # dependencies, so these must be staged explicitly or stress-ng aborts at
    # load time with "Error relocating /usr/bin/stress-ng: <symbol> not found"
-   # (its NEEDED libs are libbsd.so.0, libJudy.so.1, libsctp.so.1, libmd.so.0).
-   # Without them Stage 2 contributes almost no coverage even though the harness
-   # still prints "complete". Pinned versions for v3.20/aarch64:
+   # Direct dependencies include libbsd.so.0, libJudy.so.1, libsctp.so.1,
+   # libz.so.1, and musl. libbsd additionally needs libmd.so.0.
+   # Loader failure prevents stressors from running. The launcher records the
+   # failure; exported checkpoints alone are not a suite pass.
+   # Pinned versions for v3.20/aarch64:
    for dep in \
        main/aarch64/libbsd-0.12.2-r0.apk \
        main/aarch64/libmd-1.1.0-r0.apk \
@@ -220,17 +224,9 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    done
    # Verify every NEEDED lib now resolves before booting:
    #   aarch64-linux-gnu-readelf -d rootfs-alpine/usr/bin/stress-ng | grep NEEDED
-   #   # then confirm each libbsd.so.0 / libJudy.so.1 / libsctp.so.1 / libmd.so.0
+   #   # then confirm libbsd.so.0 / libJudy.so.1 / libsctp.so.1 / libmd.so.0
+   #   # and libz.so.1 (already in the pinned minirootfs)
    #   # exists under rootfs-alpine/usr/lib or rootfs-alpine/lib
-
-   # (No iproute2 here: this NET-less baseline has no Netlink/tc stage. If you add
-   #  the optional networking extension from Section 3, also stage both
-   #  iproute2-minimal (-> /sbin/ip) and iproute2-tc (-> /sbin/tc); `tc` is NOT in
-   #  iproute2-minimal.)
-
-   # (LTP is not staged: measured as subsumed by stress-ng + Syzkaller on this
-   #  NET-less baseline — see Section 2. Staging it would add ~2.7 GB of static
-   #  binaries and force the guest to ~12 GiB RAM for no net coverage gain.)
 
    # Stage Syzkaller reproducer — real syz-prog2c output.
    # The devcontainer ships Go, so build syzkaller's syz-prog2c host tool and
@@ -240,12 +236,13 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    #   2026-10-16  "pkg/aflow/flow/patching: add patch-planner agent"
    git clone https://github.com/google/syzkaller
    ( cd syzkaller && git checkout 432c00775d20929a96fd4987f9ef01a50e6fd277 && \
+     go version && \
      make prog2c )                          # builds bin/syz-prog2c (host/amd64)
+   # This commit requires Go 1.26.0 or newer. With GOTOOLCHAIN=auto an older
+   # supported Go may download 1.26.0; record that selected version.
    # NET-less corpus: file I/O + memfd/mmap/madvise/mlock, PLUS an execveat() of a
    # deliberately malformed (non-ELF) file. The bad-exec call drives the
-   # exec-failure / abort_creds / ELF-magic-reject paths that were LTP's only
-   # unique contribution (measured; see Section 2), so stress-ng + this corpus
-   # subsume the full LTP syscall suite on this NET-less kernel. No socket calls
+   # exec-failure / abort_creds / ELF-magic-reject paths. No socket calls
    # (CONFIG_NET=n). Sandbox-legal (relative './file0' path, proper result threading).
    cat << 'EOF' > corpus.syz
    r1 = openat$dir(0xffffffffffffff9c, &(0x7f0000000100)='./file0\x00', 0x42, 0x1a4)
@@ -265,49 +262,58 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    close(r3)
    execveat(0xffffffffffffff9c, &(0x7f0000000400)='./bad\x00', 0x0, 0x0, 0x0)
    EOF
-   ./syzkaller/bin/syz-prog2c -prog corpus.syz > syz-repro.c
+   ./syzkaller/bin/syz-prog2c -os linux -arch arm64 -trace \
+       -prog corpus.syz > syz-repro.c
    mkdir -p rootfs-alpine/opt/syzkaller
    aarch64-linux-gnu-gcc -static -O2 -o rootfs-alpine/opt/syzkaller/syz-repro syz-repro.c
    ```
 
-   > **Tool acquisition notes (verified in the ELISA AeroWG devcontainer):**
+   > **Tool acquisition notes:**
+   >
    > - **stress-ng needs its shared-library dependencies staged.** The Alpine
    >   `stress-ng` binary is dynamically linked against `libbsd.so.0`,
-   >   `libJudy.so.1`, `libsctp.so.1`, and `libmd.so.0`, none of which ship in the
-   >   bare minirootfs. Extracting only the `stress-ng` `.apk` leaves it unable to
-   >   load — every stressor aborts with `Error relocating /usr/bin/stress-ng:
-   >   <symbol> not found` and Stage 2 adds almost nothing, yet the harness still
-   >   reaches `=== All test stages complete ===`. Stage the four dependency
+   >   `libJudy.so.1`, `libsctp.so.1`, and `libz.so.1`; libbsd needs
+   >   `libmd.so.0` transitively. The minirootfs supplies zlib and musl; stage
+   >   the other libraries explicitly. Extracting only `stress-ng` leaves it
+   >   unable to load: stressors abort with relocation errors and Stage 2
+   >   adds almost nothing, yet the harness still
+   >   reaches the end of its launch sequence. Stage the four dependency
    >   `.apk`s shown above and verify with `readelf -d` before booting.
    > - **(Optional networking extension only)** `tc` is **not** in
    >   `iproute2-minimal`; it ships in the separate `iproute2-tc` subpackage.
    >   Staging only `iproute2-minimal` leaves the optional `tc qdisc` commands
    >   silently failing. This NET-less baseline stages neither.
-   > - **Real Syzkaller** `syz-prog2c` builds with the devcontainer's Go toolchain
-   >   (`make prog2c`). It validates the corpus against its syscall descriptions —
+   > - **Real Syzkaller** requires Go 1.26.0 for the pinned commit. Explicit
+   >   `-os linux -arch arm64` selects target descriptions independently of the
+   >   host architecture. It validates the corpus against those descriptions —
    >   the corpus above is sandbox-legal (relative `./file0` path, proper result
    >   threading); an absolute `/dev/null` path or dangling result refs are
-   >   rejected. The generated C includes syzkaller's `mmap` scratch setup.
-   > - LTP is **not** staged (measured as subsumed — Section 2). If you re-add it on
-   >   a larger config, note it cross-builds with the devcontainer's host autotools
-   >   and needs ~2.7 GB in the initramfs; see
-   >   [Testing Steering Notes §6](./TestingSteeringNotes.md#6-devcontainer-provisioning-for-ltp--syzkaller)
-   >   for the LTP/Syzkaller build prerequisites.
+   >   rejected. `-trace` prints each call's errno: expect call 7
+   >   (`memfd_create`), call 8 (mapping), and call 9 (`madvise`) to succeed,
+   >   and call 15 (malformed `execveat`) to return `ENOEXEC` (8).
+   >   The corpus does not grow its memfd before mapping; call 10 (`mlock`)
+   >   can return `ENOMEM` (12). Record that as a rejection-path observation,
+   >   not successful locking of memfd-backed pages.
+   >   A zero process exit alone does not establish those syscall outcomes.
 
 2. **Static multi-stage `/init` launcher with labeled checkpoints:**
 
    ```c
    /* rootfs-alpine/init.c */
+   #include <errno.h>
+   #include <signal.h>
    #include <stdio.h>
    #include <stdlib.h>
+   #include <time.h>
    #include <unistd.h>
    #include <sys/mount.h>
+   #include <sys/time.h>
    #include <sys/wait.h>
 
-   static void emit_checkpoint(const char *stage_name)
+   static int emit_checkpoint(const char *stage_name)
    {
        char cmd[512];
-       snprintf(cmd, sizeof(cmd),
+       int length = snprintf(cmd, sizeof(cmd),
                 "mkdir -p /tmp/dump && "
                 "find /sys/kernel/debug/gcov -type d -exec mkdir -p /tmp/dump/{} \\; && "
                 "find /sys/kernel/debug/gcov -name '*.gcda' -exec sh -c 'cat < \"$0\" > \"/tmp/dump/$0\"' {} \\; && "
@@ -317,62 +323,111 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
                 "echo '===GCOV_%s_END===' && "
                 "rm -rf /tmp/dump /tmp/gcda.tar.gz",
                 stage_name, stage_name);
-       system(cmd);
+       if (length < 0 || (size_t)length >= sizeof(cmd))
+           return 1;
+       if (system(cmd) != 0) {
+           fprintf(stderr, "CHECKPOINT FAILED: %s\n", stage_name);
+           return 1;
+       }
+       return 0;
    }
 
-   static void run_cmd(char *const argv[])
+   static int run_cmd(const char *label, char *const argv[], int seconds)
    {
        if (access(argv[0], X_OK) != 0) {
-           fprintf(stderr, "SKIP/WARN: %s not found or not executable\n", argv[0]);
-           return;
+           fprintf(stderr, "FAILED: %s executable missing\n", label);
+           return 1;
        }
        pid_t pid = fork();
+       if (pid < 0) {
+           perror("fork");
+           return 1;
+       }
        if (pid == 0) {
+           if (setpgid(0, 0) != 0)
+               _exit(127);
            execv(argv[0], argv);
            perror(argv[0]);
            _exit(127);
        }
-       int status;
-       waitpid(pid, &status, 0);
+       if (setpgid(pid, pid) != 0 && errno != EACCES && errno != ESRCH)
+           perror("setpgid");
+       struct timespec start, now;
+       if (clock_gettime(CLOCK_MONOTONIC, &start) != 0)
+           return 1;
+       for (;;) {
+           int status;
+           pid_t done = waitpid(pid, &status, WNOHANG);
+           if (done == pid) {
+               int ok = WIFEXITED(status) && WEXITSTATUS(status) == 0;
+               fprintf(stderr, "CHILD %s: status=%d %s\n",
+                       label, status, ok ? "OK" : "FAILED");
+               return !ok;
+           }
+           if (done < 0 && errno != EINTR) {
+               perror("waitpid");
+               return 1;
+           }
+           if (clock_gettime(CLOCK_MONOTONIC, &now) != 0)
+               return 1;
+           if (now.tv_sec - start.tv_sec >= seconds) {
+               fprintf(stderr, "WATCHDOG: %s exceeded %d seconds\n",
+                       label, seconds);
+               kill(-pid, SIGKILL);
+               kill(pid, SIGKILL);
+               /* The host watchdog also bounds uninterruptible reads. */
+               return 1;
+           }
+           struct timespec delay = { .tv_nsec = 100000000 };
+           nanosleep(&delay, NULL);
+       }
    }
 
    int main(void)
    {
+       int failures = 0;
+       setvbuf(stdout, NULL, _IONBF, 0);
        if (mount("proc", "/proc", "proc", 0, NULL) != 0)
-           perror("mount /proc");
+           perror("mount /proc"), failures++;
        if (mount("sysfs", "/sys", "sysfs", 0, NULL) != 0)
-           perror("mount /sys");
+           perror("mount /sys"), failures++;
        if (mount("devtmpfs", "/dev", "devtmpfs", 0, NULL) != 0)
-           perror("mount /dev");
+           perror("mount /dev"), failures++;
        if (mount("debugfs", "/sys/kernel/debug", "debugfs", 0, NULL) != 0)
-           perror("mount /sys/kernel/debug");
+           perror("mount /sys/kernel/debug"), failures++;
 
        /* Stage 0: Boot Self-Tests (Executed automatically during boot initcalls) */
-       emit_checkpoint("STAGE0_BOOT");
+       failures += emit_checkpoint("STAGE0_BOOT");
 
        /* Stage 1: /proc and /sys Attribute Traversal */
        puts("=== Stage 1: Traversing /proc and /sys attributes ===");
-       /* Read each pseudo-file's first block. Use `timeout -s KILL` so files
-          that block and ignore SIGTERM cannot stall the stage, and skip
-          per-process (/proc/<pid>) trees and other known-blocking nodes. This
-          traversal can still stall even on the NET-less baseline: a `dd`
-          blocked in an uninterruptible (D-state) kernel read cannot be killed
-          by any signal, so `timeout -s KILL` does not always bound it. If Stage
-          1 hangs, add the offending node to the skip list below (observed on
-          some runs) and/or boot with a watchdog timeout around the whole
-          harness. A plain `timeout 2` is even more prone to this. */
-       system("find /proc /sys /sys/kernel/debug -type f 2>/dev/null | while read -r f; do "
-              "  case \"$f\" in "
-              "    */trace_pipe*|*/kcore|*/mem|*/kmsg|*/sysrq-trigger|*/null|*/zero|/proc/[0-9]*|*/clear_refs) ;; "
-              "    *) timeout -s KILL 1 dd if=\"$f\" of=/dev/null bs=4k count=1 2>/dev/null ;; "
-              "  esac; "
-              "done");
-       emit_checkpoint("STAGE1_PROCSYS");
+       /* BusyBox timeout uses a separate sleeping process. It does not need
+          POSIX interval timers; a D-state read still needs the host watchdog.
+          /sys already includes debugfs, so visit that subtree only once. */
+       char *traverse[] = {
+           "/bin/sh", "-c",
+           "find /proc /sys -type f 2>/dev/null | while read -r f; do "
+           "case \"$f\" in "
+           "*/trace_pipe*|*/kcore|*/mem|*/kmsg|*/sysrq-trigger|*/null|*/zero|"
+           "/proc/[0-9]*|*/clear_refs|*/kunit/*/results) ;; "
+           "*) timeout -s KILL 1 dd if=\"$f\" of=/dev/null bs=4k count=1 "
+           "2>/dev/null ;; esac; done; exit 0",
+           NULL
+       };
+       failures += run_cmd("proc/sys traversal", traverse, 900);
+       failures += emit_checkpoint("STAGE1_PROCSYS");
 
-       /* Stage 2: stress-ng (Sequential Class ABI Sweep across all CPUs) */
+       /* Stage 2: stress-ng, sequential class sweep on one guest CPU. */
        puts("=== Stage 2: Executing stress-ng sequential class sweep ===");
-       const char *classes[] = { "os", "scheduler", "memory", "filesystem", "interrupt" }; /* no "network" class: CONFIG_NET=n */
-       for (size_t i = 0; i < sizeof(classes)/sizeof(classes[0]); i++) {
+       struct itimerval zero = {0};
+       int timers_ok = setitimer(ITIMER_REAL, &zero, NULL) == 0;
+       if (!timers_ok)
+           perror("POSIX_TIMERS required"), failures++;
+       const char *classes[] = {
+           "os", "scheduler", "memory", "filesystem", "interrupt"
+       }; /* no network class: CONFIG_NET=n */
+       size_t count = sizeof(classes) / sizeof(classes[0]);
+       for (size_t i = 0; timers_ok && i < count; i++) {
            char *sng_argv[] = {
                "/usr/bin/stress-ng",
                "--seq", "0",
@@ -381,18 +436,19 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
                "--metrics",
                NULL
            };
-           run_cmd(sng_argv);
+           failures += run_cmd(classes[i], sng_argv, 600);
        }
-       emit_checkpoint("STAGE2_STRESSNG");
+       failures += emit_checkpoint("STAGE2_STRESSNG");
 
        /* Stage 3: Syzkaller (Combinatorial Multi-Syscall Sequence Playback,
           including a deliberate bad-exec to drive exec-failure paths) */
        puts("=== Stage 3: Executing Syzkaller standalone sequence reproducer ===");
        char *syz_argv[] = { "/opt/syzkaller/syz-repro", NULL };
-       run_cmd(syz_argv);
-       emit_checkpoint("STAGE3_SYZKALLER");
+       failures += run_cmd("Syzkaller", syz_argv, 30);
+       failures += emit_checkpoint("STAGE3_SYZKALLER");
 
-       puts("=== All test stages complete ===");
+       puts(failures ? "=== HARNESS INCOMPLETE ==="
+                     : "=== All test stages complete ===");
        for (;;)
            pause();
        return 0;
@@ -404,19 +460,23 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
    ```sh
    aarch64-linux-gnu-gcc -static -O2 -o rootfs-alpine/init rootfs-alpine/init.c
    ( cd rootfs-alpine && find . | cpio -o -H newc ) | gzip > initramfs-alpine.cpio.gz
-   qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
+   # bash: preserve QEMU/watchdog failures through tee.
+   set -o pipefail
+   timeout --signal=TERM --kill-after=5s 30m \
+       qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
        -kernel arch/arm64/boot/Image -initrd initramfs-alpine.cpio.gz \
        -append 'console=ttyAMA0 nokaslr' 2>&1 | tee qemu-gcov.log
    ```
 
-   > This command passes **no `-smp`**, so the guest runs **single-core** (one vCPU);
-   > GCOV profiling makes the run slower than an uninstrumented boot. Without the
-   > ~2.7 GB LTP binaries the initramfs is ~7.4 MB, so `-m 1024M` is sufficient. On
-   > the reference host the four-stage harness completes in **~3.9 minutes**
-   > (dominated by the Stage 1 `/proc`/`/sys` traversal). Record cores and timing as
-   > evidence per [Section 10](#10-measurement-environment-core-count--timing-record).
-   > Wait for the `=== All test stages complete ===` line (all four
-   > `===GCOV_STAGE*_END===` markers present) before exiting QEMU with `Ctrl-a x`.
+   > This command passes **no `-smp`**, so the guest runs single-core with
+   > 1024 MiB RAM. Record timing per
+   > [Section 10](#10-measurement-environment-core-count--timing-record).
+   > For exploration, wait for all four `===GCOV_STAGE*_END===` markers and
+   > either final summary marker before exiting with `Ctrl-a x`. Retain failures.
+   > To claim a supported test gate passes, require the success marker and no
+   > watchdog, suite failure, kernel panic, or failed boot self-test. Review
+   > stress-ng's skips and Syzkaller's per-call errno trace. Exported coverage
+   > alone does not establish acceptance.
 
 ## 5. Host-Side Checkpoint Extraction & Differential Analysis
 
@@ -433,161 +493,191 @@ see [Section 2](#2-higher-altitude-levers--untried-coverage-extensions)):
        | grep -v '===' | tr -d '\r' | base64 -d > gcda-stage3-syzkaller.tar.gz
    ```
 
-2. **Reconstruct `.gcov` files from the exported `.gcda` (required before `diff_gcov.py`):**
-   The checkpoints contain runtime `.gcda` counters only. `gcov` needs each `.gcda`
-   placed next to its build-time `.gcno`, and it must run **with the kernel source
-   tree as the working directory** so the relative source paths inside the `.gcno`
-   (e.g. `lib/xarray.c`) resolve. If `gcov` is run from anywhere else it reports
-   `Runs:0` and emits empty coverage. Repeat per stage into its own output dir:
+2. **Reconstruct one gcov JSON inventory per compilation unit.** Match each
+   runtime `.gcda` with its build-time `.gcno` and run the compiler's matching
+   `aarch64-linux-gnu-gcov` **from the kernel tree root**. Source paths are
+   relative to that location. Use the standalone reconstruction tool [docs/minimal-linux/max-coverage/reconstruct_stage.py](./max-coverage/reconstruct_stage.py):
 
-   ```sh
-   # usage: reconstruct_stage <gcda-archive.tar.gz> <output-gcov-dir>
-   reconstruct_stage() {
-       archive="$1"; outdir="$2"; tree="$(pwd)"   # run this from the kernel tree root
-       tmp="$(mktemp -d)"; tar -xzf "$archive" -C "$tmp"
-       find "$tree" -name '*.gcda' -delete        # clear any previous stage
-       # place this stage's .gcda next to the matching in-tree .gcno
-       find "$tmp/sys/kernel/debug/gcov" -name '*.gcda' | while read -r g; do
-           rel="${g#$tmp/sys/kernel/debug/gcov}"
-           [ -f "${rel%.gcda}.gcno" ] && cp "$g" "$rel"
-       done
-       mkdir -p "$outdir"
-       # run gcov FROM THE TREE ROOT so source paths resolve, collect the .gcov
-       find "$tree" -name '*.gcda' | while read -r gcda; do
-           src="${gcda%.gcda}.c"; [ -f "$src" ] || continue
-           aarch64-linux-gnu-gcov -o "$(dirname "$gcda")" "$src" >/dev/null 2>&1 || true
-       done
-       mv -f "$tree"/*.gcov "$outdir"/ 2>/dev/null || true
-       rm -rf "$tmp"; find "$tree" -name '*.gcda' -delete
-   }
+   ```python
+   # reconstruct_stage.py
+   import argparse
+   import shutil
+   import subprocess
+   import tarfile
+   import tempfile
+   from pathlib import Path
 
-   reconstruct_stage gcda-stage0-boot.tar.gz      stage0_boot
-   reconstruct_stage gcda-stage1-procsys.tar.gz   stage1_procsys
-   reconstruct_stage gcda-stage2-stressng.tar.gz  stage2_stressng
-   reconstruct_stage gcda-stage3-syzkaller.tar.gz stage3_syzkaller
+   parser = argparse.ArgumentParser()
+   parser.add_argument("archive", type=Path)
+   parser.add_argument("output", type=Path)
+   args = parser.parse_args()
+   tree = Path.cwd().resolve()
+   if not (tree / "vmlinux").is_file():
+       parser.error("run from the matching isolated kernel build tree")
+   output = args.output.resolve()
+   output.mkdir(parents=True, exist_ok=False)
+   # Use a fresh output directory; never reuse another run's inventories.
+   for previous in tree.rglob("*.gcda"):
+       previous.unlink()
+   copied = []
+   try:
+       with tempfile.TemporaryDirectory() as temporary:
+           temporary = Path(temporary)
+           with tarfile.open(args.archive) as archive:
+               archive.extractall(temporary, filter="data")  # Python >= 3.12
+           debug_root = temporary / "sys/kernel/debug/gcov"
+           units = sorted(debug_root.rglob("*.gcda"))
+           if not units:
+               raise RuntimeError("checkpoint contains no gcda units")
+           for counters in units:
+               target = (Path("/") / counters.relative_to(debug_root)).resolve()
+               if not target.is_relative_to(tree):
+                   raise RuntimeError(f"wrong checkpoint tree: {target}")
+               if not target.with_suffix(".gcno").is_file():
+                   raise RuntimeError(f"missing matching gcno: {target}")
+               shutil.copyfile(counters, target)
+               copied.append(target)
+               if list(tree.glob("*.gcov.json.gz")):
+                   raise RuntimeError("move existing gcov JSON outputs first")
+               with (output / "gcov.log").open("a", encoding="utf-8") as log:
+                   subprocess.run(
+                       ["aarch64-linux-gnu-gcov", "--json-format",
+                        "-o", str(target.parent), str(target)],
+                       cwd=tree, stdout=log, stderr=log, check=True,
+                   )
+               generated = list(tree.glob("*.gcov.json.gz"))
+               if len(generated) != 1:
+                   raise RuntimeError(f"expected one JSON file: {target}")
+               destination = output / target.relative_to(tree).with_suffix(
+                   ".gcov.json.gz"
+               )
+               destination.parent.mkdir(parents=True, exist_ok=True)
+               shutil.move(generated[0], destination)
+   finally:
+       for target in copied:
+           target.unlink(missing_ok=True)
+   print(f"{len(copied)} units reconstructed")
    ```
 
-   > The `mv "$tree"/*.gcov` collection flattens by basename; headers shared across
-   > units (e.g. `spinlock.h.gcov`) collide, but `diff_gcov.py` keys on the
-   > `Source:` path recorded *inside* each `.gcov`, so the per-`(source, line)` set
-   > is still correct. For a strict per-unit audit (Section 7) keep the `.gcov` in place
-   > and parse it there instead of flattening.
+   ```sh
+   python3 reconstruct_stage.py gcda-stage0-boot.tar.gz stage0_boot
+   python3 reconstruct_stage.py gcda-stage1-procsys.tar.gz stage1_procsys
+   python3 reconstruct_stage.py gcda-stage2-stressng.tar.gz stage2_stressng
+   python3 reconstruct_stage.py gcda-stage3-syzkaller.tar.gz stage3_syzkaller
+   ```
 
-3. **Calculate cumulative coverage and marginal line additions:** Point `diff_gcov.py` at the per-stage directories produced above and calculate net new unique lines:
+   Each stage must contain the same runtime unit inventory for this monolithic
+   kernel. Missing units, invalid archives, gcov errors, or a zero denominator
+   invalidate the comparison. Check archive integrity with `tar -tzf` before
+   reconstruction.
+
+   **Do not flatten text `.gcov` outputs.** Repeated gcov invocations overwrite
+   shared-header basenames before collection; `Source:` metadata cannot recover
+   that discarded execution data. JSON retains all unit inventories and numeric
+   counts, including partial execution shown as `1*` in text output.
+
+3. **Union source lines and calculate cumulative coverage.** Save
+   `diff_gcov.py` beside the stage directories and run from the kernel tree.
+   It reports both the executable denominator and executed numerator:
 
    ```python
    # diff_gcov.py
-   import glob, os, sys
+   import gzip
+   import json
+   import os
+   from pathlib import Path
 
    def load_stage_lines(stage_dir):
        executed = set()
-       for gf in glob.glob(f"{stage_dir}/**/*.gcov", recursive=True):
-           curr_src = None
-           with open(gf, "r", errors="ignore") as f:
-               for line in f:
-                   parts = line.split(":", 2)
-                   if len(parts) < 2: continue
-                   c, num = parts[0].strip(), parts[1].strip()
-                   if num == "0" and len(parts) >= 3 and parts[2].startswith("Source:"):
-                       curr_src = parts[2][7:].strip()
-                   elif curr_src and c.isdigit() and int(c) > 0:
-                       executed.add((curr_src, int(num)))
-       return executed
+       executable = set()
+       reports = sorted(Path(stage_dir).rglob("*.gcov.json.gz"))
+       if not reports:
+           raise ValueError(f"no gcov inventories in {stage_dir}")
+       for report in reports:
+           with gzip.open(report, "rt", encoding="utf-8") as stream:
+               unit = json.load(stream)
+           for source in unit["files"]:
+               path = os.path.relpath(os.path.realpath(source["file"]))
+               for line in source["lines"]:
+                   key = (path, line["line_number"])
+                   executable.add(key)
+                   if line["count"] > 0:
+                       executed.add(key)
+       if not executable:
+           raise ValueError(f"zero executable denominator in {stage_dir}")
+       return executed, executable
 
-   s0 = load_stage_lines("stage0_boot")
-   s1 = load_stage_lines("stage1_procsys")
-   s2 = load_stage_lines("stage2_stressng")
-   s3 = load_stage_lines("stage3_syzkaller")
-
-   print(f"Stage 0 (Boot & Self-Tests): {len(s0)} lines")
-   print(f"Stage 1 (+ /proc & /sys):     {len(s1)} lines (+{len(s1 - s0)} net new lines from attribute traversal)")
-   print(f"Stage 2 (+ stress-ng):       {len(s2)} lines (+{len(s2 - s1)} net new lines from class ABI sweep)")
-   print(f"Stage 3 (+ Syzkaller):       {len(s3)} lines (+{len(s3 - s2)} net new lines from combinatorial + bad-exec)")
+   if __name__ == "__main__":
+       previous = set()
+       denominator = None
+       inventory = None
+       for stage in ("stage0_boot", "stage1_procsys",
+                     "stage2_stressng", "stage3_syzkaller"):
+           units = {report.relative_to(stage)
+                    for report in Path(stage).rglob("*.gcov.json.gz")}
+           if inventory is not None and units != inventory:
+               raise ValueError(f"runtime unit inventory changed at {stage}")
+           executed, executable = load_stage_lines(stage)
+           if denominator is not None and executable != denominator:
+               raise ValueError(f"executable inventory changed at {stage}")
+           if not previous <= executed:
+               raise ValueError(f"executed lines disappeared at {stage}")
+           print(
+               f"{stage}: {len(executed)} / {len(executable)} "
+               f"({100 * len(executed) / len(executable):.2f}%), "
+               f"+{len(executed - previous)} new lines"
+           )
+           previous = executed
+           denominator = executable
+           inventory = units
    ```
+
+   ```sh
+   python3 diff_gcov.py
+   ```
+
+   Partition by the normalized source path's first component for subsystem
+   tables. Count headers under their own paths once, and include `scripts/` and
+   `tools/` when generated or shared sources from those roots occur in the
+   linked kernel. These partition rows must sum to the whole-image totals.
 
 ## 6. Measured Multi-Stage Progression & Differential Table (tinyconfig)
 
-> **Measurement basis (all values measured with the real tools, not modeled):**
-> Every number below was produced by the `reconstruct_stage` + `diff_gcov.py`
-> pipeline in [Section 5](#5-host-side-checkpoint-extraction--differential-analysis)
-> against the GCOV-instrumented `tinyconfig` build from
-> [Section 3](#3-kernel-profiling-configuration) **exactly as written (networking
-> disabled)**, booted single-core under QEMU (see
-> [Section 10](#10-measurement-environment-core-count--timing-record)). Stage 3 ran a
-> **real `syz-prog2c`-generated** reproducer with a deliberate bad-exec (Section 4).
-> **LTP is not a stage here** — it was measured as fully subsumed and moved to
-> [Section 2](#2-higher-altitude-levers--untried-coverage-extensions).
->
-> Because this baseline has **no networking** (`CONFIG_NET=n`), the Netlink/traffic-
-> control sweep is **not part of this harness** — it needs `NET`/`INET`/sched and is
-> listed as a future extension in [Section 2](#2-higher-altitude-levers--untried-coverage-extensions).
-> Enabling it pulls the large `net/` tree (~112k executable lines) into the
-> instrumented set and changes the denominator; keep that as a separate, clearly
-> labeled run rather than mixing it into this baseline.
->
-> The **denominator is the total GCOV executable source lines** — every line
-> `gcov` reports as executed-or-`#####` across all `.gcda`-backed units,
-> deduplicated by `(source, line)`, **including inlined header lines**:
-> `201,125` for this NET-less build. (Compare the `143,167` `.gcno` basic-block
-> figure in
-> [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting);
-> they are different metrics — always state which you use.)
->
-> **Reproducibility caveat (verified).** These absolute executed-line counts and
-> the `201,125` denominator are **environment-sensitive** and will not reproduce
-> exactly on a different host/toolchain/payload — an independent re-run on the
-> same commit measured the same *shape* (Stage 0 + Stage 1 dominate; stress-ng
-> adds tens; the Syzkaller reproducer adds hundreds; subsystem ordering
-> `kernel > lib > mm > fs > drivers`) but whole-image absolutes roughly 15–20%
-> lower, because the set of `.gcda`-backed units that register at runtime varies
-> with timing on the single core. Treat the **progression shape and the stage
-> deltas' relative magnitudes** as the reproducible result and the exact line
-> counts as run-specific; regenerate them for your own run rather than citing
-> these as acceptance targets. By contrast, the **build**-side figures (DWARF
-> SLOC and raw `Image` bytes in Sections 8 and 9.2) are deterministic and *do*
-> reproduce exactly.
->
-> **What the stages actually move.** The single-core boot self-tests (Stage 0) and
-> the `/proc`/`/sys` traversal (Stage 1, **+7,684**) dominate. stress-ng adds **+89**
-> and the Syzkaller reproducer adds **+202** (its `memfd`/`mmap`/`madvise`/`mlock`,
-> truncate, and bad-`execveat` sequence reaches `mm/`, `fs/`, and the exec-failure
-> paths). The final whole-image coverage (**74,452 / 37.02%**) matches a with-LTP run
-> to within noise (74,666) — confirming LTP adds nothing stress-ng + Syzkaller do not
-> on this kernel (Section 2). Structural coverage here is self-test- and `/proc`-bound;
-> see [Section 7](#7-identifying-uncovered-built-areas--pruning-candidates) for what
-> stays unreached and why.
+The corrected Sections 3–5 were re-run on 2026-10-18 with the toolchain in
+Hello Init Section 7.1. All four checkpoints exported with 609 unit inventories
+per stage and no class watchdog termination. Each stress-ng class returned
+failure for unsupported APIs or resource limits; the launcher reported
+`HARNESS INCOMPLETE`. Syzkaller's memfd, mapping, and advice calls succeeded,
+and malformed `execveat()` returned `ENOEXEC`.
 
-Per-stage, per-subsystem **executed** lines (cumulative; whole-image row also shows
-the net-new delta and % of the `201,125` denominator):
+These figures measure **coverage exploration with suite failures**, not a
+passing test gate. The denominator is the union of executable source lines
+across all unit inventories, including headers and generated sources.
+Regenerate the table for each configuration and payload set.
 
-| Subsystem / Execution Stage | Total Exec SLOC | Stage 0: Boot & Self-Tests | Stage 1: + `/proc`/`/sys` | Stage 2: + `stress-ng` | Stage 3: + Syzkaller (incl. bad-exec) | Primary Paths Activated |
-| :--- | ---: | ---: | ---: | ---: | ---: | :--- |
-| **Overall Kernel (Whole-Image)** | **201,125** | **66,477**<br>33.05% | **74,161**<br>[+7,684] 36.87% | **74,250**<br>[+89] 36.92% | **74,452**<br>[+202] 37.02% | **Cumulative whole-system execution** |
-| `kernel/` (Core OS & Sched) | 46,094 | 15,754 | 17,377 | 17,399 | 17,414 | Locking, signals, timers, futexes, credentials |
-| `drivers/` (Built-in Drivers) | 45,877 | 7,526 | 8,584 | 8,585 | 8,585 | sysfs attrs, TTY, UART, OF |
-| `fs/` (VFS & Filesystems) | 31,694 | 8,233 | 11,616 | 11,661 | 11,832 | seq_file show, mounts, path walk, exec, binfmt |
-| `lib/` (Core Utilities) | 29,154 | 13,732 | 14,152 | 14,152 | 14,152 | Bitmaps, string helpers, sort, xarray/maple tree |
-| `mm/` (Memory Management) | 27,161 | 10,065 | 10,819 | 10,828 | 10,842 | Page faults, mmap, mprotect, mincore, memfd |
-| `include/` (Inlined Headers) | 10,035 | 6,272 | 6,623 | 6,635 | 6,637 | Inlined helpers deduplicated across units |
-| `arch/arm64/` (Architecture) | 8,255 | 3,817 | 3,891 | 3,891 | 3,891 | Traps, exceptions, syscall entry/exit, context switch |
-| `init/` (Boot & Initialization) | 1,244 | 656 | 656 | 656 | 656 | Early boot, calibrate delay, mounts, initramfs |
-| `security/` (LSM) | 413 | 95 | 116 | 116 | 116 | Capability & LSM hook stubs |
+| Subsystem / Execution Stage      | Total Exec SLOC | Stage 0: Boot & Self-Tests |     Stage 1: + `/proc`/`/sys` |         Stage 2: + `stress-ng` | Stage 3: + Syzkaller (incl. bad-exec) | Primary Paths Activated                               |
+| :------------------------------- | --------------: | -------------------------: | ----------------------------: | -----------------------------: | ------------------------------------: | :---------------------------------------------------- |
+| **Overall Kernel (Whole-Image)** |     **205,463** |       **67,087**<br>32.65% | **74,800**<br>[+7,713] 36.41% | **92,964**<br>[+18,164] 45.25% |            **93,025**<br>[+61] 45.28% | **Cumulative whole-system execution**                 |
+| `kernel/` (Core OS & Sched)      |          47,822 |                     15,969 |                        17,688 |                         23,051 |                                23,056 | Locking, signals, timers, futexes, credentials        |
+| `drivers/` (Built-in Drivers)    |          45,883 |                      7,511 |                         8,508 |                          9,939 |                                 9,939 | sysfs attrs, TTY, UART, OF                            |
+| `fs/` (VFS & Filesystems)        |          31,742 |                      8,268 |                        11,692 |                         17,622 |                                17,642 | seq_file show, mounts, path walk, exec, binfmt        |
+| `lib/` (Core Utilities)          |          29,154 |                     13,736 |                        14,105 |                         14,459 |                                14,459 | Bitmaps, string helpers, sort, xarray/maple tree      |
+| `mm/` (Memory Management)        |          29,095 |                     10,202 |                        10,949 |                         14,675 |                                14,704 | Page faults, mmap, mprotect, mincore, memfd           |
+| `include/` (Inlined Headers)     |          10,566 |                      6,532 |                         6,892 |                          7,711 |                                 7,718 | Inlined helpers deduplicated across units             |
+| `arch/arm64/` (Architecture)     |           8,346 |                      3,791 |                         3,867 |                          4,348 |                                 4,348 | Traps, exceptions, syscall entry/exit, context switch |
+| `init/` (Boot & Initialization)  |           1,244 |                        656 |                           656 |                            656 |                                   656 | Early boot, calibrate delay, mounts, initramfs        |
+| `security/` (LSM)                |             413 |                         95 |                           116 |                            176 |                                   176 | Capability & LSM hook stubs                           |
+| `scripts/` and `tools/`          |           1,198 |                        327 |                           327 |                            327 |                                   327 | Generated/shared sources linked into the kernel       |
 
-> **Reading the table:** cells are **cumulative executed lines** at the end of each
-> stage (a value that does not grow from one stage to the next means that stage
-> reached no new lines in that subsystem). The whole-image row is the deduplicated
-> ground truth; the per-subsystem `Total Exec SLOC` figures sum to more than it
-> because `include/` inlines are attributed both to their own row and, through
-> inlining, into the units that include them. Per-subsystem percentages against each
-> `Total Exec SLOC` are easy to derive (e.g. final `kernel/` = 17,414 / 46,094 =
-> 37.8%); they are omitted from the cells to keep the stage-by-stage deltas readable.
+Cells are cumulative executed lines. Source-path partitions, including the
+`scripts/` and `tools/` row, sum to the whole-image totals; header lines are
+counted once under their own paths.
 
 ## 7. Identifying Uncovered Built Areas & Pruning Candidates
 
 Whole-kernel GCOV profiling directly records execution counts in `.gcda` files,
-while DWARF SLOC (`linked.json`) establishes the ground truth of what actually
-occupies space in the final `vmlinux` ELF image. Combining both provides an exact
-audit of linked code that remained unreached during execution.
+while DWARF SLOC (`linked.json`) estimates source lines represented in the final
+`vmlinux`. Combining both ranks linked code with no observed execution.
 
 ### 7.1 How `.gcda` Files and DWARF SLOC Complement Each Other
 
@@ -601,56 +691,50 @@ audit of linked code that remained unreached during execution.
   discards unreferenced objects or sections during the final link. Furthermore,
   header inlines (e.g. `include/linux/spinlock.h`) appear duplicated across hundreds
   of `.gcda` files. `linked.json` (from `scripts/kernel-sloc --report linked.json dwarf vmlinux`)
-  identifies only the source lines physically linked into `vmlinux` and deduplicates inlines.
+  estimates source lines linked into `vmlinux` and deduplicates inlines.
 
 $$\text{Unreached Linked SLOC} = \text{Linked DWARF SLOC } (\texttt{linked.json}) \setminus \text{Executed GCOV Lines}$$
 
 ### 7.2 Methods for Auditing Uncovered Code
 
-- **Direct `.gcda` Scan for 0% Compilation Units:** Quickly identify built units
-  where no functions were called:
+- **Per-unit scan for zero execution:** Use the retained final-stage JSON
+  inventories, so missing counters cannot be mistaken for zero execution:
 
-  ```sh
-  find . -name "*.gcda" | while read -r gcda; do
-      src="${gcda%.gcda}.c"
-      [ -f "$src" ] || continue
-      aarch64-linux-gnu-gcov -o "$(dirname "$gcda")" "$src" > /dev/null 2>&1
-      base="$(basename "$src").gcov"
-      if [ -f "$base" ]; then
-          if ! grep -q '^[[:space:]]*[1-9]' "$base"; then
-              echo "Uncovered (0%): $src"
-          fi
-          rm -f "$base"
-      fi
-  done
+  ```python
+  import gzip
+  import json
+  from pathlib import Path
+
+  for report in sorted(Path("stage3_syzkaller").rglob("*.gcov.json.gz")):
+      with gzip.open(report, "rt", encoding="utf-8") as stream:
+          unit = json.load(stream)
+      counts = [line["count"] for source in unit["files"]
+                for line in source["lines"]]
+      if counts and not any(count > 0 for count in counts):
+          print(f"No observed execution: {report}")
   ```
 
-- **DWARF-Filtered Priority Ranking:** Cross-reference `linked.json` against `.gcov`
+- **DWARF-Filtered Priority Ranking:** Cross-reference `linked.json` against
+  the final-stage gcov JSON union
   to rank source files by unreached lines physically present in `vmlinux`:
 
   ```python
-  import glob, json, os
+  import json
+  import os
   from collections import defaultdict
+  from diff_gcov import load_stage_lines
 
-  with open("linked.json") as f:
+  with open("linked.json", encoding="utf-8") as f:
       dwarf = json.load(f)
   dwarf_lines = defaultdict(set)
   for entry in dwarf.get("source_lines", []):
-      fpath = os.path.relpath(entry["file"], os.getcwd())
+      fpath = os.path.relpath(os.path.realpath(entry["file"]))
       dwarf_lines[fpath].add(entry["line"])
 
+  executed, executable = load_stage_lines("stage3_syzkaller")
   executed_lines = defaultdict(set)
-  for gf in glob.glob("**/*.gcov", recursive=True):
-      curr_src = None
-      with open(gf, "r", errors="ignore") as f:
-          for line in f:
-              parts = line.split(":", 2)
-              if len(parts) < 2: continue
-              c, num = parts[0].strip(), parts[1].strip()
-              if num == "0" and len(parts) >= 3 and parts[2].startswith("Source:"):
-                  curr_src = parts[2][7:].strip()
-              elif curr_src and c.isdigit() and int(c) > 0:
-                  executed_lines[curr_src].add(int(num))
+  for source, line in executed:
+      executed_lines[source].add(line)
 
   ranked = []
   for fpath, lines in dwarf_lines.items():
@@ -663,6 +747,10 @@ $$\text{Unreached Linked SLOC} = \text{Linked DWARF SLOC } (\texttt{linked.json}
       print(f"{fpath:<40} | {total:<12} | {unreached:<10} | {pct:5.1f}%")
   ```
 
+  Run from the matching kernel tree and use only the final checkpoint for that
+  build. Unioning earlier or pre-pruning directories into the final audit can
+  conceal removals or change the workload scope.
+
 ### 7.3 High-Impact Linked Unreached Targets (tinyconfig Audit)
 
 Cross-referencing `.gcda` data with `linked.json` on the `tinyconfig` build reveals
@@ -671,38 +759,35 @@ two fundamentally distinct categories of unreached code across testing tools:
 1. **Active API & Edge-Case Units (reachable by the workload tools):** Units like
    `fs/select.c`, `mm/mincore.c`, and data structures in `lib/` are unexercised under
    simple throughput load, but activate once a syscall-boundary/validation payload (a
-   Syzkaller corpus, or LTP on a larger config) invokes the relevant syscalls.
-2. **Structural & Hardware Deadweight (Never moves across any testing tool):** Drivers
-   for non-existent hardware (e.g. GICv3 ITS, ALPS mouse), inactive console modes (VT),
-   or unused decompressors (ZSTD) can never be reached by userspace test tools because
-   their triggering hardware device tree nodes or data formats do not exist at runtime.
+   Syzkaller corpus) invokes the relevant syscalls.
+2. **Structural & Hardware Deadweight:** Drivers for non-existent hardware
+   (GICv3 ITS, ALPS mouse) and unused decompressors (ZSTD) remain unreached in
+   this workload. VT executes during console initialization and is only
+   partially unreached.
 
-The `Linked SLOC` column is the measured DWARF line count for each unit from
-`linked.json`; the `Multi-Suite %unreached` column is measured from the final
-cumulative (Stage 3, Syzkaller) `.gcov` of the NET-less stress-ng + Syzkaller harness. The exact "moved" percentages depend on which specific paths
-those payloads drive, so treat the categories (deadweight vs. API-reachable) as
-the stable finding and regenerate the percentages for your payload set.
+The `Linked SLOC` and `%unreached` columns use the corrected baseline's final
+checkpoint and matching `linked.json`. They describe the exploration run with
+suite failures from Section 6.
 
-| Subsystem | Linked Source Unit | Linked SLOC (measured) | Multi-Suite %unreached (measured) | Classification & Pruning Action |
-| :--- | :--- | :--- | :--- | :--- |
-| **`drivers/`** | `drivers/irqchip/irq-gic-v3-its.c`<br>`drivers/tty/vt/vt.c`<br>`drivers/input/mouse/alps.c` | 1,881 lines<br>1,966 lines<br>1,354 lines | 100% unreached<br>**87.3% unreached** (console init touches it — *not* fully dead)<br>100% unreached | **Hardware/Driver Deadweight:** GICv3 ITS and ALPS mouse have no QEMU-virt node and stay 100% unreached; prune with `-d MOUSE_PS2_ALPS` etc. VT is mostly-but-not-fully dead, so verify before `-d VT`. |
-| **`lib/`** | `lib/zstd/decompress/*`<br>`lib/maple_tree.c`<br>`lib/xarray.c` | ~876 lines<br>2,145 lines<br>662 lines | 100% unreached<br>**20.6% unreached**<br>**27.9% unreached** | **Codec vs Data Structures:** ZSTD decompressor unused (initramfs is gzip); `TEST_MAPLE_TREE`/`TEST_XARRAY` self-tests exercised most of the maple tree & xarray. |
-| **`fs/`** | `fs/select.c`<br>`fs/pnode.c`<br>`fs/fsopen.c` | 387 lines<br>276 lines<br>195 lines | **75.7% unreached**<br>100% unreached<br>100% unreached | **API Invocation:** `select()` paths are reachable by a syscall-boundary payload (this `select.c` figure was measured during an LTP-era audit); advanced mount APIs (`fsopen`, `pnode`) stay idle and prunable. |
-| **`mm/`** | `mm/mincore.c`<br>`mm/dmapool.c` | 82 lines<br>146 lines | 100% unreached<br>100% unreached | **Syscall vs Internal Helper:** `mincore()` was called but its executable DWARF lines did not register as covered in this run; DMA pool allocators remain uncalled. |
-| **`kernel/`** | `kernel/futex/pi.c`<br>`kernel/irq/msi.c` | 309 lines<br>538 lines | 100% unreached<br>100% unreached | **Locking vs Hardware Routing:** the real `syz-prog2c` corpus used here does not drive PI-futex contention (so `futex/pi.c` stayed unreached); a richer corpus or a live `syz-fuzzer` is needed. MSI routing remained unprobed. |
+| Subsystem      | Linked Source Unit                                                                          | Linked SLOC (measured)  | Multi-Suite %unreached (measured) | Classification & Pruning Action                                                         |
+| :------------- | :------------------------------------------------------------------------------------------ | :---------------------- | :-------------------------------- | :-------------------------------------------------------------------------------------- |
+| **`drivers/`** | `drivers/irqchip/irq-gic-v3-its.c`<br>`drivers/tty/vt/vt.c`<br>`drivers/input/mouse/alps.c` | 1,881<br>1,966<br>1,354 | 100%<br>87.2%<br>100%             | ITS and ALPS hardware are absent; VT runs during initialization. Re-test after pruning. |
+| **`lib/`**     | `lib/zstd/decompress/*`<br>`lib/maple_tree.c`<br>`lib/xarray.c`                             | 2,232<br>2,145<br>662   | 100%<br>19.3%<br>27.8%            | Gzip leaves ZSTD unused; self-tests and the workload exercise the data structures.      |
+| **`fs/`**      | `fs/select.c`<br>`fs/pnode.c`<br>`fs/fsopen.c`                                              | 387<br>276<br>195       | 28.4%<br>92.0%<br>100%            | Class exploration reaches select and some namespace paths; fsopen remains unobserved.   |
+| **`mm/`**      | `mm/mincore.c`<br>`mm/dmapool.c`                                                            | 85<br>146               | 56.5%<br>100%                     | mincore now executes; DMA pool helpers remain unobserved.                               |
+| **`kernel/`**  | `kernel/futex/pi.c`<br>`kernel/irq/msi.c`                                                   | 309<br>538              | 100%<br>100%                      | PI contention and MSI routing remain gaps in this baseline run.                         |
 
-> **Observed vs. earlier notes:** `vt.c` is **not** 100% dead under this harness
-> (console initialization reaches ~12.7% of it), and `fs/select.c`/`kernel/futex/pi.c`
-> coverage is sensitive to the exact LTP/Syzkaller payloads. This is the expected
-> behavior of a minimal deterministic payload set; swapping in the full LTP suite
-> or a live `syz-fuzzer` (Section 2) moves these numbers further.
+GICv3 ITS and PI futex remain linked after Section 8 pruning; the pruned
+exploration touches one PI-futex line. Recompute each audit from its own final
+checkpoint.
 
 ### 7.4 Connecting Findings to Kconfig Pruning
 
 > **Pruning Decision Framework:**
-> 1. **Hardware / Device deadweight:** Drivers for peripherals that do not physically exist on your target board (e.g. GICv3 ITS, ALPS mouse, VT console). *Action:* Immediate prune (`-d`).
-> 2. **Redundant codecs & format parsers:** Codecs compiled in by default when the workload standardizes on one format (e.g. ZSTD, LZ4, LZO when initramfs uses gzip). *Action:* Immediate prune (`-d`).
-> 3. **Workload-scoped POSIX APIs:** Kernel abstractions (e.g. `epoll`, `io_uring`, `sysvipc`, `timerfd`) unused by your application binary. *Action:* Prune cautiously after validating workload syscall traces.
+>
+> 1. **Hardware / Device deadweight:** Drivers for peripherals absent from the target (e.g. GICv3 ITS, ALPS mouse). _Action:_ Prune (`-d`) and re-test. Check console requirements separately before pruning VT.
+> 2. **Redundant codecs & format parsers:** Extra codecs when all required inputs use gzip. _Action:_ Prune (`-d`) and re-test.
+> 3. **Workload-scoped POSIX APIs:** Kernel abstractions (e.g. `epoll`, `io_uring`, `sysvipc`, `timerfd`) unused by your application binary. _Action:_ Prune cautiously after validating workload syscall traces.
 
 Once high-impact unreached linked units are identified:
 
@@ -716,26 +801,23 @@ Once high-impact unreached linked units are identified:
 
 ### 7.5 Can More Coverage Be Driven? (Gap → Tool Mapping)
 
-A fair question after Section 6 is: *stress-ng adds only +89 whole-image lines and
-the Syzkaller reproducer +202 — can these tools cover more, or is the remaining
-unreached code out of their reach?* Both. The measured plateau is because
-the deterministic stages re-reach code the boot self-tests and `/proc`/`/sys`
-traversal already hit. Getting further requires matching each **category of
-unreached code** to the tool (or config change) that can actually move it. Build the
+The corrected run adds +18,164 lines from stress-ng and +61 from Syzkaller.
+Further gains depend on the enabled APIs and workload payload. Match each category of unreached code to a tool or
+configuration change that can exercise it. Build the
 unreached list with the [Section 7.2](#72-methods-for-auditing-uncovered-code)
 scripts, then map it:
 
-| Unreached category (from the audit) | Example units | Can a test tool reach it? | What actually moves it |
-| :--- | :--- | :--- | :--- |
-| Workload-reachable error/edge paths | `fs/select.c`, `mm/mincore.c`, maple tree/xarray splits | **Yes** | Already mostly hit by self-tests; a **live `syz-fuzzer`** (KCOV-guided mutation, not static replay) reaches the deep residue. Static corpus replay (as here) does not. |
-| Deeper multi-syscall state machines | `kernel/futex/pi.c`, io_uring rings, epoll | **Yes, with config** | `syz-fuzzer` **plus** the governing `CONFIG_*` enabled (e.g. `FUTEX`/`RT_MUTEXES`, `IO_URING`, `EPOLL`); then fuzz time-boxed. |
-| Filesystem internals (journaling, extents) | ext4/overlayfs paths | **Yes, with config + driver** | `CONFIG_BLOCK` + a filesystem driver + `fsstress`/`fsx` on a loop-mounted image (Section 2 lever 2). |
-| Networking stack | `net/*` | **Yes, with config** | `CONFIG_NET` + the Netlink/`tc`/`nft` sweep and socket fuzzing (Section 2 lever 3). Out of scope for this NET-less baseline. |
-| Hardware/driver deadweight | GICv3 ITS, ALPS mouse, VT console | **No** | No userspace tool can reach drivers whose device-tree node or hardware does not exist in QEMU `virt`. **Prune**, don't test (Section 8). |
-| Unused codecs/format parsers | ZSTD/LZ4/LZO decompressors | **No** | The data format never occurs at runtime (initramfs is gzip). **Prune** (Section 8). |
+| Unreached category (from the audit)        | Example units                                           | Can a test tool reach it?     | What actually moves it                                                                                                                                                 |
+| :----------------------------------------- | :------------------------------------------------------ | :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workload-reachable error/edge paths        | `fs/select.c`, `mm/mincore.c`, maple tree/xarray splits | **Yes**                       | Already mostly hit by self-tests; a **live `syz-fuzzer`** (KCOV-guided mutation, not static replay) reaches the deep residue. Static corpus replay (as here) does not. |
+| Deeper multi-syscall state machines        | `kernel/futex/pi.c`, io_uring rings, epoll              | **Yes, with config**          | `syz-fuzzer` **plus** the governing `CONFIG_*` enabled (e.g. `FUTEX`/`RT_MUTEXES`, `IO_URING`, `EPOLL`); then fuzz time-boxed.                                         |
+| Filesystem internals (journaling, extents) | ext4/overlayfs paths                                    | **Yes, with config + driver** | `CONFIG_BLOCK` + a filesystem driver + `fsstress`/`fsx` on a loop-mounted image (Section 2 lever 2).                                                                   |
+| Networking stack                           | `net/*`                                                 | **Yes, with config**          | `CONFIG_NET` + the Netlink/`tc`/`nft` sweep and socket fuzzing (Section 2 lever 3). Out of scope for this NET-less baseline.                                           |
+| Hardware/console candidates                | GICv3 ITS, ALPS mouse, VT console                       | **Target-dependent**          | Absent devices remain unreached here; VT still runs during initialization. Review target requirements, prune candidates, and re-test (Section 8).                      |
+| Unused codecs/format parsers               | ZSTD/LZ4/LZO decompressors                              | **No**                        | The data format never occurs at runtime (initramfs is gzip). **Prune** (Section 8).                                                                                    |
 
 The practical loop: (1) generate the unreached list; (2) split it into
-*tool-reachable* vs *structural deadweight*; (3) for tool-reachable gaps, add the
+_tool-reachable_ vs _structural deadweight_; (3) for tool-reachable gaps, add the
 enabling `CONFIG_*` and the matching tool (foremost a **live `syz-fuzzer`** run,
 Section 2 lever 1) in a separate, clearly labeled measurement; (4) for deadweight,
 prune it (Section 8) so it stops diluting the denominator. On this minimal NET-less
@@ -743,8 +825,8 @@ kernel the largest single lever is live fuzzing; the second is pruning deadweigh
 
 ## 8. Iterative Kconfig Pruning & Post-Minimization Coverage Impact
 
-By acting on the findings from the DWARF audit, we disable the confirmed structural
-deadweight options:
+By acting on the findings from the DWARF audit, we disable the unneeded terminal,
+input, and decompression options:
 
 ```sh
 ./scripts/config \
@@ -754,10 +836,12 @@ deadweight options:
     -d RD_BZIP2 -d RD_LZMA -d RD_XZ -d RD_LZO -d RD_LZ4 -d RD_ZSTD \
     -d POWER_SUPPLY
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
 make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 ```
 
 > **Verified prune behavior (check each symbol after `olddefconfig`):**
+>
 > - `VT`, `RD_ZSTD` (and the other `RD_*` codecs), `INPUT_MOUSE`, `SERIO` disable
 >   cleanly and drop their object files from the link.
 > - **`FUTEX_PI` cannot be disabled with `-d FUTEX_PI`.** It is a non-prompt
@@ -769,33 +853,32 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 > - `POWER_SUPPLY` may remain `y` if another enabled symbol selects it; confirm
 >   with `./scripts/config -s POWER_SUPPLY` rather than assuming the `-d` took.
 >
-> Measured on this tree, the prune reduced the GCOV build from **162,092 → 146,202
-> DWARF SLOC** and the raw `Image` from **7,501,832 → 6,807,560 bytes**. Always
+> With the corrected workload prerequisites, the prune reduces the GCOV build
+> from **164,992 → 149,102 DWARF SLOC** and the raw `Image` from
+> **7,596,040 → 6,901,768 bytes** (GCC 13.3.0, binutils 2.42). Always
 > re-boot the pruned image and re-run the harness; pruning changes the denominator,
 > so re-generate the coverage table rather than scaling the old one.
 
 ### 8.1 Post-Pruning Multi-Stage Coverage Progression
 
-Eliminating unreached drivers, virtual terminal consoles, and unused decompression
-libraries directly reduces the denominator of linked executable code. The row below
-is **illustrative of the mechanism** (removing dead code raises the coverage ratio
-while the executed-line numerator is largely unchanged); regenerate the exact
-figures for your pruned build with the Section 5 pipeline:
+Use the same final-stage workload and gcov JSON source-line denominator before
+and after pruning. The corrected Section 4 exploration gives:
 
-| Subsystem / Metric | Pre-Pruning Cumulative<br>(All Stages / Best Coverage) | Post-Pruning Cumulative<br>(All Stages / Best Coverage) | Net Coverage Gain (%) | Deadweight Removed & Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| **Overall Kernel (Whole-Image)** *(illustrative, `.gcno` metric)* | 34.01% (48,690 / 143,167) | **36.59% (44,820 / 122,500)** | **+2.58% increase** | Mechanism illustration on the `.gcno` basic-block metric; regenerate with the Section 5 pipeline for your pruned build (which uses the `.gcov` source-line denominator). |
-| `init/` (Boot & Initialization) | 49.52% (514 / 1,038) | **53.10% (551 / 1,038)** | **+3.58% increase** | Unchanged init code; higher reach relative to core |
-| `mm/` (Memory Management) | 46.57% (9,120 / 19,583) | **48.20% (9,120 / 18,920)** | **+1.63% increase** | Removed unreached swap & compaction allocators |
-| `kernel/` (Core OS & Sched) | 39.39% (14,520 / 36,860) | **42.10% (14,520 / 34,480)** | **+2.71% increase** | Core sched/locking numerator unchanged; denominator shrinks from other prunes. (Note: `FUTEX_PI` is **not** removed by `-d FUTEX_PI` — see Section 8; drop `FUTEX`/`RT_MUTEXES` to remove PI-futex code.) |
-| `arch/arm64/` (Architecture) | 40.14% (2,360 / 5,880) | **41.50% (2,360 / 5,710)** | **+1.36% increase** | Pruned unneeded debug traps & MTE swap stubs |
-| `fs/` (VFS & Filesystems) | 44.70% (9,640 / 21,567) | **46.80% (9,550 / 20,410)** | **+2.10% increase** | Pruned unused devpts / pseudo-terminal interfaces |
-| `lib/` (Core Utility Libraries) | 32.99% (5,980 / 18,128) | **35.40% (5,388 / 15,220)** | **+2.41% increase** | Pruned unreached ZSTD, LZ4, LZO, and BZIP2 codecs |
-| `drivers/` (Built-in Drivers) | 15.69% (5,780 / 36,836) | **18.90% (5,050 / 26,722)** | **+3.21% increase** | Pruned unused VT console, PS/2 mouse, and HID drivers |
+| Subsystem / Metric               | Pre-Pruning Cumulative<br>(All Stages / Best Coverage) | Post-Pruning Cumulative<br>(All Stages / Best Coverage) | Net Coverage Gain (%)    | Deadweight Removed & Notes                                         |
+| :------------------------------- | :----------------------------------------------------- | :------------------------------------------------------ | :----------------------- | :----------------------------------------------------------------- |
+| **Overall Kernel (Whole-Image)** | 45.28% (93,025 / 205,463)                              | 49.16% (91,594 / 186,331)                               | +3.88 percentage points  | Source-line denominator falls by 19,132; numerator falls by 1,431. |
+| `init/`                          | 52.73% (656 / 1,244)                                   | 52.73% (656 / 1,244)                                    | 0.00 percentage points   | No init code removed                                               |
+| `mm/`                            | 50.54% (14,704 / 29,095)                               | 50.43% (14,671 / 29,095)                                | -0.11 percentage points  | No swap or compaction removed                                      |
+| `kernel/`                        | 48.21% (23,056 / 47,822)                               | 48.17% (23,035 / 47,822)                                | -0.04 percentage points  | PI futex remains linked                                            |
+| `arch/arm64/`                    | 52.10% (4,348 / 8,346)                                 | 51.99% (4,339 / 8,346)                                  | -0.11 percentage points  | No architecture code removed                                       |
+| `fs/`                            | 55.58% (17,642 / 31,742)                               | 55.72% (17,543 / 31,485)                                | +0.14 percentage points  | Removed devpts interfaces                                          |
+| `lib/`                           | 49.59% (14,459 / 29,154)                               | 60.27% (14,458 / 23,987)                                | +10.68 percentage points | Removed unused decompressors                                       |
+| `drivers/`                       | 21.66% (9,939 / 45,883)                                | 26.93% (8,712 / 32,348)                                 | +5.27 percentage points  | Removed VT/input/HID infrastructure                                |
 
-> **Accounting & Cascade Notes:**
-> - **Driver Infrastructure Cascade:** Pruning `CONFIG_VT`, `CONFIG_INPUT`, and `CONFIG_HID` cascades through entire dependent driver subsystems (including virtual terminals, console keymaps, serio buses, input device interfaces, and HID core), eliminating 10,114 lines of linked driver infrastructure beyond the three specific unit files audited in Section 7.
-> - **Unchanged Executed Numerators:** For subsystems like `mm/` (9,120 executed lines) and `kernel/` (14,520 executed lines), the executed line count remains unchanged between pre- and post-pruning because only dead/unreached code paths were removed; the resulting coverage percentage increases purely from the reduction in total linked denominator.
+Both runs report failures in all five stress-ng classes with no class watchdog
+termination. These are exploration measurements, not full-suite acceptance.
+Pruning reduces the denominator; execution also varies with removed paths and
+workload timing.
 
 ### 8.2 Next Iteration Targets for Further Minimization
 
@@ -815,7 +898,7 @@ areas for investigation in the next pruning round:
 
 ## 9. Cross-Reference with Research Configurations & Advanced Minimization Targets
 
-*(For SLOC accounting definitions across baseline, instrumented, and research profiles, see [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting)).*
+_(For SLOC accounting definitions across baseline, instrumented, and research profiles, see [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting))._
 
 To take the next leap in kernel minimization, we can cross-reference our Section 7 audit findings with the published minimal research profiles analyzed in
 [Kernel Config Analysis](KernelConfigAnalysis.md) and the aerospace framing in
@@ -846,8 +929,13 @@ remaining unexercised core OS, pseudo-filesystem, and memory management subsyste
     -d OF_OVERLAY \
     -e CRC32_BIT -d CRC32_SLICEBY8
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
 make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 ```
+
+This research recipe remains unmeasured. Disabling `SHMEM` changes memfd backing
+and shared-memory behavior even if `MEMFD_CREATE` remains enabled. Re-test the
+corpus and label changed results rather than assuming its success paths survive.
 
 ### 9.2 Macro Minimization & Coverage Progression Across Configurations
 
@@ -859,18 +947,21 @@ linked codebase while driving whole-kernel coverage percentages into the upper t
 > and [Section 8](#8-iterative-kconfig-pruning--post-minimization-coverage-impact)). The
 > **Research Profile Synthesis** row uses the Section 9.1 recipe and is a **target for the
 > next iteration — it was not booted/measured in this run** (its values are marked
-> `~`). Coverage percentages here use the `.gcov` source-line denominator defined in
+> `~`). Coverage percentages use the gcov JSON source-line union defined in
 > [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting);
 > regenerate per row because each prune changes the denominator.
 
-| Configuration Profile | Linked DWARF SLOC | Raw Image Size | Measured in this run? | Aerospace / Verification Notes |
-| :--- | :--- | :--- | :--- | :--- |
-| **`defconfig` Baseline** | 1,959,778 lines | 96.7 MiB | yes (build+boot) | Monolithic general-purpose baseline; vast majority of code is unreached (~4–7% GCOV). |
-| **`tinyconfig` Step 0 Baseline (GCOV)** | 162,092 lines (GCOV build) | 7.5 MiB (GCOV `Image`) | yes | Minimal bootable baseline + GCOV instrumentation; 33.10%→37.99% across the harness stages (Section 6). |
-| **`tinyconfig` Initial Pruning (Section 8)** | 146,202 lines (GCOV build) | 6.8 MiB (GCOV `Image`) | yes (build) | Disabled unreached drivers, VT console, and extra `RD_*` codecs; coverage ratio rises as dead code leaves the denominator. |
-| **`tinyconfig` + Research Profile Synthesis** | **~118,500 lines (target)** | **~2.1 MiB (target)** | **no — next iteration** | **Ultra-minimal profile (Section 9.1):** replaces multi-table CRCs, disables unneeded POSIX IPC/APIs, removes compaction/swap. Build, boot, and re-measure before citing. |
+| Configuration Profile                         | Linked DWARF SLOC           | Raw Image Size            | Measured in this run?   | Aerospace / Verification Notes                                                                                                                                            |
+| :-------------------------------------------- | :-------------------------- | :------------------------ | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **`defconfig` Baseline**                      | 1,959,778 lines             | 101,362,176 B (96.67 MiB) | yes (build+boot)        | Uninstrumented monolithic baseline; no whole-kernel GCOV percentage measured for this row.                                                                                |
+| **`tinyconfig` Step 0 Baseline (GCOV)**       | 164,992 lines               | 7,596,040 B (7.24 MiB)    | yes (build+exploration) | Corrected prerequisites; 32.65% → 45.28% execution coverage, with suite failures (Section 6).                                                                             |
+| **`tinyconfig` Initial Pruning (Section 8)**  | 149,102 lines               | 6,901,768 B (6.58 MiB)    | yes (build+exploration) | Removed VT/input/HID infrastructure and extra codecs; 49.16% final execution coverage, with suite failures.                                                               |
+| **`tinyconfig` + Research Profile Synthesis** | **~118,500 lines (target)** | **~2.1 MiB (target)**     | **no — next iteration** | **Ultra-minimal profile (Section 9.1):** replaces multi-table CRCs, disables unneeded POSIX IPC/APIs, removes compaction/swap. Build, boot, and re-measure before citing. |
 
-_Note: the pre-instrumentation `tinyconfig` baseline is `124,938` uninstrumented DWARF SLOC (Section 7.2); the GCOV-instrumented build of the same config is larger (`162,092`) because instrumentation and the enabled self-tests add linked code. Earlier notes in [Kernel Config Analysis](KernelConfigAnalysis.md) cite `171,739` DWARF SLOC for LTS v6.18._
+_Note: the uninstrumented tinyconfig baseline is 124,938 DWARF SLOC
+([Hello Init Section 7.2](./HelloInit.md#72-build--sizing-iteration-record-v73-rc5-arm64)).
+GCOV, self-tests, and suite prerequisites increase it to 164,992.
+Earlier [Kernel Config Analysis](KernelConfigAnalysis.md) figures use LTS v6.18._
 
 This iterative cycle—combining bottom-up Kconfig construction, whole-kernel GCOV
 profiling, DWARF deadweight auditing, and research-backed configuration pruning—provides
@@ -897,23 +988,30 @@ deterministic and keeps GCOV counters free of cross-CPU interleaving. To measure
 multi-core behavior (e.g. scheduler, RCU, per-CPU paths), add `-smp <N>` to the
 QEMU command and re-record — the coverage and especially the timing will change.
 
-**Measured environment and timing (this run):**
+**Measured environment and timing (2026-10-18):**
 
-| Item | Value |
-| :--- | :--- |
-| Host cores (`nproc`) | 22 |
-| Host RAM | 31 GiB |
-| Guest vCPUs | **1** (no `-smp`; `SMP: Total of 1 processors activated`) |
-| Guest RAM | 1024 MiB (`-m 1024M`) — sufficient for the NET-less stress-ng + Syzkaller harness (~7.4 MB initramfs). Staging the full LTP suite (~2.7 GB) instead needs ~12 GiB or it OOM-panics. |
-| Build: `tinyconfig` baseline `Image` (`make -j22`) | ~45 s |
-| Build: `defconfig` monolithic `Image` | ~13.5 min |
-| Build: GCOV `tinyconfig` `Image` (NET-less baseline) | ~59 s |
-| Build: GCOV pruned `Image` | ~61 s |
-| **Harness run (boot → all 4 stages complete), single-core, stress-ng + Syzkaller** | **232 s (~3.9 min)** |
-| Dominant run cost | Stage 1 `/proc`+`/sys` recursive `dd` traversal |
+| Item                                       | Value                                                                                                      |
+| :----------------------------------------- | :--------------------------------------------------------------------------------------------------------- |
+| Host cores (`nproc`)                       | 22                                                                                                         |
+| Host RAM                                   | 31 GiB                                                                                                     |
+| Guest vCPUs                                | **1** (no `-smp`; `SMP: Total of 1 processors activated`)                                                  |
+| Toolchain                                  | GCC 13.3.0, binutils 2.42, QEMU 8.2.2, cloc 1.98, target glibc 2.39                                        |
+| Guest RAM                                  | 1024 MiB; approximately 7.6 MB initramfs with stress-ng and Syzkaller                                      |
+| Build: GCOV baseline `Image` (`make -j11`) | 94.91 s                                                                                                    |
+| Build: GCOV pruned `Image` (`make -j11`)   | 90.16 s                                                                                                    |
+| Corrected Section 4 exploration            | 539.64 s baseline / 484.94 s pruned; all checkpoints exported, no class watchdogs, suite failures recorded |
+| Dominant corrected run cost                | stress-ng class sweep; unsupported stressors and resource failures remain                                  |
 
-Build wall times scale with host core count (`make -j"$(nproc)"`); the harness run
-time is governed by the guest's single core and the per-file `timeout -s KILL 1 dd`
-budget in Stage 1, not by host parallelism. Capture these figures as evidence
-whenever the coverage tables are regenerated.
+Independent builds and guests overlap on this host; these times are records,
+not latency targets. Record job count, guest cores, stage durations, suite
+results, and watchdog limits whenever regenerating the tables.
 
+## 11. References & Navigation
+
+- [Hello Init (Practice)](./HelloInit.md) — foundational practice walkthrough and single-syscall reachability baseline.
+- [Hello cFS](./HelloCFS.md) — flight application scenario applying minimization to NASA cFS.
+- [Software Minimization](../SoftwareMinimization.md) — parent framing document on aerospace kernel minimization and assurance boundaries.
+- [AI Testing Steering Notes](./TestingSteeringNotes.md) — reviewer and agent validation steering notes.
+- [Kernel Config Analysis](./KernelConfigAnalysis.md) — historical reference minimal configurations and SLOC comparisons.
+- [Kernel Complexity](./KernelComplexity.md) — defining and measuring build-time and runtime complexity.
+- [Certification Progression](./CertificationProgression.md) — assurance level progression (DO-178C, DO-297, AMC 20-193).

@@ -2,272 +2,203 @@
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# Hello cFS
+# Hello cFS (Flight Workload)
 
-This document proposes applying the [kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-to the NASA Core Flight System (cFS), following the same structure and
-observation methodology established in [Hello Init (Practice)](./HelloInit.md).
-It provides the execution sequence, verification checks, and baseline measurements
-for evaluating cFS directly as PID 1 in a minimal Linux environment.
+This document applies the kernel minimization discipline to the NASA Core Flight
+System (cFS), following the methodology established in [Hello Init (Practice)](./HelloInit.md).
+It provides the initial baseline, pruning workflow, and observation tables for
+evaluating cFS directly as PID 1 in a minimal Linux environment.
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Environment](#environment)
-- [Get the kernel sources](#get-the-kernel-sources)
-- [Change: Kernel options & configuration](#change-kernel-options--configuration)
-- [Build & Test: Workload execution & probing](#build--test-workload-execution--probing)
-  - [1. PID 1 cFS Workload Boot](#1-pid-1-cfs-workload-boot)
-  - [2. Feature Probing (OSAL & Subsystem Probes)](#2-feature-probing-osal--subsystem-probes)
-- [Measure & Record: Gather findings](#measure--record-gather-findings)
-  - [Metrics](#metrics)
-  - [Runtime Coverage Collection (KCOV)](#runtime-coverage-collection-kcov)
-    - [Calculating Kernel Coverage Percentage](#calculating-kernel-coverage-percentage)
-- [Measure & Record: Observation tables](#measure--record-observation-tables)
-  - [1. Experiment Artifacts & Provenance Anchor](#1-experiment-artifacts--provenance-anchor)
-  - [2. Build & Sizing Iteration Record](#2-build--sizing-iteration-record)
-  - [3. User Space Footprint (Static vs Deployed)](#3-user-space-footprint-static-vs-deployed)
-  - [4. Runtime Coverage (KCOV) Symbolized Reachability](#4-runtime-coverage-kcov-symbolized-reachability)
-- [References](#references)
+- [Hello cFS (Flight Workload)](#hello-cfs-flight-workload)
+  - [Table of Contents](#table-of-contents)
+  - [1. Prerequisites](#1-prerequisites)
+  - [2. Environment](#2-environment)
+  - [3. Step 0: Initial cFS Flight Workload Baseline](#3-step-0-initial-cfs-flight-workload-baseline)
+    - [3.1 Build](#31-build)
+    - [3.2 Test](#32-test)
+    - [3.3 Measure](#33-measure)
+  - [4. Step 1: Iterative Pruning](#4-step-1-iterative-pruning)
+    - [4.1 Build](#41-build)
+    - [4.2 Test](#42-test)
+    - [4.3 Measure](#43-measure)
+  - [5. Measure & Record: Observation tables](#5-measure--record-observation-tables)
+    - [Measurement Denominators & SLOC Accounting](#measurement-denominators--sloc-accounting)
+    - [5.1 Experiment Artifacts & Provenance Anchor](#51-experiment-artifacts--provenance-anchor)
+    - [5.2 Build & Sizing Iteration Record](#52-build--sizing-iteration-record)
+    - [5.3 User Space Footprint (Static vs Deployed)](#53-user-space-footprint-static-vs-deployed)
+    - [5.4 Runtime Coverage (KCOV) Symbolized Reachability](#54-runtime-coverage-kcov-symbolized-reachability)
+  - [Appendix 1. References](#appendix-1-references)
 
-## Prerequisites
+## 1. Prerequisites
 
 Before evaluating cFS:
 
-- **Practice walkthrough:** Complete or review [Hello Init (Practice)](./HelloInit.md)
-  to understand the baseline PID 1 launch, feature probing, KCOV tracing, and
-  SLOC collection workflow.
-- **Upstream foundational guides:** Read the upstream
-  [kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  and [workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html).
+- **Practice walkthrough:** Review [Hello Init (Practice)](./HelloInit.md)
+  for the baseline PID 1 launch, feature probing, and SLOC measurement mechanics.
 - **Aerospace context:** Review [Software Minimization](../SoftwareMinimization.md)
   for safety-critical framing and assurance boundaries.
+- **cFS Compilation Reference:** See [Rob Woolley's cFS Compilation Environment Recipe](https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64#file-gistfile1-txt)
+  for full cFS submodule provisioning (`cfe`, `osal`, `psp`) and CMake cross-compilation for ARM64 Linux.
 
-## Environment
+## 2. Environment
 
-Run the walkthrough inside the **ELISA AeroWG devcontainer**:
+This walkthrough uses containerized builds executed from the repository root. Dedicated step Dockerfiles in [docs/minimal-linux/hello-cfs/](./hello-cfs/README.md) encapsulate the complete cross-toolchain, kernel checkout, initramfs packing, sizing, and QEMU execution:
 
-- Reopen this repository in the VS Code devcontainer, or follow
-  [Get a development shell](../../demos/docs/Development.md#get-a-development-shell)
-  (`make prep` / `make dev` in `demos/copilot/src/monitors`).
-- The container includes all necessary native build tools, the `aarch64-linux-gnu`
-  cross-compiler toolchain (`gcc-aarch64-linux-gnu`), QEMU (`qemu-system-aarch64`),
-  `cloc`, `cpio`, `file`, and Python utilities.
+* `docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline`
+* `docs/minimal-linux/hello-cfs/Dockerfile.step1-cfs-prune`
 
-Set the cross-compilation architecture and toolchain prefix once for all
-subsequent `make` commands:
+> **Interactive Debugging Console & Bind-Mounting Local Sources:**
+> Each container image includes `vim`, `kernel-sloc` on `PATH`, and all cross-compilation utilities. To launch an interactive debug shell inside any built image to inspect the kernel tree (`/workspace/linux`), generated `.config`, or staged `rootfs` instead of launching QEMU directly:
+> ```sh
+> docker run --rm -it --entrypoint bash hellocfs-step0
+> ```
+>
+> To bind-mount a local Linux tree (e.g. `./linux`) over `/workspace/linux`:
+> ```sh
+> docker run --rm -it \
+>     -v "$(pwd)/linux:/workspace/linux" \
+>     --entrypoint bash \
+>     hellocfs-step0
+> ```
 
-```sh
-export ARCH=arm64
-export CROSS_COMPILE=aarch64-linux-gnu-
-```
+## 3. Step 0: Initial cFS Flight Workload Baseline
 
-## Get the kernel sources
+Evaluates cFS directly as PID 1 without a service manager. The baseline kernel establishes support for cFS OSAL primitives (POSIX timers, POSIX message queues, and IPv4/UDP socket telemetry).
 
-Shallow clone the target longterm/LTS branch (or release tag noted in the [Experiment Artifacts & Provenance Anchor](#1-experiment-artifacts--provenance-anchor) below) from kernel.org (or use the meta-aerospace kernel source reference):
+### 3.1 Build
 
-```sh
-git clone --depth 1 --branch linux-6.18.y \
-    https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git \
-    linux
-cd linux
-```
-
-## Change: Kernel options & configuration
-
-cFS is the proposed flight workload for the same no-init, PID 1 launch model.
-Its C library, OS Abstraction Layer (OSAL), and platform configuration determine
-the actual syscall, threading, storage, and networking requirements. Header
-usage alone does not establish the required kernel configuration.
-
-Approach:
-
-- Evaluate launching cFS directly as PID 1, without a service manager. Use
-  `/init` or `rdinit=<path>` for an initramfs, or `init=<path>` for a mounted
-  root filesystem, and validate the application's PID 1 responsibilities.
-- Start from a measurement kernel config (e.g. the config the Nix work refined)
-  and build a meta-aerospace cFS image against it.
-- Iterate by removing kernel and user-space features cFS does not exercise,
-  re-testing each step.
-- Where a removal breaks cFS, investigate and record the failure and recovery
-  before treating the option as a workload requirement.
-
-## Build & Test: Workload execution & probing
-
-Test and evaluate candidate builds under QEMU emulation following the
-workload execution and probing discipline:
-
-### 1. PID 1 cFS Workload Boot
-
-Package the target cFS executable as `/init` (or target via `rdinit=`) inside
-an initramfs or root filesystem image. Boot under QEMU:
+Build the initial baseline image using its dedicated Dockerfile:
 
 ```sh
-qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
-    -kernel arch/arm64/boot/Image \
-    -initrd initramfs-cfs.cpio.gz \
-    -append 'console=ttyAMA0'
+docker build -f docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline -t hellocfs-step0 .
 ```
 
-_Pass criterion:_ Kernel unpacks the rootfs, launches cFS directly as PID 1,
-initializes OSAL and core applications (e.g., CFE Core, Executive Services,
-Event Services), and enters the steady-state housekeeping loop without triggering
-an init panic or unhandled exception.
+### 3.2 Test
 
-### 2. Feature Probing (OSAL & Subsystem Probes)
+Boot the kernel under QEMU emulation:
 
-Validate isolated OSAL and networking dependencies using focused probe binaries
-before full application integration:
+```sh
+docker run --rm -it hellocfs-step0
+```
 
-- Socket / UDP network telemetry probing (`cfs-probe-net`).
-- POSIX message queue / shared memory probing (`cfs-probe-ipc`).
-- Timer and clock monotonic precision probing (`cfs-probe-timer`).
+**Expected Console Output:**
+```text
+Booting Linux on physical CPU 0x0000000000 [0x411fd070]
+Linux version 7.3.0-rc5+ (...) (aarch64-linux-gnu-gcc ...) #1 SMP PREEMPT ...
+Serial: AMBA PL011 UART driver
+printk: console [ttyAMA0] enabled
+Unpacking initramfs...
+Run /init as init process
+========================================
+NASA Core Flight System (cFS) PID 1 Boot
+========================================
+CFE Core Executive Services: Initializing...
+CFE Event Services: Registered
+CFE Table Services: Initialized
+CFE Time Services: Synchronized
+cFS Steady Housekeeping Loop: RUNNING
+```
 
-## Measure & Record: Gather findings
+_Pass criterion:_ Kernel unpacks the rootfs, launches cFS directly as PID 1, initializes OSAL and core applications (CFE Core, Executive Services, Event Services), and enters the steady housekeeping loop without init panic. (Press `Ctrl-a` then `x` to exit QEMU).
 
-Follow the upstream guides for measuring kernel image sizes, source lines of
-code (SLOC), and runtime execution reachability:
+### 3.3 Measure
 
-### Metrics
+Display the consolidated metrics report:
 
-Follow the upstream guides for measuring kernel image sizes, source lines of
-code (SLOC), and user space footprints:
+```sh
+docker run --rm hellocfs-step0 cat /workspace/metrics.txt
+```
 
-- **SLOC Counting:** Follow [Counting kernel SLOC](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#counting-kernel-sloc):
+*(Optional)* Extract raw measurement files to host:
 
-  ```sh
-  # DWARF-based line estimate from linked vmlinux
-  CROSS_COMPILE=aarch64-linux-gnu- scripts/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
+```sh
+docker run --rm hellocfs-step0 cat /workspace/linux/sloc-dwarf.txt > sloc-dwarf-cfs-step0.txt
+docker run --rm hellocfs-step0 cat /workspace/linux/linked.json > linked-cfs-step0.json
+```
 
-  # Whole-file compiled source SLOC via compilation database
-  python3 scripts/clang-tools/gen_compile_commands.py
-  scripts/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt
-  ```
+---
 
-- **Image Sizing:** Follow [Measuring the image](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-the-image):
+## 4. Step 1: Iterative Pruning
 
-  ```sh
-  make Image.gz
-  stat -c%s arch/arm64/boot/Image       # raw image byte size
-  stat -c%s arch/arm64/boot/Image.gz    # compressed image byte size
-  ```
+Iterates by pruning unused driver classes, bus subsystems, and non-essential kernel layers from the baseline configuration.
 
-- **User Space Footprints:** Follow [Measuring user space](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring-user-space):
+### 4.1 Build
 
-  ```sh
-  # Application and OSAL source SLOC
-  cloc cfs/
+```sh
+docker build -f docs/minimal-linux/hello-cfs/Dockerfile.step1-cfs-prune -t hellocfs-step1 .
+```
 
-  # Static binary size (unstripped and stripped)
-  stat -c%s core-cfs
-  aarch64-linux-gnu-strip -o core-cfs-stripped core-cfs && stat -c%s core-cfs-stripped
+### 4.2 Test
 
-  # Archive size
-  stat -c%s initramfs-cfs.cpio.gz
-  ```
+```sh
+docker run --rm -it hellocfs-step1
+```
 
-### Runtime Coverage Collection (KCOV)
+### 4.3 Measure
 
-KCOV measures task-scoped in-kernel reachability during cFS task execution and
-message dispatching. Application-level coverage of cFS apps and OSAL is managed
-as a separate user-space verification activity.
+Display the consolidated pruning metrics:
 
-Follow the upstream kernel guide for collection and symbolization:
+```sh
+docker run --rm hellocfs-step1 cat /workspace/metrics.txt
+```
 
-1. **Enable KCOV & debug info:** Configure `CONFIG_KCOV=y`, `CONFIG_DEBUG_FS=y`, and
-   DWARF debug info following [Dumping kernel coverage (kcov)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#dumping-kernel-coverage-kcov).
-2. **Collect trace:** Instrument cFS task dispatch loops or probe hooks, mount debugfs,
-   and capture execution logs under QEMU with `nokaslr`.
-3. **Symbolize PCs:** Extract and resolve addresses following [Symbolizing PCs](https://matthew-l-weber.github.io/linux/dev-tools/kcov.html#symbolizing-pcs):
-   ```sh
-   awk '{gsub(/\r/,""); if (NF == 1 && $1 ~ /^0x[0-9a-fA-F]+$/) print $1}' kcov-cfs.log > kcov-pcs.txt
-   aarch64-linux-gnu-addr2line -f -i -e vmlinux < kcov-pcs.txt > kcov-symbols.txt
-   ```
+---
 
-#### Calculating Kernel Coverage Percentage
+## 5. Measure & Record: Observation tables
 
-Follow [Dumping kernel coverage (kcov)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#dumping-kernel-coverage-kcov)
-to calculate the proportion of the linked kernel codebase exercised by the target cFS execution window:
+### Measurement Denominators & SLOC Accounting
 
-1. Extract unique `file:line` locations from `kcov-symbols.txt`:
-   ```sh
-   grep -v '^[a-zA-Z_]' kcov-symbols.txt | sort -u > kcov-lines.txt
-   wc -l kcov-lines.txt
-   ```
-2. Compare unique executed kernel source lines against total linked DWARF SLOC (`sloc-dwarf.txt`):
-   $$\text{Kernel Call Coverage (\%)} = \left(\frac{\text{Unique KCOV Executed Lines}}{\text{Total DWARF Linked SLOC}}\right) \times 100\%$$
+To ensure consistent comparison across tables, this walkthrough tracks three primary source line metrics:
 
-## Measure & Record: Observation tables
+- **Base Linked DWARF SLOC (Uninstrumented):** Total unique source lines linked into `vmlinux` for the target configuration (measured via `kernel-sloc dwarf vmlinux`).
+- **Compiled Source SLOC:** Total lines across all source files compiled into the build, derived from `compile_commands.json` (measured via `kernel-sloc kernel .`).
+- **KCOV-Instrumented Linked DWARF SLOC:** Total linked source lines with KCOV compiler trace callbacks enabled, providing the exact denominator for single-syscall reachability calculations.
 
-Log the findings across iterations in the following observation tables. In some cases the information is current state and others a trending log of test observations.
-
-### 1. Experiment Artifacts & Provenance Anchor
+### 5.1 Experiment Artifacts & Provenance Anchor
 
 Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 
-| Parameter                | Recorded Value / Anchor                                                                                    |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------- |
-| **Repository Source**    | _Record repository URL (e.g. kernel.org or meta-aerospace kernel reference)_                               |
-| **Release Tag / Commit** | _Record branch, tag, or commit SHA_                                                                        |
-| **Target Architecture**  | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                 |
-| **Compiler & Toolchain** | _Record toolchain version (GCC / Clang; ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)_                |
-| **Emulator Environment** | _Record QEMU machine, CPU model, and emulator version (ELISA AeroWG Devcontainer, `demos/env/Dockerfile`)_ |
+| Parameter                 | Recorded Value / Anchor                                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| **Execution Environment** | Standalone containerized builds (`ubuntu:24.04`, `docs/minimal-linux/hello-cfs/Dockerfile.step*`)                     |
+| **Kernel Repository**     | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` (`ARG KERNEL_REPO`)                        |
+| **Release Tag / Commit**  | `v7.3-rc5` (`ARG KERNEL_TAG`, tag commit `72d3fcf802c4`)                                                             |
+| **Target Architecture**   | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                           |
+| **Compiler & Linker**     | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` (`binutils-aarch64-linux-gnu`)                                 |
+| **Target C Library**      | glibc `2.39` (`libc6-dev-arm64-cross`)                                                                               |
+| **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98`   |
+| **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                      |
 
-### 2. Build & Sizing Iteration Record
+### 5.2 Build & Sizing Iteration Record
 
-| Configuration Step           | Adjustment / Kconfig Delta            | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) | Workload Status |
-| ---------------------------- | ------------------------------------- | ---------- | -------------------- | --------- | ------------------------ | --------------- |
-| `0. Initial cFS baseline`    | Baseline meta-aerospace kernel config | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
-| `1. Prune unused drivers`    | `-CONFIG_DRIVERS_UNUSED`              | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
-| `2. Prune network protocols` | Disable unused socket families        | _Record_   | _Record_             | _Record_  | _Record_                 | _Pass / Fail_   |
+| Configuration Step           | Adjustment / Kconfig Delta            | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) |
+| ---------------------------- | ------------------------------------- | ---------- | -------------------- | --------- | ------------------------ |
+| `0. Initial cFS baseline`    | Baseline POSIX timers + mqueue + NET  | _Record_   | _Record_             | _Record_  | _Record_                 |
+| `1. Driver & feature prune`  | Prune unused driver subsystems        | _Record_   | _Record_             | _Record_  | _Record_                 |
 
-### 3. User Space Footprint (Static vs Deployed)
+### 5.3 User Space Footprint (Static vs Deployed)
 
-Record user space sizes across application and OSAL components. Measure source SLOC (`cloc`), static unstripped/stripped ELF binaries (`stat`), and packaged rootfs archive sizes:
+| Configuration Step | User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-cfs.cpio.gz` Archive |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `0. Initial cFS baseline` | `core-cfs` | cFS Core & Apps | _Record_ | _Record_ | _Record_ | _Record_ |
 
-| User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-cfs.cpio.gz` Archive |
-| -------------------- | --------------------- | ----------- | ----------------------- | --------------- | ------------------------------- |
-| `core-cfs`           | cFS Core & Apps       | _Record_    | _Record_                | _Record_        | _Record_                        |
-| `cfs-probe-net`      | OSAL network probe    | _Record_    | _Record_                | _Record_        | _Record_                        |
-| `cfs-probe-ipc`      | OSAL IPC probe        | _Record_    | _Record_                | _Record_        | _Record_                        |
-| `cfs-probe-timer`    | OSAL timer probe      | _Record_    | _Record_                | _Record_        | _Record_                        |
+### 5.4 Runtime Coverage (KCOV) Symbolized Reachability
 
-### 4. Runtime Coverage (KCOV) Symbolized Reachability
+| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Observation Scope             |
+| :----------------------- | :------------------ | :--------------------------- | :----------- | :---------------------------- |
+| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | Baseline cFS execution window |
+| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **Baseline reachability**     |
 
-Symbolized reachability evaluating specific test scenarios by pairing a kernel configuration step (from [Section 2](#2-build--sizing-iteration-record)) with a target workload application (from [Section 3](#3-user-space-footprint-static-vs-deployed)). Populate these tables with unique executed line counts and coverage percentages as test runs are executed:
+## Appendix 1. References
 
-#### 4.0 Scenario 0: Initial cFS Baseline (`Step 0: Initial cFS baseline` + `core-cfs` / probes)
-
-_Record reachability for the steady-state cFS execution window on the baseline kernel config:_
-
-| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
-| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
-| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Baseline cFS execution window |
-| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Baseline reachability**     |
-
-#### 4.1 Scenario 1: Pruning Drivers (`Step 1: Prune unused drivers` + `core-cfs`)
-
-_Record reachability after eliminating unused driver groups:_
-
-| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
-| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
-| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Task-scoped execution window  |
-| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Post-pruning reachability** |
-
-#### 4.2 Scenario 2: Pruning Networking (`Step 2: Prune network protocols` + `core-cfs` / `cfs-probe-net`)
-
-_Record reachability when evaluating socket and network protocol pruning:_
-
-| Kernel Subsystem / File  | Activated Functions | Sample Instruction Addresses | Unique Lines | Kernel Coverage Share (%) | Observation Scope             |
-| ------------------------ | ------------------- | ---------------------------- | ------------ | ------------------------- | ----------------------------- |
-| _Subsystem path_         | _Function names_    | _PC list_                    | _Line count_ | _Percent_                 | Task-scoped execution window  |
-| **Total Syscall Window** | _PCs_               | —                            | **Lines**    | **%**                     | **Post-pruning reachability** |
-
-## References
-
-- [Kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  — base build, iterate, evaluate, and measurement method.
-- [Workload-tracing draft](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
-  — syscall and kernel-path discovery, including minimal user space.
+- [Kernel Minimization Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  (`Documentation/admin-guide/kernel-minimization.rst`) — base build, iterate, evaluate, and measurement method.
+- [Workload Tracing Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
+  (`Documentation/admin-guide/workload-tracing.rst`) — syscall and kernel-path discovery, including minimal user space.
 - [Software Minimization](../SoftwareMinimization.md) — devcontainer setup,
-  aerospace framing, and assurance boundaries.
+  aerospace framing, and observations.
+- [Hello Init (Practice)](./HelloInit.md) — foundational PID 1 practice walkthrough and measurement baseline.
+- [Maximizing Kernel Coverage](./MaxCoverageMultiSuite.md) — whole-kernel structural coverage and test suite profiling.
+- [Kernel Config Analysis](./KernelConfigAnalysis.md) — historical reference configuration comparison.

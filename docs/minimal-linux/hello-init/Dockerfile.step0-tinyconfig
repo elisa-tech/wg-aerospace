@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Hello Init - Step 0: Minimal tinyconfig Baseline
+#
+# This Dockerfile reproduces Step 0 of the Hello Init walkthrough:
+# - Builds a bottom-up minimal Linux kernel for ARM64 using tinyconfig.
+# - Enables only the essential Kconfig options for serial console, initramfs, and ELF execution.
+# - Statically compiles the minimal 'ainit.c' PID 1 user-space application.
+# - Packages the binary into a compressed cpio initramfs archive.
+# - Measures linked DWARF SLOC and whole-file compiled source SLOC using kernel-sloc.
+# - Boots the kernel in QEMU virt machine to verify 'hello world' output.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install cross-compilation toolchain, QEMU emulator, and build dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    vim \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned kernel tag and helper provenance anchor (v7.3-rc5 reference)
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+
+WORKDIR /workspace
+
+# Retrieve and install kernel-sloc globally (ensures availability even when bind-mounting an external linux tree)
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+# Shallow clone target kernel release into workspace
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+# Copy user-space source code from repository
+COPY docs/minimal-linux/hello-init /workspace/src
+
+# ------------------------------------------------------------------------------
+# Build Minimal User Space (ainit) & Initramfs
+# ------------------------------------------------------------------------------
+# Compile ainit statically with aarch64-linux-gnu-gcc and pack into cpio archive.
+# PID 1 executes directly from RAM with no shell or background daemons.
+WORKDIR /workspace
+RUN mkdir -p rootfs \
+    && aarch64-linux-gnu-gcc -static -O2 -o rootfs/init /workspace/src/ainit.c \
+    && ( cd rootfs && find . | cpio -o -H newc ) | gzip > initramfs.cpio.gz
+
+# ------------------------------------------------------------------------------
+# Configure & Build Kernel (Bottom-Up tinyconfig)
+# ------------------------------------------------------------------------------
+# Start from tinyconfig and enable only:
+# - PRINTK: Kernel log output
+# - TTY: Terminal driver layer
+# - SERIAL_AMBA_PL011 / SERIAL_AMBA_PL011_CONSOLE: ARM PL011 UART console
+# - BINFMT_ELF: Support for static ELF binary execution
+# - BLK_DEV_INITRD: Support for unpacked initramfs in RAM
+# - -d MODULES: Strictly monolithic kernel build (no loadable kernel modules)
+# - DWARF debug info: Required for precise linked DWARF SLOC measurement
+WORKDIR /workspace/linux
+RUN make tinyconfig \
+    && ./scripts/config \
+       -e PRINTK -e TTY -e SERIAL_AMBA_PL011 -e SERIAL_AMBA_PL011_CONSOLE \
+       -e BINFMT_ELF -e BLK_DEV_INITRD -d MODULES \
+       -d DEBUG_INFO_NONE \
+       -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    && make olddefconfig \
+    && make -j"$(nproc)" Image Image.gz
+
+# ------------------------------------------------------------------------------
+# Measure Metrics & Generate Summary Report
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN aarch64-linux-gnu-strip -o /tmp/ainit-stripped rootfs/init \
+    && cd /workspace/linux \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt \
+    && ( python3 scripts/clang-tools/gen_compile_commands.py || true ) \
+    && ( /usr/local/bin/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt || true ) \
+    && { \
+        echo "=== Step 0: Minimal tinyconfig Baseline Metrics ==="; \
+        printf "%-32s: %s\n" "User space source" "$(cloc --quiet --csv /workspace/src/ainit.c | awk -F, 'END{print $NF}') lines"; \
+        printf "%-32s: %s\n" "Raw static ELF size" "$(stat -c%s /workspace/rootfs/init) bytes"; \
+        printf "%-32s: %s\n" "Stripped static ELF size" "$(stat -c%s /tmp/ainit-stripped) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs.cpio.gz) bytes"; \
+        printf "%-32s: %s\n" "DWARF Linked SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Compiled Source SLOC" "$(cat /workspace/linux/sloc-compiled.txt 2>/dev/null || echo 'N/A') lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Compressed Image.gz size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image.gz) bytes"; \
+    } | tee /workspace/metrics.txt
+
+# ------------------------------------------------------------------------------
+# Boot Kernel in QEMU Emulation
+# ------------------------------------------------------------------------------
+# Emulates ARM64 virt machine (Cortex-A57), attaching PL011 console to stdio.
+# Pass criterion: Kernel unpacks initramfs, launches /init, prints 'hello world',
+# and enters pause() without an init panic.
+CMD ["qemu-system-aarch64", "-machine", "virt", "-cpu", "cortex-a57", "-nographic", \
+     "-kernel", "/workspace/linux/arch/arm64/boot/Image", "-initrd", "/workspace/initramfs.cpio.gz", \
+     "-append", "console=ttyAMA0 init=/init"]

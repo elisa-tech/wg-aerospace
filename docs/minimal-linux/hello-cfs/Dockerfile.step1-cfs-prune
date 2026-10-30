@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Hello cFS - Step 1: Driver Pruning Iteration
+#
+# This Dockerfile evaluates pruning unused driver subsystems from the cFS baseline kernel.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    vim \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+
+WORKDIR /workspace
+
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+COPY docs/minimal-linux/hello-cfs /workspace/src
+
+WORKDIR /workspace
+RUN mkdir -p rootfs \
+    && aarch64-linux-gnu-gcc -static -O2 -o rootfs/init /workspace/src/core-cfs.c \
+    && ( cd rootfs && find . | cpio -o -H newc ) | gzip > initramfs-cfs.cpio.gz
+
+WORKDIR /workspace/linux
+RUN make tinyconfig \
+    && ./scripts/config \
+       -e PRINTK -e TTY -e SERIAL_AMBA_PL011 -e SERIAL_AMBA_PL011_CONSOLE \
+       -e BINFMT_ELF -e BLK_DEV_INITRD -d MODULES \
+       -e POSIX_TIMERS -e POSIX_MQUEUE \
+       -e NET -e INET \
+       -d DEBUG_INFO_NONE \
+       -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    && make olddefconfig \
+    && make -j"$(nproc)" Image Image.gz
+
+WORKDIR /workspace
+RUN aarch64-linux-gnu-strip -o /tmp/core-cfs-stripped rootfs/init \
+    && cd /workspace/linux \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt \
+    && ( python3 scripts/clang-tools/gen_compile_commands.py || true ) \
+    && ( /usr/local/bin/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt || true ) \
+    && { \
+        echo "=== Step 1: Driver Pruning Metrics ==="; \
+        printf "%-32s: %s\n" "Core cFS source" "$(cloc --quiet --csv /workspace/src/core-cfs.c | awk -F, 'END{print $NF}') lines"; \
+        printf "%-32s: %s\n" "Raw static ELF size" "$(stat -c%s /workspace/rootfs/init) bytes"; \
+        printf "%-32s: %s\n" "Stripped static ELF size" "$(stat -c%s /tmp/core-cfs-stripped) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-cfs.cpio.gz) bytes"; \
+        printf "%-32s: %s\n" "DWARF Linked SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Compiled Source SLOC" "$(cat /workspace/linux/sloc-compiled.txt 2>/dev/null || echo 'N/A') lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Compressed Image.gz size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image.gz) bytes"; \
+    } | tee /workspace/metrics.txt
+
+CMD ["qemu-system-aarch64", "-machine", "virt", "-cpu", "cortex-a57", "-nographic", \
+     "-kernel", "/workspace/linux/arch/arm64/boot/Image", "-initrd", "/workspace/initramfs-cfs.cpio.gz", \
+     "-append", "console=ttyAMA0 init=/init"]
