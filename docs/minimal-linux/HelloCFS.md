@@ -23,10 +23,10 @@ evaluating cFS directly as PID 1 in a minimal Linux environment.
     - [4.1 Build](#41-build)
     - [4.2 Test](#42-test)
     - [4.3 Measure](#43-measure)
-  - [5. Measure & Record: Observation tables](#5-measure--record-observation-tables)
-    - [Measurement Denominators & SLOC Accounting](#measurement-denominators--sloc-accounting)
-    - [5.1 Experiment Artifacts & Provenance Anchor](#51-experiment-artifacts--provenance-anchor)
-    - [5.2 Build & Sizing Iteration Record](#52-build--sizing-iteration-record)
+  - [5. Measure and Record: Observation Tables](#5-measure-and-record-observation-tables)
+    - [Measurement Denominators and SLOC Accounting](#measurement-denominators-and-sloc-accounting)
+    - [5.1 Experiment Artifacts and Provenance Anchor](#51-experiment-artifacts-and-provenance-anchor)
+    - [5.2 Build and Sizing Iteration Record](#52-build-and-sizing-iteration-record)
     - [5.3 User Space Footprint (Static vs Deployed)](#53-user-space-footprint-static-vs-deployed)
     - [5.4 Runtime Coverage (KCOV) Symbolized Reachability](#54-runtime-coverage-kcov-symbolized-reachability)
   - [Appendix 1. References](#appendix-1-references)
@@ -146,9 +146,9 @@ docker run --rm hellocfs-step1 cat /workspace/metrics.txt
 
 ---
 
-## 5. Measure & Record: Observation tables
+## 5. Measure and Record: Observation Tables
 
-### Measurement Denominators & SLOC Accounting
+### Measurement Denominators and SLOC Accounting
 
 To ensure consistent comparison across tables, this walkthrough tracks three primary source line metrics:
 
@@ -156,7 +156,7 @@ To ensure consistent comparison across tables, this walkthrough tracks three pri
 - **Compiled Source SLOC:** Total lines across all source files compiled into the build, derived from `compile_commands.json` (measured via `kernel-sloc kernel .`).
 - **KCOV-Instrumented Linked DWARF SLOC:** Total linked source lines with KCOV compiler trace callbacks enabled, providing the exact denominator for single-syscall reachability calculations.
 
-### 5.1 Experiment Artifacts & Provenance Anchor
+### 5.1 Experiment Artifacts and Provenance Anchor
 
 Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 
@@ -171,7 +171,7 @@ Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 | **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98`   |
 | **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                      |
 
-### 5.2 Build & Sizing Iteration Record
+### 5.2 Build and Sizing Iteration Record
 
 | Configuration Step           | Adjustment / Kconfig Delta            | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) |
 | ---------------------------- | ------------------------------------- | ---------- | -------------------- | --------- | ------------------------ |

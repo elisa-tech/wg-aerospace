@@ -6,6 +6,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+
 def load_stage_lines(stage_dir):
     executed = set()
     executable = set()
@@ -23,6 +24,7 @@ def load_stage_lines(stage_dir):
                 if line["count"] > 0:
                     executed.add(key)
     return executed, executable
+
 
 if __name__ == "__main__":
     import gzip
@@ -44,10 +46,13 @@ if __name__ == "__main__":
     ranked = []
     for fpath, lines in dwarf_lines.items():
         unreached = lines - executed_lines.get(fpath, set())
-        ranked.append((fpath, len(lines), len(unreached), len(unreached) / len(lines) * 100))
+        pct = len(unreached) / len(lines) * 100
+        ranked.append((fpath, len(lines), len(unreached), pct))
     ranked.sort(key=lambda x: x[2], reverse=True)
 
-    print(f"{'Source File':<40} | {'Linked SLOC':<12} | {'Unreached':<10} | {'% Unreached':<12}")
+    header = (f"{'Source File':<40} | {'Linked SLOC':<12} | "
+              f"{'Unreached':<10} | {'% Unreached':<12}")
+    print(header)
     print("-" * 80)
     for fpath, total, unreached, pct in ranked[:15]:
         print(f"{fpath:<40} | {total:<12} | {unreached:<10} | {pct:5.1f}%")

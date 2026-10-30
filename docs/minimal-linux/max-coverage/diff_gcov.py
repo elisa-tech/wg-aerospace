@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 
+
 def load_stage_lines(stage_dir):
     executed = set()
     executable = set()
@@ -24,6 +25,7 @@ def load_stage_lines(stage_dir):
     if not executable:
         raise ValueError(f"zero executable denominator in {stage_dir}")
     return executed, executable
+
 
 if __name__ == "__main__":
     previous = set()

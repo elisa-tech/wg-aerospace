@@ -32,14 +32,14 @@ execution sequence, verification checks, and baseline measurements.
     - [6.1 Build](#61-build)
     - [6.2 Test](#62-test)
     - [6.3 Measure](#63-measure)
-  - [7. Measure \& Record: Observation tables](#7-measure--record-observation-tables)
-    - [Measurement Denominators \& SLOC Accounting](#measurement-denominators--sloc-accounting)
-    - [7.1 Experiment Artifacts \& Provenance Anchor](#71-experiment-artifacts--provenance-anchor)
-    - [7.2 Build \& Sizing Iteration Record (v7.3-rc5, arm64)](#72-build--sizing-iteration-record-v73-rc5-arm64)
+  - [7. Measure and Record: Observation Tables](#7-measure-and-record-observation-tables)
+    - [Measurement Denominators and SLOC Accounting](#measurement-denominators-and-sloc-accounting)
+    - [7.1 Experiment Artifacts and Provenance Anchor](#71-experiment-artifacts-and-provenance-anchor)
+    - [7.2 Build and Sizing Iteration Record (v7.3-rc5, arm64)](#72-build-and-sizing-iteration-record-v73-rc5-arm64)
     - [7.3 User Space Footprint (Static vs Deployed)](#73-user-space-footprint-static-vs-deployed)
     - [7.4 Runtime Coverage (KCOV) Symbolized Reachability](#74-runtime-coverage-kcov-symbolized-reachability)
-      - [7.4.1 Scenario 1: Minimal Kernel Network Feature Probe (`Step 2: + Networking + KCOV` + `ainit-net-kcov`)](#741-scenario-1-minimal-kernel-network-feature-probe-step-2--networking--kcov--ainit-net-kcov)
-      - [7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 3: defconfig (monolithic)` + `ainit-net-kcov`)](#742-scenario-2-monolithic-baseline-network-feature-probe-step-3-defconfig-monolithic--ainit-net-kcov)
+      - [7.4.1 Scenario 1: Minimal Kernel Network Feature Probe](#741-scenario-1-minimal-kernel-network-feature-probe)
+      - [7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe](#742-scenario-2-monolithic-baseline-network-feature-probe)
   - [Appendix 1. References](#appendix-1-references)
 
 ## 1. Prerequisites
@@ -138,7 +138,7 @@ docker run --rm helloinit-step0 cat /workspace/linux/sloc-dwarf.txt > sloc-dwarf
 docker run --rm helloinit-step0 cat /workspace/linux/linked.json > linked-step0.json
 ```
 
-Recorded values are documented in [Section 7.2](#72-build--sizing-iteration-record-v73-rc5-arm64) and [Section 7.3](#73-user-space-footprint-static-vs-deployed).
+Recorded values are documented in [Section 7.2](#72-build-and-sizing-iteration-record-v73-rc5-arm64) and [Section 7.3](#73-user-space-footprint-static-vs-deployed).
 
 ---
 
@@ -182,7 +182,7 @@ docker run --rm helloinit-step1 cat /workspace/metrics.txt
 docker run --rm helloinit-step1 cat /workspace/linux/sloc-dwarf.txt > sloc-dwarf-step1.txt
 ```
 
-Recorded SLOC and binary sizing deltas are logged in [Section 7.2](#72-build--sizing-iteration-record-v73-rc5-arm64).
+Recorded SLOC and binary sizing deltas are logged in [Section 7.2](#72-build-and-sizing-iteration-record-v73-rc5-arm64).
 
 ---
 
@@ -262,13 +262,13 @@ Extract the normalized line list to host:
 docker run --rm helloinit-step3 cat /workspace/kcov-lines.txt > kcov-lines-step3.txt
 ```
 
-Comparative observations and reachability breakdowns against the minimal kernel are recorded in [Section 7.2](#72-build--sizing-iteration-record-v73-rc5-arm64) and [Section 7.4.2](#742-scenario-2-monolithic-baseline-network-feature-probe-step-3-defconfig-monolithic--ainit-net-kcov).
+Comparative observations and reachability breakdowns against the minimal kernel are recorded in [Section 7.2](#72-build-and-sizing-iteration-record-v73-rc5-arm64) and [Section 7.4.2](#742-scenario-2-monolithic-baseline-network-feature-probe).
 
 ---
 
-## 7. Measure & Record: Observation tables
+## 7. Measure and Record: Observation Tables
 
-### Measurement Denominators & SLOC Accounting
+### Measurement Denominators and SLOC Accounting
 
 To ensure consistent comparison across tables, this walkthrough tracks three primary source line metrics:
 
@@ -280,7 +280,7 @@ To ensure consistent comparison across tables, this walkthrough tracks three pri
 
 Log the findings across iterations in the following observation tables. In some cases the information is current state and others a trending log of test observations.
 
-### 7.1 Experiment Artifacts & Provenance Anchor
+### 7.1 Experiment Artifacts and Provenance Anchor
 
 Anchoring the baseline experiment parameters ensures reviewable and reproducible metrics:
 
@@ -297,7 +297,7 @@ Anchoring the baseline experiment parameters ensures reviewable and reproducible
 
 > **Note on Customization & Provenance:** The step Dockerfiles default to `v7.3-rc5` from kernel.org and download the verified `kernel-sloc` measurement helper. When building against other releases or longterm branches (e.g. `--build-arg KERNEL_TAG=linux-6.18.y`), record the target tag and regenerate the measurement tables for that environment.
 
-### 7.2 Build & Sizing Iteration Record (v7.3-rc5, arm64)
+### 7.2 Build and Sizing Iteration Record (v7.3-rc5, arm64)
 
 | Configuration Step          | Adjustment / Kconfig Delta                       | DWARF SLOC | Compiled Source SLOC    | Raw Image                  | Compressed Image (`.gz`)  |
 | --------------------------- | ------------------------------------------------ | ---------- | ----------------------- | -------------------------- | ------------------------- |
@@ -319,7 +319,7 @@ Anchoring the baseline experiment parameters ensures reviewable and reproducible
 
 Comparing single-syscall reachability for `socket(AF_INET, SOCK_DGRAM, 0)` between the minimized kernel (Step 2) and the monolithic baseline (Step 3) using `ainit-net-kcov.c`:
 
-#### 7.4.1 Scenario 1: Minimal Kernel Network Feature Probe (`Step 2: + Networking + KCOV` + `ainit-net-kcov`)
+#### 7.4.1 Scenario 1: Minimal Kernel Network Feature Probe
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyconfig + NET + INET` build (209,321 instrumented linked DWARF SLOC):
 
@@ -335,7 +335,7 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyc
 | _Other VFS, headers & libraries_ | Namespace, per-CPU counters, atomic bitops, timer init                   | —                                          | 98 lines      | Inline helpers, reference counting, KCOV_DISABLE ioctl   |
 | **Total Syscall Window**         | _276 normalized source lines; 268 captured / 252 distinct PCs_           | —                                          | **276 lines** | **In-kernel socket() reachability (incl. KCOV_DISABLE)** |
 
-#### 7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe (`Step 3: defconfig (monolithic)` + `ainit-net-kcov`)
+#### 7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe
 
 Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the KCOV-instrumented monolithic `defconfig` build (2,070,838 instrumented linked DWARF SLOC):
 
