@@ -22,6 +22,45 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - None
 
+## 20261030
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Yassine Cherni - GoMyRobot
+- Ivan Perez - KBR @ NASA
+- Leonidas Kosmidis - BSC
+- Shefali Sharma
+- Paulpandian Velusamy
+
+**Discussion topics**
+
+- Kernel minimization effort
+  - ACTION: Weber - Need to walk example and check again prior sloc table in helloinit.md, Ivan's live use case walk through in the call had higher values
+  - Continued to walk the HelloInit steps - got through kcov and found a broken assumption as sysfs is off with tiny
+  - [Feedback on Kernel doc update](https://github.com/matthew-l-weber/linux/pull/1)
+  - **ACTION:** Everyone is welcome to start to look at the next step where we take the HelloInit.md process and apply it to cFS
+    - We started to sketch it out here - <https://github.com/elisa-tech/wg-aerospace/pull/257/changes#diff-41fdbdf2764036e2ecb603de8840ec101abe6d24c6f89299eee9b40b345046c3>
+    - And it would take a build sequence like "SGL SDK -> cFS build instructions" we had been working in prior calls as a start
+
+**Not discussed but FYI**
+
+- QEMU instruction introspection for coverage
+  - Carryover ACTION: Rob - Look for the video link on QEMU instruction introspection
+
+- SGL SDK -> cFS build instructions
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+  - [#257 Starting point for kernel minimization effort](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - [#237 Update cFS demo to use Ogma 1.15.0](https://github.com/elisa-tech/wg-aerospace/pull/237)
+  - [#231 ARINC 615A Tool Suite](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - [#177 Mixed crit workshop](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+- Revisit parking lot items
+  - ACTION: Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+---
+
 ## 20261023
 
 **Attendance**
@@ -91,12 +130,12 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Kernel minimization effort
   - ACTION: Need to decide if we look at coverage at the instruction or source code level
-  - ACTION: TESTING!!!  Start here to review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  - ACTION: TESTING!!! Start here to review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
   - ACTION: Matt to demo basic app using instructions
 
 - Leonidas presented on ["Faithful Emulation of Space Processors SoCs using Open Source Technologies"](https://onedrive.live.com/?id=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026%2FKosmidis%5FSpace%5FProcessors%5FQEMU%5FELISA%5FOct%5F2026%2Epdf&listurl=%2Fpersonal%2F01b8647ed2301e95%2FDocuments&ithint=file%2Cpdf&e=taUegA&migratedtospo=true&parent=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy8wMWI4NjQ3ZWQyMzAxZTk1L0lRRG1wemF2NkFpdlNvenZoR0FsbnpDcUFjYTlTYmlwaFN0cWx6VTE1VTlTdFZFP2U9dGFVZWdB&ga=1)
 
-- FYI from Matt - Haoda Wang <haoda.wang@columbia.edu>  contacted me with HPSC and fault tolerant research interest.  I've invited him to our weekly calls.
+- FYI from Matt - Haoda Wang <haoda.wang@columbia.edu> contacted me with HPSC and fault tolerant research interest. I've invited him to our weekly calls.
 
 **Not discussed but FYI**
 

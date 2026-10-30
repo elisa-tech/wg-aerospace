@@ -80,6 +80,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Olivier Charrier - Wind River
 - Paul Greenwood - Vorago Technologies
 - Paul Mani - Collins India
+- Paulpandian Velusamy
 - Pavel Roskin
 - Pawel Wodnicki - 32bitmicro
 - Pedro Roque - Caltech
