@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
+# pylint: disable=duplicate-code
 """Compute differential coverage across sequential GCOV checkpoints."""
 import gzip
 import json

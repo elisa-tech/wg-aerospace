@@ -94,7 +94,7 @@ The build is executed using `Dockerfile.step0-tinyconfig`. The Dockerfile clones
 You can override default parameters by supplying `--build-arg`:
 
 | Build Argument | Default Value                                                             | Description                                                        |
-|:---------------|:--------------------------------------------------------------------------|:-------------------------------------------------------------------|
+| :------------- | :------------------------------------------------------------------------ | :----------------------------------------------------------------- |
 | `BASE_IMAGE`   | `ubuntu:24.04`                                                            | Host base image providing cross-compilation toolchain              |
 | `KERNEL_REPO`  | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` | Upstream or custom kernel Git repository                           |
 | `KERNEL_TAG`   | `v7.3-rc5`                                                                | Pinned kernel release tag or longterm branch (e.g. `linux-6.18.y`) |
@@ -286,27 +286,27 @@ Log the findings across iterations in the following observation tables. In some 
 
 Anchoring the baseline experiment parameters ensures reviewable and reproducible metrics:
 
-| Parameter                 | Recorded Value / Anchor                                                                                              |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Execution Environment** | Standalone containerized builds (`ubuntu:24.04`, `docs/minimal-linux/hello-init/Dockerfile.step*`)                   |
-| **Kernel Repository**     | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` (`ARG KERNEL_REPO`)                        |
-| **Release Tag / Commit**  | `v7.3-rc5` (`ARG KERNEL_TAG`, tag commit `72d3fcf802c4`)                                                             |
-| **Target Architecture**   | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                           |
-| **Compiler & Linker**     | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` (`binutils-aarch64-linux-gnu`)                                 |
-| **Target C Library**      | glibc `2.39` (`libc6-dev-arm64-cross`)                                                                               |
-| **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98`   |
-| **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                      |
+| Parameter                 | Recorded Value / Anchor                                                                                           |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Execution Environment** | Standalone containerized builds (`ubuntu:24.04`, `docs/minimal-linux/hello-init/Dockerfile.step*`)                |
+| **Kernel Repository**     | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` (`ARG KERNEL_REPO`)                     |
+| **Release Tag / Commit**  | `v7.3-rc5` (`ARG KERNEL_TAG`, tag commit `72d3fcf802c4`)                                                          |
+| **Target Architecture**   | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                        |
+| **Compiler & Linker**     | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` (`binutils-aarch64-linux-gnu`)                              |
+| **Target C Library**      | glibc `2.39` (`libc6-dev-arm64-cross`)                                                                            |
+| **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98` |
+| **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                   |
 
 > **Note on Customization & Provenance:** The step Dockerfiles default to `v7.3-rc5` from kernel.org and download the verified `kernel-sloc` measurement helper. When building against other releases or longterm branches (e.g. `--build-arg KERNEL_TAG=linux-6.18.y`), record the target tag and regenerate the measurement tables for that environment.
 
 ### 7.2 Build and Sizing Iteration Record (v7.3-rc5, arm64)
 
-| Configuration Step          | Adjustment / Kconfig Delta                       | DWARF SLOC | Compiled Source SLOC    | Raw Image                  | Compressed Image (`.gz`)  |
-| --------------------------- | ------------------------------------------------ | ---------- | ----------------------- | -------------------------- | ------------------------- |
-| `0. tinyconfig baseline`    | `tinyconfig` + PL011 serial, printk, initrd, elf | 124,938    | 352,672 (600 files)     | 3,223,560 B (~3.07 MiB)    | 1,140,052 B (~1.09 MiB)   |
-| `1. + Networking`           | `+NET`, `+INET`                                  | 197,490    | 527,040 (784 files)     | 4,495,368 B (~4.3 MiB)     | 1,810,215 B (~1.7 MiB)    |
-| `2. + Networking + KCOV`    | `+KCOV`, `+DEBUG_FS`, DWARF debug info           | 209,321    | 527,040 (784 files)     | 5,552,136 B (~5.29 MiB)    | —                         |
-| `3. defconfig (monolithic)` | `defconfig`, `-MODULES`, `+KCOV`                 | 2,070,838  | 5,722,530 (9,157 files) | 110,991,872 B (~105.85 MiB)| 36,250,252 B (~34.57 MiB) |
+| Configuration Step          | Adjustment / Kconfig Delta                       | DWARF SLOC | Compiled Source SLOC    | Raw Image                   | Compressed Image (`.gz`)  |
+| --------------------------- | ------------------------------------------------ | ---------- | ----------------------- | --------------------------- | ------------------------- |
+| `0. tinyconfig baseline`    | `tinyconfig` + PL011 serial, printk, initrd, elf | 124,938    | 352,672 (600 files)     | 3,223,560 B (~3.07 MiB)     | 1,140,052 B (~1.09 MiB)   |
+| `1. + Networking`           | `+NET`, `+INET`                                  | 197,490    | 527,040 (784 files)     | 4,495,368 B (~4.3 MiB)      | 1,810,215 B (~1.7 MiB)    |
+| `2. + Networking + KCOV`    | `+KCOV`, `+DEBUG_FS`, DWARF debug info           | 209,321    | 527,040 (784 files)     | 5,552,136 B (~5.29 MiB)     | —                         |
+| `3. defconfig (monolithic)` | `defconfig`, `-MODULES`, `+KCOV`                 | 2,070,838  | 5,722,530 (9,157 files) | 110,991,872 B (~105.85 MiB) | 36,250,252 B (~34.57 MiB) |
 
 ### 7.3 User Space Footprint (Static vs Deployed)
 

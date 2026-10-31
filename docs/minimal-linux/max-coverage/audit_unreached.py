@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
+# pylint: disable=too-many-locals,duplicate-code
 """Audit unreached functions and lines across GCOV checkpoints."""
 import gzip
 import json

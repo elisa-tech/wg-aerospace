@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
+# pylint: disable=too-many-locals
 """Extract GCOV checkpoints and generate per-unit JSON inventories."""
 import argparse
 import shutil

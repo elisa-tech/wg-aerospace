@@ -161,29 +161,29 @@ To ensure consistent comparison across tables, this walkthrough tracks three pri
 
 Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 
-| Parameter                 | Recorded Value / Anchor                                                                                              |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| **Execution Environment** | Standalone containerized builds (`ubuntu:24.04`, `docs/minimal-linux/hello-cfs/Dockerfile.step*`)                     |
-| **Kernel Repository**     | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` (`ARG KERNEL_REPO`)                        |
-| **Release Tag / Commit**  | `v7.3-rc5` (`ARG KERNEL_TAG`, tag commit `72d3fcf802c4`)                                                             |
-| **Target Architecture**   | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                           |
-| **Compiler & Linker**     | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` (`binutils-aarch64-linux-gnu`)                                 |
-| **Target C Library**      | glibc `2.39` (`libc6-dev-arm64-cross`)                                                                               |
-| **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98`   |
-| **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                      |
+| Parameter                 | Recorded Value / Anchor                                                                                           |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Execution Environment** | Standalone containerized builds (`ubuntu:24.04`, `docs/minimal-linux/hello-cfs/Dockerfile.step*`)                 |
+| **Kernel Repository**     | `https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git` (`ARG KERNEL_REPO`)                     |
+| **Release Tag / Commit**  | `v7.3-rc5` (`ARG KERNEL_TAG`, tag commit `72d3fcf802c4`)                                                          |
+| **Target Architecture**   | `arm64` (`ARCH=arm64`, `CROSS_COMPILE=aarch64-linux-gnu-`)                                                        |
+| **Compiler & Linker**     | GCC `13.3.0` (`aarch64-linux-gnu-gcc`), GNU ld `2.42` (`binutils-aarch64-linux-gnu`)                              |
+| **Target C Library**      | glibc `2.39` (`libc6-dev-arm64-cross`)                                                                            |
+| **SLOC Helper / Counter** | `scripts/kernel-sloc` (SHA-256 `4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40`); `cloc` `1.98` |
+| **Emulator Environment**  | QEMU `8.2.2` (`qemu-system-aarch64`, `-machine virt -cpu cortex-a57`), one vCPU                                   |
 
 ### 5.2 Build and Sizing Iteration Record
 
-| Configuration Step           | Adjustment / Kconfig Delta            | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) |
-| ---------------------------- | ------------------------------------- | ---------- | -------------------- | --------- | ------------------------ |
-| `0. Initial cFS baseline`    | Baseline POSIX timers + mqueue + NET  | _Record_   | _Record_             | _Record_  | _Record_                 |
-| `1. Driver & feature prune`  | Prune unused driver subsystems        | _Record_   | _Record_             | _Record_  | _Record_                 |
+| Configuration Step          | Adjustment / Kconfig Delta           | DWARF SLOC | Compiled Source SLOC | Raw Image | Compressed Image (`.gz`) |
+| --------------------------- | ------------------------------------ | ---------- | -------------------- | --------- | ------------------------ |
+| `0. Initial cFS baseline`   | Baseline POSIX timers + mqueue + NET | _Record_   | _Record_             | _Record_  | _Record_                 |
+| `1. Driver & feature prune` | Prune unused driver subsystems       | _Record_   | _Record_             | _Record_  | _Record_                 |
 
 ### 5.3 User Space Footprint (Static vs Deployed)
 
-| Configuration Step | User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-cfs.cpio.gz` Archive |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `0. Initial cFS baseline` | `core-cfs` | cFS Core & Apps | _Record_ | _Record_ | _Record_ | _Record_ |
+| Configuration Step        | User Space Component | Purpose / Description | Source SLOC | Static ELF (unstripped) | Stripped Binary | `initramfs-cfs.cpio.gz` Archive |
+| :------------------------ | :------------------- | :-------------------- | :---------- | :---------------------- | :-------------- | :------------------------------ |
+| `0. Initial cFS baseline` | `core-cfs`           | cFS Core & Apps       | _Record_    | _Record_                | _Record_        | _Record_                        |
 
 ### 5.4 Runtime Coverage (KCOV) Symbolized Reachability
 
