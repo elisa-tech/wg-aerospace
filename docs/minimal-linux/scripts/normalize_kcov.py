@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: CC-BY-SA-4.0
 """Normalize KCOV addr2line symbol output into unique source:line entries."""
+
 import os
 import re
 import sys

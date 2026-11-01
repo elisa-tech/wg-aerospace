@@ -114,6 +114,11 @@ RUN qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
     && ( timeout 15s gdb-multiarch /workspace/linux/vmlinux -x /workspace/gdb-trace.cmd --batch || true ) \
     && kill -9 $QEMU_PID 2>/dev/null || true
 
+# Fail the build if the trace did not capture PID 1's write(1, "hello world\n", 12)
+RUN if ! grep -q '^syscall=64 arg0=0x1' /workspace/pid1-syscalls.log; then \
+        cat /workspace/qemu-gdb.log; exit 1; \
+    fi
+
 # ------------------------------------------------------------------------------
 # Format Syscall Trace Report
 # ------------------------------------------------------------------------------

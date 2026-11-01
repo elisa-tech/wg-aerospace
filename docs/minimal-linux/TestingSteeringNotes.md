@@ -7,7 +7,8 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 This is the test-steering guide for the minimal-Linux practice material: it
 tells a reviewer or an automated agent how to re-run and validate the measured
-claims in [Hello Init (Practice)](./HelloInit.md), its
+claims in [Hello Init (Practice)](./HelloInit.md), the
+[Hello cFS](./HelloCFS.md) scaffold, the
 [Maximizing Kernel Coverage](./MaxCoverageMultiSuite.md) worked example, and the
 parent [Software Minimization](../SoftwareMinimization.md) document. It is not a
 new experiment — it is the checklist that keeps those experiments honest and
@@ -15,12 +16,12 @@ reproducible.
 
 ## Walkthrough Progression & Dependency Roadmap
 
-| Stage                  | Document                                                                                                                                                                     | Purpose & Scope                                                                        | Key Prerequisite                                   | Evidence                                            |
-| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------- | :------------------------------------------------- | :-------------------------------------------------- |
-| **1. Practice**        | [Hello Init](./HelloInit.md)                                                                                                                                                 | Static binary PID 1 baseline, bottom-up/top-down builds, KCOV reachability, SLOC       | Cross-compiler, QEMU `virt`, `scripts/kernel-sloc` | Boot serial log, `linked.json`, `kcov-lines.txt`    |
-| **2. Flight Workload** | [Hello cFS](./HelloCFS.md)                                                                                                                                                   | NASA cFS & OSAL PID 1 boot, OSAL feature probes, task-scoped KCOV                      | cFS build toolchain, OSAL probe binaries, QEMU     | cFS housekeeping log, probe results, cFS KCOV trace |
-| **3. Multi-Suite**     | [Maximizing Coverage](./MaxCoverageMultiSuite.md)                                                                                                                            | Whole-kernel GCOV profiling across test suites (stress-ng, Syzkaller) and pruning      | Go 1.26+, autotools, Alpine minirootfs, gcov       | Checkpoint GCOV JSON, diff tables, pruned `.config` |
-| **Context**            | [Minimization](../SoftwareMinimization.md)<br>[Analysis](./KernelConfigAnalysis.md)<br>[Complexity](./KernelComplexity.md)<br>[Certification](./CertificationProgression.md) | DO-178C framing, historical benchmarking, complexity metrics, and assurance references | Conceptual review & standards context              | Safety-case rationales & boundary definitions       |
+| Stage                  | Document                                                                                                                                                                     | Purpose & Scope                                                                                                                    | Key Prerequisite                                                                                | Evidence                                                                                          |
+| :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| **1. Practice**        | [Hello Init](./HelloInit.md)                                                                                                                                                 | Static PID 1 baseline, bottom-up (`tinyconfig`) and top-down (`defconfig`) builds, KCOV reachability, SLOC, GDB-stub syscall trace | Docker with BuildKit; the step images supply the cross-compiler, QEMU `virt`, and `kernel-sloc` | `metrics.txt`, boot console, `linked.json`/`compiled.json`, `kcov-lines.txt`, `pid1-syscalls.log` |
+| **2. Flight Workload** | [Hello cFS](./HelloCFS.md)                                                                                                                                                   | cFS PID 1 scaffold: kernel options for POSIX timers, message queues, and IPv4/UDP; observation tables still to be recorded         | Docker; the real cFS build is not wired in yet                                                  | `metrics.txt`, boot console                                                                       |
+| **3. Multi-Suite**     | [Maximizing Coverage](./MaxCoverageMultiSuite.md)                                                                                                                            | Whole-kernel GCOV profiling across test suites (stress-ng, Syzkaller) and pruning                                                  | Devcontainer: Go 1.26+, autotools, Alpine minirootfs, gcov                                      | Checkpoint GCOV JSON, diff tables, pruned `.config`                                               |
+| **Context**            | [Minimization](../SoftwareMinimization.md)<br>[Analysis](./KernelConfigAnalysis.md)<br>[Complexity](./KernelComplexity.md)<br>[Certification](./CertificationProgression.md) | DO-178C framing, historical benchmarking, complexity metrics, and assurance references                                             | Conceptual review & standards context                                                           | Safety-case rationales & boundary definitions                                                     |
 
 ## Key Drivers Behind the Upstream Docs and Scripts
 
@@ -37,8 +38,10 @@ methodology. Key architectural and assurance drivers behind these artifacts:
   and enforcing a strict monolithic kernel build (`CONFIG_MODULES=n`).
 - **Separation of Concerns (Upstream Mechanics vs. Aerospace Assurance):**
   - _Upstream Scope (`kernel-minimization.rst`):_ Focuses purely on general
-    software engineering mechanics — top-down vs. bottom-up Kconfig trimming,
-    user-space feature probing (`ainit.c`, `ainit-net.c`), and build measurement.
+    software engineering mechanics — top-down (`defconfig`) and bottom-up
+    (`tinyconfig`) Kconfig trimming, a minimal PID 1 workload (`hello_init.c`),
+    and build measurement. The feature probes (`ainit-net.c`,
+    `ainit-net-kcov.c`) live in the AeroWG walkthroughs, not upstream.
   - _Aerospace Scope (`SoftwareMinimization.md`):_ Addresses airworthiness and
     safety standards (DO-178C, DO-297, AMC 20-193), explaining why minimization
     reduces review surface, why unobserved execution in a trace is not dead-code
@@ -47,8 +50,9 @@ methodology. Key architectural and assurance drivers behind these artifacts:
   whole-tree `cloc *` estimates and binary size guesses with two reproducible metrics:
   - _DWARF Linked SLOC (`dwarf vmlinux`):_ Resolves DWARF line-table addresses to
     unique `file:line` pairs present in the final linked `vmlinux` ELF.
-  - _Compiled Source SLOC (`kernel .`):_ Uses `compile_commands.json` to count code
-    lines strictly across files actually compiled into that build.
+  - _Compiled Source SLOC (`kernel .`):_ Counts code lines in the whole source
+    files that `compile_commands.json` lists for that build. Included headers
+    are not followed.
 - **Grounding Runtime Coverage Mechanics (KCOV & GCOV):**
   - Integrates task-scoped runtime coverage collection via KCOV
     ([Linux Kernel KCOV Support](https://www.kernel.org/doc/html/latest/dev-tools/kcov.html), `Documentation/dev-tools/kcov.rst`) to bound, capture, and symbolize
@@ -58,26 +62,71 @@ methodology. Key architectural and assurance drivers behind these artifacts:
 
 ## 1. How to use these notes
 
-- **Pre-flight toolchain check.** Before starting, verify the basic devcontainer dependencies:
+- **Pre-flight check.** Hello Init and Hello cFS run entirely in Docker. Check
+  the Docker client and server, BuildKit, and free space where Docker stores
+  its data:
+
+  ```sh
+  docker version --format 'client {{.Client.Version}}, server {{.Server.Version}}'
+  docker buildx version
+  df -h "$(docker info --format '{{.DockerRootDir}}')" .
+  ```
+
+  The Maximizing Kernel Coverage example builds on the host or in the
+  devcontainer instead. Check its toolchain there:
+
   ```sh
   for cmd in aarch64-linux-gnu-gcc qemu-system-aarch64 cloc cpio python3 make; do
       printf "%-25s: " "$cmd"; command -v "$cmd" || echo MISSING
   done
   ```
+
 - Treat every table in [Hello Init (Practice)](./HelloInit.md) and [the Maximizing Kernel Coverage example](./MaxCoverageMultiSuite.md)
   as a claim to be re-derived, not trusted. Each claim has a build recipe and a
   measurement command in the referenced document; re-run them rather than reusing
   published numbers.
-- Use the **ELISA AeroWG devcontainer** for the workflow. Its package versions
-  are not pinned, so verify the
-  [Provenance Anchor](./HelloInit.md#71-experiment-artifacts--provenance-anchor)
-  before applying exact targets; a different toolchain needs new measurements.
-- Acquire the pinned draft source or its checksum-verified `scripts/kernel-sloc`
-  helper using [Hello Init Section 3](./HelloInit.md#3-get-the-kernel-sources).
-  The `v7.3-rc5` release checkout alone lacks the helper.
-- **Monitor disk across builds.** Each clean kernel build adds a few GB; the
-  `defconfig` and GCOV builds are the largest. Run `make clean` between
-  configurations and `df -h .` after each build.
+- **Environment.** Hello Init and Hello cFS do not need the devcontainer: their
+  Dockerfiles install the toolchain on `ubuntu:24.04`. That tag and its
+  packages are not pinned, so record the base image digest and tool versions
+  (`docker run --rm --entrypoint sh <image> -c 'aarch64-linux-gnu-gcc --version; qemu-system-aarch64 --version'`)
+  and compare them with the
+  [Provenance Anchor](./HelloInit.md#71-experiment-artifacts-and-provenance-anchor)
+  before treating a number as an exact target. A different toolchain needs new
+  measurements. The Maximizing Kernel Coverage example uses the ELISA AeroWG
+  devcontainer ([Section 8](#8-devcontainer-provisioning-for-syzkaller--build-tooling)).
+- **SLOC helper.** The `v7.3-rc5` release tree does not contain
+  `scripts/kernel-sloc`. The step Dockerfiles download it from a pinned commit
+  and verify its SHA-256 (`SLOC_HELPER_URL` and `SLOC_HELPER_SHA256` build
+  arguments). If the pinned URL stops resolving, pass both arguments for a
+  reviewed copy rather than dropping the checksum.
+- **Watch disk space where Docker and the builds write.** On 2026-10-31, one
+  `--no-cache` pass of the five Hello Init images added about 13 GB under
+  Docker's data root: the Step 3 image is 6.4 GB (its kernel build layer is
+  3.4 GB) and each other image is 3.1–3.4 GB. Repeated `--no-cache` rebuilds
+  also grow the BuildKit cache. Check the filesystem that holds Docker's data
+  root and your build output before each pass:
+
+  ```sh
+  df -h "$(docker info --format '{{.DockerRootDir}}')" .
+  ```
+
+  **On WSL 2**, `df` inside Linux reports the size of the distribution's
+  virtual disk (a VHDX file, 1 TB by default), not the free space on the
+  Windows drive that holds that file. Check that drive too, for example
+  `df -h /mnt/c`. When the Windows drive fills, the VHDX cannot grow: ext4
+  hits I/O errors and remounts read-only (`read-only file system` from
+  `docker build`), and WSL can then fail with `getpwnam(...) failed 5` and
+  `SIGBUS` until it is restarted. This happened during the 2026-10-31
+  validation pass. Keep Docker's data root (`"data-root"` in
+  `/etc/docker/daemon.json`) and large build trees on a disk with room, or
+  move the distribution with `wsl --manage <distro> --move <path>`.
+
+  For host builds, each clean kernel build adds a few GB; run `make clean`
+  between configurations and `df -h .` after each build. Remove validation
+  images when you are done (`docker rmi helloinit-step0 ...`).
+  `docker builder prune` and `docker system prune` remove cache and objects for
+  every build on the host, so ask before running them on a shared machine.
+
 - **Isolate each test run in its own build tree — never share one kernel tree
   between concurrent runs.** The kernel build is stateful: `.config`, the
   generated headers under `include/generated/` (for example `autoconf.h`), and
@@ -89,13 +138,19 @@ olddefconfig` and `make clean`. If two runs (two reviewers, two agents, or a
   `struct task_struct has no member named 'io_uring'`, `unknown type name
 'proc_write_t'`, `undefined symbol 'jiffies_64'`, or a vanished `.config`.
   These are collision artifacts, not findings; do not record them as failures.
-  Give each run a dedicated, non-conflicting working directory, e.g. export a
-  pristine snapshot into a temporary run directory stemming from the current
-  folder:
+
+  The step Dockerfiles build each kernel inside its own image, so separate
+  `docker build` runs do not collide; BuildKit runs identical steps once and
+  shares the result. The risk applies to host builds and to a host tree
+  bind-mounted over `/workspace/linux`: do not point two containers or host
+  builds at the same mounted tree at once, and pass
+  `--user "$(id -u):$(id -g)"` so the container does not leave root-owned
+  files in it. For host builds, give each run a dedicated directory, e.g.
+  export a pristine snapshot:
 
   ```sh
   # one independent tree per run; no shared .git, no shared build state
-  RUN_DIR="./tmp/minrun-$$"
+  RUN_DIR="../minrun-$$"
   mkdir -p "$RUN_DIR/linux"
   git -C /path/to/linux archive --format=tar HEAD \
       | tar -x -C "$RUN_DIR/linux"
@@ -107,59 +162,163 @@ olddefconfig` and `make clean`. If two runs (two reviewers, two agents, or a
   worktree, not sibling worktrees. Keep rootfs images and reports under the same
   per-run directory.
 
+- **Run super-linter on a throwaway clone.** This repository's super-linter
+  settings enable `FIX_*` modes (clang-format, black, shfmt, prettier) that
+  rewrite files in the mounted tree, and the container runs as `root`.
+  Pointing it at a working tree rewrites files and leaves them owned by
+  `root`. Commit first, clone to a scratch directory, and load the
+  environment the way `.github/workflows/lint.yml` does, with the same pinned
+  version:
+
+  ```sh
+  git clone --quiet --no-hardlinks . ../lint-scratch
+  git -C ../lint-scratch checkout --quiet --detach
+  git -C ../lint-scratch branch -f main "$(git merge-base origin/main HEAD)"
+  grep -v '^#' .github/super-linter.env > ../lint.env
+  docker run --rm -e RUN_LOCAL=true --env-file ../lint.env \
+      -v "$(cd ../lint-scratch && pwd)":/tmp/lint \
+      ghcr.io/super-linter/super-linter:v8.7.0
+  ```
+
+  Setting `main` to the merge base gives the same changed-file set as the
+  pull-request run in CI. Files that fix mode rewrote in the clone are owned
+  by `root`; remove the clone with
+  `docker run --rm -v "$(cd .. && pwd)":/w ubuntu:24.04 rm -rf /w/lint-scratch`.
+
 - Record cores and wall-clock time for every run, per
   [Section 10](./MaxCoverageMultiSuite.md#10-measurement-environment-core-count--timing-record).
+
+### 1.1 Running the Hello Init sequence (resumable)
+
+Run from the repository root. Each step writes its own log and a status line,
+so an interrupted pass resumes at the first step without `exit=0`. The run
+directory sits outside the repository so it never shows up as untracked files:
+
+```sh
+RUN=../hello-init-run
+mkdir -p "$RUN"
+for pair in step0-tinyconfig:helloinit-step0 step1-net:helloinit-step1 \
+            step2-kcov:helloinit-step2 gdb-stub-tracing:helloinit-gdb \
+            step3-defconfig:helloinit-step3; do
+    s=${pair%%:*}
+    tag=${pair#*:}
+    grep -q "^$s exit=0" "$RUN/status.txt" 2>/dev/null && continue   # done already
+    start=$(date +%s)
+    docker build --no-cache --progress=plain \
+        -f "docs/minimal-linux/hello-init/Dockerfile.$s" -t "$tag" . > "$RUN/$s.log" 2>&1
+    echo "$s exit=$? secs=$(( $(date +%s) - start ))" >> "$RUN/status.txt"
+done
+cat "$RUN/status.txt"
+```
+
+`--no-cache` makes the pass a real rebuild: each step installs its packages,
+clones the kernel, and compiles again. Without it, BuildKit reuses cached
+layers and a rerun proves little. Reference timings from 2026-10-31 on 22
+cores, with Step 3 built in parallel with the others: Step 0 330 s, Step 1
+282 s, Step 2 336 s, GDB trace 453 s, Step 3 1,754 s.
+
+If the host failed mid-pass, first confirm that the filesystem is writable and
+has room (`touch "$RUN/probe"`, `df -h`). An interrupted build leaves no
+partial image, so rerunning the loop rebuilds only the failed and missing
+steps.
+
+Collect the evidence for [Section 2](#2-validating-the-hello-init-body-sections):
+
+```sh
+for tag in helloinit-step0 helloinit-step1 helloinit-step2 helloinit-step3 helloinit-gdb; do
+    docker run --rm "$tag" cat /workspace/metrics.txt > "$RUN/metrics-$tag.txt"
+done
+# The Step 0 and Step 1 images boot QEMU as their command; no TTY is needed.
+for tag in helloinit-step0 helloinit-step1; do
+    docker run -d --name "boot-$tag" "$tag" > /dev/null
+    sleep 30
+    docker logs "boot-$tag" > "$RUN/boot-$tag.log" 2>&1
+    docker rm -f "boot-$tag" > /dev/null
+done
+grep -a -h -E 'Linux version|Run /init|hello world|NET-PROBE' "$RUN"/boot-*.log
+docker run --rm helloinit-gdb > "$RUN/pid1-syscalls.log"
+```
+
+The Step 2 and Step 3 images capture KCOV while the image builds. To repeat a
+capture without rebuilding (for example, after a capture on a busy host), use
+`-icount shift=4` for deterministic guest timing. The capture is slower in this
+mode; for Step 3, add `-m 512M` and raise the timeout to 60 s:
+
+```sh
+docker run --rm --entrypoint sh helloinit-step2 -c '
+cd /workspace &&
+timeout 40s qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic -icount shift=4 \
+    -kernel linux/arch/arm64/boot/Image -initrd initramfs-kcov.cpio.gz \
+    -append "console=ttyAMA0 nokaslr" > /tmp/kcov.log 2>&1
+tr -d "\r" < /tmp/kcov.log | grep -E "^0x[0-9a-f]+$" > /tmp/pcs.txt
+aarch64-linux-gnu-addr2line -f -i -e linux/vmlinux < /tmp/pcs.txt > /tmp/symbols.txt
+python3 scripts/normalize_kcov.py /tmp/symbols.txt /tmp/lines.txt
+echo "captured=$(wc -l < /tmp/pcs.txt) distinct=$(sort -u /tmp/pcs.txt | wc -l)"'
+```
 
 ## 2. Validating the Hello Init body sections
 
 All "Section N" references in this table are sections of [Hello Init (Practice)](./HelloInit.md).
 
-| Claim to validate       | How to reproduce                                       | Pass criterion in the recorded environment                                                                              |
-| ----------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| 7.2 Step 0 `tinyconfig` | Section 3 (`Dockerfile.step0-tinyconfig`)              | DWARF `124,938`, compiled `352,672` (600 files), raw `Image` `3,223,560` B; boots to `hello world`                      |
-| 7.2 Step 1 `+NET+INET`  | Section 4 (`Dockerfile.step1-net`)                     | DWARF `197,490`, compiled `527,040` (784 files); `NET-PROBE: IPv4/UDP socket available`                                 |
-| 7.2 Step 2 `+KCOV`      | Section 5 (`Dockerfile.step2-kcov`)                    | DWARF `209,321`, compiled `527,040` (784 files); KCOV instrumented binary                                               |
-| 7.2 Step 3 `defconfig`  | Section 6 (`Dockerfile.step3-defconfig`)               | DWARF `2,070,838`, compiled `5,722,530` (9,157 files), raw `Image` `110,991,872` B; boots with `-m 512M`                |
-| 7.3 user space          | Section 3.3 / 4.3 / 5.3 / 6.3 user space sizing        | Step 0: `ainit` 10 SLOC / 634,000 B; Step 1: `ainit-net` 22 SLOC; Steps 2 & 3: `ainit-net-kcov` 73 SLOC / 704,704 B     |
-| 7.4.1 `socket()` KCOV   | Section 5 (`Dockerfile.step2-kcov` normalization)      | ~276 source lines; ~268 captured / 252 distinct PCs; instrumented DWARF 209,321                                         |
-| 7.4.2 `socket()` KCOV   | Section 6 (`Dockerfile.step3-defconfig` normalization) | ~318 source lines; ~278 captured / 259 distinct PCs; instrumented DWARF 2,070,838; namespace and security paths present |
+| Claim to validate       | How to reproduce                            | Pass criterion in the recorded environment                                                                                                                                                                                                        |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7.2 Step 0 `tinyconfig` | Section 3 (`Dockerfile.step0-tinyconfig`)   | DWARF `124,938`, compiled `352,672` (600 files), raw `Image` `3,223,560` B; boot shows `Linux version 7.3.0-rc5` and `hello world` with no panic                                                                                                  |
+| 7.2 Step 1 `+NET+INET`  | Section 4 (`Dockerfile.step1-net`)          | DWARF `197,490`, compiled `527,040` (784 files), raw `Image` `4,495,368` B; `NET-PROBE: IPv4/UDP socket available`                                                                                                                                |
+| 7.2 Step 2 `+KCOV`      | Section 5 (`Dockerfile.step2-kcov`)         | DWARF `209,321` (instrumented), compiled `533,116` (789 files), raw `Image` `5,552,136` B; the build fails unless the probe line and KCOV PCs appear                                                                                              |
+| 7.2 Step 3 `defconfig`  | Section 6 (`Dockerfile.step3-defconfig`)    | DWARF `2,070,838`, compiled `5,722,530` (9,158 files), raw `Image` `110,991,872` B; `.config` has no `=m` entries; KCOV capture inside the 30 s window at `-m 512M`                                                                               |
+| 7.3 user space          | Sections 3.3, 4.3, 5.3, 6.3 (`metrics.txt`) | `ainit` 9 SLOC / 634,000 B; `ainit-net` 21 SLOC / 634,984 B; `ainit-net-kcov` 81 SLOC / 704,704 B (stripped 597,944 B)                                                                                                                            |
+| 7.4.1 `socket()` KCOV   | Section 5 (`Dockerfile.step2-kcov`)         | 276 normalized lines; 268 captured / 252 distinct PCs; per file: `net/socket.c` 32, `af_inet.c` 20, `sock.c` 24, `file_table.c`+`file.c` 51, `dcache.c`+`inode.c` 37, `syscall.c` 10, `udp.c` 4, other 98                                         |
+| 7.4.2 `socket()` KCOV   | Section 6 (`Dockerfile.step3-defconfig`)    | 318 normalized lines; 278 captured / 259 distinct PCs; per file: `net/socket.c` 31, VFS group 93, `sock.c`+`af_inet.c` 48, `user_namespace.c`+`security.c` 28, `syscall.c` 9, `udp.c` 3, other 106 (including `fs/ioctl.c` 11 for `KCOV_DISABLE`) |
+| Appendix 2 GDB trace    | Appendix 2 (`Dockerfile.gdb-stub-tracing`)  | The 16 entries listed in Appendix 2; `syscall=29` has request `0x5401` (`TCGETS`); the build fails without `syscall=64 arg0=0x1`                                                                                                                  |
 
-> **Known-benign variance.** Compressed `Image.gz` sizes and `*.cpio.gz` archive
-> sizes vary with timestamps and archive/build metadata. Compare the raw
-> `Image` and SLOC only when the recorded versions and debug policy match.
+> **Recorded rebuild (2026-10-31).** A `--no-cache` rebuild of all five images
+> (base `ubuntu:24.04@sha256:fe81560990fa…`, GCC `13.3.0-6ubuntu2~24.04.1`,
+> QEMU `8.2.2+ds-0ubuntu1.18`) reproduced every exact value in this table.
 >
-> **Approximate rows are shape checks, not exact matches.** The `7.4.0 read()`
-> row (`21` PCs / `27` normalized lines) and the per-step DWARF/compiled SLOC,
-> file counts, and raw `Image` bytes are exact for the recorded environment.
-> The old `29` read count included discriminator variants; do not use it as
-> a unique-source-line target. The `socket()`
-> KCOV totals in `7.4.1`/`7.4.2` are marked `~` because `socket()` crosses
-> allocation, refcount, and (on `defconfig`) LSM/namespace paths whose exact
-> PC/line totals shift a few percent with toolchain and build details. Validate
-> them by **per-subsystem shape** — the named files and their normalized line
-> counts (`net/socket.c`, `net/core/sock.c`, `net/ipv4/af_inet.c`, `udp.c`, the
-> VFS `file*/dcache/inode` group, `arch/arm64/kernel/syscall.c`, and the
-> `fs/ioctl.c` `KCOV_DISABLE` window). Compare captured PCs, distinct PCs, and
-> source lines separately. Totals within roughly ±10% that preserve the required
-> subsystem paths are a pass. Use the instrumented `vmlinux` denominator.
+> **Source formatting changes the user-space SLOC.** super-linter's clang-format
+> fix joins each `main` opening brace onto the signature line, which lowers each
+> `cloc` count by one (10/22/82 before, 9/21/81 after) without changing the
+> compiled binaries. Re-measure after reformatting the sources.
+>
+> **Known-benign variance.** Compressed `Image.gz` and `*.cpio.gz` sizes vary by
+> a few bytes between rebuilds of the same sources (observed: 1 B on
+> `Image.gz`, 3 B on the Step 1 archive) because the archives embed timestamps.
+> Compare raw `Image` sizes and SLOC exactly when the recorded versions and
+> debug policy match.
+>
+> **KCOV counts repeat exactly on a quiet host.** Four idle-host boots and two
+> `-icount shift=4` boots of the Step 2 image gave identical PC lists (268
+> captured, 252 distinct, 276 lines). Under heavy host load, guest timer
+> interrupts inside the window added 8 PCs and 10 lines in `kernel/irq.c`,
+> `kernel/time/sched_clock.c`, `arch/arm64/include/asm/arch_timer.h`, and
+> `include/linux/seqlock.h`. If a build-time capture differs only in those
+> files, repeat it on a quiet host or with `-icount`
+> ([Section 1.1](#11-running-the-hello-init-sequence-resumable)) before
+> recording. With a different toolchain or kernel, compare the per-file shape
+> instead: totals within roughly ±10% that keep the listed subsystem paths are
+> a pass. Use the instrumented `vmlinux` denominator.
 
-## 3. Validating the Hello cFS flight scenario (`HelloCFS.md`)
+## 3. Validating the Hello cFS scaffold (`HelloCFS.md`)
 
-All "Section N" references in this table are sections of [Hello cFS](./HelloCFS.md).
+All "Section N" references in this section are sections of [Hello cFS](./HelloCFS.md).
 
-| Claim / Scenario to validate    | How to reproduce                                                                   | Pass criterion in the recorded environment                                                                                   |
-| :------------------------------ | :--------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
-| **1. PID 1 cFS Workload Boot**  | Section "PID 1 cFS Workload Boot" recipe under QEMU                                | Boots `core-cfs` as PID 1, initializes CFE Core and OSAL, enters steady housekeeping loop without init panic                 |
-| **2. Feature Probing**          | Build and execute `cfs-probe-net`, `cfs-probe-ipc`, and `cfs-probe-timer` as PID 1 | Probe binaries report feature availability (IPv4/UDP socket, POSIX mqueue, monotonic timer precision) or graceful error code |
-| **3. Sizing & SLOC Accounting** | Section "Metrics" commands using `scripts/kernel-sloc` and `cloc`                  | Produces `linked.json` DWARF SLOC, `compiled.json` whole-file SLOC, and user-space source/stripped binary footprints         |
-| **4. KCOV Reachability**        | Section "Runtime Coverage Collection (KCOV)" with `normalize_kcov.py`              | Deduplicated `(file, line)` counts and coverage percentage computed against instrumented `vmlinux` DWARF SLOC                |
+Hello cFS is a scaffold. `hello-cfs/core-cfs.c` prints the expected cFS banner
+and idles; it does not build or run cFS or OSAL yet (the Step 0 Dockerfile
+carries the cFS build steps as comments only), and the observation tables in
+Section 5 hold `_Record_` placeholders. Validate what exists:
 
-> **Validation Context.** [Hello cFS](./HelloCFS.md) applies the exact Change →
-> Build → Test → Measure → Record discipline established in
-> [Hello Init](./HelloInit.md) to the NASA Core Flight System flight stack.
-> Reviewers should verify that cFS-specific configuration deltas (such as POSIX
-> timers, message queues, and socket options) are validated against isolated OSAL
-> probes before full application integration.
+| Claim / Scenario to validate | How to reproduce                                                      | Pass criterion                                                                            |
+| :--------------------------- | :-------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| **3.1–3.2 Step 0 boot**      | Build `Dockerfile.step0-cfs-baseline`, then boot it as in Section 3.2 | Banner lines follow `Run /init as init process` and the guest idles without an init panic |
+| **3.3 Step 0 metrics**       | `docker run --rm hellocfs-step0 cat /workspace/metrics.txt`           | Every row has a value, including DWARF and compiled SLOC                                  |
+| **4.x Step 1 pruning**       | Build and boot `Dockerfile.step1-cfs-prune`                           | Same banner; metrics present                                                              |
+| **5.2–5.4 tables**           | —                                                                     | Placeholders; nothing to compare until a real cFS workload and probes exist               |
+
+> **Known gaps (checked against a 2026-10-30 `hellocfs-step0` image).** The
+> kernel reports `7.3.0-rc5`, not the `7.3.0-rc5+` shown in Section 3.2. The
+> Step 0 Dockerfile header mentions OSAL probe binaries that are not in the
+> tree. Once the real cFS build lands, add exact pass criteria here, as for
+> Hello Init.
 
 ## 4. Validating the Maximizing-Kernel-Coverage example
 
@@ -184,7 +343,7 @@ tables [Section 6](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression
 > sources, Python 3.12 or newer for archive extraction, and
 > `wget`/`base64`/`tar`/`aarch64-linux-gnu-gcov`. Keep the guest
 > **single-core at `-m 1024M`** for the NET-less baseline. Allow a few GB of disk for
-> each GCOV build.
+> each GCOV build. The 2026-10-31 pass did not re-run this example.
 
 Watch for these verified failure modes (each is called out at its step):
 
@@ -218,7 +377,7 @@ Watch for these verified failure modes (each is called out at its step):
   instead (Section 8).
 - **Denominator ambiguity.** State whether a percentage uses a `.gcno`
   graph metric or the gcov JSON executable-source-line union
-  (see [Measurement Denominators](./HelloInit.md#measurement-denominators--sloc-accounting)
+  (see [Measurement Denominators](./HelloInit.md#measurement-denominators-and-sloc-accounting)
   in Hello Init); they are not interchangeable.
 
 > **Environment sensitivity.** The Maximizing Kernel Coverage example's magnitudes
@@ -237,60 +396,59 @@ execute the following test scenarios:
 
 ### 5.1 Function Graph Tracing (`Kernel paths reached by the workload`)
 
-Validates kernel execution paths using ftrace and `trace-cmd`:
+Validates kernel execution paths using ftrace and `trace-cmd`. Use a
+tracing-capable test system or QEMU guest; the Hello Init kernels do not enable
+ftrace.
 
 1. **Verify tracer support:** Confirm the test kernel provides `CONFIG_FTRACE=y`,
    `CONFIG_FUNCTION_TRACER=y`, and `CONFIG_FUNCTION_GRAPH_TRACER=y`. Check with:
+
    ```sh
    sudo trace-cmd list -t
    ```
-2. **Collect application trace:** Record a task-filtered graph for a target binary
-   (e.g., `./ainit` or test application):
+
+2. **Collect application trace:** Record a task-filtered graph for a native
+   workload that exits, as in the upstream example (`./app`). `ainit` is not
+   suitable here: it is built for arm64 and, as PID 1, idles in `pause()`
+   forever, so the recording never ends.
+
    ```sh
    sudo trace-cmd record -p function_graph -F -c -O nofuncgraph-irqs \
-       --user "$USER" -o functions.dat ./ainit
+       --user "$USER" -o functions.dat ./app
    trace-cmd report -i functions.dat > functions.txt
    ```
+
 3. **Pass criterion:** `functions.txt` captures the nested function graph of the
    workload without dropped buffer events or interrupt interleaving.
 
 ### 5.2 Host-Side GDB Stub Tracing (`Tracing a minimal user space`)
 
-Validates non-intrusive syscall trapping for minimal PID 1 binaries under QEMU:
+`Dockerfile.gdb-stub-tracing` automates this section for the Step 0 `ainit`
+image (see [Hello Init Appendix 2](./HelloInit.md#appendix-2-non-intrusive-syscall-tracing-via-qemu-gdb-stub)):
 
-1. **Launch QEMU with GDB stub:** Boot the debug `vmlinux` with `nokaslr` and
-   paused on start:
-   ```sh
-   qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
-       -kernel arch/arm64/boot/Image -initrd initramfs.cpio.gz \
-       -append 'console=ttyAMA0 nokaslr' -S -gdb tcp:127.0.0.1:1234
-   ```
-2. **Trap syscall entry in GDB:** Connect `gdb-multiarch` and set breakpoints on
-   `kernel_init` and `do_el0_svc` to log syscall register numbers:
-   ```sh
-   gdb-multiarch vmlinux \
-       -ex "target remote localhost:1234" \
-       -ex "tbreak kernel_init" \
-       -ex "continue" \
-       -ex "set pagination off" \
-       -ex "set logging file pid1-syscalls.log" \
-       -ex "set logging enabled on" \
-       -ex "break do_el0_svc" \
-       -ex "commands" \
-       -ex "silent" \
-       -ex 'printf "syscall=%lu arg0=%#lx\n", regs->regs[8], regs->regs[0]' \
-       -ex "continue" \
-       -ex "end" \
-       -ex "continue"
-   ```
-3. **Pass criterion:** `pid1-syscalls.log` records initial system calls invoked
-   by PID 1 (e.g., `syscall=64` for `write`) without requiring user-space tooling.
+```sh
+docker build -f docs/minimal-linux/hello-init/Dockerfile.gdb-stub-tracing -t helloinit-gdb .
+docker run --rm helloinit-gdb
+```
+
+**Pass criterion:** In the recorded environment, the log lists the 16 `ainit`
+syscall entries shown in Hello Init Appendix 2, including `syscall=64 arg0=0x1`
+(`write`) and ending with `syscall=73` (`ppoll`, the `pause()` loop). The image
+build fails if the `write` entry is missing.
+
+When running GDB by hand, put the breakpoint `commands` block in a command file
+and pass it with `-x`, as the Dockerfile does. GDB reads a `commands` body from
+its input, so splitting it across `-ex` arguments fails with
+`Undefined command: "silent"` and `There is no member named regs`. To check an
+`ioctl` request, also print `regs->regs[1]`: `0x5401` is `TCGETS`.
 
 ### 5.3 Low-Level QEMU Instruction Tracing
 
 1. **Enable QEMU execution logging:** Pass `-d in_asm -D qemu.log` to QEMU.
 2. **Pass criterion:** `qemu.log` captures translated basic blocks for early boot
-   and user-space execution.
+   and user-space execution. A block appears when QEMU translates it, not each
+   time it runs, so a missing repeat does not show that the block did not run
+   again.
 
 ## 6. Validating the parent document (`SoftwareMinimization.md`)
 
@@ -315,11 +473,20 @@ testing it, check structure and links rather than metrics:
   `MaxCoverageMultiSuite.md`), this steering page
   (`./minimal-linux/TestingSteeringNotes.md`), the related-work pages, and the
   upstream draft URLs. Link rot, not numeric drift, is what breaks this page.
+  Check `#anchor` fragments as well as files: GitHub builds anchors from
+  heading text, so renaming a heading breaks every link to it. Heading renames
+  in Hello Init (for example `&` to `and`, which turned
+  `#measurement-denominators--sloc-accounting` into
+  `#measurement-denominators-and-sloc-accounting`) left seven links in other
+  pages pointing at anchors that no longer existed.
 
 ## 7. Determinism and anti-regression levers
 
-- **Pin the inputs:** kernel tag/commit (Provenance Anchor), toolchain versions,
-  Alpine `3.20.3` minirootfs and the pinned `stress-ng`/`iproute2` APK versions.
+- **Pin the inputs:** kernel tag/commit (Provenance Anchor), the base image
+  digest and toolchain versions, Alpine `3.20.3` minirootfs and the pinned
+  `stress-ng`/`iproute2` APK versions.
+- **Rebuild for real:** use `docker build --no-cache` for a validation pass;
+  cached layers only prove that an earlier build worked.
 - **One variable at a time:** when a number moves, change only the config group or
   payload under test and keep `make clean` between builds so stale objects do not
   distort SLOC.
@@ -330,6 +497,9 @@ testing it, check structure and links rather than metrics:
   two reviewers) reproducible against each other instead of interfering.
 - **Single-core by default:** keep the guest at one vCPU (no `-smp`) for
   deterministic stage ordering; only add cores deliberately and re-record timing.
+- **Quiet host for KCOV:** capture KCOV on an idle host or with
+  `-icount shift=4`; host load adds timer-interrupt PCs to the window
+  ([Section 2](#2-validating-the-hello-init-body-sections)).
 - **Capture evidence:** save serial logs, suite outcomes, checkpoint archives,
   `linked.json`/`compiled.json`, and per-unit gcov JSON directories so a reviewer
   can regenerate the tables.

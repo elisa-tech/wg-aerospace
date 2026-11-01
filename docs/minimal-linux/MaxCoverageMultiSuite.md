@@ -110,7 +110,7 @@ techniques remain untried and are scoped for larger configurations
 
 ## 3. Kernel Profiling Configuration
 
-Start from the bootable `tinyconfig` baseline from [Section 4](./HelloInit.md#4-change-kernel-options--configuration)
+Start from the bootable `tinyconfig` baseline from [Section 3](./HelloInit.md#3-step-0-minimal-tinyconfig-baseline)
 (`tinyconfig` + PL011 serial, printk, initrd, ELF, `-MODULES`), then enable
 whole-kernel GCOV profiling, boot self-tests, and the workload prerequisites
 on ARM64. Use the pinned draft helper and record the actual tool versions as
@@ -899,7 +899,7 @@ areas for investigation in the next pruning round:
 
 ## 9. Cross-Reference with Research Configurations & Advanced Minimization Targets
 
-_(For SLOC accounting definitions across baseline, instrumented, and research profiles, see [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting))._
+_(For SLOC accounting definitions across baseline, instrumented, and research profiles, see [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators-and-sloc-accounting))._
 
 To take the next leap in kernel minimization, we can cross-reference our Section 7 audit findings with the published minimal research profiles analyzed in
 [Kernel Config Analysis](KernelConfigAnalysis.md) and the aerospace framing in
@@ -949,7 +949,7 @@ linked codebase while driving whole-kernel coverage percentages into the upper t
 > **Research Profile Synthesis** row uses the Section 9.1 recipe and is a **target for the
 > next iteration — it was not booted/measured in this run** (its values are marked
 > `~`). Coverage percentages use the gcov JSON source-line union defined in
-> [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators--sloc-accounting);
+> [Measurement Denominators & SLOC Accounting](./HelloInit.md#measurement-denominators-and-sloc-accounting);
 > regenerate per row because each prune changes the denominator.
 
 | Configuration Profile                         | Linked DWARF SLOC           | Raw Image Size            | Measured in this run?   | Aerospace / Verification Notes                                                                                                                                            |
@@ -960,7 +960,7 @@ linked codebase while driving whole-kernel coverage percentages into the upper t
 | **`tinyconfig` + Research Profile Synthesis** | **~118,500 lines (target)** | **~2.1 MiB (target)**     | **no — next iteration** | **Ultra-minimal profile (Section 9.1):** replaces multi-table CRCs, disables unneeded POSIX IPC/APIs, removes compaction/swap. Build, boot, and re-measure before citing. |
 
 _Note: the uninstrumented tinyconfig baseline is 124,938 DWARF SLOC
-([Hello Init Section 7.2](./HelloInit.md#72-build--sizing-iteration-record-v73-rc5-arm64)).
+([Hello Init Section 7.2](./HelloInit.md#72-build-and-sizing-iteration-record-v73-rc5-arm64)).
 GCOV, self-tests, and suite prerequisites increase it to 164,992.
 Earlier [Kernel Config Analysis](KernelConfigAnalysis.md) figures use LTS v6.18._
 

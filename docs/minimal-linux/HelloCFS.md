@@ -47,16 +47,18 @@ Before evaluating cFS:
 
 This walkthrough uses containerized builds executed from the repository root. Dedicated step Dockerfiles in [docs/minimal-linux/hello-cfs/](./hello-cfs/README.md) encapsulate the complete cross-toolchain, kernel checkout, initramfs packing, sizing, and QEMU execution:
 
-* `docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline`
-* `docs/minimal-linux/hello-cfs/Dockerfile.step1-cfs-prune`
+- `docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline`
+- `docs/minimal-linux/hello-cfs/Dockerfile.step1-cfs-prune`
 
 > **Interactive Debugging Console & Bind-Mounting Local Sources:**
 > Each container image includes `vim`, `kernel-sloc` on `PATH`, and all cross-compilation utilities. To launch an interactive debug shell inside any built image to inspect the kernel tree (`/workspace/linux`), generated `.config`, or staged `rootfs` instead of launching QEMU directly:
+>
 > ```sh
 > docker run --rm -it --entrypoint bash hellocfs-step0
 > ```
 >
 > To bind-mount a local Linux tree (e.g. `./linux`) over `/workspace/linux`:
+>
 > ```sh
 > docker run --rm -it \
 >     -v "$(pwd)/linux:/workspace/linux" \
@@ -85,6 +87,7 @@ docker run --rm -it hellocfs-step0
 ```
 
 **Expected Console Output:**
+
 ```text
 Booting Linux on physical CPU 0x0000000000 [0x411fd070]
 Linux version 7.3.0-rc5+ (...) (aarch64-linux-gnu-gcc ...) #1 SMP PREEMPT ...
@@ -112,7 +115,7 @@ Display the consolidated metrics report:
 docker run --rm hellocfs-step0 cat /workspace/metrics.txt
 ```
 
-*(Optional)* Extract raw measurement files to host:
+_(Optional)_ Extract raw measurement files to host:
 
 ```sh
 docker run --rm hellocfs-step0 cat /workspace/linux/sloc-dwarf.txt > sloc-dwarf-cfs-step0.txt

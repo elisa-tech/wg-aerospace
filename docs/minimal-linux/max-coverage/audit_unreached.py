@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 # pylint: disable=too-many-locals,duplicate-code
 """Audit unreached functions and lines across GCOV checkpoints."""
+
 import gzip
 import json
 import os
@@ -56,8 +57,10 @@ def main() -> None:
         ranked.append((fpath, len(lset), len(unreached), pct))
     ranked.sort(key=lambda x: x[2], reverse=True)
 
-    tbl_header = (f"{'Source File':<40} | {'Linked SLOC':<12} | "
-                  f"{'Unreached':<10} | {'% Unreached':<12}")
+    tbl_header = (
+        f"{'Source File':<40} | {'Linked SLOC':<12} | "
+        f"{'Unreached':<10} | {'% Unreached':<12}"
+    )
     print(tbl_header)
     print("-" * 80)
     for fpath, total, unreached_cnt, pct in ranked[:15]:

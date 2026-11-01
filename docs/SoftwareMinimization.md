@@ -63,17 +63,17 @@ We provide three concrete scenarios executing this discipline:
 New contributors and reviewers should follow the scenarios in order:
 
 - **[Hello Init (Practice Baseline)](./minimal-linux/HelloInit.md)** — Foundational
-   practice baseline booting a static binary as PID 1 under QEMU `arm64`.
-   Provides an end-to-end sandbox for team members to practice the mechanics
-   and record baseline metrics.
+  practice baseline booting a static binary as PID 1 under QEMU `arm64`.
+  Provides an end-to-end sandbox for team members to practice the mechanics
+  and record baseline metrics.
 - **[Hello cFS (Flight Application Workload)](./minimal-linux/HelloCFS.md)** — Flight application
-   scenario applying the same structure and observation tables to the NASA
-   Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
+  scenario applying the same structure and observation tables to the NASA
+  Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
 - **[Maximizing Kernel Coverage with Open-Source Test Suites](./minimal-linux/MaxCoverageMultiSuite.md)**
-   — a worked example of applying these concepts to maximize whole-kernel
-   structural coverage: it drives stress-ng, Syzkaller, and GCOV against a
-   GCOV-instrumented `tinyconfig` kernel, then audits and prunes the code that
-   remains unreached.
+  — a worked example of applying these concepts to maximize whole-kernel
+  structural coverage: it drives stress-ng, Syzkaller, and GCOV against a
+  GCOV-instrumented `tinyconfig` kernel, then audits and prunes the code that
+  remains unreached.
 
 ## How this maps to the kernel.org draft guides
 

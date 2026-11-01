@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 # pylint: disable=too-many-locals
 """Extract GCOV checkpoints and generate per-unit JSON inventories."""
+
 import argparse
 import shutil
 import subprocess
@@ -47,9 +48,17 @@ def main() -> None:
                     raise RuntimeError("move existing gcov JSON outputs first")
                 with (output / "gcov.log").open("a", encoding="utf-8") as log:
                     subprocess.run(
-                        ["aarch64-linux-gnu-gcov", "--json-format",
-                         "-o", str(target.parent), str(target)],
-                        cwd=tree, stdout=log, stderr=log, check=True,
+                        [
+                            "aarch64-linux-gnu-gcov",
+                            "--json-format",
+                            "-o",
+                            str(target.parent),
+                            str(target),
+                        ],
+                        cwd=tree,
+                        stdout=log,
+                        stderr=log,
+                        check=True,
                     )
                 generated = list(tree.glob("*.gcov.json.gz"))
                 if len(generated) != 1:

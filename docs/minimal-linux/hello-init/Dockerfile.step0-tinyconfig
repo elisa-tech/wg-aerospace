@@ -125,4 +125,4 @@ RUN aarch64-linux-gnu-strip -o /tmp/ainit-stripped rootfs/init \
 # and enters pause() without an init panic.
 CMD ["qemu-system-aarch64", "-machine", "virt", "-cpu", "cortex-a57", "-nographic", \
      "-kernel", "/workspace/linux/arch/arm64/boot/Image", "-initrd", "/workspace/initramfs.cpio.gz", \
-     "-append", "console=ttyAMA0 init=/init"]
+     "-append", "console=ttyAMA0"]

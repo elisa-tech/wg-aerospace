@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: CC-BY-SA-4.0
 # pylint: disable=duplicate-code
 """Compute differential coverage across sequential GCOV checkpoints."""
+
 import gzip
 import json
 import os
@@ -37,12 +38,17 @@ def main() -> None:
     previous: set[tuple[str, int]] = set()
     denominator = None
     inventory = None
-    for stage in ("stage0_boot", "stage1_procsys",
-                  "stage2_stressng", "stage3_syzkaller"):
+    for stage in (
+        "stage0_boot",
+        "stage1_procsys",
+        "stage2_stressng",
+        "stage3_syzkaller",
+    ):
         if not Path(stage).is_dir():
             continue
-        units = {report.relative_to(stage)
-                 for report in Path(stage).rglob("*.gcov.json.gz")}
+        units = {
+            report.relative_to(stage) for report in Path(stage).rglob("*.gcov.json.gz")
+        }
         if inventory is not None and units != inventory:
             raise ValueError(f"runtime unit inventory changed at {stage}")
         executed, executable = load_stage_lines(stage)

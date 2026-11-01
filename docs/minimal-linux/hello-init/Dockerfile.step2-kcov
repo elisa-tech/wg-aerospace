@@ -98,8 +98,18 @@ RUN timeout 15s qemu-system-aarch64 -machine virt -cpu cortex-a57 -nographic \
     -kernel /workspace/linux/arch/arm64/boot/Image -initrd /workspace/initramfs-kcov.cpio.gz \
     -append 'console=ttyAMA0 nokaslr' > /workspace/kcov.log 2>&1 || true
 
+# Fail the build if the probe did not run or KCOV captured no program counters
+RUN if ! grep -q 'NET-PROBE: IPv4/UDP socket available' /workspace/kcov.log \
+        || ! grep -q 'KCOV captured [1-9][0-9]* PCs' /workspace/kcov.log; then \
+        tail -n 40 /workspace/kcov.log; exit 1; \
+    fi
+
 WORKDIR /workspace
 RUN aarch64-linux-gnu-strip -o /tmp/ainit-kcov-stripped rootfs-kcov/init \
+    && cd /workspace/linux \
+    && ( python3 scripts/clang-tools/gen_compile_commands.py || true ) \
+    && ( /usr/local/bin/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt || true ) \
+    && cd /workspace \
     && awk '{gsub(/\r/,""); if (NF == 1 && $1 ~ /^0x[0-9a-fA-F]+$/) print $1}' kcov.log > kcov-pcs.txt \
     && aarch64-linux-gnu-addr2line -f -i -e linux/vmlinux < kcov-pcs.txt > kcov-symbols.txt \
     && python3 /workspace/scripts/normalize_kcov.py kcov-symbols.txt kcov-lines.txt >/dev/null \
@@ -110,6 +120,8 @@ RUN aarch64-linux-gnu-strip -o /tmp/ainit-kcov-stripped rootfs-kcov/init \
         printf "%-32s: %s\n" "Stripped static ELF size" "$(stat -c%s /tmp/ainit-kcov-stripped) bytes"; \
         printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-kcov.cpio.gz) bytes"; \
         printf "%-32s: %s\n" "Instrumented DWARF SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Compiled Source SLOC" "$(cat /workspace/linux/sloc-compiled.txt 2>/dev/null || echo 'N/A') lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
         printf "%-32s: %s\n" "Captured Program Counters" "$(wc -l < /workspace/kcov-pcs.txt) addresses"; \
         printf "%-32s: %s\n" "Unique Reached Source Lines" "$(wc -l < /workspace/kcov-lines.txt) lines"; \
     } | tee /workspace/metrics.txt

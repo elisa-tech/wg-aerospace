@@ -2,13 +2,12 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int main(void)
-{
-    printf("hello world\n");
-    fflush(stdout);
+int main(void) {
+  printf("hello world\n");
+  fflush(stdout);
 
-    for (;;)
-        pause();
+  for (;;)
+    pause();
 
-    return 0;
+  return 0;
 }
