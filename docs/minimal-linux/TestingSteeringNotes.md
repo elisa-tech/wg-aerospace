@@ -20,7 +20,7 @@ reproducible.
 | :--------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
 | **1. Practice**        | [Hello Init](./HelloInit.md)                                                                                                                                                 | Static PID 1 baseline, bottom-up (`tinyconfig`) and top-down (`defconfig`) builds, KCOV reachability, SLOC, GDB-stub syscall trace | Docker with BuildKit; the step images supply the cross-compiler, QEMU `virt`, and `kernel-sloc` | `metrics.txt`, boot console, `linked.json`/`compiled.json`, `kcov-lines.txt`, `pid1-syscalls.log` |
 | **2. Flight Workload** | [Hello cFS](./HelloCFS.md)                                                                                                                                                   | cFS PID 1 scaffold: kernel options for POSIX timers, message queues, and IPv4/UDP; observation tables still to be recorded         | Docker; the real cFS build is not wired in yet                                                  | `metrics.txt`, boot console                                                                       |
-| **3. Multi-Suite**     | [Maximizing Coverage](./MaxCoverageMultiSuite.md)                                                                                                                            | Whole-kernel GCOV profiling across test suites (stress-ng, Syzkaller) and pruning                                                  | Devcontainer: Go 1.26+, autotools, Alpine minirootfs, gcov                                      | Checkpoint GCOV JSON, diff tables, pruned `.config`                                               |
+| **3. Multi-Suite**     | [Maximizing Coverage](./MaxCoverageMultiSuite.md)                                                                                                                            | Whole-kernel GCOV profiling across test suites (stress-ng, Syzkaller) and pruning                                                  | Docker with BuildKit; step images provide all build and guest tooling                          | Checkpoint GCOV JSON, diff tables, pruned `.config`                                               |
 | **Context**            | [Minimization](../SoftwareMinimization.md)<br>[Analysis](./KernelConfigAnalysis.md)<br>[Complexity](./KernelComplexity.md)<br>[Certification](./CertificationProgression.md) | DO-178C framing, historical benchmarking, complexity metrics, and assurance references                                             | Conceptual review & standards context                                                           | Safety-case rationales & boundary definitions                                                     |
 
 ## Key Drivers Behind the Upstream Docs and Scripts
@@ -64,7 +64,7 @@ methodology. Key architectural and assurance drivers behind these artifacts:
 
 - **Pre-flight check.** Hello Init and Hello cFS run entirely in Docker. Check
   the Docker client and server, BuildKit, and free space where Docker stores
-  its data:
+  its data. Max Coverage also runs only through its step Dockerfiles:
 
   ```sh
   docker version --format 'client {{.Client.Version}}, server {{.Server.Version}}'
@@ -72,19 +72,10 @@ methodology. Key architectural and assurance drivers behind these artifacts:
   df -h "$(docker info --format '{{.DockerRootDir}}')" .
   ```
 
-  The Maximizing Kernel Coverage example builds on the host or in the
-  devcontainer instead. Check its toolchain there:
-
-  ```sh
-  for cmd in aarch64-linux-gnu-gcc qemu-system-aarch64 cloc cpio python3 make; do
-      printf "%-25s: " "$cmd"; command -v "$cmd" || echo MISSING
-  done
-  ```
-
 - Treat every table in [Hello Init (Practice)](./HelloInit.md) and [the Maximizing Kernel Coverage example](./MaxCoverageMultiSuite.md)
-  as a claim to be re-derived, not trusted. Each claim has a build recipe and a
-  measurement command in the referenced document; re-run them rather than reusing
-  published numbers.
+  as a claim to be re-derived, not trusted. Follow the reproduction method for
+  each walkthrough; for Max Coverage, use the paired step Dockerfiles in
+  Section 4 below. Re-run them rather than reusing published numbers.
 - **Environment.** Hello Init and Hello cFS do not need the devcontainer: their
   Dockerfiles install the toolchain on `ubuntu:24.04`. That tag and its
   packages are not pinned, so record the base image digest and tool versions
@@ -92,8 +83,8 @@ methodology. Key architectural and assurance drivers behind these artifacts:
   and compare them with the
   [Provenance Anchor](./HelloInit.md#71-experiment-artifacts-and-provenance-anchor)
   before treating a number as an exact target. A different toolchain needs new
-  measurements. The Maximizing Kernel Coverage example uses the ELISA AeroWG
-  devcontainer ([Section 8](#8-devcontainer-provisioning-for-syzkaller--build-tooling)).
+  measurements. The Max Coverage step images install their toolchain and use
+  pinned kernel and workload inputs; see their Dockerfile comments.
 - **SLOC helper.** The `v7.3-rc5` release tree does not contain
   `scripts/kernel-sloc`. The step Dockerfiles download it from a pinned commit
   and verify its SHA-256 (`SLOC_HELPER_URL` and `SLOC_HELPER_SHA256` build
@@ -325,89 +316,36 @@ Section 5 hold `_Record_` placeholders. Validate what exists:
 All "Section N" references in this subsection are sections of
 [Maximizing Kernel Coverage](./MaxCoverageMultiSuite.md).
 
-Two ways to run it:
+Run the two step images from the repository root. Step 0 measures the baseline
+(Sections 3–7); Step 1 applies the Section 8 prune and repeats the same workload:
 
-- **Dockerized (preferred), matching the Hello Init step images.** Build and run
-  the two step Dockerfiles; each one does the whole Section 3–8 pipeline and
-  fails the build if a GCOV prerequisite is dropped, a stage checkpoint is
-  missing, the unit inventory changes, or the denominator is zero:
-
-  ```sh
-  docker build -f docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline -t maxcov-step0 .
-  docker run --rm maxcov-step0                       # coverage progression + metrics
-  docker build -f docs/minimal-linux/max-coverage/Dockerfile.step1-gcov-pruned   -t maxcov-step1 .
-  docker run --rm maxcov-step1
-  ```
-
-- **By hand**, for adapting the run: [Section 3](./MaxCoverageMultiSuite.md#3-kernel-profiling-configuration) build →
-  [Section 4](./MaxCoverageMultiSuite.md#4-rootfs-assembly--sequential-multi-stage-execution-workflow) rootfs/boot →
-  [Section 5](./MaxCoverageMultiSuite.md#5-host-side-checkpoint-extraction--differential-analysis) reconstruct →
-  tables [Section 6](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression--differential-table-tinyconfig)/[Section 7](./MaxCoverageMultiSuite.md#7-identifying-uncovered-built-areas--pruning-candidates)/[Section 8](./MaxCoverageMultiSuite.md#8-iterative-kconfig-pruning--post-minimization-coverage-impact).
+```sh
+docker build -f docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline -t maxcov-step0 .
+docker run --rm maxcov-step0
+docker build -f docs/minimal-linux/max-coverage/Dockerfile.step1-gcov-pruned -t maxcov-step1 .
+docker run --rm maxcov-step1
+```
 
 > **This example is part of a full validation pass — do not skip it.** A review
 > that only re-runs [Hello Init](./HelloInit.md) has **not** validated the
-> walkthrough set. The Maximizing Kernel Coverage example is a separate, heavier
-> run and must be exercised too. Each step Dockerfile builds its kernel in its
-> own image layers, so separate `docker build` runs never share kernel state
-> ([Section 1](#1-how-to-use-these-notes)); a by-hand run needs its **own
-> isolated build tree**. The step images install the extra prerequisites Hello
-> Init does not need — **Go 1.26.0 or newer** for the pinned real `syz-prog2c`
-> (via `golang-go` + `GOTOOLCHAIN=auto`), the Alpine rootfs and packages, and
-> `aarch64-linux-gnu-gcov` — and keep the guest **single-core at `-m 1024M`**.
-> For a by-hand run, provide those yourself. Each GCOV image is about 4.5 GB and
-> the build boots QEMU for up to 20 minutes; watch disk per
-> [Section 1](#1-how-to-use-these-notes).
+> walkthrough set. Each Dockerfile builds and validates its own complete image;
+> the image includes its toolchain and workload dependencies. The build gates
+> configuration prerequisites, checkpoint validity, runtime-unit inventory,
+> and a nonzero coverage denominator. Those gates do not require stress-ng to
+> pass; review the reported suite outcomes separately.
 >
 > **Reproduced 2026-10-31 (Docker, fresh `--no-cache` step 0, cached-layer
 > step 1).** Both images built and ran to completion. Step 0 reproduced the
-> Section 6 baseline exactly: **164,992** DWARF SLOC, **7,596,040 B** `Image`,
-> **205,463** denominator, **609** gcov units per stage, 32.65% → 45.31%. Step 1
+> Section 6's **164,992** DWARF SLOC, **7,596,040 B** `Image`, **205,463**
+> denominator, and **609** gcov units per stage. The walkthrough's Section 6
+> narrative reports 45.31% final coverage, while its table reports 45.28%;
+> reconcile that discrepancy before claiming an exact percentage match. Step 1
 > reproduced the Section 8 prune in direction and magnitude: **146,810** DWARF
 > SLOC, **6,756,360 B** `Image`, **49.97%** final coverage (about 1.5–2% off the
 > doc's 2026-10-18 pruned figures — within the stated toolchain/`olddefconfig`
-> variance). Both reported `HARNESS INCOMPLETE` with all five stress-ng classes
-> failing and Syzkaller succeeding.
-
-Watch for these verified failure modes (each is called out at its step):
-
-- **Self-tests silently dropped.** After the Section 3 `olddefconfig`, confirm
-  `RUNTIME_TESTING_MENU=y`, `KUNIT=y`, and the `TEST_*`/`ATOMIC64_SELFTEST`
-  symbols survived. If they are `undef`, Stage 0 coverage collapses.
-- **Workload prerequisites dropped.** Verify `POSIX_TIMERS=y`, `SHMEM=y`,
-  `MEMFD_CREATE=y`, and `ADVISE_SYSCALLS=y`. Without timers, stress-ng's alarm
-  cannot bound stressors. `MEMFD_CREATE` enables the syscall, `SHMEM` supplies
-  its backing, and `ADVISE_SYSCALLS` enables advice calls.
-- **Wrong Syzkaller target or hidden syscall failures.** Generate with
-  `-os linux -arch arm64 -trace`. Inspect the emitted per-call errno values;
-  process exit zero alone does not prove the intended syscalls worked.
-- **`tc` missing (optional networking extension only).** The NET-less baseline
-  has no Netlink/tc stage. If you add the optional networking extension
-  (Section 3), confirm `/sbin/tc` exists in the rootfs (needs the `iproute2-tc`
-  package, which `iproute2-minimal` does not provide); otherwise its `tc qdisc`
-  commands do nothing.
-- **Missing or mismatched GCOV counters.** Place each `.gcda` next to its
-  matching `.gcno` and run gcov from the kernel tree root. Verify the runtime
-  unit inventory and executable denominator agree across all checkpoints.
-- **Overwritten headers and partial counts.** Preserve each unit's gcov JSON
-  output. Flattened text `.gcov` basenames discard shared-header data, and
-  `c.isdigit()` ignores positive partial counts such as `1*`.
-- **Incomplete suites reported as success.** Require all four valid checkpoint
-  archives and review suite/skipped-test and syscall outcomes. A suite pass
-  requires no failed self-test, `WATCHDOG`, `FAILED`, or `HARNESS INCOMPLETE`.
-  The broad class exploration may export usable coverage despite suite failures;
-  it does not establish acceptance.
-- **`-d FUTEX_PI` is ignored.** It is auto-selected; drop `FUTEX`/`RT_MUTEXES`
-  instead (Section 8).
-- **Denominator ambiguity.** State whether a percentage uses a `.gcno`
-  graph metric or the gcov JSON executable-source-line union
-  (see [Measurement Denominators](./HelloInit.md#measurement-denominators-and-sloc-accounting)
-  in Hello Init); they are not interchangeable.
-
-> **Environment sensitivity.** The Maximizing Kernel Coverage example's magnitudes
-> are reproducible _in method and shape_, but exact line counts depend on the
-> single-core guest, the toolchain, and the payloads. Its active Section 4 stages are
-> **stress-ng + a real `syz-prog2c` reproducer**. A live `syz-fuzzer` or a richer corpus moves the edge-case numbers. Always regenerate the tables
-> for your own payload set rather than citing these values as acceptance targets.
+> variance). These are coverage-exploration measurements, not suite-pass claims:
+> stress-ng failures are recorded, not gated, and coverage must be remeasured if
+> the toolchain, guest configuration, or workload changes.
 
 ## 5. Validating the Upstream Workload-Tracing Guide (`workload-tracing.rst`)
 
@@ -527,42 +465,11 @@ testing it, check structure and links rather than metrics:
   `linked.json`/`compiled.json`, and per-unit gcov JSON directories so a reviewer
   can regenerate the tables.
 
-## 8. Devcontainer provisioning for Syzkaller & Build Tooling
+## 8. Max Coverage Docker Tooling
 
-The example builds real Syzkaller tooling. The build prerequisites are installed in `demos/env/Dockerfile`:
-
-- **Autotools & build utilities** (`autoconf`, `automake`, `autotools-dev`, `m4`, `pkg-config`).
-- **Syzkaller** at the pinned commit needs Go 1.26.0 or newer. `golang-go`
-  supplies a Go installation, but its package version depends on the image.
-
-If you are running in an older image that predates these additions, install them
-for the session (the devcontainer user has passwordless `sudo`):
-
-```sh
-sudo apt-get update
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-    autoconf automake autotools-dev m4 pkg-config golang-go
-```
-
-Verify before building the suites:
-
-```sh
-for t in aclocal autoconf automake autoreconf m4 pkg-config go; do
-    printf '%s: ' "$t"; command -v "$t" || echo MISSING
-done
-# Run in the pinned Syzkaller checkout to show its selected Go toolchain.
-go version
-go env GOTOOLCHAIN
-```
-
-With `GOTOOLCHAIN=auto`, a supported older Go installation can download the
-version required by `go.mod`. This needs network access to Go's toolchain and
-module endpoints. Otherwise install the required version before `make prog2c`.
-Record `go version` from inside the pinned module.
-
-Earlier handwritten or Go-free Syzkaller stand-ins do not validate the real
-suites. Use Go for the active reproducer; tool
-provisioning alone does not establish that a suite executed or passed.
+Both Max Coverage Dockerfiles install the cross-toolchain, QEMU, Alpine
+workload, and pinned Syzkaller tooling. `GOTOOLCHAIN=auto` selects the Go
+version required by the pinned Syzkaller commit; the build prints that version.
 
 ## 9. Reviewing proposed changes and moving to the next step
 
@@ -603,13 +510,14 @@ and a human reviews and commits them.
 Treat each walkthrough step as done only when all of the following hold. This is
 the gate to move to the next step or to commit.
 
-1. **The build/run finished with the expected exit and pass criterion.** The
-   step images fail the build on a dropped config option, a missing or invalid
-   checkpoint, or a zero coverage denominator (Hello Init
-   [Section 2](#2-validating-the-hello-init-body-sections); Max Coverage
-   [Section 4](#4-validating-the-maximizing-kernel-coverage-example)). A build
-   that exits 0 has already passed those internal gates; still compare the
-   recorded numbers against the document's table for that step.
+1. **The build/run finished with the expected exit and pass criterion.** See
+  Hello Init [Section 2](#2-validating-the-hello-init-body-sections) for its
+  image-specific gates. For Max Coverage [Section
+  4](#4-validating-the-maximizing-kernel-coverage-example), the build fails on
+  dropped GCOV prerequisites, missing or invalid checkpoints, a changed
+  runtime-unit inventory, or a zero coverage denominator. A successful build
+  passes those measurement-integrity gates, not necessarily the workload
+  suites; compare its metrics and suite outcomes with the walkthrough.
 2. **The numbers were re-derived, not reused.** Confirm the measured values in
    the reviewed environment (Section 2's table, Section 4's reproduction note).
    Exact matches are expected for deterministic metrics (DWARF SLOC, raw
@@ -673,25 +581,15 @@ not to quietly edit.
 
 ### 9.5 Expected run times — a long build is not a hang
 
-A `--no-cache` build boots QEMU and, for the coverage example, compiles
-Syzkaller and runs a multi-minute stress sweep. These are the recorded
-wall-clock times on a 22-core host (single-core guest); treat anything near them
-as normal, and only suspect a hang well beyond them:
+A `--no-cache` build boots QEMU. These are the recorded wall-clock times on a
+22-core host; treat anything near them as normal, and only suspect a hang well
+beyond them:
 
 | Image                                       | Approx. build+run time |
 | :------------------------------------------ | :--------------------- |
 | Hello Init step 0/1/2                       | ~5–6 min each          |
 | Hello Init GDB-stub trace                   | ~7–8 min               |
 | Hello Init step 3 (`defconfig`)             | ~29 min                |
-| Max Coverage step 0 (GCOV baseline)         | ~27 min                |
-| Max Coverage step 1 (pruned, cached layers) | ~23 min                |
-
-The coverage steps spend most of that time in the in-image QEMU run (bounded by
-a 20-minute `timeout` in the Dockerfile) and in reconstructing one gcov JSON per
-unit. The build log is quiet during the QEMU run because the guest's serial
-output is redirected to a file inside the container; the stage markers are not
-visible until the extraction step runs. Wait for the bounding timeout before
-concluding a run is stuck.
 
 ### 9.6 Keep a resumable record across a long review
 

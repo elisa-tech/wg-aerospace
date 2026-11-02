@@ -73,8 +73,7 @@ docker run --rm maxcov-step1
 ```
 
 Each image builds its kernel inside its own layers, so separate `docker build`
-runs never share kernel state (the isolation requirement in
-[Testing Steering Notes](./TestingSteeringNotes.md#1-how-to-use-these-notes)).
+runs never share kernel state.
 The build **fails** if a GCOV prerequisite is dropped, a stage checkpoint is
 missing or not a valid archive, the runtime unit inventory changes between
 stages, or the coverage denominator is zero. It does **not** fail on stress-ng
@@ -84,15 +83,15 @@ not gated (see [Section 6](#6-measured-multi-stage-progression--differential-tab
 This image is much heavier than the Hello Init steps: it clones Syzkaller and
 builds its Go host tool, downloads the Alpine rootfs and packages, and boots a
 single-core QEMU guest for up to 20 minutes. Build it on a host with disk space
-to spare and watch the filesystem that holds Docker's data root
-([Testing Steering Notes, Section 1](./TestingSteeringNotes.md#1-how-to-use-these-notes)).
+to spare and watch the filesystem that holds Docker's data root.
 
 The detailed mechanics each Dockerfile automates are documented in
 [Section 3](#3-kernel-profiling-configuration) (config),
 [Section 4](#4-rootfs-assembly--sequential-multi-stage-execution-workflow)
 (rootfs and boot), and
 [Section 5](#5-host-side-checkpoint-extraction--differential-analysis)
-(reconstruction). Read them to adapt the run; use the Dockerfiles to reproduce it.
+(reconstruction). These sections explain the measurement design; use the
+Dockerfiles as the canonical execution recipes.
 
 ## 1. Test Methodologies & Coverage Complementarity
 
@@ -162,70 +161,17 @@ techniques remain untried and are scoped for larger configurations
 Start from the bootable `tinyconfig` baseline from [Section 3](./HelloInit.md#3-step-0-minimal-tinyconfig-baseline)
 (`tinyconfig` + PL011 serial, printk, initrd, ELF, `-MODULES`), then enable
 whole-kernel GCOV profiling, boot self-tests, and the workload prerequisites
-on ARM64. Use the pinned draft helper and record the actual tool versions as
-described in [Hello Init](./HelloInit.md#2-environment).
+on ARM64. The step Dockerfiles hold the exact Kconfig recipe and verify that
+required symbols survive `olddefconfig`. The important dependencies are
+`RUNTIME_TESTING_MENU` for the runtime tests, `KUNIT` for sort tests,
+`POSIX_TIMERS` for bounded stress-ng runs, and `SHMEM`, `MEMFD_CREATE`, and
+`ADVISE_SYSCALLS` for the Syzkaller corpus. DWARF debug information supports
+the linked-SLOC audit in [Section 7](#7-identifying-uncovered-built-areas--pruning-candidates).
+See [Hello Init](./HelloInit.md#2-environment) for tool-version recording.
 
-```sh
-./scripts/config \
-    -e DEBUG_FS -e SYSFS -e PROC_FS -e DEVTMPFS -e DEVTMPFS_MOUNT \
-    -e GCOV_KERNEL -e GCOV_PROFILE_ALL \
-    -e FUTEX -e POSIX_TIMERS -e SHMEM -e MEMFD_CREATE -e ADVISE_SYSCALLS \
-    -e RUNTIME_TESTING_MENU \
-    -e KUNIT \
-    -e DEBUG_LOCKING_API_SELFTESTS \
-    -e STATIC_KEYS_SELFTEST \
-    -e ATOMIC64_SELFTEST \
-    -e TEST_BITMAP \
-    -e TEST_SORT \
-    -e TEST_LIST_SORT \
-    -e TEST_HEXDUMP \
-    -e TEST_KSTRTOX \
-    -e TEST_XARRAY \
-    -e TEST_MAPLE_TREE \
-    -e TEST_RHASHTABLE \
-    -e TEST_IDA \
-    -e TEST_BITOPS \
-    -d DEBUG_INFO_NONE -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
-    -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
-make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
-```
-
-> **Required for the self-tests to survive `olddefconfig` (verified):**
->
-> - `-e RUNTIME_TESTING_MENU` is **mandatory**. The `TEST_*` options and
->   `ATOMIC64_SELFTEST` live under the `menuconfig RUNTIME_TESTING_MENU` guard,
->   which is `n` in `tinyconfig`. Without it, `olddefconfig` **silently drops every
->   `TEST_*` and `ATOMIC64_SELFTEST`** request, so Stage 0 self-test coverage never
->   compiles in.
-> - `-e KUNIT` is required for `TEST_SORT` and `TEST_LIST_SORT`: both now
->   `depends on KUNIT` (they are KUnit tests), so they are dropped without it.
-> - The DWARF debug-info options are added so the same `vmlinux` supports the
->   linked-SLOC audit in [Section 7](#7-identifying-uncovered-built-areas--pruning-candidates).
-> - `POSIX_TIMERS=y` is required for stress-ng's `alarm()` timeout. Without it,
->   `setitimer()` returns `ENOSYS` and the class sweep can hang despite
->   `--timeout 1s`. The original recipe failed to finish within 900 seconds.
-> - `SHMEM=y` supplies shared-memory backing and `MEMFD_CREATE=y` enables
->   the syscall itself; `SHMEM` alone does not select it on this kernel.
->   `ADVISE_SYSCALLS=y` enables `madvise()`. Without these options, the corpus
->   exercises syscall rejection paths and its memfd-backed mapping fails.
->
-> Confirm the requests survived before building:
->
-> ```sh
-> for c in GCOV_KERNEL GCOV_PROFILE_ALL RUNTIME_TESTING_MENU KUNIT \
->          ATOMIC64_SELFTEST TEST_MAPLE_TREE TEST_XARRAY TEST_SORT DEBUG_INFO \
->          POSIX_TIMERS SHMEM MEMFD_CREATE ADVISE_SYSCALLS; do
->     printf '%s=' "$c"; ./scripts/config -s "$c"
-> done
-> ```
-
-_(Optional, out of scope for this baseline: to add the Netlink/traffic-control
-sweep listed in [Section 2](#2-higher-altitude-levers--untried-coverage-extensions),
-rebuild with `-e NET -e INET -e NETLINK_DIAG -e DUMMY -e VETH -e BRIDGE -e VLAN_8021Q -e NET_SCHED`.
-This pulls the large `net/` tree into the instrumented set and changes the
-denominator, so run and report it separately from the NET-less baseline below.)_
+The supported baseline is NET-less. Networking extensions listed in
+[Section 2](#2-higher-altitude-levers--untried-coverage-extensions) change the
+instrumented set and denominator and are not covered by the supplied images.
 
 ## 4. Rootfs Assembly & Sequential Multi-Stage Execution Workflow
 
@@ -240,456 +186,38 @@ The class sweep includes optional APIs and networking stressors even with
 measures execution, not a suite pass. Traversal completion likewise does not
 mean every pseudo-file read succeeded.
 
-1. **Extract rootfs and stage test packages:** Retrieve Alpine ARM64 minirootfs and stage each tool suite directly into the rootfs filesystem tree:
+1. **Assemble the workload image.** The step Dockerfiles stage the pinned Alpine
+     minirootfs, stress-ng and its shared libraries, and the static Syzkaller
+     reproducer. The reproducible workload is maintained in
+     [`corpus.syz`](./max-coverage/corpus.syz); its PID 1 stage runner is
+     [`init-maxcoverage.c`](./max-coverage/init-maxcoverage.c). The Dockerfiles
+     are the source of truth for versions, assembly commands, and dependency checks.
 
-   ```sh
-   # Base rootfs extraction (Alpine minirootfs ships musl + busybox, so the
-   # dynamically linked Alpine binaries below resolve their loader/libc)
-   wget https://dl-cdn.alpinelinux.org/alpine/v3.20/releases/aarch64/alpine-minirootfs-3.20.3-aarch64.tar.gz
-   mkdir -p rootfs-alpine
-   tar -xzf alpine-minirootfs-3.20.3-aarch64.tar.gz -C rootfs-alpine
-   mkdir -p rootfs-alpine/proc rootfs-alpine/sys rootfs-alpine/dev \
-            rootfs-alpine/tmp rootfs-alpine/sys/kernel/debug
-
-   # Stage stress-ng (an .apk is a gzip tarball; extract it onto the rootfs)
-   wget https://dl-cdn.alpinelinux.org/alpine/v3.20/community/aarch64/stress-ng-0.17.08-r0.apk
-   tar -xzf stress-ng-0.17.08-r0.apk -C rootfs-alpine          # -> /usr/bin/stress-ng
-
-   # stress-ng is dynamically linked and needs shared libraries that the bare
-   # Alpine minirootfs does NOT ship. `tar -xzf` does not resolve .apk
-   # dependencies, so these must be staged explicitly or stress-ng aborts at
-   # load time with "Error relocating /usr/bin/stress-ng: <symbol> not found"
-   # Direct dependencies include libbsd.so.0, libJudy.so.1, libsctp.so.1,
-   # libz.so.1, and musl. libbsd additionally needs libmd.so.0.
-   # Loader failure prevents stressors from running. The launcher records the
-   # failure; exported checkpoints alone are not a suite pass.
-   # Pinned versions for v3.20/aarch64:
-   for dep in \
-       main/aarch64/libbsd-0.12.2-r0.apk \
-       main/aarch64/libmd-1.1.0-r0.apk \
-       main/aarch64/liblksctp-1.0.19-r5.apk \
-       community/aarch64/judy-1.0.5-r1.apk ; do
-       wget "https://dl-cdn.alpinelinux.org/alpine/v3.20/$dep"
-       tar -xzf "$(basename "$dep")" -C rootfs-alpine
-   done
-   # Verify every NEEDED lib now resolves before booting:
-   #   aarch64-linux-gnu-readelf -d rootfs-alpine/usr/bin/stress-ng | grep NEEDED
-   #   # then confirm libbsd.so.0 / libJudy.so.1 / libsctp.so.1 / libmd.so.0
-   #   # and libz.so.1 (already in the pinned minirootfs)
-   #   # exists under rootfs-alpine/usr/lib or rootfs-alpine/lib
-
-   # Stage Syzkaller reproducer — real syz-prog2c output.
-   # The devcontainer ships Go, so build syzkaller's syz-prog2c host tool and
-   # export a sandbox-legal corpus to C, then cross-compile it statically.
-   # Pinned commit for reproducibility:
-   #   432c00775d20929a96fd4987f9ef01a50e6fd277
-   #   2026-10-16  "pkg/aflow/flow/patching: add patch-planner agent"
-   git clone https://github.com/google/syzkaller
-   ( cd syzkaller && git checkout 432c00775d20929a96fd4987f9ef01a50e6fd277 && \
-     go version && \
-     make prog2c )                          # builds bin/syz-prog2c (host/amd64)
-   # This commit requires Go 1.26.0 or newer. With GOTOOLCHAIN=auto an older
-   # supported Go may download 1.26.0; record that selected version.
-   # NET-less corpus: file I/O + memfd/mmap/madvise/mlock, PLUS an execveat() of a
-   # deliberately malformed (non-ELF) file. The bad-exec call drives the
-   # exec-failure / abort_creds / ELF-magic-reject paths. No socket calls
-   # (CONFIG_NET=n). Sandbox-legal (relative './file0' path, proper result threading).
-   cat << 'EOF' > corpus.syz
-   r1 = openat$dir(0xffffffffffffff9c, &(0x7f0000000100)='./file0\x00', 0x42, 0x1a4)
-   write$binfmt_script(r1, &(0x7f0000000200)={'#! ', './file0'}, 0xb)
-   lseek(r1, 0x0, 0x0)
-   pread64(r1, &(0x7f0000000300)=""/16, 0x10, 0x0)
-   ftruncate(r1, 0x80)
-   fsync(r1)
-   close(r1)
-   r2 = memfd_create(&(0x7f0000000000)='m\x00', 0x0)
-   mmap(&(0x7f0000001000/0x1000)=nil, 0x1000, 0x3, 0x11, r2, 0x0)
-   madvise(&(0x7f0000001000/0x1000)=nil, 0x1000, 0x4)
-   mlock(&(0x7f0000001000/0x1000)=nil, 0x1000)
-   munlock(&(0x7f0000001000/0x1000)=nil, 0x1000)
-   r3 = openat$dir(0xffffffffffffff9c, &(0x7f0000000400)='./bad\x00', 0x42, 0x1ff)
-   write(r3, &(0x7f0000000500)="deadbeef0000", 0xc)
-   close(r3)
-   execveat(0xffffffffffffff9c, &(0x7f0000000400)='./bad\x00', 0x0, 0x0, 0x0)
-   EOF
-   ./syzkaller/bin/syz-prog2c -os linux -arch arm64 -trace \
-       -prog corpus.syz > syz-repro.c
-   mkdir -p rootfs-alpine/opt/syzkaller
-   aarch64-linux-gnu-gcc -static -O2 -o rootfs-alpine/opt/syzkaller/syz-repro syz-repro.c
-   ```
-
-   > **Tool acquisition notes:**
-   >
-   > - **stress-ng needs its shared-library dependencies staged.** The Alpine
-   >   `stress-ng` binary is dynamically linked against `libbsd.so.0`,
-   >   `libJudy.so.1`, `libsctp.so.1`, and `libz.so.1`; libbsd needs
-   >   `libmd.so.0` transitively. The minirootfs supplies zlib and musl; stage
-   >   the other libraries explicitly. Extracting only `stress-ng` leaves it
-   >   unable to load: stressors abort with relocation errors and Stage 2
-   >   adds almost nothing, yet the harness still
-   >   reaches the end of its launch sequence. Stage the four dependency
-   >   `.apk`s shown above and verify with `readelf -d` before booting.
-   > - **(Optional networking extension only)** `tc` is **not** in
-   >   `iproute2-minimal`; it ships in the separate `iproute2-tc` subpackage.
-   >   Staging only `iproute2-minimal` leaves the optional `tc qdisc` commands
-   >   silently failing. This NET-less baseline stages neither.
-   > - **Real Syzkaller** requires Go 1.26.0 for the pinned commit. Explicit
-   >   `-os linux -arch arm64` selects target descriptions independently of the
-   >   host architecture. It validates the corpus against those descriptions —
-   >   the corpus above is sandbox-legal (relative `./file0` path, proper result
-   >   threading); an absolute `/dev/null` path or dangling result refs are
-   >   rejected. `-trace` prints each call's errno: expect call 7
-   >   (`memfd_create`), call 8 (mapping), and call 9 (`madvise`) to succeed,
-   >   and call 15 (malformed `execveat`) to return `ENOEXEC` (8).
-   >   The corpus does not grow its memfd before mapping; call 10 (`mlock`)
-   >   can return `ENOMEM` (12). Record that as a rejection-path observation,
-   >   not successful locking of memfd-backed pages.
-   >   A zero process exit alone does not establish those syscall outcomes.
-
-2. **Static multi-stage `/init` launcher with labeled checkpoints:**
-
-   ```c
-   /* rootfs-alpine/init.c */
-   #include <errno.h>
-   #include <signal.h>
-   #include <stdio.h>
-   #include <stdlib.h>
-   #include <time.h>
-   #include <unistd.h>
-   #include <sys/mount.h>
-   #include <sys/time.h>
-   #include <sys/wait.h>
-
-   static int emit_checkpoint(const char *stage_name)
-   {
-       char cmd[512];
-       int length = snprintf(cmd, sizeof(cmd),
-                "mkdir -p /tmp/dump && "
-                "find /sys/kernel/debug/gcov -type d -exec mkdir -p /tmp/dump/{} \\; && "
-                "find /sys/kernel/debug/gcov -name '*.gcda' -exec sh -c 'cat < \"$0\" > \"/tmp/dump/$0\"' {} \\; && "
-                "tar -czf /tmp/gcda.tar.gz -C /tmp/dump sys && "
-                "echo '===GCOV_%s_START===' && "
-                "base64 /tmp/gcda.tar.gz && "
-                "echo '===GCOV_%s_END===' && "
-                "rm -rf /tmp/dump /tmp/gcda.tar.gz",
-                stage_name, stage_name);
-       if (length < 0 || (size_t)length >= sizeof(cmd))
-           return 1;
-       if (system(cmd) != 0) {
-           fprintf(stderr, "CHECKPOINT FAILED: %s\n", stage_name);
-           return 1;
-       }
-       return 0;
-   }
-
-   static int run_cmd(const char *label, char *const argv[], int seconds)
-   {
-       if (access(argv[0], X_OK) != 0) {
-           fprintf(stderr, "FAILED: %s executable missing\n", label);
-           return 1;
-       }
-       pid_t pid = fork();
-       if (pid < 0) {
-           perror("fork");
-           return 1;
-       }
-       if (pid == 0) {
-           if (setpgid(0, 0) != 0)
-               _exit(127);
-           execv(argv[0], argv);
-           perror(argv[0]);
-           _exit(127);
-       }
-       if (setpgid(pid, pid) != 0 && errno != EACCES && errno != ESRCH)
-           perror("setpgid");
-       struct timespec start, now;
-       if (clock_gettime(CLOCK_MONOTONIC, &start) != 0)
-           return 1;
-       for (;;) {
-           int status;
-           pid_t done = waitpid(pid, &status, WNOHANG);
-           if (done == pid) {
-               int ok = WIFEXITED(status) && WEXITSTATUS(status) == 0;
-               fprintf(stderr, "CHILD %s: status=%d %s\n",
-                       label, status, ok ? "OK" : "FAILED");
-               return !ok;
-           }
-           if (done < 0 && errno != EINTR) {
-               perror("waitpid");
-               return 1;
-           }
-           if (clock_gettime(CLOCK_MONOTONIC, &now) != 0)
-               return 1;
-           if (now.tv_sec - start.tv_sec >= seconds) {
-               fprintf(stderr, "WATCHDOG: %s exceeded %d seconds\n",
-                       label, seconds);
-               kill(-pid, SIGKILL);
-               kill(pid, SIGKILL);
-               /* The host watchdog also bounds uninterruptible reads. */
-               return 1;
-           }
-           struct timespec delay = { .tv_nsec = 100000000 };
-           nanosleep(&delay, NULL);
-       }
-   }
-
-   int main(void)
-   {
-       int failures = 0;
-       setvbuf(stdout, NULL, _IONBF, 0);
-       if (mount("proc", "/proc", "proc", 0, NULL) != 0)
-           perror("mount /proc"), failures++;
-       if (mount("sysfs", "/sys", "sysfs", 0, NULL) != 0)
-           perror("mount /sys"), failures++;
-       if (mount("devtmpfs", "/dev", "devtmpfs", 0, NULL) != 0)
-           perror("mount /dev"), failures++;
-       if (mount("debugfs", "/sys/kernel/debug", "debugfs", 0, NULL) != 0)
-           perror("mount /sys/kernel/debug"), failures++;
-
-       /* Stage 0: Boot Self-Tests (Executed automatically during boot initcalls) */
-       failures += emit_checkpoint("STAGE0_BOOT");
-
-       /* Stage 1: /proc and /sys Attribute Traversal */
-       puts("=== Stage 1: Traversing /proc and /sys attributes ===");
-       /* BusyBox timeout uses a separate sleeping process. It does not need
-          POSIX interval timers; a D-state read still needs the host watchdog.
-          /sys already includes debugfs, so visit that subtree only once. */
-       char *traverse[] = {
-           "/bin/sh", "-c",
-           "find /proc /sys -type f 2>/dev/null | while read -r f; do "
-           "case \"$f\" in "
-           "*/trace_pipe*|*/kcore|*/mem|*/kmsg|*/sysrq-trigger|*/null|*/zero|"
-           "/proc/[0-9]*|*/clear_refs|*/kunit/*/results) ;; "
-           "*) timeout -s KILL 1 dd if=\"$f\" of=/dev/null bs=4k count=1 "
-           "2>/dev/null ;; esac; done; exit 0",
-           NULL
-       };
-       failures += run_cmd("proc/sys traversal", traverse, 900);
-       failures += emit_checkpoint("STAGE1_PROCSYS");
-
-       /* Stage 2: stress-ng, sequential class sweep on one guest CPU. */
-       puts("=== Stage 2: Executing stress-ng sequential class sweep ===");
-       struct itimerval zero = {0};
-       int timers_ok = setitimer(ITIMER_REAL, &zero, NULL) == 0;
-       if (!timers_ok)
-           perror("POSIX_TIMERS required"), failures++;
-       const char *classes[] = {
-           "os", "scheduler", "memory", "filesystem", "interrupt"
-       }; /* no network class: CONFIG_NET=n */
-       size_t count = sizeof(classes) / sizeof(classes[0]);
-       for (size_t i = 0; timers_ok && i < count; i++) {
-           char *sng_argv[] = {
-               "/usr/bin/stress-ng",
-               "--seq", "0",
-               "--class", (char *)classes[i],
-               "--timeout", "1s",
-               "--metrics",
-               NULL
-           };
-           failures += run_cmd(classes[i], sng_argv, 600);
-       }
-       failures += emit_checkpoint("STAGE2_STRESSNG");
-
-       /* Stage 3: Syzkaller (Combinatorial Multi-Syscall Sequence Playback,
-          including a deliberate bad-exec to drive exec-failure paths) */
-       puts("=== Stage 3: Executing Syzkaller standalone sequence reproducer ===");
-       char *syz_argv[] = { "/opt/syzkaller/syz-repro", NULL };
-       failures += run_cmd("Syzkaller", syz_argv, 30);
-       failures += emit_checkpoint("STAGE3_SYZKALLER");
-
-       puts(failures ? "=== HARNESS INCOMPLETE ==="
-                     : "=== All test stages complete ===");
-       for (;;)
-           pause();
-       return 0;
-   }
-   ```
-
-3. **Package and boot in QEMU:**
-
-   ```sh
-   aarch64-linux-gnu-gcc -static -O2 -o rootfs-alpine/init rootfs-alpine/init.c
-   ( cd rootfs-alpine && find . | cpio -o -H newc ) | gzip > initramfs-alpine.cpio.gz
-   # bash: preserve QEMU/watchdog failures through tee.
-   set -o pipefail
-   timeout --signal=TERM --kill-after=5s 30m \
-       qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
-       -kernel arch/arm64/boot/Image -initrd initramfs-alpine.cpio.gz \
-       -append 'console=ttyAMA0 nokaslr' 2>&1 | tee qemu-gcov.log
-   ```
-
-   > This command passes **no `-smp`**, so the guest runs single-core with
-   > 1024 MiB RAM. Record timing per
-   > [Section 10](#10-measurement-environment-core-count--timing-record).
-   > For exploration, wait for all four `===GCOV_STAGE*_END===` markers and
-   > either final summary marker before exiting with `Ctrl-a x`. Retain failures.
-   > To claim a supported test gate passes, require the success marker and no
-   > watchdog, suite failure, kernel panic, or failed boot self-test. Review
-   > stress-ng's skips and Syzkaller's per-call errno trace. Exported coverage
-   > alone does not establish acceptance.
+2. **Run the sequential workload.** The maintained PID 1 launcher mounts the
+   guest filesystems, runs the four stages with watchdogs, and exports one GCOV
+   checkpoint after each stage. See
+   [`init-maxcoverage.c`](./max-coverage/init-maxcoverage.c) for the launcher.
+   The Dockerfiles compile it, assemble the initramfs, and boot the single-core
+   QEMU guest with a 1024 MiB memory limit and bounded runtime. Checkpoint
+   integrity is a build gate; stress-ng failures are recorded as exploration
+   results, not treated as a suite pass.
 
 ## 5. Host-Side Checkpoint Extraction & Differential Analysis
 
-1. **Extract checkpoint archives from console log:**
+The Dockerfiles extract and validate the four labeled checkpoints, then call
+[`reconstruct_stage.py`](./max-coverage/reconstruct_stage.py) to match each
+runtime `.gcda` with its build-time `.gcno` and produce per-unit gcov JSON. They
+call [`diff_gcov.py`](./max-coverage/diff_gcov.py) to report cumulative and
+per-stage executed source-line coverage, and [`audit_unreached.py`](./max-coverage/audit_unreached.py)
+to rank linked lines with no observed execution. The Dockerfiles and these
+helpers are the canonical implementation; the build rejects invalid checkpoints,
+changed runtime-unit inventories, and a zero coverage denominator.
 
-   ```sh
-   sed -n '/===GCOV_STAGE0_BOOT_START===/,/===GCOV_STAGE0_BOOT_END===/p' qemu-gcov.log \
-       | grep -v '===' | tr -d '\r' | base64 -d > gcda-stage0-boot.tar.gz
-   sed -n '/===GCOV_STAGE1_PROCSYS_START===/,/===GCOV_STAGE1_PROCSYS_END===/p' qemu-gcov.log \
-       | grep -v '===' | tr -d '\r' | base64 -d > gcda-stage1-procsys.tar.gz
-   sed -n '/===GCOV_STAGE2_STRESSNG_START===/,/===GCOV_STAGE2_STRESSNG_END===/p' qemu-gcov.log \
-       | grep -v '===' | tr -d '\r' | base64 -d > gcda-stage2-stressng.tar.gz
-   sed -n '/===GCOV_STAGE3_SYZKALLER_START===/,/===GCOV_STAGE3_SYZKALLER_END===/p' qemu-gcov.log \
-       | grep -v '===' | tr -d '\r' | base64 -d > gcda-stage3-syzkaller.tar.gz
-   ```
-
-2. **Reconstruct one gcov JSON inventory per compilation unit.** Match each
-   runtime `.gcda` with its build-time `.gcno` and run the compiler's matching
-   `aarch64-linux-gnu-gcov` **from the kernel tree root**. Source paths are
-   relative to that location. Use the standalone reconstruction tool [docs/minimal-linux/max-coverage/reconstruct_stage.py](./max-coverage/reconstruct_stage.py):
-
-   ```python
-   # reconstruct_stage.py
-   import argparse
-   import shutil
-   import subprocess
-   import tarfile
-   import tempfile
-   from pathlib import Path
-
-   parser = argparse.ArgumentParser()
-   parser.add_argument("archive", type=Path)
-   parser.add_argument("output", type=Path)
-   args = parser.parse_args()
-   tree = Path.cwd().resolve()
-   if not (tree / "vmlinux").is_file():
-       parser.error("run from the matching isolated kernel build tree")
-   output = args.output.resolve()
-   output.mkdir(parents=True, exist_ok=False)
-   # Use a fresh output directory; never reuse another run's inventories.
-   for previous in tree.rglob("*.gcda"):
-       previous.unlink()
-   copied = []
-   try:
-       with tempfile.TemporaryDirectory() as temporary:
-           temporary = Path(temporary)
-           with tarfile.open(args.archive) as archive:
-               archive.extractall(temporary, filter="data")  # Python >= 3.12
-           debug_root = temporary / "sys/kernel/debug/gcov"
-           units = sorted(debug_root.rglob("*.gcda"))
-           if not units:
-               raise RuntimeError("checkpoint contains no gcda units")
-           for counters in units:
-               target = (Path("/") / counters.relative_to(debug_root)).resolve()
-               if not target.is_relative_to(tree):
-                   raise RuntimeError(f"wrong checkpoint tree: {target}")
-               if not target.with_suffix(".gcno").is_file():
-                   raise RuntimeError(f"missing matching gcno: {target}")
-               shutil.copyfile(counters, target)
-               copied.append(target)
-               if list(tree.glob("*.gcov.json.gz")):
-                   raise RuntimeError("move existing gcov JSON outputs first")
-               with (output / "gcov.log").open("a", encoding="utf-8") as log:
-                   subprocess.run(
-                       ["aarch64-linux-gnu-gcov", "--json-format",
-                        "-o", str(target.parent), str(target)],
-                       cwd=tree, stdout=log, stderr=log, check=True,
-                   )
-               generated = list(tree.glob("*.gcov.json.gz"))
-               if len(generated) != 1:
-                   raise RuntimeError(f"expected one JSON file: {target}")
-               destination = output / target.relative_to(tree).with_suffix(
-                   ".gcov.json.gz"
-               )
-               destination.parent.mkdir(parents=True, exist_ok=True)
-               shutil.move(generated[0], destination)
-   finally:
-       for target in copied:
-           target.unlink(missing_ok=True)
-   print(f"{len(copied)} units reconstructed")
-   ```
-
-   ```sh
-   python3 reconstruct_stage.py gcda-stage0-boot.tar.gz stage0_boot
-   python3 reconstruct_stage.py gcda-stage1-procsys.tar.gz stage1_procsys
-   python3 reconstruct_stage.py gcda-stage2-stressng.tar.gz stage2_stressng
-   python3 reconstruct_stage.py gcda-stage3-syzkaller.tar.gz stage3_syzkaller
-   ```
-
-   Each stage must contain the same runtime unit inventory for this monolithic
-   kernel. Missing units, invalid archives, gcov errors, or a zero denominator
-   invalidate the comparison. Check archive integrity with `tar -tzf` before
-   reconstruction.
-
-   **Do not flatten text `.gcov` outputs.** Repeated gcov invocations overwrite
-   shared-header basenames before collection; `Source:` metadata cannot recover
-   that discarded execution data. JSON retains all unit inventories and numeric
-   counts, including partial execution shown as `1*` in text output.
-
-3. **Union source lines and calculate cumulative coverage.** Save
-   `diff_gcov.py` beside the stage directories and run from the kernel tree.
-   It reports both the executable denominator and executed numerator:
-
-   ```python
-   # diff_gcov.py
-   import gzip
-   import json
-   import os
-   from pathlib import Path
-
-   def load_stage_lines(stage_dir):
-       executed = set()
-       executable = set()
-       reports = sorted(Path(stage_dir).rglob("*.gcov.json.gz"))
-       if not reports:
-           raise ValueError(f"no gcov inventories in {stage_dir}")
-       for report in reports:
-           with gzip.open(report, "rt", encoding="utf-8") as stream:
-               unit = json.load(stream)
-           for source in unit["files"]:
-               path = os.path.relpath(os.path.realpath(source["file"]))
-               for line in source["lines"]:
-                   key = (path, line["line_number"])
-                   executable.add(key)
-                   if line["count"] > 0:
-                       executed.add(key)
-       if not executable:
-           raise ValueError(f"zero executable denominator in {stage_dir}")
-       return executed, executable
-
-   if __name__ == "__main__":
-       previous = set()
-       denominator = None
-       inventory = None
-       for stage in ("stage0_boot", "stage1_procsys",
-                     "stage2_stressng", "stage3_syzkaller"):
-           units = {report.relative_to(stage)
-                    for report in Path(stage).rglob("*.gcov.json.gz")}
-           if inventory is not None and units != inventory:
-               raise ValueError(f"runtime unit inventory changed at {stage}")
-           executed, executable = load_stage_lines(stage)
-           if denominator is not None and executable != denominator:
-               raise ValueError(f"executable inventory changed at {stage}")
-           if not previous <= executed:
-               raise ValueError(f"executed lines disappeared at {stage}")
-           print(
-               f"{stage}: {len(executed)} / {len(executable)} "
-               f"({100 * len(executed) / len(executable):.2f}%), "
-               f"+{len(executed - previous)} new lines"
-           )
-           previous = executed
-           denominator = executable
-           inventory = units
-   ```
-
-   ```sh
-   python3 diff_gcov.py
-   ```
-
-   Partition by the normalized source path's first component for subsystem
-   tables. Count headers under their own paths once, and include `scripts/` and
-   `tools/` when generated or shared sources from those roots occur in the
-   linked kernel. These partition rows must sum to the whole-image totals.
+Coverage percentages use the union of executable source lines across the gcov
+JSON inventories. Retain the per-unit JSON: flattening text `.gcov` files can
+overwrite shared-header output and lose partial counts. For subsystem tables,
+partition normalized paths and count header lines once; the partitions should
+sum to the whole-image totals.
 
 ## 6. Measured Multi-Stage Progression & Differential Table (tinyconfig)
 
@@ -889,34 +417,11 @@ kernel the largest single lever is live fuzzing; the second is pruning deadweigh
 By acting on the findings from the DWARF audit, we disable the unneeded terminal,
 input, and decompression options:
 
-```sh
-./scripts/config \
-    -d VT -d VT_CONSOLE -d UNIX98_PTYS -d LEGACY_PTYS \
-    -d INPUT_MOUSEDEV -d INPUT_KEYBOARD -d INPUT_MOUSE -d SERIO \
-    -d HID -d HID_SUPPORT \
-    -d RD_BZIP2 -d RD_LZMA -d RD_XZ -d RD_LZO -d RD_LZ4 -d RD_ZSTD \
-    -d POWER_SUPPLY
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
-make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
-```
+The supported prune and repeat measurement are implemented by
+`Dockerfile.step1-gcov-pruned`, which applies the Kconfig changes and reruns the
+same four-stage workload. Its comments and assertions document the exact
+symbols and checks; do not use a separate host-side recipe.
 
-> **Verified prune behavior (check each symbol after `olddefconfig`):**
->
-> - `VT`, `RD_ZSTD` (and the other `RD_*` codecs), `INPUT_MOUSE`, `SERIO` disable
->   cleanly and drop their object files from the link.
-> - **`FUTEX_PI` cannot be disabled with `-d FUTEX_PI`.** It is a non-prompt
->   `bool` (`default y`, `depends on FUTEX && RT_MUTEXES`) that is auto-selected
->   whenever both dependencies are on, so the request is silently ignored.
->   `-d RT_MUTEXES` does **not** help on this GCOV build either: another enabled
->   symbol selects `RT_MUTEXES` (itself a non-prompt `bool`), so that request is
->   ignored too and both stay `y` (verified on v7.3-rc5). The reliable way to
->   remove PI-futex code is to drop the whole subsystem with `-d FUTEX`
->   (verified: `FUTEX=n`, and `FUTEX_PI`/`RT_MUTEXES` become unset) — then
->   re-test, since this removes all futex support.
-> - `POWER_SUPPLY` may remain `y` if another enabled symbol selects it; confirm
->   with `./scripts/config -s POWER_SUPPLY` rather than assuming the `-d` took.
->
 > With the corrected workload prerequisites, the prune reduces the GCOV build
 > from **164,992 → 149,102 DWARF SLOC** and the raw `Image` from
 > **7,596,040 → 6,901,768 bytes** (GCC 13.3.0, binutils 2.42). Always
@@ -931,8 +436,8 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 > expected toolchain/`olddefconfig` variance this guide warns about; the prune's
 > effect — a smaller denominator and a higher coverage percentage than the
 > baseline — reproduces. The pruned-config guard confirmed `VT`, `SERIO`,
-> `INPUT_MOUSE`, `HID_SUPPORT`, and `RD_ZSTD` dropped to `n` while `POWER_SUPPLY`
-> stayed `y`, as noted above.
+> `INPUT_MOUSE`, `HID_SUPPORT`, and `RD_ZSTD` dropped to `n`; `POWER_SUPPLY`
+> remained `y` because another enabled option selects it.
 
 ### 8.1 Post-Pruning Multi-Stage Coverage Progression
 
@@ -1091,7 +596,6 @@ results, and watchdog limits whenever regenerating the tables.
 - [Hello Init (Practice)](./HelloInit.md) — foundational practice walkthrough and single-syscall reachability baseline.
 - [Hello cFS](./HelloCFS.md) — flight application scenario applying minimization to NASA cFS.
 - [Software Minimization](../SoftwareMinimization.md) — parent framing document on aerospace kernel minimization and assurance boundaries.
-- [AI Testing Steering Notes](./TestingSteeringNotes.md) — reviewer and agent validation steering notes.
 - [Kernel Config Analysis](./KernelConfigAnalysis.md) — historical reference minimal configurations and SLOC comparisons.
 - [Kernel Complexity](./KernelComplexity.md) — defining and measuring build-time and runtime complexity.
 - [Certification Progression](./CertificationProgression.md) — assurance level progression (DO-178C, DO-297, AMC 20-193).

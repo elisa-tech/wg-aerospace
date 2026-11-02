@@ -13,6 +13,5 @@ This directory contains the user-space harness, test corpus, host-side analysis 
 - `reconstruct_stage.py` — Host-side utility to extract checkpoint archives and run `gcov --json-format`
 - `diff_gcov.py` — Host-side differential analysis script to compute cumulative and per-stage coverage deltas
 - `audit_unreached.py` — Static/dynamic auditing script to identify unreached functions and candidate pruning targets
-- `run_maxcoverage.sh` — Host-side automation runner (builds from an existing `../../../linux` tree; the Dockerfiles above are the self-contained alternative)
 
 For complete configuration, execution workflows, and differential coverage tables, see **[Maximizing Kernel Coverage with Open-Source Test Suites](../MaxCoverageMultiSuite.md)**.

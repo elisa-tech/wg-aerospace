@@ -85,7 +85,7 @@ Detailed explanations of kernel configuration symbols, build mechanics, and meas
 >     helloinit-step0
 > ```
 >
-> The mounted tree replaces the image's `/workspace/linux` and its build outputs, so run `kernel-sloc` from `PATH` there. Do not point two containers at the same mounted tree at the same time; see [Testing Steering Notes](./TestingSteeringNotes.md#1-how-to-use-these-notes).
+> The mounted tree replaces the image's `/workspace/linux` and its build outputs, so run `kernel-sloc` from `PATH` there. Do not point two containers at the same mounted tree at the same time.
 
 ## 3. Step 0: Minimal `tinyconfig` Baseline
 
@@ -349,7 +349,7 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the instrumented `tinyc
 | _Other VFS, headers & libraries_ | Namespace, per-CPU counters, atomic bitops, timer init                   | —                                          | 98 lines      | Inline helpers, reference counting, KCOV_DISABLE ioctl   |
 | **Total Syscall Window**         | _276 normalized source lines; 268 captured / 252 distinct PCs_           | —                                          | **276 lines** | **In-kernel socket() reachability (incl. KCOV_DISABLE)** |
 
-> **Note on repeatability:** On an idle host these counts repeat exactly from boot to boot. When the host is heavily loaded (for example, while Step 3 compiles in parallel), guest timer interrupts can land inside the window and add a few interrupt-exit PCs in `kernel/irq.c` and `kernel/time/sched_clock.c` (observed: 276 captured, 286 lines). Re-run the capture on a quiet host, or add `-icount shift=4` to QEMU, before comparing totals; see [Testing Steering Notes](./TestingSteeringNotes.md#2-validating-the-hello-init-body-sections).
+> **Note on repeatability:** On an idle host these counts repeat exactly from boot to boot. When the host is heavily loaded (for example, while Step 3 compiles in parallel), guest timer interrupts can land inside the window and add a few interrupt-exit PCs in `kernel/irq.c` and `kernel/time/sched_clock.c` (observed: 276 captured, 286 lines). Re-run the capture on a quiet host, or add `-icount shift=4` to QEMU, before comparing totals.
 
 #### 7.4.2 Scenario 2: Monolithic Baseline Network Feature Probe
 

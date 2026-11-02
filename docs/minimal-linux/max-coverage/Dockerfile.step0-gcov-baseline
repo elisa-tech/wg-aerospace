@@ -20,6 +20,11 @@
 # These are coverage-EXPLORATION measurements with stress-ng suite failures,
 # not a passing test gate. See MaxCoverageMultiSuite.md Section 6.
 #
+# Supported run path (from the repository root): build this image, then run it
+# to print /workspace/metrics.txt. A fresh no-cache build took about 27 minutes
+# on a 22-core host; each image is about 4.5 GB. The guest is single-core with
+# 1024 MiB RAM, and its QEMU run is bounded at 20 minutes.
+#
 # The build FAILS if the GCOV config options are dropped, a stage checkpoint is
 # missing or empty, the runtime unit inventory changes between stages, or the
 # coverage denominator is zero. It does NOT fail on stress-ng stressor failures,
@@ -159,6 +164,9 @@ RUN for apk in \
     done
 
 # Build the real Syzkaller syz-prog2c and export the pinned corpus to static C.
+# Keep the target linux/arm64 and tracing enabled; a zero reproducer exit alone
+# does not prove every intended syscall succeeded. Review the guest outcome in
+# metrics.txt and qemu-gcov.log; stress-ng failures are recorded, not gated.
 ENV GOTOOLCHAIN=auto
 RUN git clone "${SYZKALLER_REPO}" syzkaller \
     && cd syzkaller \
@@ -179,7 +187,8 @@ RUN aarch64-linux-gnu-gcc -static -O2 \
 # Boot the single-core guest and run the four stages (Section 4)
 # ------------------------------------------------------------------------------
 # No -smp: the guest is single-core for deterministic stage ordering. 1024 MiB
-# RAM for the ~7.6 MB initramfs. The outer timeout bounds the whole run.
+# RAM for the ~7.6 MB initramfs. The outer timeout bounds the whole run. Serial
+# output is saved in qemu-gcov.log, so the build is quiet until extraction.
 RUN timeout --signal=TERM --kill-after=15s 20m \
         qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
         -kernel linux/arch/arm64/boot/Image -initrd initramfs-alpine.cpio.gz \

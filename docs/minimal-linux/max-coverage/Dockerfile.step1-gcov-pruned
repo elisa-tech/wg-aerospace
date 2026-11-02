@@ -13,6 +13,11 @@
 # coverage-EXPLORATION measurements with stress-ng suite failures, not a passing
 # test gate (MaxCoverageMultiSuite.md Section 8.1).
 #
+# Supported run path (from the repository root): build this image, then run it
+# to print /workspace/metrics.txt. A build with common layers cached took about
+# 23 minutes on a 22-core host; each image is about 4.5 GB. The guest
+# is single-core with 1024 MiB RAM, and its QEMU run is bounded at 20 minutes.
+#
 # The build FAILS on dropped GCOV prerequisites, a missing or empty stage
 # checkpoint, a changed runtime unit inventory, or a zero coverage denominator.
 
@@ -141,6 +146,10 @@ RUN for apk in \
         || { echo "ERROR: $lib missing from rootfs; stress-ng will not load"; exit 1; }; \
     done
 
+# Use the pinned real Syzkaller generator for the linux/arm64 traced corpus.
+# A successful process exit does not prove every intended syscall succeeded;
+# review the guest outcome in metrics.txt and qemu-gcov.log. Stress-ng failures
+# are recorded as exploration results, not treated as a build failure.
 ENV GOTOOLCHAIN=auto
 RUN git clone "${SYZKALLER_REPO}" syzkaller \
     && cd syzkaller \
@@ -157,7 +166,8 @@ RUN aarch64-linux-gnu-gcc -static -O2 \
         | gzip > initramfs-alpine.cpio.gz
 
 # ------------------------------------------------------------------------------
-# Boot, capture, reconstruct, diff, audit (identical to Step 0)
+# Boot, capture, reconstruct, diff, audit (identical to Step 0). The guest is
+# single-core at 1024 MiB; serial output is saved until checkpoint extraction.
 # ------------------------------------------------------------------------------
 RUN timeout --signal=TERM --kill-after=15s 20m \
         qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
