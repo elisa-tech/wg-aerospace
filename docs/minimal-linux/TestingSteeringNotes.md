@@ -325,25 +325,48 @@ Section 5 hold `_Record_` placeholders. Validate what exists:
 All "Section N" references in this subsection are sections of
 [Maximizing Kernel Coverage](./MaxCoverageMultiSuite.md).
 
-Reproduce in order: [Section 3](./MaxCoverageMultiSuite.md#3-kernel-profiling-configuration) build →
-[Section 4](./MaxCoverageMultiSuite.md#4-rootfs-assembly--sequential-multi-stage-execution-workflow) rootfs/boot →
-[Section 5](./MaxCoverageMultiSuite.md#5-host-side-checkpoint-extraction--differential-analysis) reconstruct →
-tables [Section 6](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression--differential-table-tinyconfig)/[Section 7](./MaxCoverageMultiSuite.md#7-identifying-uncovered-built-areas--pruning-candidates)/[Section 8](./MaxCoverageMultiSuite.md#8-iterative-kconfig-pruning--post-minimization-coverage-impact).
+Two ways to run it:
+
+- **Dockerized (preferred), matching the Hello Init step images.** Build and run
+  the two step Dockerfiles; each one does the whole Section 3–8 pipeline and
+  fails the build if a GCOV prerequisite is dropped, a stage checkpoint is
+  missing, the unit inventory changes, or the denominator is zero:
+
+  ```sh
+  docker build -f docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline -t maxcov-step0 .
+  docker run --rm maxcov-step0                       # coverage progression + metrics
+  docker build -f docs/minimal-linux/max-coverage/Dockerfile.step1-gcov-pruned   -t maxcov-step1 .
+  docker run --rm maxcov-step1
+  ```
+
+- **By hand**, for adapting the run: [Section 3](./MaxCoverageMultiSuite.md#3-kernel-profiling-configuration) build →
+  [Section 4](./MaxCoverageMultiSuite.md#4-rootfs-assembly--sequential-multi-stage-execution-workflow) rootfs/boot →
+  [Section 5](./MaxCoverageMultiSuite.md#5-host-side-checkpoint-extraction--differential-analysis) reconstruct →
+  tables [Section 6](./MaxCoverageMultiSuite.md#6-measured-multi-stage-progression--differential-table-tinyconfig)/[Section 7](./MaxCoverageMultiSuite.md#7-identifying-uncovered-built-areas--pruning-candidates)/[Section 8](./MaxCoverageMultiSuite.md#8-iterative-kconfig-pruning--post-minimization-coverage-impact).
 
 > **This example is part of a full validation pass — do not skip it.** A review
 > that only re-runs [Hello Init](./HelloInit.md) has **not** validated the
 > walkthrough set. The Maximizing Kernel Coverage example is a separate, heavier
-> run and must be exercised too, in its **own isolated build tree**
-> ([Section 1](#1-how-to-use-these-notes)) so it never shares kernel state with a
-> concurrent Hello Init run. Before starting it, confirm the extra prerequisites
-> that Hello Init does not need: **Go 1.26.0 or newer** for the pinned real
-> `syz-prog2c`, host **autotools** (`aclocal`/`autoconf`/`automake`/`m4`/
-> `pkg-config`),
-> network access to the Alpine CDN and GitHub for the rootfs and Syzkaller
-> sources, Python 3.12 or newer for archive extraction, and
-> `wget`/`base64`/`tar`/`aarch64-linux-gnu-gcov`. Keep the guest
-> **single-core at `-m 1024M`** for the NET-less baseline. Allow a few GB of disk for
-> each GCOV build. The 2026-10-31 pass did not re-run this example.
+> run and must be exercised too. Each step Dockerfile builds its kernel in its
+> own image layers, so separate `docker build` runs never share kernel state
+> ([Section 1](#1-how-to-use-these-notes)); a by-hand run needs its **own
+> isolated build tree**. The step images install the extra prerequisites Hello
+> Init does not need — **Go 1.26.0 or newer** for the pinned real `syz-prog2c`
+> (via `golang-go` + `GOTOOLCHAIN=auto`), the Alpine rootfs and packages, and
+> `aarch64-linux-gnu-gcov` — and keep the guest **single-core at `-m 1024M`**.
+> For a by-hand run, provide those yourself. Each GCOV image is about 4.5 GB and
+> the build boots QEMU for up to 20 minutes; watch disk per
+> [Section 1](#1-how-to-use-these-notes).
+>
+> **Reproduced 2026-10-31 (Docker, fresh `--no-cache` step 0, cached-layer
+> step 1).** Both images built and ran to completion. Step 0 reproduced the
+> Section 6 baseline exactly: **164,992** DWARF SLOC, **7,596,040 B** `Image`,
+> **205,463** denominator, **609** gcov units per stage, 32.65% → 45.31%. Step 1
+> reproduced the Section 8 prune in direction and magnitude: **146,810** DWARF
+> SLOC, **6,756,360 B** `Image`, **49.97%** final coverage (about 1.5–2% off the
+> doc's 2026-10-18 pruned figures — within the stated toolchain/`olddefconfig`
+> variance). Both reported `HARNESS INCOMPLETE` with all five stress-ng classes
+> failing and Syzkaller succeeding.
 
 Watch for these verified failure modes (each is called out at its step):
 
@@ -540,3 +563,142 @@ Record `go version` from inside the pinned module.
 Earlier handwritten or Go-free Syzkaller stand-ins do not validate the real
 suites. Use Go for the active reproducer; tool
 provisioning alone does not establish that a suite executed or passed.
+
+## 9. Reviewing proposed changes and moving to the next step
+
+Sections 2–8 say how to run and validate each walkthrough. This section is the
+workflow around that: how to review a batch of proposed changes (for example,
+edits an agent left in the working tree) and decide when a step is done and the
+next one can start. It assumes the common split where one actor proposes changes
+and a human reviews and commits them.
+
+### 9.1 Proposed changes land uncommitted; the reviewer commits
+
+- **Proposed edits are left uncommitted and unstaged in the working tree**, with
+  a copy of each applied patch kept outside the tree. The reviewer reads the
+  diff and commits; nothing is pushed or sent without a separate decision.
+- **See what is proposed before running anything:**
+
+  ```sh
+  git status --short
+  git diff                      # unstaged proposed edits
+  git diff --cached             # anything already staged
+  git status --short | grep '^??'   # new untracked files (e.g. new Dockerfiles)
+  ```
+
+- **Review new files too, not just diffs.** New Dockerfiles and scripts show up
+  only as `??` in `git status`; `git diff` alone misses them. Read each new file
+  in full.
+- **Commit in small, reviewed batches** rather than one large commit, so a later
+  bisect or revert is cheap. Keep unrelated staged work (for example, a
+  configuration fix) separate from doc edits by committing specific paths:
+
+  ```sh
+  git add docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline
+  git commit -s -- docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline
+  ```
+
+### 9.2 Step gate — when a step is "done" and the next may start
+
+Treat each walkthrough step as done only when all of the following hold. This is
+the gate to move to the next step or to commit.
+
+1. **The build/run finished with the expected exit and pass criterion.** The
+   step images fail the build on a dropped config option, a missing or invalid
+   checkpoint, or a zero coverage denominator (Hello Init
+   [Section 2](#2-validating-the-hello-init-body-sections); Max Coverage
+   [Section 4](#4-validating-the-maximizing-kernel-coverage-example)). A build
+   that exits 0 has already passed those internal gates; still compare the
+   recorded numbers against the document's table for that step.
+2. **The numbers were re-derived, not reused.** Confirm the measured values in
+   the reviewed environment (Section 2's table, Section 4's reproduction note).
+   Exact matches are expected for deterministic metrics (DWARF SLOC, raw
+   `Image`, the coverage denominator); small drift is expected for the
+   stress-ng/Syzkaller stages and for toolchain-sensitive pruned figures. Label
+   which is which.
+3. **The evidence is saved** (Section 7): serial log, `metrics.txt`, the JSON
+   inventories. A reviewer who cannot point at the artifact has not verified the
+   claim.
+4. **Lint and links pass** for any doc or Dockerfile change (Section 9.4).
+
+If a step changes a measured number in the document, see Section 9.3 before
+editing the table.
+
+### 9.3 Do not silently rewrite measured tables
+
+When a fresh run produces numbers close to but not identical to a recorded
+table, **do not overwrite the table in place.** Those figures are dated evidence
+from a specific toolchain. Instead add a dated reproduction note next to the
+table stating what was rebuilt, the environment (base image digest, GCC/QEMU
+versions), and which values matched exactly versus drifted and by how much. Only
+replace the table's headline numbers when the environment is the authoritative
+one going forward, and then record the new environment in the Provenance Anchor.
+Exact-match metrics that move (DWARF SLOC, raw `Image`, denominator) are a signal
+to investigate — a changed toolchain, a changed config, or a real regression —
+not to quietly edit.
+
+### 9.4 Lint and link checks for doc/Dockerfile changes
+
+- **Build the lint clone from the current `HEAD`, not an older base.** Files the
+  reviewer already committed (for example a `CPPLINT.cfg` that silences the C
+  samples, or reformatted sources) are invisible to `git diff HEAD` and
+  `git ls-files --others`, so a clone checked out at an older commit will be
+  missing them and the C linter will report the very errors that commit fixed.
+  Clone, check out `HEAD`, then overlay only the still-uncommitted edits:
+
+  ```sh
+  git clone --quiet --no-hardlinks . ../lint-scratch
+  git -C ../lint-scratch checkout --quiet --detach HEAD
+  git -C ../lint-scratch branch -f main "$(git merge-base origin/main HEAD)"
+  { git diff HEAD --name-only; git ls-files --others --exclude-standard -- docs; } \
+      | while read -r f; do mkdir -p "../lint-scratch/$(dirname "$f")"; \
+          cp "$f" "../lint-scratch/$f"; done
+  grep -v '^#' .github/super-linter.env > ../lint.env
+  docker run --rm -e RUN_LOCAL=true --env-file ../lint.env \
+      -v "$(cd ../lint-scratch && pwd)":/tmp/lint \
+      ghcr.io/super-linter/super-linter:v8.7.0
+  ```
+
+- **Use the repository's `super-linter.env` unmodified.** It already lists the
+  disabled linters; adding a `VALIDATE_<X>=true` on top makes super-linter abort
+  with "either only include or only exclude" and lint nothing. If a run exits
+  non-zero, confirm it actually linted (look for `Errors found in <LINTER>`)
+  rather than failed to start.
+- **Check `#anchor` fragments, not just file paths.** Renaming a Markdown
+  heading breaks every in-repo link to its old anchor (Section 6). A link
+  checker that resolves heading-derived slugs catches this; a file-existence
+  check does not.
+- Remove the lint clone when done; its `FIX_*` modes rewrite files as `root`
+  (`docker run --rm -v "$(cd .. && pwd)":/w ubuntu:24.04 rm -rf /w/lint-scratch`).
+
+### 9.5 Expected run times — a long build is not a hang
+
+A `--no-cache` build boots QEMU and, for the coverage example, compiles
+Syzkaller and runs a multi-minute stress sweep. These are the recorded
+wall-clock times on a 22-core host (single-core guest); treat anything near them
+as normal, and only suspect a hang well beyond them:
+
+| Image                                       | Approx. build+run time |
+| :------------------------------------------ | :--------------------- |
+| Hello Init step 0/1/2                       | ~5–6 min each          |
+| Hello Init GDB-stub trace                   | ~7–8 min               |
+| Hello Init step 3 (`defconfig`)             | ~29 min                |
+| Max Coverage step 0 (GCOV baseline)         | ~27 min                |
+| Max Coverage step 1 (pruned, cached layers) | ~23 min                |
+
+The coverage steps spend most of that time in the in-image QEMU run (bounded by
+a 20-minute `timeout` in the Dockerfile) and in reconstructing one gcov JSON per
+unit. The build log is quiet during the QEMU run because the guest's serial
+output is redirected to a file inside the container; the stage markers are not
+visible until the extraction step runs. Wait for the bounding timeout before
+concluding a run is stuck.
+
+### 9.6 Keep a resumable record across a long review
+
+A full pass is long enough to be interrupted (or to outlive a host reboot; see
+the disk/WSL note in [Section 1](#1-how-to-use-these-notes)). Keep a short
+running record outside the repository — which steps have a saved `exit=0`, which
+numbers are confirmed, what is still pending — so the review resumes without
+re-running completed steps. The step loop in
+[Section 1.1](#11-running-the-hello-init-sequence-resumable) already skips steps
+with a recorded `exit=0`; apply the same habit to the review itself.

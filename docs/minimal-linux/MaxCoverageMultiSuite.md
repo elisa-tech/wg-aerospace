@@ -45,6 +45,55 @@ user processes.
 - [10. Measurement Environment, Core Count & Timing Record](#10-measurement-environment-core-count--timing-record)
 - [11. References & Navigation](#11-references--navigation)
 
+## Environment and Dockerized Walkthrough
+
+Like [Hello Init](./HelloInit.md#2-environment), this example ships dedicated
+step Dockerfiles that encapsulate the whole pipeline — toolchain, kernel
+checkout, GCOV build, rootfs assembly (Alpine + stress-ng + real Syzkaller),
+the single-core QEMU run, and the host-side checkpoint reconstruction and
+differential coverage. They run the exploration end to end so a reviewer does
+not have to wire the stages together by hand:
+
+- `docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline` — Sections
+  3–7: the GCOV `tinyconfig` baseline exploration.
+- `docs/minimal-linux/max-coverage/Dockerfile.step1-gcov-pruned` — Section 8:
+  the same harness after the deadweight prune.
+
+```sh
+# Build and run the baseline exploration (Sections 3-7).
+docker build -f docs/minimal-linux/max-coverage/Dockerfile.step0-gcov-baseline \
+    -t maxcov-step0 .
+docker run --rm maxcov-step0                       # prints coverage progression + metrics
+docker run --rm maxcov-step0 cat /workspace/unreached-ranking.txt
+
+# Build and run the pruned exploration (Section 8), then compare.
+docker build -f docs/minimal-linux/max-coverage/Dockerfile.step1-gcov-pruned \
+    -t maxcov-step1 .
+docker run --rm maxcov-step1
+```
+
+Each image builds its kernel inside its own layers, so separate `docker build`
+runs never share kernel state (the isolation requirement in
+[Testing Steering Notes](./TestingSteeringNotes.md#1-how-to-use-these-notes)).
+The build **fails** if a GCOV prerequisite is dropped, a stage checkpoint is
+missing or not a valid archive, the runtime unit inventory changes between
+stages, or the coverage denominator is zero. It does **not** fail on stress-ng
+stressor failures: those are expected on this minimal kernel and are recorded,
+not gated (see [Section 6](#6-measured-multi-stage-progression--differential-table-tinyconfig)).
+
+This image is much heavier than the Hello Init steps: it clones Syzkaller and
+builds its Go host tool, downloads the Alpine rootfs and packages, and boots a
+single-core QEMU guest for up to 20 minutes. Build it on a host with disk space
+to spare and watch the filesystem that holds Docker's data root
+([Testing Steering Notes, Section 1](./TestingSteeringNotes.md#1-how-to-use-these-notes)).
+
+The detailed mechanics each Dockerfile automates are documented in
+[Section 3](#3-kernel-profiling-configuration) (config),
+[Section 4](#4-rootfs-assembly--sequential-multi-stage-execution-workflow)
+(rootfs and boot), and
+[Section 5](#5-host-side-checkpoint-extraction--differential-analysis)
+(reconstruction). Read them to adapt the run; use the Dockerfiles to reproduce it.
+
 ## 1. Test Methodologies & Coverage Complementarity
 
 Combining multiple test tools creates a unified, layered verification harness where
@@ -656,6 +705,17 @@ passing test gate. The denominator is the union of executable source lines
 across all unit inventories, including headers and generated sources.
 Regenerate the table for each configuration and payload set.
 
+> **Containerized reproduction (2026-10-31).** A fresh
+> `docker build -f Dockerfile.step0-gcov-baseline` on the base image
+> `ubuntu:24.04@sha256:fe81560990fa…` (GCC 13.3.0, QEMU 8.2.2) reproduced the
+> **164,992** DWARF SLOC, **7,596,040 B** raw `Image`, and the **205,463**
+> executable denominator exactly, with **609** gcov units per stage. The
+> per-stage numerators landed at 67,081 / 74,800 / 93,042 / 93,104
+> (32.65% → 45.31%): identical boot/traversal lines and the same shape, with the
+> stress-ng and Syzkaller stages varying by well under 0.1% run to run, as this
+> section warns. The harness again reported `HARNESS INCOMPLETE` (all five
+> stress-ng classes failed, Syzkaller and the traversal succeeded).
+
 | Subsystem / Execution Stage      | Total Exec SLOC | Stage 0: Boot & Self-Tests |     Stage 1: + `/proc`/`/sys` |         Stage 2: + `stress-ng` | Stage 3: + Syzkaller (incl. bad-exec) | Primary Paths Activated                               |
 | :------------------------------- | --------------: | -------------------------: | ----------------------------: | -----------------------------: | ------------------------------------: | :---------------------------------------------------- |
 | **Overall Kernel (Whole-Image)** |     **205,463** |       **67,087**<br>32.65% | **74,800**<br>[+7,713] 36.41% | **92,964**<br>[+18,164] 45.25% |            **93,025**<br>[+61] 45.28% | **Cumulative whole-system execution**                 |
@@ -847,10 +907,13 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 >   cleanly and drop their object files from the link.
 > - **`FUTEX_PI` cannot be disabled with `-d FUTEX_PI`.** It is a non-prompt
 >   `bool` (`default y`, `depends on FUTEX && RT_MUTEXES`) that is auto-selected
->   whenever both dependencies are on, so the request is silently ignored. To
->   actually remove PI-futex code, drop a dependency instead — e.g.
->   `-d FUTEX` (removes all futex support) or `-d RT_MUTEXES` — and re-test that
->   the workload still runs.
+>   whenever both dependencies are on, so the request is silently ignored.
+>   `-d RT_MUTEXES` does **not** help on this GCOV build either: another enabled
+>   symbol selects `RT_MUTEXES` (itself a non-prompt `bool`), so that request is
+>   ignored too and both stay `y` (verified on v7.3-rc5). The reliable way to
+>   remove PI-futex code is to drop the whole subsystem with `-d FUTEX`
+>   (verified: `FUTEX=n`, and `FUTEX_PI`/`RT_MUTEXES` become unset) — then
+>   re-test, since this removes all futex support.
 > - `POWER_SUPPLY` may remain `y` if another enabled symbol selects it; confirm
 >   with `./scripts/config -s POWER_SUPPLY` rather than assuming the `-d` took.
 >
@@ -859,6 +922,17 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 > **7,596,040 → 6,901,768 bytes** (GCC 13.3.0, binutils 2.42). Always
 > re-boot the pruned image and re-run the harness; pruning changes the denominator,
 > so re-generate the coverage table rather than scaling the old one.
+>
+> **Containerized reproduction (2026-10-31).** A fresh
+> `docker build -f Dockerfile.step1-gcov-pruned` reproduced the same direction
+> and magnitude: **146,810** DWARF SLOC and a **6,756,360 B** raw `Image` (both
+> about 1.5–2% below the 2026-10-18 figures above), a **183,582** executable
+> denominator, and **49.97%** final cumulative coverage. The small drift is the
+> expected toolchain/`olddefconfig` variance this guide warns about; the prune's
+> effect — a smaller denominator and a higher coverage percentage than the
+> baseline — reproduces. The pruned-config guard confirmed `VT`, `SERIO`,
+> `INPUT_MOUSE`, `HID_SUPPORT`, and `RD_ZSTD` dropped to `n` while `POWER_SUPPLY`
+> stayed `y`, as noted above.
 
 ### 8.1 Post-Pruning Multi-Stage Coverage Progression
 
@@ -892,8 +966,11 @@ areas for investigation in the next pruning round:
    `CONFIG_SYSVIPC`, `CONFIG_SIGNALFD`, `CONFIG_TIMERFD`, `CONFIG_EVENTFD`, or `CONFIG_AIO`.
 3. **`drivers/of/` (Device Tree Subsystem):** Evaluate unneeded device tree parsing
    features (`CONFIG_OF_OVERLAY`, dynamic device tree nodes).
-4. **`lib/` (Cryptographic & CRC Variants):** Replace multi-table slice-by-8 CRC algorithms
-   with minimal implementations (`CONFIG_CRC32_SLICEBY8` $\rightarrow$ `CONFIG_CRC32_BIT`).
+4. **`lib/` (CRC implementation):** On kernels that still offer the slice-by-8
+   CRC32 choice, replace it with a minimal bit-at-a-time implementation. **Note:**
+   v7.3-rc5 no longer exposes `CONFIG_CRC32_SLICEBY8`/`CONFIG_CRC32_BIT`
+   (`lib/crc/Kconfig` defines only `CRC32` and `CRC32_ARCH`), so this item is a
+   no-op there; confirm the symbols exist for your kernel before relying on it.
 5. **`mm/` (Memory Subsystem Tuning):** Evaluate memory compaction and swap stubs
    (`CONFIG_COMPACTION=n`, `CONFIG_SWAP=n`, `CONFIG_SLUB_TINY=y`).
 
@@ -927,8 +1004,7 @@ remaining unexercised core OS, pseudo-filesystem, and memory management subsyste
     -d SIGNALFD -d TIMERFD -d EVENTFD -d EPOLL \
     -d COMPACTION -d SWAP -d SHMEM \
     -e SLUB_TINY \
-    -d OF_OVERLAY \
-    -e CRC32_BIT -d CRC32_SLICEBY8
+    -d OF_OVERLAY
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig
 make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- clean
 make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
@@ -937,6 +1013,9 @@ make -j"$(nproc)" ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image
 This research recipe remains unmeasured. Disabling `SHMEM` changes memfd backing
 and shared-memory behavior even if `MEMFD_CREATE` remains enabled. Re-test the
 corpus and label changed results rather than assuming its success paths survive.
+The CRC32 slice-by-8/bit swap from [Section 8.2](#82-next-iteration-targets-for-further-minimization)
+is omitted here because v7.3-rc5 does not expose those symbols; add it only on a
+kernel that still offers the CRC32 implementation choice.
 
 ### 9.2 Macro Minimization & Coverage Progression Across Configurations
 

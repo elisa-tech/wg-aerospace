@@ -1,0 +1,230 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Max Coverage - Step 0: GCOV tinyconfig baseline, multi-suite exploration
+#
+# This Dockerfile reproduces the Maximizing Kernel Coverage walkthrough
+# (Sections 3-7) end to end, matching the dedicated step Dockerfiles used by
+# Hello Init:
+# - Builds a bottom-up GCOV-instrumented ARM64 kernel from tinyconfig with the
+#   boot self-tests and workload prerequisites the harness needs (Section 3).
+# - Builds the real Syzkaller syz-prog2c host tool (Go) and exports the pinned
+#   corpus to a static C reproducer; stages the Alpine minirootfs, stress-ng,
+#   and its shared-library dependencies (Section 4).
+# - Boots the single-core guest in QEMU during the image build, runs the four
+#   sequential stages (boot self-tests, /proc + /sys traversal, stress-ng class
+#   sweep, Syzkaller reproducer), and captures a base64 GCOV checkpoint per
+#   stage from the serial log (Section 4).
+# - Reconstructs one gcov JSON inventory per compilation unit and computes the
+#   cumulative, per-stage differential coverage (Section 5), then ranks linked
+#   DWARF SLOC with no observed execution (Section 7).
+#
+# These are coverage-EXPLORATION measurements with stress-ng suite failures,
+# not a passing test gate. See MaxCoverageMultiSuite.md Section 6.
+#
+# The build FAILS if the GCOV config options are dropped, a stage checkpoint is
+# missing or empty, the runtime unit inventory changes between stages, or the
+# coverage denominator is zero. It does NOT fail on stress-ng stressor failures,
+# which are expected on this minimal kernel and are recorded, not gated.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Cross toolchain, QEMU, gcov, Go (for the real Syzkaller syz-prog2c), and the
+# archive/measurement utilities the pipeline uses.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    ca-certificates \
+    xz-utils \
+    golang-go \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned kernel tag and helper provenance anchor (v7.3-rc5 reference)
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+
+# Pinned Alpine artifacts (v3.20/aarch64). stress-ng is dynamically linked and
+# needs libbsd/libmd/libsctp/libJudy staged alongside it; the minirootfs ships
+# musl and zlib. These are staged by SHA-verified download below.
+ARG ALPINE_VER=3.20.3
+ARG ALPINE_BRANCH=v3.20
+
+# Pinned Syzkaller commit (needs Go 1.26.0+; GOTOOLCHAIN=auto will fetch it).
+ARG SYZKALLER_REPO=https://github.com/google/syzkaller
+ARG SYZKALLER_COMMIT=432c00775d20929a96fd4987f9ef01a50e6fd277
+
+WORKDIR /workspace
+
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+# Copy the harness, corpus, and host-side analysis scripts.
+COPY docs/minimal-linux/max-coverage /workspace/src
+
+# ------------------------------------------------------------------------------
+# Configure & Build the GCOV tinyconfig kernel (Section 3)
+# ------------------------------------------------------------------------------
+# RUNTIME_TESTING_MENU is mandatory: the TEST_* options and ATOMIC64_SELFTEST
+# live under its menuconfig guard and are silently dropped without it. KUNIT is
+# required for TEST_SORT/TEST_LIST_SORT. POSIX_TIMERS bounds stress-ng's alarm;
+# MEMFD_CREATE + SHMEM + ADVISE_SYSCALLS back the Syzkaller mapping corpus. The
+# DWARF options let the same vmlinux feed the Section 7 linked-SLOC audit.
+RUN make tinyconfig \
+    && ./scripts/config \
+       -e PRINTK -e TTY -e SERIAL_AMBA_PL011 -e SERIAL_AMBA_PL011_CONSOLE \
+       -e BINFMT_ELF -e BLK_DEV_INITRD -d MODULES \
+       -e DEBUG_FS -e SYSFS -e PROC_FS -e DEVTMPFS -e DEVTMPFS_MOUNT \
+       -e GCOV_KERNEL -e GCOV_PROFILE_ALL \
+       -e FUTEX -e POSIX_TIMERS -e SHMEM -e MEMFD_CREATE -e ADVISE_SYSCALLS \
+       -e RUNTIME_TESTING_MENU \
+       -e KUNIT \
+       -e DEBUG_LOCKING_API_SELFTESTS \
+       -e STATIC_KEYS_SELFTEST \
+       -e ATOMIC64_SELFTEST \
+       -e TEST_BITMAP -e TEST_SORT -e TEST_LIST_SORT -e TEST_HEXDUMP \
+       -e TEST_KSTRTOX -e TEST_XARRAY -e TEST_MAPLE_TREE -e TEST_RHASHTABLE \
+       -e TEST_IDA -e TEST_BITOPS \
+       -d DEBUG_INFO_NONE -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    && make olddefconfig
+
+# Fail early if olddefconfig dropped any prerequisite the harness depends on.
+RUN for c in GCOV_KERNEL GCOV_PROFILE_ALL RUNTIME_TESTING_MENU KUNIT \
+             ATOMIC64_SELFTEST TEST_MAPLE_TREE TEST_XARRAY TEST_SORT \
+             DEBUG_INFO POSIX_TIMERS SHMEM MEMFD_CREATE ADVISE_SYSCALLS; do \
+        v=$(./scripts/config -s "$c"); \
+        printf '%-24s = %s\n' "$c" "$v"; \
+        [ "$v" = y ] || { echo "ERROR: $c=$v after olddefconfig (expected y)"; exit 1; }; \
+    done
+
+RUN make -j"$(nproc)" Image \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
+
+# ------------------------------------------------------------------------------
+# Assemble the Alpine rootfs: stress-ng + deps, Syzkaller reproducer, launcher
+# (Section 4)
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/releases/aarch64/alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz" \
+    && wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/releases/aarch64/alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz.sha256" \
+    && sha256sum -c "alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz.sha256" \
+    && mkdir -p rootfs-alpine \
+    && tar -xzf "alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz" -C rootfs-alpine \
+    && mkdir -p rootfs-alpine/proc rootfs-alpine/sys rootfs-alpine/dev \
+               rootfs-alpine/tmp rootfs-alpine/sys/kernel/debug rootfs-alpine/opt/syzkaller
+
+# stress-ng and its shared-library dependencies. An .apk is a gzip tarball;
+# tar does not resolve .apk dependencies, so each is staged explicitly.
+RUN for apk in \
+        community/aarch64/stress-ng-0.17.08-r0.apk \
+        main/aarch64/libbsd-0.12.2-r0.apk \
+        main/aarch64/libmd-1.1.0-r0.apk \
+        main/aarch64/liblksctp-1.0.19-r5.apk \
+        community/aarch64/judy-1.0.5-r1.apk ; do \
+        wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/$apk" \
+        && tar -xzf "$(basename "$apk")" -C rootfs-alpine ; \
+    done \
+    && for lib in libbsd.so.0 libmd.so.0 libsctp.so.1 libJudy.so.1 libz.so.1; do \
+        find rootfs-alpine -name "$lib" | grep -q . \
+        || { echo "ERROR: $lib missing from rootfs; stress-ng will not load"; exit 1; }; \
+    done
+
+# Build the real Syzkaller syz-prog2c and export the pinned corpus to static C.
+ENV GOTOOLCHAIN=auto
+RUN git clone "${SYZKALLER_REPO}" syzkaller \
+    && cd syzkaller \
+    && git checkout "${SYZKALLER_COMMIT}" \
+    && go version \
+    && make prog2c \
+    && ./bin/syz-prog2c -os linux -arch arm64 -trace -prog /workspace/src/corpus.syz \
+        > /workspace/syz-repro.c \
+    && aarch64-linux-gnu-gcc -static -O2 -o /workspace/rootfs-alpine/opt/syzkaller/syz-repro /workspace/syz-repro.c
+
+# Build the PID 1 multi-stage launcher.
+RUN aarch64-linux-gnu-gcc -static -O2 \
+        -o rootfs-alpine/init /workspace/src/init-maxcoverage.c \
+    && ( cd rootfs-alpine && find . | cpio -o -H newc 2>/dev/null ) \
+        | gzip > initramfs-alpine.cpio.gz
+
+# ------------------------------------------------------------------------------
+# Boot the single-core guest and run the four stages (Section 4)
+# ------------------------------------------------------------------------------
+# No -smp: the guest is single-core for deterministic stage ordering. 1024 MiB
+# RAM for the ~7.6 MB initramfs. The outer timeout bounds the whole run.
+RUN timeout --signal=TERM --kill-after=15s 20m \
+        qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
+        -kernel linux/arch/arm64/boot/Image -initrd initramfs-alpine.cpio.gz \
+        -append 'console=ttyAMA0 nokaslr' > qemu-gcov.log 2>&1 || true
+
+# Extract one checkpoint archive per stage from the serial log.
+RUN for s in STAGE0_BOOT STAGE1_PROCSYS STAGE2_STRESSNG STAGE3_SYZKALLER; do \
+        out="gcda-$(echo "$s" | tr 'A-Z_' 'a-z-').tar.gz"; \
+        sed -n "/===GCOV_${s}_START===/,/===GCOV_${s}_END===/p" qemu-gcov.log \
+            | grep -v '===' | tr -d '\r' | base64 -d > "$out" 2>/dev/null || true; \
+        if [ ! -s "$out" ] || ! tar -tzf "$out" >/dev/null 2>&1; then \
+            echo "ERROR: checkpoint $s missing or not a valid archive"; \
+            echo "--- last 60 lines of qemu-gcov.log ---"; tail -n 60 qemu-gcov.log; \
+            exit 1; \
+        fi; \
+    done
+
+# ------------------------------------------------------------------------------
+# Reconstruct per-unit gcov JSON and compute differential coverage (Section 5)
+# ------------------------------------------------------------------------------
+WORKDIR /workspace/linux
+RUN cp /workspace/gcda-stage0-boot.tar.gz /workspace/gcda-stage1-procsys.tar.gz \
+       /workspace/gcda-stage2-stressng.tar.gz /workspace/gcda-stage3-syzkaller.tar.gz . \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage0-boot.tar.gz stage0_boot \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage1-procsys.tar.gz stage1_procsys \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage2-stressng.tar.gz stage2_stressng \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage3-syzkaller.tar.gz stage3_syzkaller \
+    && python3 /workspace/src/diff_gcov.py | tee /workspace/coverage-progression.txt \
+    && python3 /workspace/src/audit_unreached.py linked.json stage3_syzkaller \
+        | tee /workspace/unreached-ranking.txt
+
+# ------------------------------------------------------------------------------
+# Measure Metrics & Generate Summary Report
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN { \
+        echo "=== Max Coverage Step 0: GCOV tinyconfig baseline ==="; \
+        printf "%-32s: %s\n" "GCOV DWARF Linked SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-alpine.cpio.gz) bytes"; \
+        echo; echo "--- Cumulative coverage progression (diff_gcov.py) ---"; \
+        cat /workspace/coverage-progression.txt; \
+        echo; echo "--- Harness outcome (from serial log) ---"; \
+        grep -E 'CHILD |WATCHDOG|HARNESS INCOMPLETE|All test stages complete' /workspace/qemu-gcov.log || true; \
+    } | tee /workspace/metrics.txt
+
+# Default command: show the recorded metrics and coverage progression.
+CMD ["cat", "/workspace/metrics.txt"]

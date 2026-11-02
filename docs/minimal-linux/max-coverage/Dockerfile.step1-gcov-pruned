@@ -1,0 +1,201 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Max Coverage - Step 1: GCOV baseline + Section 8 Kconfig prune
+#
+# This Dockerfile reproduces the iterative-pruning step of the Maximizing Kernel
+# Coverage walkthrough (Section 8). It is identical to
+# Dockerfile.step0-gcov-baseline except that, after the GCOV tinyconfig recipe,
+# it disables the terminal, input, HID, decompressor, and power-supply options
+# the Section 7 audit flagged as deadweight, then re-runs the same four-stage
+# harness so the before/after coverage tables use the same workload.
+#
+# Pruning changes the coverage denominator, so compare Step 0 and Step 1 only as
+# whole runs, never by scaling one from the other. Like Step 0, these are
+# coverage-EXPLORATION measurements with stress-ng suite failures, not a passing
+# test gate (MaxCoverageMultiSuite.md Section 8.1).
+#
+# The build FAILS on dropped GCOV prerequisites, a missing or empty stage
+# checkpoint, a changed runtime unit inventory, or a zero coverage denominator.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    ca-certificates \
+    xz-utils \
+    golang-go \
+    && rm -rf /var/lib/apt/lists/*
+
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+ARG ALPINE_VER=3.20.3
+ARG ALPINE_BRANCH=v3.20
+ARG SYZKALLER_REPO=https://github.com/google/syzkaller
+ARG SYZKALLER_COMMIT=432c00775d20929a96fd4987f9ef01a50e6fd277
+
+WORKDIR /workspace
+
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+COPY docs/minimal-linux/max-coverage /workspace/src
+
+# ------------------------------------------------------------------------------
+# GCOV tinyconfig recipe (Section 3), then the Section 8 prune
+# ------------------------------------------------------------------------------
+RUN make tinyconfig \
+    && ./scripts/config \
+       -e PRINTK -e TTY -e SERIAL_AMBA_PL011 -e SERIAL_AMBA_PL011_CONSOLE \
+       -e BINFMT_ELF -e BLK_DEV_INITRD -d MODULES \
+       -e DEBUG_FS -e SYSFS -e PROC_FS -e DEVTMPFS -e DEVTMPFS_MOUNT \
+       -e GCOV_KERNEL -e GCOV_PROFILE_ALL \
+       -e FUTEX -e POSIX_TIMERS -e SHMEM -e MEMFD_CREATE -e ADVISE_SYSCALLS \
+       -e RUNTIME_TESTING_MENU \
+       -e KUNIT \
+       -e DEBUG_LOCKING_API_SELFTESTS \
+       -e STATIC_KEYS_SELFTEST \
+       -e ATOMIC64_SELFTEST \
+       -e TEST_BITMAP -e TEST_SORT -e TEST_LIST_SORT -e TEST_HEXDUMP \
+       -e TEST_KSTRTOX -e TEST_XARRAY -e TEST_MAPLE_TREE -e TEST_RHASHTABLE \
+       -e TEST_IDA -e TEST_BITOPS \
+       -d DEBUG_INFO_NONE -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    `# Section 8 prune: terminal, input, HID, decompressors, power supply` \
+    && ./scripts/config \
+       -d VT -d VT_CONSOLE -d UNIX98_PTYS -d LEGACY_PTYS \
+       -d INPUT_MOUSEDEV -d INPUT_KEYBOARD -d INPUT_MOUSE -d SERIO \
+       -d HID -d HID_SUPPORT \
+       -d RD_BZIP2 -d RD_LZMA -d RD_XZ -d RD_LZO -d RD_LZ4 -d RD_ZSTD \
+       -d POWER_SUPPLY \
+    && make olddefconfig
+
+RUN for c in GCOV_KERNEL GCOV_PROFILE_ALL RUNTIME_TESTING_MENU KUNIT \
+             ATOMIC64_SELFTEST TEST_MAPLE_TREE TEST_XARRAY TEST_SORT \
+             DEBUG_INFO POSIX_TIMERS SHMEM MEMFD_CREATE ADVISE_SYSCALLS; do \
+        v=$(./scripts/config -s "$c"); \
+        printf '%-24s = %s\n' "$c" "$v"; \
+        [ "$v" = y ] || { echo "ERROR: $c=$v after olddefconfig (expected y)"; exit 1; }; \
+    done \
+    && echo "--- pruned symbols (VT/SERIO/RD_ZSTD should be n; POWER_SUPPLY may stay y) ---" \
+    && for c in VT SERIO INPUT_MOUSE HID_SUPPORT RD_ZSTD POWER_SUPPLY; do \
+        printf '%-24s = %s\n' "$c" "$(./scripts/config -s "$c")"; \
+    done
+
+RUN make -j"$(nproc)" Image \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt
+
+# ------------------------------------------------------------------------------
+# Rootfs assembly (identical to Step 0)
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/releases/aarch64/alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz" \
+    && wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/releases/aarch64/alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz.sha256" \
+    && sha256sum -c "alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz.sha256" \
+    && mkdir -p rootfs-alpine \
+    && tar -xzf "alpine-minirootfs-${ALPINE_VER}-aarch64.tar.gz" -C rootfs-alpine \
+    && mkdir -p rootfs-alpine/proc rootfs-alpine/sys rootfs-alpine/dev \
+               rootfs-alpine/tmp rootfs-alpine/sys/kernel/debug rootfs-alpine/opt/syzkaller
+
+RUN for apk in \
+        community/aarch64/stress-ng-0.17.08-r0.apk \
+        main/aarch64/libbsd-0.12.2-r0.apk \
+        main/aarch64/libmd-1.1.0-r0.apk \
+        main/aarch64/liblksctp-1.0.19-r5.apk \
+        community/aarch64/judy-1.0.5-r1.apk ; do \
+        wget -q "https://dl-cdn.alpinelinux.org/alpine/${ALPINE_BRANCH}/$apk" \
+        && tar -xzf "$(basename "$apk")" -C rootfs-alpine ; \
+    done \
+    && for lib in libbsd.so.0 libmd.so.0 libsctp.so.1 libJudy.so.1 libz.so.1; do \
+        find rootfs-alpine -name "$lib" | grep -q . \
+        || { echo "ERROR: $lib missing from rootfs; stress-ng will not load"; exit 1; }; \
+    done
+
+ENV GOTOOLCHAIN=auto
+RUN git clone "${SYZKALLER_REPO}" syzkaller \
+    && cd syzkaller \
+    && git checkout "${SYZKALLER_COMMIT}" \
+    && go version \
+    && make prog2c \
+    && ./bin/syz-prog2c -os linux -arch arm64 -trace -prog /workspace/src/corpus.syz \
+        > /workspace/syz-repro.c \
+    && aarch64-linux-gnu-gcc -static -O2 -o /workspace/rootfs-alpine/opt/syzkaller/syz-repro /workspace/syz-repro.c
+
+RUN aarch64-linux-gnu-gcc -static -O2 \
+        -o rootfs-alpine/init /workspace/src/init-maxcoverage.c \
+    && ( cd rootfs-alpine && find . | cpio -o -H newc 2>/dev/null ) \
+        | gzip > initramfs-alpine.cpio.gz
+
+# ------------------------------------------------------------------------------
+# Boot, capture, reconstruct, diff, audit (identical to Step 0)
+# ------------------------------------------------------------------------------
+RUN timeout --signal=TERM --kill-after=15s 20m \
+        qemu-system-aarch64 -machine virt -cpu cortex-a57 -m 1024M -nographic \
+        -kernel linux/arch/arm64/boot/Image -initrd initramfs-alpine.cpio.gz \
+        -append 'console=ttyAMA0 nokaslr' > qemu-gcov.log 2>&1 || true
+
+RUN for s in STAGE0_BOOT STAGE1_PROCSYS STAGE2_STRESSNG STAGE3_SYZKALLER; do \
+        out="gcda-$(echo "$s" | tr 'A-Z_' 'a-z-').tar.gz"; \
+        sed -n "/===GCOV_${s}_START===/,/===GCOV_${s}_END===/p" qemu-gcov.log \
+            | grep -v '===' | tr -d '\r' | base64 -d > "$out" 2>/dev/null || true; \
+        if [ ! -s "$out" ] || ! tar -tzf "$out" >/dev/null 2>&1; then \
+            echo "ERROR: checkpoint $s missing or not a valid archive"; \
+            echo "--- last 60 lines of qemu-gcov.log ---"; tail -n 60 qemu-gcov.log; \
+            exit 1; \
+        fi; \
+    done
+
+WORKDIR /workspace/linux
+RUN cp /workspace/gcda-stage0-boot.tar.gz /workspace/gcda-stage1-procsys.tar.gz \
+       /workspace/gcda-stage2-stressng.tar.gz /workspace/gcda-stage3-syzkaller.tar.gz . \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage0-boot.tar.gz stage0_boot \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage1-procsys.tar.gz stage1_procsys \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage2-stressng.tar.gz stage2_stressng \
+    && python3 /workspace/src/reconstruct_stage.py gcda-stage3-syzkaller.tar.gz stage3_syzkaller \
+    && python3 /workspace/src/diff_gcov.py | tee /workspace/coverage-progression.txt \
+    && python3 /workspace/src/audit_unreached.py linked.json stage3_syzkaller \
+        | tee /workspace/unreached-ranking.txt
+
+WORKDIR /workspace
+RUN { \
+        echo "=== Max Coverage Step 1: GCOV baseline + Section 8 prune ==="; \
+        printf "%-32s: %s\n" "Pruned GCOV DWARF Linked SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-alpine.cpio.gz) bytes"; \
+        echo; echo "--- Cumulative coverage progression (diff_gcov.py) ---"; \
+        cat /workspace/coverage-progression.txt; \
+        echo; echo "--- Harness outcome (from serial log) ---"; \
+        grep -E 'CHILD |WATCHDOG|HARNESS INCOMPLETE|All test stages complete' /workspace/qemu-gcov.log || true; \
+    } | tee /workspace/metrics.txt
+
+CMD ["cat", "/workspace/metrics.txt"]

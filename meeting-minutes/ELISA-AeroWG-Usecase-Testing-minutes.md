@@ -46,12 +46,12 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - Kernel minimization effort
   - ACTION: Need to decide if we look at coverage at the instruction or source code level
-  - ACTION: TESTING!!!  Start here to review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+  - ACTION: TESTING!!! Start here to review [basics of minimizing](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
   - ACTION: Matt to demo basic app using instructions
 
 - Leonidas presented on ["Faithful Emulation of Space Processors SoCs using Open Source Technologies"](https://onedrive.live.com/?id=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026%2FKosmidis%5FSpace%5FProcessors%5FQEMU%5FELISA%5FOct%5F2026%2Epdf&listurl=%2Fpersonal%2F01b8647ed2301e95%2FDocuments&ithint=file%2Cpdf&e=taUegA&migratedtospo=true&parent=%2Fpersonal%2F01b8647ed2301e95%2FDocuments%2FSMC%2DIT%202026&redeem=aHR0cHM6Ly8xZHJ2Lm1zL2IvYy8wMWI4NjQ3ZWQyMzAxZTk1L0lRRG1wemF2NkFpdlNvenZoR0FsbnpDcUFjYTlTYmlwaFN0cWx6VTE1VTlTdFZFP2U9dGFVZWdB&ga=1)
 
-- FYI from Matt - Haoda Wang <haoda.wang@columbia.edu>  contacted me with HPSC and fault tolerant research interest.  I've invited him to our weekly calls.
+- FYI from Matt - Haoda Wang <haoda.wang@columbia.edu> contacted me with HPSC and fault tolerant research interest. I've invited him to our weekly calls.
 
 **Not discussed but FYI**
 
