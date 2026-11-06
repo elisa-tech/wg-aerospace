@@ -25,6 +25,8 @@ jobs:
           INDEX_FILE="./docs/register.md"
           # Find all markdown files, excluding the index file and node_modules
           ALL_MD_FILES=$(find . -type f -name '*.md' ! -wholename "$INDEX_FILE" ! \
+                        -path './linux*' ! \
+                        -path './.venv*' ! \
                         -path './Contributing.md' ! \
                         -path './presentations*' ! \
                         -path './meeting-minutes*' ! \
@@ -32,6 +34,7 @@ jobs:
                         -path './demos/copilot/src/cfs/apps/lights_app*' ! \
                         -path './demos/copilot/src/cfs/apps/switch_app*' ! \
                         -path './demos/copilot/src/cfs/elisa_usecase*' ! \
+                        -path './demos/copilot/src/monitors*' ! \
                         -path './demos/copilot/src/cfs/updated_template*')
 
           MISSING_FILES=()

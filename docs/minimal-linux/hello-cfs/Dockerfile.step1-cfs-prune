@@ -1,0 +1,171 @@
+# SPDX-License-Identifier: CC-BY-SA-4.0
+# Hello cFS - Step 1: Driver Pruning Iteration
+#
+# This Dockerfile evaluates pruning unused driver subsystems from the cFS baseline kernel.
+
+ARG BASE_IMAGE=ubuntu:24.04
+FROM ${BASE_IMAGE}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    file \
+    gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
+    binutils-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
+    cmake \
+    bison \
+    flex \
+    libssl-dev \
+    libelf-dev \
+    bc \
+    make \
+    git \
+    cpio \
+    qemu-system-arm \
+    ipxe-qemu \
+    cloc \
+    python3 \
+    wget \
+    vim \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Pinned kernel, cFS, SLOC helper, and Bootlin musl toolchain provenance anchors
+ARG KERNEL_REPO=https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+ARG KERNEL_TAG=v7.3-rc5
+ARG CFS_REPO=https://github.com/nasa/cFS.git
+ARG CFS_COMMIT=1ca3a956d05348d2dce22447fa5eda74ddd89a55
+ARG BOOTLIN_MUSL_URL=https://toolchains.bootlin.com/downloads/releases/toolchains/aarch64/tarballs/aarch64--musl--stable-2026.08-1.tar.xz
+ARG BOOTLIN_MUSL_SHA256=b388c480a48e8e9f9b99e3d14e69219c4d61e5a2424a82faecb88a015b781a60
+ARG SLOC_HELPER_URL=https://raw.githubusercontent.com/matthew-l-weber/linux/398a7781b2ddd81b8fcf809a019209a32c883c8d/scripts/kernel-sloc
+ARG SLOC_HELPER_SHA256=4f83ebd27759f6bff2d696260e665849575d1b31a5940676a57140f8c94e4f40
+
+WORKDIR /workspace
+
+# Install Bootlin aarch64 musl toolchain on x86_64 hosts for static linking without
+# LGPL static-linking constraints; on non-x86_64 hosts, CMake falls back to the
+# Ubuntu aarch64 toolchain installed via apt.
+RUN mkdir -p /opt/aarch64-toolchain \
+    && if [ "$(uname -m)" = "x86_64" ]; then \
+        wget -q -O /tmp/musl-toolchain.tar.xz "${BOOTLIN_MUSL_URL}" \
+        && printf "%s  %s\n" "${BOOTLIN_MUSL_SHA256}" /tmp/musl-toolchain.tar.xz | sha256sum -c - \
+        && tar -xf /tmp/musl-toolchain.tar.xz -C /opt/aarch64-toolchain --strip-components=1 \
+        && rm /tmp/musl-toolchain.tar.xz \
+        && printf '#ifndef _EXECINFO_H\n#define _EXECINFO_H\nstatic inline int backtrace(void **buffer, int size) { (void)buffer; (void)size; return 0; }\n#endif\n' \
+           > /opt/aarch64-toolchain/aarch64-buildroot-linux-musl/sysroot/usr/include/execinfo.h; \
+    fi
+
+# Retrieve and install kernel-sloc globally
+RUN wget -q -O /usr/local/bin/kernel-sloc "${SLOC_HELPER_URL}" \
+    && printf "%s  %s\n" "${SLOC_HELPER_SHA256}" /usr/local/bin/kernel-sloc | sha256sum -c - \
+    && chmod 0755 /usr/local/bin/kernel-sloc \
+    && git config --global --add safe.directory '*'
+
+# ------------------------------------------------------------------------------
+# Source Checkouts (Cached above kernel and cFS build stages)
+# ------------------------------------------------------------------------------
+# 1. Shallow clone target kernel release into workspace
+RUN git clone --depth 1 --branch "${KERNEL_TAG}" "${KERNEL_REPO}" linux
+
+WORKDIR /workspace/linux
+RUN mkdir -p scripts && ln -sf /usr/local/bin/kernel-sloc scripts/kernel-sloc
+
+# 2. Clone NASA cFS and initialize submodules at pinned commit
+WORKDIR /workspace
+RUN git clone "${CFS_REPO}" /workspace/cFS \
+    && cd /workspace/cFS \
+    && git checkout "${CFS_COMMIT}" \
+    && git submodule update --init --depth 1 -j 8
+
+ENV ARCH=arm64
+ENV CROSS_COMPILE=aarch64-linux-gnu-
+
+# ------------------------------------------------------------------------------
+# Configure & Build Kernel (Step 1 Pruning Outline)
+# ------------------------------------------------------------------------------
+WORKDIR /workspace/linux
+RUN make tinyconfig \
+    && ./scripts/config \
+       -e PRINTK -e TTY -e SERIAL_AMBA_PL011 -e SERIAL_AMBA_PL011_CONSOLE \
+       -e BINFMT_ELF -e BLK_DEV_INITRD -d MODULES \
+       -e FUTEX -e RT_MUTEXES \
+       -e POSIX_TIMERS -e POSIX_MQUEUE \
+       -e SHMEM -e TMPFS -e SYSVIPC \
+       -e NET -e INET \
+       -d DEBUG_INFO_NONE \
+       -e DEBUG_KERNEL -e DEBUG_INFO_DWARF_TOOLCHAIN_DEFAULT \
+       -d DEBUG_INFO_BTF -d DEBUG_INFO_SPLIT \
+    && make olddefconfig \
+    && make -j"$(nproc)" Image Image.gz
+
+# ------------------------------------------------------------------------------
+# cFS Environment Setup & Static Cross-Compilation (arm64_linux target)
+# ------------------------------------------------------------------------------
+WORKDIR /workspace/cFS
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        CFS_CC="/opt/aarch64-toolchain/bin/aarch64-linux-gcc"; \
+        CFS_CXX="/opt/aarch64-toolchain/bin/aarch64-linux-g++"; \
+        CFS_SYSROOT="/opt/aarch64-toolchain/aarch64-buildroot-linux-musl/sysroot"; \
+    else \
+        CFS_CC="/usr/bin/aarch64-linux-gnu-gcc"; \
+        CFS_CXX="/usr/bin/aarch64-linux-gnu-g++"; \
+        CFS_SYSROOT="/usr/aarch64-linux-gnu"; \
+    fi \
+    && sed -i '/list(APPEND MISSION_CPUNAMES cpu2)/s/^/#/' sample_defs/targets.cmake \
+    && sed -i 's|MISSION_GLOBAL_APPLIST|MISSION_GLOBAL_STATIC_APPLIST|g' sample_defs/targets.cmake \
+    && sed -i '1i set(MISSION_GLOBAL_APPLIST)' sample_defs/targets.cmake \
+    && sed -i 's|SET(cpu1_APPLIST ci_lab to_lab sch_lab)|SET(cpu1_STATIC_APPLIST cfe_assert ci_lab to_lab sch_lab)\nSET(cpu1_STATIC_SYMLIST CFE_Assert_LibInit,ASSERT_LIB SAMPLE_LIB_Init,SAMPLE_LIB SCH_LAB_AppMain,SCH_LAB CI_LAB_AppMain,CI_LAB TO_LAB_AppMain,TO_LAB SAMPLE_APP_Main,SAMPLE_APP LC_AppMain,LC CF_AppMain,CF DS_AppMain,DS FM_AppMain,FM HK_AppMain,HK HS_AppMain,HS SC_AppMain,SC MD_AppMain,MD CS_AppMain,CS)|' sample_defs/targets.cmake \
+    && sed -i 's|SET(cpu1_SYSTEM.*|SET(cpu1_SYSTEM aarch64-linux)|' sample_defs/targets.cmake \
+    && sed -i 's|qemu_yocto_linux|arm64_linux|g' target-configs.mk \
+    && sed -i 's|ARCH_arm64_linux =.*|ARCH_arm64_linux = aarch64-linux|' target-configs.mk \
+    && cp sample_defs/toolchain-arm-cortexa8_neon-linux-gnueabi.cmake sample_defs/toolchain-aarch64-linux.cmake \
+    && sed -i 's|SET(CMAKE_SYSTEM_PROCESSOR.*|SET(CMAKE_SYSTEM_PROCESSOR aarch64)|' sample_defs/toolchain-aarch64-linux.cmake \
+    && sed -i "s|SET(CMAKE_C_COMPILER.*|SET(CMAKE_C_COMPILER \"${CFS_CC}\")|" sample_defs/toolchain-aarch64-linux.cmake \
+    && sed -i "s|SET(CMAKE_CXX_COMPILER.*|SET(CMAKE_CXX_COMPILER \"${CFS_CXX}\")|" sample_defs/toolchain-aarch64-linux.cmake \
+    && sed -i "s|SET(CMAKE_FIND_ROOT_PATH\t.*|SET(CMAKE_FIND_ROOT_PATH \"${CFS_SYSROOT}\")|" sample_defs/toolchain-aarch64-linux.cmake \
+    && printf '\nSET(CMAKE_EXE_LINKER_FLAGS "-static")\nSET(START_WHOLE_ARCHIVE "-Wl,--whole-archive")\nSET(STOP_WHOLE_ARCHIVE "-Wl,--no-whole-archive")\n' >> sample_defs/toolchain-aarch64-linux.cmake \
+    && cp sample_defs/riscv64-poky-linux_osconfig.cmake sample_defs/aarch64-linux_osconfig.cmake \
+    && printf '\nset(OSAL_CONFIG_INCLUDE_DYNAMIC_LOADER FALSE)\nset(OSAL_CONFIG_INCLUDE_STATIC_LOADER TRUE)\n' >> sample_defs/aarch64-linux_osconfig.cmake \
+    && make arm64_linux.prep \
+    && make -j"$(nproc)" arm64_linux.install
+
+# ------------------------------------------------------------------------------
+# Stage Static cFS Workload & Tables into Initramfs
+# ------------------------------------------------------------------------------
+COPY docs/minimal-linux/hello-cfs /workspace/src
+WORKDIR /workspace
+RUN mkdir -p rootfs/tmp rootfs/dev/shm \
+    && cp -r /workspace/cFS/build-arm64_linux/exe/cpu1/* rootfs/ \
+    && mv rootfs/core-cpu1 rootfs/init \
+    && ( cd rootfs && find . | cpio -o -H newc ) | gzip > initramfs-cfs.cpio.gz
+
+# ------------------------------------------------------------------------------
+# Measure Metrics & Generate Summary Report
+# ------------------------------------------------------------------------------
+WORKDIR /workspace
+RUN aarch64-linux-gnu-strip -o /tmp/core-cfs-stripped rootfs/init \
+    && /usr/local/bin/kernel-sloc --report /workspace/cfs-compiled.json kernel /workspace/cFS/build-arm64_linux/aarch64-linux/default_cpu1 > /workspace/cfs-sloc-compiled.txt \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report /workspace/cfs-linked.json dwarf /workspace/rootfs/init > /workspace/cfs-sloc-dwarf.txt \
+    && cd /workspace/linux \
+    && CROSS_COMPILE=aarch64-linux-gnu- /usr/local/bin/kernel-sloc --report linked.json dwarf vmlinux > sloc-dwarf.txt \
+    && ( python3 scripts/clang-tools/gen_compile_commands.py || true ) \
+    && ( /usr/local/bin/kernel-sloc --report compiled.json kernel . > sloc-compiled.txt || true ) \
+    && { \
+        echo "=== Step 1: Driver Pruning Metrics ==="; \
+        printf "%-32s: %s\n" "cFS DWARF Linked SLOC" "$(cat /workspace/cfs-sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "cFS Compiled Source SLOC" "$(cat /workspace/cfs-sloc-compiled.txt) lines"; \
+        printf "%-32s: %s\n" "Raw static ELF size" "$(stat -c%s /workspace/rootfs/init) bytes"; \
+        printf "%-32s: %s\n" "Stripped static ELF size" "$(stat -c%s /tmp/core-cfs-stripped) bytes"; \
+        printf "%-32s: %s\n" "Initramfs archive size" "$(stat -c%s /workspace/initramfs-cfs.cpio.gz) bytes"; \
+        printf "%-32s: %s\n" "Kernel DWARF Linked SLOC" "$(cat /workspace/linux/sloc-dwarf.txt) lines"; \
+        printf "%-32s: %s\n" "Kernel Compiled Source SLOC" "$(cat /workspace/linux/sloc-compiled.txt 2>/dev/null || echo 'N/A') lines"; \
+        printf "%-32s: %s\n" "Raw kernel Image size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image) bytes"; \
+        printf "%-32s: %s\n" "Compressed Image.gz size" "$(stat -c%s /workspace/linux/arch/arm64/boot/Image.gz) bytes"; \
+    } | tee /workspace/metrics.txt
+
+CMD ["qemu-system-aarch64", "-machine", "virt", "-cpu", "cortex-a57", "-nographic", \
+     "-kernel", "/workspace/linux/arch/arm64/boot/Image", "-initrd", "/workspace/initramfs-cfs.cpio.gz", \
+     "-append", "console=ttyAMA0 init=/init"]
