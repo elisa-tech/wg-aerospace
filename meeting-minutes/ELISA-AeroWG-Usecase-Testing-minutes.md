@@ -22,6 +22,127 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 - None
 
+## 20261106
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Rob Woolley - Wind River Systems, Inc.
+- Ivan Perez - KBR @ NASA
+- Shefali Sharma
+- Martin Halle - Hamburg University of Technology
+- Yassine Cherni - GoMyRobot
+- Leonidas Kosmidis - BSC
+
+**Discussion topics**
+
+- Kernel minimization effort & KCOV documentation
+  - Matt submitted Linux patches for the minimization guide and KCOV
+    documentation to the linux-doc and KCOV mailing lists (addressing
+    clarifications, licensing, and minimization guide)
+    - Discussion/Patches:
+      <https://lore.kernel.org/linux-doc/20261105013823.29741-1-matthew.l.weber@gmail.com/>
+    - PR: <https://github.com/matthew-l-weber/linux/pull/1>
+  - Matt and Ivan updated documentation and Docker files so that the
+    "Hello World" and "Hello Init" examples are fully containerized and
+    reproducible
+  - Matt updated the [Documentation wrt discussion w/ Ivan](https://github.com/elisa-tech/wg-aerospace/blob/develop-kernel-minimization/docs/minimal-linux/HelloInit.md)
+  - Addressed line count measurement discrepancies between builds (one
+    discrepancy was due to using a full defconfig instead of a bottom-up build)
+  - **ACTION:** Matt - Work through constructive feedback received on the
+    Linux patches sent to the kernel doc mailing list
+  - **ACTION:** Ivan - Walk through updated HelloInit documentation and
+    examples to verify line counts match and containerized workflow is
+    reproducible
+
+- cFS integration as init process & Docker build environment
+  - Discussed technical requirements for running cFS as an init process,
+    including a minimal root filesystem containing the `core-cpu1` binary
+    and `cf` directory
+  - Explored static vs dynamic linking to reduce glibc/libm dependencies,
+    and evaluated the MUSL library as a license-compatible alternative
+  - Discussed handling cFS execution / automatic restarts and potential need
+    for an init wrapper to handle mounts before executing cFS
+  - Martin demonstrated a successful run of the sample cFS app in the current
+    environment (with sudo):
+    ```text
+    sudo ./core-cpu1
+    CFE_PSP: Default Reset SubType = 1
+    CFE_PSP: Default CPU ID = 1
+    CFE_PSP: Default Spacecraft ID = 66
+    CFE_PSP: Default CPU Name: cpu1
+    OS_Posix_GetSchedulerParams():208:Policy 1: available, min-max: 1-99
+    OS_Posix_GetSchedulerParams():208:Policy 2: available, min-max: 1-99
+    OS_Posix_TaskAPI_Impl_Init():401:Selected policy 2 for RT tasks, root task = 99
+    CFE_PSP: initializing module 'soft_timebase' with ID 0110ff00
+    CFE_PSP: Instantiated software timebase 'cFS-Master' running at 10000 usec
+    CFE_PSP: initializing module 'timebase_posix_clock' with ID 0110ff01
+    CFE_PSP: Using POSIX monotonic clock as CFE timebase
+    CFE_PSP: initializing module 'eeprom_mmap_file' with ID 0110ff02
+    CFE_PSP: Using MMAP simulated EEPROM implementation
+    CFE_PSP: initializing module 'port_notimpl' with ID 0110ff03
+    CFE_PSP: I/O Port access not implemented
+    CFE_PSP: initializing module 'iodriver' with ID 0110ff04
+    CFE_PSP: initializing module 'linux_sysmon' with ID 0110ff05
+    CFE_PSP: EEPROM Range (2) created: Start Address = F651D4CEE000, Size = 00080000 Status = 0
+    CFE_PSP: initializing module 'endian_api' with ID 0110ff06
+    CFE_PSP: Host CPU Endian=LITTLE
+    CFE_PSP: initializing module 'ram_notimpl' with ID 0110ff07
+    CFE_PSP: Physical RAM access not implemented
+    CFE_PSP: Starting the cFE with a POWER ON reset.
+    CFE_PSP: Clearing out CFE CDS Shared memory segment.
+    CFE_PSP: Clearing out CFE Reset Shared memory segment.
+    CFE_PSP: Clearing out CFE User Reserved Shared memory segment.
+    1980-001-00:13:19.55663 CFE_ES_SetupResetVariables: POWER ON RESET due to Power Cycle (Power Cycle).
+    1980-001-00:13:19.55679 CFE_ES_Main: CFE_ES_Main in EARLY_INIT state
+    Number of addresses returned by backtrace = 1
+    CFE_PSP: CFE_PSP_AttachExceptions called
+    1980-001-00:13:19.55719 CFE_ES_Main: CFE_ES_Main entering CORE_STARTUP state
+    1980-001-00:13:19.55719 CFE_ES_CreateObjects: Starting Object Creation calls.
+    ```
+  - Found option for static app build:
+    ```text
+    #  <cpuname>_STATIC_APPLIST : list of applications to build and statically
+    #       link with the CFE executable.  This is similar to the "APPLIST"
+    #       except the application is built with STATIC linkage, and it is
+    #       included directly when linking the CFE core executable itself.
+    #       No separate application file is generated for these apps.
+    ```
+  - Agreed to use existing ARM toolchain rather than creating full SGL build
+  - Reviewed existing Gist and Docker files as starting point for cFS build
+    sequence:
+    - Baseline Dockerfile:
+      `docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline`
+    - PR changes reference:
+      <https://github.com/elisa-tech/wg-aerospace/pull/257/changes#diff-bcedf95c727e8451faf9d6a415167f84abdc573545c9192909f4101824d0bf1aR68>
+  - **ACTION:** Matt - Copy CFS build sequence from Gist into the Dockerfile as
+    commented-out steps to provide a starting baseline
+  - **ACTION:** Martin - Continue working on CFS build from Hello CFS Dockerfile
+    baseline, test running CFS as an init process, and report findings/issues
+
+- AI transcription tools discussion
+  - Team discussed inaccuracies in AI speaker identification and noted risks of
+    misattributed meeting statements
+  - Agreed that raw meeting transcripts should not be shared externally
+
+**Not discussed but FYI**
+
+- QEMU instruction introspection for coverage
+  - Carryover ACTION: Rob - Look for the video link on QEMU instruction introspection
+
+- SGL SDK -> cFS build instructions
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+  - [#257 Starting point for kernel minimization effort](https://github.com/elisa-tech/wg-aerospace/pull/257)
+  - [#237 Update cFS demo to use Ogma 1.15.0](https://github.com/elisa-tech/wg-aerospace/pull/237)
+  - [#231 ARINC 615A Tool Suite](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - [#177 Mixed crit workshop](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+- Revisit parking lot items
+  - ACTION: Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+---
+
 ## 20261030
 
 **Attendance**
