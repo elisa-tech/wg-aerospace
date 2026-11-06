@@ -50,6 +50,8 @@ POST-MEETING (after the call)
 
 7. Incorporate chat text into minutes
    - Cross-reference all shared links from Zoom chat against the minutes
+   - Ask for or incorporate AI-generated meeting summary/transcription (if available)
+     to refine notes, clarify technical context, and capture ACTION items
    - Add any missing links/references to the appropriate section
    - Add contact info shared (emails) to relevant ACTION items
 
@@ -98,13 +100,23 @@ PRE-CALL:
 POST-CALL:
   2. Pull updated notes from HackMD
      - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py pull <temp-file>
+  3. Incorporate AI meeting summary & notes
+     - Ask contributor/user for any AI transcription/meeting summary if not already provided
+     - Merge details from the AI summary into the manual notes (clarifying technical
+       context, additional details, and precise ACTION items / owners)
      - Insert the new dated section into ELISA-AeroWG-Usecase-Testing-minutes.md
        (new sections go at the top, below the header/parking lot)
-  3. Clear the HackMD pad
+  4. Clear the HackMD pad
      - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py clear
-  4. Check if any event info was added - sync into docs/events.md if so
-  5. Generate a call summary for email
-     - Brief paragraph on main topic(s) discussed
-     - Key decisions or direction agreed upon (bullet points)
-     - ACTION items with owners
-     - Any notable links or references shared
+  5. Check if any event info was added - sync into docs/events.md if so
+  6. Generate a TL;DR call summary for email (plain text, Outlook-friendly)
+     - Format as clean plain text (asterisks for bullets, plain URLs) so it can
+       be copied directly into Outlook
+     - Structure:
+       Subject: [TL;DR] ELISA Aerospace WG — Use Case Call ([Month Day, Year])
+
+       Quick Recap:
+       * 2-3 concise bullets covering main topics, decisions, and progress
+
+       Key Links:
+       * Label: https://...
