@@ -20,7 +20,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the Switch App.
  */
 
 /*
@@ -37,9 +37,9 @@
 #include "switch_app_eds_dictionary.h"
 
 /*
- * Define a lookup table for SAMPLE app command codes
+ * Define a lookup table for SWITCH app command codes
  */
-static const EdsDispatchTable_SWITCH_APP_Application_CFE_SB_Telecommand_t SAMPLE_TC_DISPATCH_TABLE = {
+static const EdsDispatchTable_SWITCH_APP_Application_CFE_SB_Telecommand_t SWITCH_TC_DISPATCH_TABLE = {
     .CMD     = {.NoopCmd_indication          = SWITCH_APP_NoopCmd,
             .ResetCountersCmd_indication = SWITCH_APP_ResetCountersCmd,
             .ProcessCmd_indication       = SWITCH_APP_ProcessCmd,
@@ -49,7 +49,7 @@ static const EdsDispatchTable_SWITCH_APP_Application_CFE_SB_Telecommand_t SAMPLE
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
 /*  Purpose:                                                                  */
-/*     This routine will process any packet that is received on the SAMPLE    */
+/*     This routine will process any packet that is received on the SWITCH    */
 /*     command pipe.                                                          */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
@@ -60,7 +60,7 @@ void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
     CFE_MSG_Size_t    MsgSize;
     CFE_MSG_FcnCode_t MsgFc;
 
-    Status = EdsDispatch_SWITCH_APP_Application_Telecommand(SBBufPtr, &SAMPLE_TC_DISPATCH_TABLE);
+    Status = EdsDispatch_SWITCH_APP_Application_Telecommand(SBBufPtr, &SWITCH_TC_DISPATCH_TABLE);
 
     if (Status != CFE_SUCCESS)
     {
@@ -72,7 +72,7 @@ void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
         if (Status == CFE_STATUS_UNKNOWN_MSG_ID)
         {
             CFE_EVS_SendEvent(SWITCH_APP_MID_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
+                              "SWITCH: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
         }
         else if (Status == CFE_STATUS_WRONG_MSG_LENGTH)
         {
@@ -83,7 +83,7 @@ void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
         else
         {
             CFE_EVS_SendEvent(SWITCH_APP_CC_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: Invalid ground command code: CC = %d", (int)MsgFc);
+                              "SWITCH: Invalid ground command code: CC = %d", (int)MsgFc);
         }
     }
 }

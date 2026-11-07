@@ -21,7 +21,7 @@
 /**
  * @file
  *
- *  The Sample App header file containing version information
+ *  The Switch App header file containing version information
  */
 
 #ifndef SWITCH_APP_VERSION_H

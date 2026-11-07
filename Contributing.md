@@ -13,6 +13,12 @@ Please follow the guidelines below to ensure a smooth contribution process.
   - [How to Contribute](#how-to-contribute)
   - [Reporting Issues](#reporting-issues)
   - [Submitting Changes](#submitting-changes)
+  - [AI-Assisted Contributions](#ai-assisted-contributions)
+    - [Scope](#scope)
+    - [Attribution with `Assisted-by`](#attribution-with-assisted-by)
+    - [Signed-off-by and Developer Certificate of Origin](#signed-off-by-and-developer-certificate-of-origin)
+    - [License compliance](#license-compliance)
+    - [Review expectations](#review-expectations)
   - [Style Guide](#style-guide)
   - [License](#license)
     - [How to use the license checker](#how-to-use-the-license-checker)
@@ -54,6 +60,119 @@ Be sure to include as much detail as possible.
 When you're ready to submit your changes, please create a pull request.
 Include a description of your changes and reference any related issues.
 
+## AI-Assisted Contributions
+
+Contributors may use AI tools (e.g., GitHub Copilot, ChatGPT, Claude) to
+assist with writing code, documentation, or other contributions. When doing
+so, please follow these guidelines.
+
+This guidance is modeled on the Linux kernel's
+[coding-assistants](https://docs.kernel.org/process/coding-assistants.html)
+and [generated-content](https://docs.kernel.org/process/generated-content.html)
+documentation, and aligns with the
+[Linux Foundation Generative AI Policy](https://www.linuxfoundation.org/legal/generative-ai)
+and the
+[OpenJS Foundation Policy on Use of AI Coding Assistants](https://openjsf.cdn.prismic.io/openjsf/acqiJpGXnQHGZGtq_OpenJSAICodingAssistantsPolicy.pdf).
+
+### Scope
+
+The `Assisted-by` trailer and these guidelines apply when AI tools
+generate meaningful content (code, documentation prose, analysis).
+Trivial suggestions such as identifier completion, spelling corrections,
+or common boilerplate do not require attribution. See the kernel's
+[generated-content: Out of Scope](https://docs.kernel.org/process/generated-content.html#out-of-scope)
+section for detailed examples of what is and is not in scope.
+
+### Attribution with `Assisted-by`
+
+When AI tools contribute to development, proper attribution helps track
+the evolving role of AI in the project. Contributions must include an
+`Assisted-by` trailer in the commit message using the following format:
+
+```text
+Assisted-by: AGENT_NAME:MODEL_VERSION [TOOL1] [TOOL2]
+```
+
+Where:
+
+- `AGENT_NAME` is the name of the AI tool or framework
+- `MODEL_VERSION` is the specific model version used
+- `[TOOL1] [TOOL2]` are optional specialized analysis tools used
+  (e.g., coccinelle, sparse, clang-tidy)
+
+Basic development tools (git, gcc, make, editors) should not be listed.
+
+Examples:
+
+```text
+Assisted-by: Claude:claude-sonnet-4-20250514
+Assisted-by: GitHub Copilot:gpt-4o
+Assisted-by: Claude:claude-sonnet-4-20250514 cppcheck
+```
+
+There is no specific model version requirement. Use whatever version
+identifier the tool provides for traceability purposes.
+
+For contributions where AI generated a substantial portion of the
+content, include a summary of prompts or session context in the commit
+message or PR description per the kernel's
+[generated-content: Guidelines](https://docs.kernel.org/process/generated-content.html#guidelines)
+recommendations.
+
+### Signed-off-by and Developer Certificate of Origin
+
+AI tools MUST NOT add `Signed-off-by` tags. Only humans can legally
+certify the Developer Certificate of Origin (DCO). AI tools must not
+autonomously commit, push, or create pull requests without explicit
+human review and direction. The human submitter is responsible for:
+
+- Reviewing all AI-generated code
+- Ensuring compliance with licensing requirements
+- Adding their own `Signed-off-by` tag to certify the DCO
+- Taking full responsibility for the contribution
+
+This aligns with the OpenJS Foundation's
+[Duty of Care](https://openjsf.cdn.prismic.io/openjsf/acqiJpGXnQHGZGtq_OpenJSAICodingAssistantsPolicy.pdf)
+principle: every submitter remains responsible for their submission
+regardless of the degree to which they employ AI tools.
+
+### License compliance
+
+Ensure AI-generated content does not introduce license-incompatible
+material. You are responsible for verifying that contributions comply
+with the project's licensing (see [License](#license) below).
+
+Contributors should also verify that the terms and conditions of their
+AI tool do not restrict how its output can be used in ways inconsistent
+with the project's CC-BY-SA-4.0 license, per the
+[Linux Foundation Generative AI Policy](https://www.linuxfoundation.org/legal/generative-ai).
+
+When using AI tools to generate code, you can ask the tool to provide
+citations or sources for its suggestions to help assess licensing
+compliance. Note that this is a best-effort step — AI tools cannot
+guarantee complete provenance of their output, and the contributor
+accepts IP risk when using AI-generated content. For example:
+
+> "Please provide citations or references for the code you suggested.
+> Is this based on any existing open source project, and if so, under
+> what license?"
+
+### Review expectations
+
+AI-generated content should receive a greater level of review than
+hand-written contributions. Do not submit AI output without
+understanding and validating it. Maintainers may apply additional
+scrutiny proportional to the degree of AI involvement, as described in
+the kernel's
+[generated-content: Guidelines](https://docs.kernel.org/process/generated-content.html#guidelines)
+section.
+
+This guidance ensures traceability and transparency while welcoming the
+productivity benefits of AI tooling. The repository maintainers reserve
+the right to temporarily or permanently ban a contributor from the
+project for violating these guidelines, in accordance with the
+[Code of Conduct](#code-of-conduct) enforcement provisions.
+
 ## Style Guide
 
 Please follow the project's coding style enforced by the lint checks on your pull request.
@@ -63,12 +182,27 @@ The super linter project is one option to help with consistency and security of 
 The following can be setup locally to lint material before pushing to the repository (this assumes the defaults in the [configuration env file](./.github/super-linter.env).)
 This hook isn't a default so re-cloning the repository would require you to again setup the hook.
 
+The hook shells out to Docker. If you push from an environment without a
+usable Docker daemon (for example, inside a devcontainer), the hook detects
+this and skips gracefully rather than aborting the push. The same
+Super-Linter runs in CI on every push and pull request, so lint enforcement
+is not lost when the local hook is skipped.
+
 ```bash
 # Run once after checkout to setup the hook
 cat > .git/hooks/pre-push <<'EOM'
 #!/bin/sh
 
 # Run the super-linter Docker container as a pre-push hook
+
+# Skip gracefully when Docker is not usable (e.g. inside a devcontainer
+# without Docker access). CI runs the same Super-Linter on push/PR, so
+# skipping locally does not lose lint enforcement.
+if ! docker info >/dev/null 2>&1; then
+  echo "Docker not available (e.g. inside a devcontainer); skipping Super-Linter pre-push hook."
+  echo "CI will still run Super-Linter on the pull request."
+  exit 0
+fi
 
 echo "Running Super-Linter via Docker pre-push hook..."
 docker run -e RUN_LOCAL=true -e LOG_LEVEL=ERROR --env-file "./.github/super-linter.env" -v "$(pwd)":/tmp/lint --rm ghcr.io/super-linter/super-linter:latest

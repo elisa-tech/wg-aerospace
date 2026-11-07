@@ -40,7 +40,7 @@ typedef struct LIGHTS_APP_DisplayParam_Payload
 
 /*************************************************************************/
 /*
-** Type definition (Sample App housekeeping)
+** Type definition (Lights App housekeeping)
 */
 
 typedef struct LIGHTS_APP_HkTlm_Payload

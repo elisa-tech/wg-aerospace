@@ -16,8 +16,20 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 2. Download the CCS Images/SDK from Gitlab CCS artifacts:
 
    ```text
-   wget "https://gitlab.com/api/v4/projects/61362364/packages/generic/minimal-linux-debug/1.0.0/archive.tar" -O archive.tar
+   wget "https://gitlab.com/api/v4/projects/71533173/packages/generic/min-kernel-debug/1.0.0/archive.tar" -O archive.tar
    ```
+
+   > **Note:** The `min-kernel-debug` package is (re)published by the
+   > [demo-cert-linux](https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux)
+   > CI on every merge to `main` and on the scheduled build. To confirm you're
+   > pulling the current artifact — and to see which pipeline produced it —
+   > browse the project's
+   > [Packages &amp; Registries](https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux/-/packages)
+   > page (check the `min-kernel-debug` package's published date), and the
+   > [CI/CD &gt; Pipelines](https://gitlab.com/elisa-tech/aero-wg/demo-cert-linux/-/pipelines)
+   > page for the latest successful pipeline ID. The version in the URL is
+   > pinned to `1.0.0` (each build overwrites it), so the URL above always
+   > resolves to the most recently published build.
 
 3. Untar the archive file:
 

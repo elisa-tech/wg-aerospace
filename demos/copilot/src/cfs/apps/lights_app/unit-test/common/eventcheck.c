@@ -22,11 +22,11 @@
 ** File: coveragetest_lights_app.c
 **
 ** Purpose:
-** Coverage Unit Test cases for the SAMPLE Application
+** Coverage Unit Test cases for the LIGHTS Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the SAMPLE application.
+** paths through all functions defined in the LIGHTS application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that

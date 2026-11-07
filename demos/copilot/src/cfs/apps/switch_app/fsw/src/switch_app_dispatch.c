@@ -20,7 +20,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App.
+ *   This file contains the source code for the Switch App.
  */
 
 /*
@@ -74,7 +74,7 @@ bool SWITCH_APP_VerifyCmdLength(const CFE_MSG_Message_t *MsgPtr, size_t Expected
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* SAMPLE ground commands                                                     */
+/* SWITCH ground commands                                                     */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
@@ -84,7 +84,7 @@ void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
     CFE_MSG_GetFcnCode(&SBBufPtr->Msg, &CommandCode);
 
     /*
-    ** Process SAMPLE app ground commands
+    ** Process SWITCH app ground commands
     */
     switch (CommandCode)
     {
@@ -127,7 +127,7 @@ void SWITCH_APP_ProcessGroundCommand(const CFE_SB_Buffer_t *SBBufPtr)
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
 /*  Purpose:                                                                  */
-/*     This routine will process any packet that is received on the SAMPLE    */
+/*     This routine will process any packet that is received on the SWITCH    */
 /*     command pipe.                                                          */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * *  * * * * * * *  * *  * * * * */
@@ -153,7 +153,7 @@ void SWITCH_APP_TaskPipe(const CFE_SB_Buffer_t *SBBufPtr)
 
         default:
             CFE_EVS_SendEvent(SWITCH_APP_MID_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
+                              "SWITCH: invalid command packet,MID = 0x%x", (unsigned int)CFE_SB_MsgIdToValue(MsgId));
             break;
     }
 }

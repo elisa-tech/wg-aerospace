@@ -21,7 +21,7 @@
 /**
  * @file
  *
- *  The Sample App header file containing version information
+ *  The Lights App header file containing version information
  */
 
 #ifndef LIGHTS_APP_VERSION_H

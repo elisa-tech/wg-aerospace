@@ -35,7 +35,7 @@
  ************************************************************************/
 
 /*
-** Sample App command codes
+** Lights App command codes
 */
 #define LIGHTS_APP_NOOP_CC           0
 #define LIGHTS_APP_RESET_COUNTERS_CC 1

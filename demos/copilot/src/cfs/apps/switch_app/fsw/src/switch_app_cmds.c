@@ -20,7 +20,7 @@
 
 /**
  * \file
- *   This file contains the source code for the Sample App Ground Command-handling functions
+ *   This file contains the source code for the Switch App Ground Command-handling functions
  */
 
 /*
@@ -75,14 +75,14 @@ CFE_Status_t SWITCH_APP_SendHkCmd(const SWITCH_APP_SendHkCmd_t *Msg)
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 /*                                                                            */
-/* SAMPLE NOOP commands                                                       */
+/* SWITCH NOOP commands                                                       */
 /*                                                                            */
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * **/
 CFE_Status_t SWITCH_APP_NoopCmd(const SWITCH_APP_NoopCmd_t *Msg)
 {
     SWITCH_APP_Data.CmdCounter++;
 
-    CFE_EVS_SendEvent(SWITCH_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: NOOP command %s",
+    CFE_EVS_SendEvent(SWITCH_APP_NOOP_INF_EID, CFE_EVS_EventType_INFORMATION, "SWITCH: NOOP command %s",
                       SWITCH_APP_VERSION);
 
     return CFE_SUCCESS;
@@ -100,7 +100,7 @@ CFE_Status_t SWITCH_APP_ResetCountersCmd(const SWITCH_APP_ResetCountersCmd_t *Ms
     SWITCH_APP_Data.CmdCounter = 0;
     SWITCH_APP_Data.ErrCounter = 0;
 
-    CFE_EVS_SendEvent(SWITCH_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "SAMPLE: RESET command");
+    CFE_EVS_SendEvent(SWITCH_APP_RESET_INF_EID, CFE_EVS_EventType_INFORMATION, "SWITCH: RESET command");
 
     return CFE_SUCCESS;
 }
@@ -118,24 +118,24 @@ CFE_Status_t SWITCH_APP_ProcessCmd(const SWITCH_APP_ProcessCmd_t *Msg)
     SWITCH_APP_ExampleTable_t *TblPtr;
     const char *               TableName = "SWITCH_APP.ExampleTable";
 
-    /* Sample Use of Example Table */
+    /* Switch Use of Example Table */
     SWITCH_APP_Data.CmdCounter++;
     Status = CFE_TBL_GetAddress(&TblAddr, SWITCH_APP_Data.TblHandles[0]);
     if (Status < CFE_SUCCESS)
     {
-        CFE_ES_WriteToSysLog("Sample App: Fail to get table address: 0x%08lx", (unsigned long)Status);
+        CFE_ES_WriteToSysLog("Switch App: Fail to get table address: 0x%08lx", (unsigned long)Status);
     }
     else
     {
         TblPtr = TblAddr;
-        CFE_ES_WriteToSysLog("Sample App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
+        CFE_ES_WriteToSysLog("Switch App: Example Table Value 1: %d  Value 2: %d", TblPtr->Int1, TblPtr->Int2);
 
         SWITCH_APP_GetCrc(TableName);
 
         Status = CFE_TBL_ReleaseAddress(SWITCH_APP_Data.TblHandles[0]);
         if (Status != CFE_SUCCESS)
         {
-            CFE_ES_WriteToSysLog("Sample App: Fail to release table address: 0x%08lx", (unsigned long)Status);
+            CFE_ES_WriteToSysLog("Switch App: Fail to release table address: 0x%08lx", (unsigned long)Status);
         }
         else
         {

@@ -5,6 +5,7 @@
 {
   fetchurl,
   linuxKernel,
+  gcc14Stdenv,
 }:
 
 let
@@ -22,10 +23,19 @@ let
 
   kernel =
     (linuxKernel.manualConfig {
+      /*
+        Fix for broken build with modern GCC due to C23 making
+
+        ../include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+        ../include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+      */
+      stdenv = gcc14Stdenv;
+
       inherit configfile src version;
       config.CONFIG_DEBUG_INFO = "y"; # otherwise the elf-to-sloc tool won't work
     }).overrideAttrs
       {
+
         outputs = [
           "dev"
           "out"

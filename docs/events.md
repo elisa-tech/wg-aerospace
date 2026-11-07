@@ -7,36 +7,62 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **May 18-20** Open Source Summit North America, Denver, CO -> [link](https://events.linuxfoundation.org/open-source-summit-north-america/)
-- **May 27-28** Embedded Recipes, Nice, France -> [link](https://embedded-recipes.org/2026/)
-- **May 29** Yocto Project Summit, Nice, France -> [link](https://pretalx.com/yocto-embedded-recipes-2026/)
-- **June 8-12** RISC-V Summit Europe, Bologna, Italy
-  - Special session for RISC-V in Space
-- **June 9-11** ELISA Workshop London (virtual) -> [link](https://elisa.tech/event/elisa-workshop-london-2026/)
-- **Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
-  - 17th International Conference on Space Computing (SCC)
-  - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
-  - Workshop on V&V of multicore systems - **Submissions open until May 23** -> [VVCiSS](https://2026.smcit-scc.space/home/vvciss-2026)
-    - Prior topics: cert / practical issues / interference mgmt - Ivan has a contact if interested
-- **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
-- **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
-  - Our AeroWG paper got accepted
-- **Sept 22-25** SafeComp 2026, Valencia, Spain -> [link](https://safecomp2026.webs.upv.es/)
-  - Call for Position Papers deadline: July 10, 2026
-  - Leonidas keynoting
-- **Oct 2026** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
-  - Full presentations deadline likely end of May
+- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
+- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
+  - CFP Closes: June 24, 2026
+  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
+    - CFP coming to solicit speakers and session topics
+- **Oct 13** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
+  - Full presentations deadline likely end of May - did anyone submit?
   - Posters much later; not-selected full presentations can be considered for posters
   - Safe/secure lang focus for high-integrity (in-person)
   - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
   - **ACTION:** Leonidas checking on if he can attend
-- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
-  - CFP Closes: June 24, 2026
-- **Nov** Xen Summit, Munich - Date TBD
 - NASA SPARK submissions -> [link](https://spark.nasa.gov/)
+- **Feb 23, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
+  - Paper Deadline: Oct 21, 2026
+- **Mar 6-13 2027** 48th International IEEE Aerospace Conference 2027, Yellowstone Conference Center, Big Sky MT, USA -> [link](https://www.aeroconf.org/)
+- **Sept 12-16, 2027** DASC Congress, Belfast, Northern Ireland, Europe -> [link](https://dasconline.org/2027/) (Links to be available soon)
+- **Nov 3-6, 2027** iSpaRo / i-SAIRAS Conference, Cologne, Germany
+  - Workshop on Open Space Robotics: <https://openrobotics.space/>, deadline 21st October (2min-video or PDF Poster)
 
 ## Recently Past Deadlines/Events
 
+- **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
+- **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
+  - Our AeroWG paper got accepted
+  - Wanja: NixOS-talk for embedded Linux in Avionics (tutorial session)
+- **Sept 22-25** SafeComp 2026, Valencia, Spain -> [link](https://safecomp2026.webs.upv.es/)
+  - Call for Position Papers deadline: July 10, 2026
+  - Leonidas keynoting
+- **Sept 24** ROSCon Global 2026
+  - "A Working Open Source Stack for Space Autonomy: SGL, SpaceROS, PX4, and ATMOS" (2:30–2:50 PM)
+  - Links: <https://sgl.elisa.tech>, <https://space-ros.org>, <https://px4.io>, <https://atmos.discower.io>
+  - BeagleV-Fire SGL + Space ROS demo: <https://vimeo.com/1136204579>
+  - ATMOS in IEEE TFR 2025: <https://doi.org/10.1109/TFR.2025.3632772>
+  - ACTION: Get video links
+- **(2026) Sept 15-17** Xen Summit 2026, Munich, Germany (hybrid) -> [link](https://xenproject.org/resources/summit-2026/)
+  - Weber presented: [ARINC 653 on Xen - A Unikraft Safety Architecture](https://xensummit2026.sched.com/event/2RDrH/arinc-653-on-xen-a-unikraft-safety-architecture) (slide + video links soon)
+  - ACTION: Matt to work on [merging material supporting that talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+- **(2026) Aug 03-07** IEEE SMC-IT/SCC, Pasadena, CA -> [link](https://2026.smcit-scc.space/)
+  - 17th International Conference on Space Computing (SCC)
+  - Leonidas presenting: Post quantum crypto (RISC-V focused, touching on ELISA) and QEMU models for space processors
+  - Workshop on V&V of multicore systems
+  - Outbrief - Interest in Minimal Kernel (num funcs), HPSC
+- **(2026) July 23** ELISA Seminar: "WHAT-WHY-HOW: A practical model for understanding software requirements" - Stanislav Pankevich (Reflex Aerospace GmbH) -> [link](https://elisa.tech/event/elisa-seminar-what-why-how-a-practical-model-for-understanding-software-requirements/)
+- **(2026) June 23** ELISA Seminar: AvioNix - Infrastructure as Code for Linux in Avionics (Erin + Wanja) -> [link](https://elisa.tech/event/elisa-seminar-avionix-infrastructure-as-code-for-linux-in-avionics/)
+  - Video recording: <https://youtu.be/D8H4dBtKCYM>
+- **(2026) June 9-11** ELISA Workshop London (virtual) -> [link](https://elisa.tech/event/elisa-workshop-london-2026/)
+  - Workshop material: <https://directory.elisa.tech/workshops/index.html#june-2026-london>
+  - AMD + ELISA mixed criticality presentation (DO-178C lifecycle tied to automotive)
+  - NVIDIA safe Linux concepts
+  - AI talks (sw lifecycle vs AI vs Human)
+- **(2026) June 8-12** RISC-V Summit Europe, Bologna, Italy
+  - Special session for RISC-V in Space -> [sessions](https://riscv-europe.org/summit/2026/session-riscv-in-space)
+  - HPSC mission presented (F Prime based + RTOS)
+- **(2026) May 27-29** Embedded Recipes + Yocto Project Summit, Nice, France -> [ER](https://embedded-recipes.org/2026/) [Yocto](https://pretalx.com/yocto-embedded-recipes-2026/)
+- **(2026) May 18-20** Open Source Summit North America, MN -> [link](https://events.linuxfoundation.org/open-source-summit-north-america/)
+  - ACTION: Grab playlist link
 - **(2025) Oct 27-29** ROSCon 2025 Singapore [link](https://roscon.ros.org/2025/)
   - Rob Woolley talking about space topics
   - Ramon doing a full day PX4 workshop

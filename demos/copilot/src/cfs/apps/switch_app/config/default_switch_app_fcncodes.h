@@ -35,7 +35,7 @@
  ************************************************************************/
 
 /*
-** Sample App command codes
+** Switch App command codes
 */
 #define SWITCH_APP_NOOP_CC           0
 #define SWITCH_APP_RESET_COUNTERS_CC 1

@@ -22,11 +22,11 @@
 ** File: coveragetest_lights_app.c
 **
 ** Purpose:
-** Coverage Unit Test cases for the SAMPLE Application
+** Coverage Unit Test cases for the LIGHTS Application
 **
 ** Notes:
 ** This implements various test cases to exercise all code
-** paths through all functions defined in the SAMPLE application.
+** paths through all functions defined in the LIGHTS application.
 **
 ** It is primarily focused at providing examples of the various
 ** stub configurations, hook functions, and wrapper calls that
@@ -115,7 +115,7 @@ void Test_LIGHTS_APP_ResetCountersCmd(void)
 
     memset(&TestMsg, 0, sizeof(TestMsg));
 
-    UT_CHECKEVENT_SETUP(&EventTest, LIGHTS_APP_RESET_INF_EID, "SAMPLE: RESET command");
+    UT_CHECKEVENT_SETUP(&EventTest, LIGHTS_APP_RESET_INF_EID, "LIGHTS: RESET command");
 
     UtAssert_INT32_EQ(LIGHTS_APP_ResetCountersCmd(&TestMsg), CFE_SUCCESS);
 

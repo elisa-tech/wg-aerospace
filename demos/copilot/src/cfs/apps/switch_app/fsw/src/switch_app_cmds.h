@@ -20,7 +20,7 @@
 
 /**
  * @file
- *   This file contains the prototypes for the Sample App Ground Command-handling functions
+ *   This file contains the prototypes for the Switch App Ground Command-handling functions
  */
 
 #ifndef SWITCH_APP_CMDS_H

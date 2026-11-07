@@ -21,7 +21,7 @@
 /**
  * @file
  *
- * Main header file for the SAMPLE application
+ * Main header file for the SWITCH application
  */
 
 #ifndef SWITCH_APP_DISPATCH_H

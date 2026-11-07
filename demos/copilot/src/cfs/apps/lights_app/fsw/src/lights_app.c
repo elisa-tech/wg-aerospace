@@ -92,7 +92,7 @@ void LIGHTS_APP_Main(void)
         else
         {
             CFE_EVS_SendEvent(LIGHTS_APP_PIPE_ERR_EID, CFE_EVS_EventType_ERROR,
-                              "SAMPLE APP: SB Pipe Read Error, App Will Exit");
+                              "LIGHTS APP: SB Pipe Read Error, App Will Exit");
 
             LIGHTS_APP_Data.RunStatus = CFE_ES_RunStatus_APP_ERROR;
         }

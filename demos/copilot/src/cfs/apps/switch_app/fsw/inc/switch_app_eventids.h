@@ -21,7 +21,7 @@
 /**
  * @file
  *
- * Define Sample App Events IDs
+ * Define Switch App Events IDs
  */
 
 #ifndef SWITCH_APP_EVENTS_H

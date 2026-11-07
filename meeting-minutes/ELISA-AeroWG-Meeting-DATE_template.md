@@ -39,13 +39,15 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Andrew Wilson - L3Harris, BYU, FPGA Zealot
 - Arthur Melo Cruz - Mathworks
 - Benjamin Pellieux - Coros Space
+- Bob Pulju - Collins Aerospace
 - Brennan Hay - NASA
 - Brennan Stewart - NASA
+- Brian Vandegriend - Microchip
 - Brian Wood - Boeing
 - Carole Garrison - NASA Langley
 - Chuck Wolber - Boeing
 - Cyril Jean - Microchip Technology Inc.
-- Daniel Riechers - Collins (Security)
+- Daniel Riechers - Collins Aerospace
 - Daniel Witte - Astro Mechanica
 - David Graziano - Collins (Security)
 - Don V Black
@@ -55,6 +57,7 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Ganapathi N
 - Gaston Gonzalez - VENG
 - Gary Crum - Voyager
+- Hihara Hiroki
 - Iain Galloway - NXP Semiconductors
 - Ivan Perez - KBR @ NASA Ames Research Center
 - Ivan Rodriguez - Coros Space
@@ -73,11 +76,14 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Michael Monaghan - NASA Goddard
 - Merlin Kooshmanian - ESA
 - Naga - Timesys/Lynx
+- Nick Zajerko-McKee - Vorago Technologies
 - Olivier Charrier - Wind River
 - Paul Greenwood - Vorago Technologies
 - Paul Mani - Collins India
+- Paulpandian Velusamy
 - Pavel Roskin
 - Pawel Wodnicki - 32bitmicro
+- Pedro Roque - Caltech
 - Phaedrus Leeds - Aerospace Corp
 - Philip Balister - OpenEmbedded
 - Philipp Ahmann - ETAS GmbH
@@ -88,15 +94,19 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Rob Woolley - Wind River
 - Salim Jalaleddine - Boeing
 - Sam Thompson - Rapita Systems
+- Sandipan Ghosh
 - Sascha Wise - Elodin
 - Scott Salmon - Cesium
 - Shefali Sharma
 - Steve VanderLeest - Boeing
+- Subhajit Ghosh - Tweaklogic
+- Thomas Gleixner
 - Tim Bird - Sony
 - Tomas Novotny - Czech Aerospace Research Centre
 - Vikash Kodati
 - Walt Miner - Linux Foundation
 - Wanja Zaeske - DLR
+- Yassine Cherni - GoMyRobot
 - Yasushi SHOJI - Space Cubics
 
 ---
