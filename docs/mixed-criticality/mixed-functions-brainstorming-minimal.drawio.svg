@@ -761,14 +761,14 @@
                                         <font style="font-size: 11px;">
                                             - D = highest criticality
                                             <br/>
-                                            (SWL-B)
+                                            (no direct SWL equivalent)
                                         </font>
                                     </div>
                                     <div>
                                         <font style="font-size: 11px;">
                                             - A = lowest
                                             <span style="color: light-dark(rgb(63, 63, 63), rgb(183, 183, 183)); background-color: transparent;">
-                                                (SWL-D)
+                                                (no direct SWL equivalent)
                                             </span>
                                         </font>
                                     </div>
