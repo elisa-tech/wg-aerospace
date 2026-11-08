@@ -75,7 +75,7 @@ The ISO side has a head start on this structure; see the [ELISA Seminar on Funct
 
 | ID   | Requirement                                                                                                                                                   | Source       |
 | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
-| SC-1 | The hypervisor shall implement two-level scheduling: hypervisor-level partition time schedules (first level) and intra-partition scheduling (second level)    | Process View |
+| SC-1 | Xen shall schedule domains/vCPUs (first level); each guest OS/runtime shall schedule its own processes/threads within its allotted window (second level)      | Process View |
 | SC-2 | The hypervisor shall provide ARINC 653 scheduling as a named scheduler option (alongside Core and NULL)                                                       | Logical View |
 | SC-3 | The system shall establish partition scheduling at build time via configuration file; the scheduler shall be selectable at runtime but shall not be redefined | Process View |
 | SC-4 | CPU time allocated to one partition shall not be preempted by another partition                                                                               | Process View |
