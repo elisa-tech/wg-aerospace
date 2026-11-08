@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="background: #FFFFFF; background-color: #FFFFFF;" version="1.1" width="820px" height="480px" viewBox="-0.5 -0.5 820 480"><defs/>
+<rect fill="#FFFFFF" width="100%" height="100%" x="0" y="0"/>
+<g>
+
+<!-- ==================== CPU Core 0 ==================== -->
+<text x="55" y="18" fill="#333333" font-family="Helvetica" font-size="11px" text-anchor="middle" font-weight="bold">CPU Core 0</text>
+
+<!-- Layer labels Core 0 -->
+<text x="100" y="46" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Process</text>
+<text x="100" y="56" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Schedule</text>
+<text x="100" y="100" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Partition</text>
+<text x="100" y="110" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Window</text>
+
+<!-- Time axis Core 0 -->
+<line x1="110" y1="140" x2="790" y2="140" stroke="#000" stroke-width="1.5"/>
+<path d="M 790 140 L 783 136.5 L 785 140 L 783 143.5 Z" fill="#000"/>
+
+<!-- Major ticks Core 0 -->
+<line x1="110" y1="140" x2="110" y2="150" stroke="#000" stroke-width="1.5"/>
+<text x="110" y="162" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle">0</text>
+<line x1="510" y1="140" x2="510" y2="150" stroke="#000" stroke-width="1.5"/>
+<text x="510" y="162" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle">40</text>
+
+<!-- Minor ticks Core 0 -->
+<line x1="160" y1="140" x2="160" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="210" y1="140" x2="210" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="260" y1="140" x2="260" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="310" y1="140" x2="310" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="360" y1="140" x2="360" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="410" y1="140" x2="410" y2="146" stroke="#000" stroke-width="0.5"/>
+<line x1="460" y1="140" x2="460" y2="146" stroke="#000" stroke-width="0.5"/>
+
+<!-- Major Frame bracket Core 0 -->
+<line x1="110" y1="168" x2="110" y2="174" stroke="#555" stroke-width="1"/>
+<line x1="110" y1="174" x2="510" y2="174" stroke="#555" stroke-width="1"/>
+<line x1="510" y1="168" x2="510" y2="174" stroke="#555" stroke-width="1"/>
+<text x="310" y="186" fill="#555" font-family="Helvetica" font-size="9px" text-anchor="middle" font-style="italic">Major Frame (40 ms) — per core, aligned</text>
+
+<!-- Repeat indicator Core 0 -->
+<line x1="510" y1="174" x2="525" y2="174" stroke="#555" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="550" y="178" fill="#555" font-family="Helvetica" font-size="9px" text-anchor="middle" font-style="italic">repeats →</text>
+
+<!-- ===== Partition Windows Core 0 ===== -->
+
+<!-- APEX context switch @ 0ms -->
+<rect x="110" y="75" width="8" height="60" fill="#c00000" stroke="none" opacity="0.7"/>
+
+<!-- Partition 0 (Module Mgmt) window -->
+<rect x="118" y="75" width="142" height="60" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1" rx="2" ry="2"/>
+<text x="189" y="100" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Partition 0</text>
+<text x="189" y="112" fill="#000" font-family="Helvetica" font-size="7px" text-anchor="middle">(Module Mgmt)</text>
+<text x="189" y="130" fill="#555" font-family="Helvetica" font-size="7px" text-anchor="middle">15 ms</text>
+
+<!-- APEX context switch @ 15ms -->
+<rect x="260" y="75" width="8" height="60" fill="#c00000" stroke="none" opacity="0.7"/>
+
+<!-- Partition 1 window -->
+<rect x="268" y="75" width="142" height="60" fill="#d5e8d4" stroke="#82b366" stroke-width="1" rx="2" ry="2"/>
+<text x="339" y="102" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Partition 1</text>
+<text x="339" y="130" fill="#555" font-family="Helvetica" font-size="7px" text-anchor="middle">15 ms</text>
+
+<!-- APEX context switch @ 30ms -->
+<rect x="410" y="75" width="8" height="60" fill="#c00000" stroke="none" opacity="0.7"/>
+
+<!-- Partition 2 window -->
+<rect x="418" y="75" width="92" height="60" fill="#ffe6cc" stroke="#d79b00" stroke-width="1" rx="2" ry="2"/>
+<text x="464" y="102" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Partition 2</text>
+<text x="464" y="130" fill="#555" font-family="Helvetica" font-size="7px" text-anchor="middle">10 ms</text>
+
+<!-- ===== Process Schedule Core 0 ===== -->
+
+<!-- Partition 0 (Mgmt) processes -->
+<rect x="118" y="30" width="68" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="152" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Mgmt Process(s)</text>
+<rect x="188" y="30" width="72" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="224" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Mgmt Process(s)</text>
+
+<!-- Partition 1 processes -->
+<rect x="268" y="30" width="46" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="291" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 0</text>
+<rect x="316" y="30" width="46" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="339" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 1</text>
+<rect x="364" y="30" width="46" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="387" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 2</text>
+
+<!-- Partition 2 processes -->
+<rect x="418" y="30" width="44" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="440" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 0</text>
+<rect x="464" y="30" width="46" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="487" y="52" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 1</text>
+
+
+<!-- ==================== CPU Core N ==================== -->
+<text x="55" y="218" fill="#333333" font-family="Helvetica" font-size="11px" text-anchor="middle" font-weight="bold">CPU Core N</text>
+
+<!-- Layer labels Core N -->
+<text x="100" y="246" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Process</text>
+<text x="100" y="256" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Schedule</text>
+<text x="100" y="300" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Partition</text>
+<text x="100" y="310" fill="#666" font-family="Helvetica" font-size="8px" text-anchor="end" font-style="italic">Window</text>
+
+<!-- Time axis Core N -->
+<line x1="110" y1="340" x2="790" y2="340" stroke="#000" stroke-width="1.5"/>
+<path d="M 790 340 L 783 336.5 L 785 340 L 783 343.5 Z" fill="#000"/>
+
+<!-- Major ticks Core N (aligned) -->
+<line x1="110" y1="340" x2="110" y2="350" stroke="#000" stroke-width="1.5"/>
+<text x="110" y="362" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle">0</text>
+<line x1="510" y1="340" x2="510" y2="350" stroke="#000" stroke-width="1.5"/>
+<text x="510" y="362" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle">40</text>
+
+<!-- Minor ticks Core N -->
+<line x1="160" y1="340" x2="160" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="210" y1="340" x2="210" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="260" y1="340" x2="260" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="310" y1="340" x2="310" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="360" y1="340" x2="360" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="410" y1="340" x2="410" y2="346" stroke="#000" stroke-width="0.5"/>
+<line x1="460" y1="340" x2="460" y2="346" stroke="#000" stroke-width="0.5"/>
+
+<!-- Major Frame bracket Core N (aligned) -->
+<line x1="110" y1="368" x2="110" y2="374" stroke="#555" stroke-width="1"/>
+<line x1="110" y1="374" x2="510" y2="374" stroke="#555" stroke-width="1"/>
+<line x1="510" y1="368" x2="510" y2="374" stroke="#555" stroke-width="1"/>
+<text x="310" y="386" fill="#555" font-family="Helvetica" font-size="9px" text-anchor="middle" font-style="italic">Major Frame (40 ms) — per core, aligned</text>
+
+<!-- Repeat indicator Core N -->
+<line x1="510" y1="374" x2="525" y2="374" stroke="#555" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="550" y="378" fill="#555" font-family="Helvetica" font-size="9px" text-anchor="middle" font-style="italic">repeats →</text>
+
+<!-- ===== Partition Windows Core N ===== -->
+
+<!-- APEX context switch @ 0ms -->
+<rect x="110" y="275" width="8" height="60" fill="#c00000" stroke="none" opacity="0.7"/>
+
+<!-- Partition 3 (0-20ms) -->
+<rect x="118" y="275" width="192" height="60" fill="#e1d5e7" stroke="#9673a6" stroke-width="1" rx="2" ry="2"/>
+<text x="214" y="302" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Partition 3</text>
+<text x="214" y="330" fill="#555" font-family="Helvetica" font-size="7px" text-anchor="middle">20 ms</text>
+
+<!-- APEX context switch @ 20ms -->
+<rect x="310" y="275" width="8" height="60" fill="#c00000" stroke="none" opacity="0.7"/>
+
+<!-- Partition 4 (20-40ms) -->
+<rect x="318" y="275" width="192" height="60" fill="#f8cecc" stroke="#b85450" stroke-width="1" rx="2" ry="2"/>
+<text x="414" y="302" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Partition 4</text>
+<text x="414" y="330" fill="#555" font-family="Helvetica" font-size="7px" text-anchor="middle">20 ms</text>
+
+<!-- ===== Process Schedule Core N ===== -->
+
+<!-- Partition 3 processes -->
+<rect x="118" y="230" width="62" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="149" y="252" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 0</text>
+<rect x="182" y="230" width="62" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="213" y="252" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 1</text>
+<rect x="246" y="230" width="64" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="278" y="252" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 2</text>
+
+<!-- Partition 4 processes -->
+<rect x="318" y="230" width="95" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="366" y="252" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 0</text>
+<rect x="415" y="230" width="95" height="38" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="463" y="252" fill="#fff" font-family="Helvetica" font-size="7px" text-anchor="middle">Process 1</text>
+
+<!-- ==================== Alignment lines ==================== -->
+<line x1="110" y1="25" x2="110" y2="390" stroke="#999" stroke-width="0.8" stroke-dasharray="4 3"/>
+<line x1="510" y1="25" x2="510" y2="390" stroke="#999" stroke-width="0.8" stroke-dasharray="4 3"/>
+
+<!-- Time (ms) labels -->
+<text x="760" y="162" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Time (ms)</text>
+<text x="760" y="362" fill="#000" font-family="Helvetica" font-size="9px" text-anchor="middle" font-weight="bold">Time (ms)</text>
+
+<!-- ==================== Legend ==================== -->
+<text x="110" y="420" fill="#333" font-family="Helvetica" font-size="9px" font-weight="bold">Legend:</text>
+<rect x="155" y="410" width="30" height="14" fill="#dae8fc" stroke="#6c8ebf" stroke-width="0.8" rx="2" ry="2"/>
+<rect x="187" y="410" width="30" height="14" fill="#d5e8d4" stroke="#82b366" stroke-width="0.8" rx="2" ry="2"/>
+<rect x="219" y="410" width="30" height="14" fill="#ffe6cc" stroke="#d79b00" stroke-width="0.8" rx="2" ry="2"/>
+<rect x="251" y="410" width="30" height="14" fill="#e1d5e7" stroke="#9673a6" stroke-width="0.8" rx="2" ry="2"/>
+<rect x="283" y="410" width="30" height="14" fill="#f8cecc" stroke="#b85450" stroke-width="0.8" rx="2" ry="2"/>
+<text x="230" y="440" fill="#555" font-family="Helvetica" font-size="8px" text-anchor="middle">Partition Windows</text>
+
+<rect x="340" y="410" width="30" height="14" fill="#44546a" stroke="#432d57" stroke-width="0.8" rx="3" ry="3"/>
+<text x="355" y="440" fill="#555" font-family="Helvetica" font-size="8px" text-anchor="middle">ARINC 653 Processes</text>
+
+<rect x="420" y="410" width="8" height="14" fill="#c00000" stroke="none" opacity="0.7"/>
+<text x="470" y="420" fill="#555" font-family="Helvetica" font-size="8px" text-anchor="middle">APEX Context Switch</text>
+
+<line x1="530" y1="417" x2="560" y2="417" stroke="#999" stroke-width="0.8" stroke-dasharray="4 3"/>
+<text x="610" y="420" fill="#555" font-family="Helvetica" font-size="8px" text-anchor="middle">Major Frame Alignment</text>
+
+</g></svg>
