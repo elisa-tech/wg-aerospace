@@ -48,10 +48,11 @@ POST-MEETING (after the call)
    - Run: python3 meeting-minutes/hackmd-tool/hackmd_helper.py clear
    - Leaves only the 3-line footer, ready for the next meeting
 
-7. Incorporate chat text into minutes
+7. Incorporate AI meeting summary, transcript & chat text into minutes
+   - Ask contributor/user for any AI transcription/meeting summary if not already provided
+   - Merge details from the AI summary/transcript into the manual notes (clarifying
+     technical context, additional details, and precise ACTION items / owners)
    - Cross-reference all shared links from Zoom chat against the minutes
-   - Ask for or incorporate AI-generated meeting summary/transcription (if available)
-     to refine notes, clarify technical context, and capture ACTION items
    - Add any missing links/references to the appropriate section
    - Add contact info shared (emails) to relevant ACTION items
 
@@ -79,6 +80,18 @@ POST-MEETING (after the call)
 
 11. Verify SPDX license headers in any new files
    - See Contributing.md "License" section for requirements and reuse tool usage
+
+12. Generate a TL;DR call summary for email (plain text, Outlook-friendly)
+    - Format as clean plain text (asterisks for bullets, plain URLs) so it can
+      be copied directly into Outlook
+    - Structure:
+      Subject: [TL;DR] ELISA Aerospace WG — General Call ([Month Day, Year])
+
+      Quick Recap:
+      * 2-3 concise bullets covering main topics, decisions, and progress
+
+      Key Links:
+      * Label: https://...
 
 NOTES
 -----
