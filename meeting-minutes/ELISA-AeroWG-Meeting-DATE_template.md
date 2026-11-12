@@ -40,11 +40,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Arthur Melo Cruz - Mathworks
 - Benjamin Pellieux - Coros Space
 - Bob Pulju - Collins Aerospace
-- Brennan Hay - NASA
+- Brennan Hay - NASA Goddard
 - Brennan Stewart - NASA
 - Brian Vandegriend - Microchip
 - Brian Wood - Boeing
 - Carole Garrison - NASA Langley
+- Charles Perry - Microchip
 - Chuck Wolber - Boeing
 - Cyril Jean - Microchip Technology Inc.
 - Daniel Riechers - Collins Aerospace
@@ -57,11 +58,12 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Ganapathi N
 - Gaston Gonzalez - VENG
 - Gary Crum - Voyager
-- Hihara Hiroki
+- Hiroki Hihara
 - Iain Galloway - NXP Semiconductors
 - Ivan Perez - KBR @ NASA Ames Research Center
 - Ivan Rodriguez - Coros Space
 - Joshua Whitehead - Boeing
+- Juan Solano
 - Justin Pearson - Lynx Software
 - Laurent Meilleur
 - Lenka Koskova - TUL CZ
@@ -69,8 +71,10 @@ The Aerospace Working Group shall develop use cases to inform and influence Linu
 - Macarena Sagredo
 - Manuel Beltran - Boeing
 - Martin Halle - Hamburg University of Technology
+- Martin Herren
 - Matt Kelly - Boeing
 - Matt Weber - Boeing
+- Matthias Schmitz
 - Michael Epley - Redhat
 - Michael Mahoney - Wind River
 - Michael Monaghan - NASA Goddard

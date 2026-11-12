@@ -7,27 +7,28 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 ## Upcoming Events
 
-- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
-- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
-  - CFP Closes: June 24, 2026
-  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
-    - CFP coming to solicit speakers and session topics
-- **Oct 13** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
-  - Full presentations deadline likely end of May - did anyone submit?
-  - Posters much later; not-selected full presentations can be considered for posters
-  - Safe/secure lang focus for high-integrity (in-person)
-  - **ACTION:** Ivan/Matt offered to help prepare material from existing decks
-  - **ACTION:** Leonidas checking on if he can attend
-- NASA SPARK submissions -> [link](https://spark.nasa.gov/)
-- **Feb 23, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
-  - Paper Deadline: Oct 21, 2026
+- **Feb 22, 2027** 9th Workshop on Avionics Systems and Software Engineering (AvioSE), Dortmund, Germany -> [link](https://aviose-workshop.github.io/)
+  - NEW Paper Deadline: Dec 01, 2026
 - **Mar 6-13 2027** 48th International IEEE Aerospace Conference 2027, Yellowstone Conference Center, Big Sky MT, USA -> [link](https://www.aeroconf.org/)
+- **March 22–25 2027** Flight Software Workshop -> [link](https://flightsoftware.org/)
+  - **Abstracts due Dec 4th**
 - **Sept 12-16, 2027** DASC Congress, Belfast, Northern Ireland, Europe -> [link](https://dasconline.org/2027/) (Links to be available soon)
 - **Nov 3-6, 2027** iSpaRo / i-SAIRAS Conference, Cologne, Germany
   - Workshop on Open Space Robotics: <https://openrobotics.space/>, deadline 21st October (2min-video or PDF Poster)
+- NASA SPARK submissions -> [link](https://spark.nasa.gov/)
 
 ## Recently Past Deadlines/Events
 
+- **Nov 6-7** Texas Linux Fest -> [link](https://2026.texaslinuxfest.org/)
+  - Kate Stewart did a nice intro presentation of the Safe Usage of Linux at the Texas Linux Festival last weekend. The video is up on YouTube now: <https://www.youtube.com/watch?v=163k-BmEPqY>
+- **Oct 4-9** Embedded Systems Week (ESWeek) -> [link](https://esweek.org)
+- **Oct 07-09** Embedded Linux Conference Europe, Prague, Czechia -> [link](https://events.linuxfoundation.org/embedded-linux-conference-europe/)
+  - RTL User Forum co-located event (afternoon before OSS Europe) -> [link](https://events.linuxfoundation.org/open-source-summit-europe/features/co-located-events/#real-time-linux-user-forum)
+  - Failure Propagation in Linux: Challenges for Safety Qualification - Alessandro Carminati, NVIDIA -> [link](https://osselceu2026.sched.com/event/2Rahu/failure-propagation-in-linux-challenges-for-safety-qualification-alessandro-carminati-nvidia) -> [video](https://www.youtube.com/watch?v=CM9Zhfi_W6E)
+  - Let's Perform a Hazard Assessment! - Peter Brink & Chuck Wolber -> [link](https://osselceu2026.sched.com/event/2Ragz/lets-perform-a-hazard-assessment-chuck-wolber-the-boeing-company-pete-brink-underwriter-laboratories-ul) -> [video](https://www.youtube.com/watch?v=TLnQoUqyMpc)
+- **Oct 13** High Integrity Systems Conference -> [link](https://www.his-conference.co.uk/)
+  - Posters much later; not-selected full presentations can be considered for posters
+  - Safe/secure lang focus for high-integrity (in-person)
 - **Sept 13-17** ICAS Congress, Sydney, Australia -> [link](https://icas2026.com/)
 - **Sept 13-17** DASC Congress, Orlando, USA -> [link](https://dasconline.org/2026/)
   - Our AeroWG paper got accepted
