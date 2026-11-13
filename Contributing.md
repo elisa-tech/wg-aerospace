@@ -136,6 +136,45 @@ This aligns with the OpenJS Foundation's
 principle: every submitter remains responsible for their submission
 regardless of the degree to which they employ AI tools.
 
+Note for the DCO: Author and e-mail address must match with GIT account!
+
+#### How to update DCO in commits if forgotten
+
+Checkout the right working copy, e.g. from a PR:
+```bash
+git checkout [pr_name]
+```
+E.g.:
+```bash
+git checkout develop-kernel-minimization
+```
+Rebase to main (you may want to use 'gitk' afterwards to check if that worked):
+```bash
+git rebase -i main
+```
+(reword as needed)
+Force the push:
+```bash
+git push origin HEAD --force-with-lease
+```
+Alternatively add DCO this way:
+```bash
+git commit --amend -sv --author "Foo Bar <foo.bar@whatever.com>"
+```
+Alternative methods you may want ot consider further:
+Push your HEAD to the [branch]. It avoids accidentally doing a force push to the wrong branch:
+```bash
+git push -u origin -f HEAD:[branch]
+```
+E.g.:
+```bash
+git push -u origin -f HEAD:develop-kernel-minimization
+```
+Or: Push your local [branch] to [branch] on the origin:
+```bash
+git push -u origin -f develop-kernel-minimization
+```
+
 ### License compliance
 
 Ensure AI-generated content does not introduce license-incompatible
