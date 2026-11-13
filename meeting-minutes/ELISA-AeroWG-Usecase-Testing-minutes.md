@@ -8,7 +8,7 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 
 **Holiday / Vacations / Conflicts**
 
-- None
+- Matt on vacation Nov 23-29th
 
 **Parking lot:**
 
@@ -21,6 +21,108 @@ Zoom link for call - <https://zoom-lfx.platform.linuxfoundation.org/meeting/9568
 **Presentations**
 
 - None
+
+## 20261113
+
+**Attendance**
+
+- Matt Weber - The Boeing Company
+- Yassine Cherni - GoMyRobot
+- Martin Halle - Hamburg University of Technology
+- Matthias Schmitz
+- Ivan Perez - KBR @ NASA
+- Shefali Sharma
+- Rob Woolley - Wind River Systems, Inc.
+
+**Discussion topics**
+
+- [Kernel minimization effort]: ELISA HelloInit instructions & PR #257
+  - Martin and Matthias walked through the updated `HelloInit` documentation and
+    QEMU Docker container implementation; verified that line counts match and
+    the containerized workflow is reproducible
+  - Matthias confirmed that Podman works as a drop-in replacement for Docker
+  - Resolved DCO / commit authorship issue on
+    [PR #257 Starting point for kernel minimization effort](https://github.com/elisa-tech/wg-aerospace/pull/257)
+    (supporting [Issue #168](https://github.com/elisa-tech/wg-aerospace/issues/168))
+    and merged it onto `main` via rebase and merge
+
+- Git commit authorship, DCO sign-off, and AI contribution trailers
+  - Discussed DCO requirements: the commit author name/email and `Signed-off-by`
+    trailer must match the contributor's GitHub identity
+  - Martin opened [PR #269](https://github.com/elisa-tech/wg-aerospace/pull/269)
+    to document DCO recovery steps in `Contributing.md` (with follow-up
+    refinement on the author phrasing requested by Rob)
+  - Discussed AI-assisted contribution policies and commit trailers, comparing
+    the Linux Foundation `Assisted-by:` format with the
+    [Yocto Project AI-Assisted Contribution Policy](https://docs.yoctoproject.org/wrynose/contributor-guide/ai-assisted-contribution-policy.html)
+
+- [Kernel minimization effort]: ELISA HelloCFS direct launch as userspace
+  - Walked through `docs/minimal-linux/hello-cfs/Dockerfile.step0-cfs-baseline`
+    demonstrating a prototype that launches cFS statically as the init process
+    without a separate userspace
+  - Addressed static linking and licensing considerations:
+    - Uses a Bootlin `musl` toolchain on x86_64 to avoid static `glibc`/`libm`
+      GPL linking issues (providing a stub `execinfo.h` header) and an Ubuntu
+      cross-toolchain for ARM64
+    - Statically links cFS applications and libraries into `core-cpu1` via
+      `STATIC_APPLIST` and disables the dynamic loader
+      (`OSAL_CONFIG_INCLUDE_DYNAMIC_LOADER`)
+  - Discussed kernel configuration additions needed on top of `tinyconfig` for
+    cFS (POSIX message queues, VFS, staging mount points, and sockets)
+  - Reviewed initial kernel size metrics (~203k SLOC) and the distinction
+    between compiled source metrics and DWARF-linked metrics (using unstripped
+    DWARF debug symbols to identify linked functions before stripping)
+  - Explored ways to further reduce both cFS and kernel footprint:
+    - Disabling unneeded OSAL options in `osal/default_config.cmake` (adjusted
+      via `sample_defs/aarch64-linux_osconfig.cmake`), such as
+      `OSAL_CONFIG_INCLUDE_DNS FALSE`, `OSAL_CONFIG_INCLUDE_DYNAMIC_LOADER`,
+      and bugcheck options
+    - Removing default test applications in `cfe/cmake/mission_defaults.cmake`
+      (`APPEND MISSION_GLOBAL_APPLIST cfe_assert cfe_testcase`)
+    - Using data-driven analysis (`strace` syscall dumps, KCOV, or QEMU
+      instruction tracing) to identify unused kernel features
+  - Yassine, noted `runit` as a minimal option if an init wrapper is needed later for
+    process supervision / automatic restarts
+  - **ACTION:** Ivan - Investigate the cFS/cFE configuration side to identify
+    which cFE and OSAL options can be disabled to further reduce image and
+    kernel requirements
+  - **ACTION:** Explore using QEMU instruction tracing or `strace` to
+    generate a syscall dump for cFS to identify which kernel options can be
+    removed
+
+- SGL SDK -> cFS build instructions & `meta-aerospace`
+  - Discussed transferring the
+    [cFS Yocto SDK build instructions Gist](https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64#file-gistfile1-txt)
+    into a `docs/` Markdown file referenced from `README.md` in
+    [meta-aerospace](https://github.com/elisa-tech/meta-aerospace)
+  - Added Matthias ([`@mattthias`](https://github.com/mattthias)) to the
+    `meta-aerospace` repository to contribute the documentation PR
+  - Yassine asked whether there are future plans to register
+    `meta-aerospace`/SGL in the
+    [OpenEmbedded Layer Index](https://layers.openembedded.org/layerindex/branch/master/layers/)
+    (potentially targeting the next LTS)
+    - **ACTION:** This is a good question and we should discuss next time
+  - **ACTION:** Matthias - Opening a PR in `meta-aerospace` transferring the
+    SGL/SDK cFS build instructions from the Gist into the repository
+    documentation
+
+**Not discussed / Carryover items**
+
+- [Kernel minimization effort]: Linux docs
+  - **ACTION:** Matt - Working through constructive feedback received on the
+    Linux patches sent to the kernel doc mailing list
+
+- [GitHub PRs](https://github.com/elisa-tech/wg-aerospace/pulls)
+  - **NEW** [#269 Contributing.md: Add DCO fix instructions](https://github.com/elisa-tech/wg-aerospace/pull/269)
+  - **NEW** [#267 Document the automated AArch64/QEMU cabin lights demo](https://github.com/elisa-tech/wg-aerospace/pull/267)
+  - [#237 Update cFS demo to use Ogma 1.15.0](https://github.com/elisa-tech/wg-aerospace/pull/237)
+  - [#231 ARINC 615A Tool Suite](https://github.com/elisa-tech/wg-aerospace/pull/231)
+  - [#177 Mixed crit workshop](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+- Revisit parking lot items
+  - **ACTION:** Matt - Work on [merging material supporting the Xen Summit talk](https://github.com/elisa-tech/wg-aerospace/pull/177)
+
+---
 
 ## 20261106
 

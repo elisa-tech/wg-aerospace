@@ -126,6 +126,8 @@ RUN make tinyconfig \
 #   - https://gist.github.com/robwoolley/04ea0872a8ceb6cf7d3fa0ebab180b64
 #   - Additional fixup example -  https://gist.github.com/robwoolley/e7cd0c221cff1967b9ead2580a9fc46f
 # - cfe/docs/README_static_app_linkage.md (OSAL static loader + STATIC_APPLIST)
+# - If there are OSAL items that need tailored, adjust the `sample_defs/aarch64-linux_osconfig.cmake`
+#   to append them, e.g. line editing `OSAL_CONFIG_INCLUDE_DYNAMIC_LOADER` below
 # ------------------------------------------------------------------------------
 WORKDIR /workspace/cFS
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
