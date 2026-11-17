@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Minimal Kernel Config Analysis
 
 A companion to the draft
-[kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+[kernel-tailoring guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
 and this repo's [aerospace framing](../SoftwareMinimization.md). The draft
 guide is the clean, iterate-through-it walkthrough; this page collects the
 deeper comparison against published minimal configs and prior measurements, so

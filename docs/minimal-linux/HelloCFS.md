@@ -235,10 +235,10 @@ Anchoring cFS experiment parameters ensures reviewable and reproducible metrics:
 
 ## Appendix 1. References
 
-- [Kernel Minimization Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  (`Documentation/admin-guide/kernel-minimization.rst`) — base build, iterate, evaluate, and measurement method.
+- [Kernel Tailoring Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
+  (`Documentation/admin-guide/kernel-tailoring.rst`) base build, iterate, evaluate, and measurement method.
 - [Workload Tracing Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
-  (`Documentation/admin-guide/workload-tracing.rst`) — syscall and kernel-path discovery, including minimal user space.
+  (`Documentation/admin-guide/workload-tracing.rst`) syscall and kernel-path discovery, including minimal user space.
 - [Software Minimization](../SoftwareMinimization.md) — devcontainer setup,
   aerospace framing, and observations.
 - [Hello Init (Practice)](./HelloInit.md) — foundational PID 1 practice walkthrough and measurement baseline.

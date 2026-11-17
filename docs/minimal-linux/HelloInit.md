@@ -5,7 +5,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 
 # Hello Init (Practice)
 
-This document demonstrates applying the [kernel-minimization draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+This document demonstrates applying the [kernel-tailoring draft](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
 to a minimal static "hello world" PID 1 application. It serves as the foundational
 practice walkthrough and template for complex workloads such as
 [Hello cFS](./HelloCFS.md). This page provides the practical end-to-end
@@ -49,8 +49,8 @@ execution sequence, verification checks, and baseline measurements.
 Before running this walkthrough:
 
 - **Upstream foundational guides:** Read the upstream
-  [Kernel Minimization Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  (`Documentation/admin-guide/kernel-minimization.rst`)
+  [Kernel Tailoring Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
+  (`Documentation/admin-guide/kernel-tailoring.rst`)
   and [Workload Tracing Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
   (`Documentation/admin-guide/workload-tracing.rst`)
   for core principles, configuration theory, and discovery mechanisms.
@@ -368,10 +368,10 @@ Target feature probe `socket(AF_INET, SOCK_DGRAM, 0)` on the KCOV-instrumented m
 
 ## Appendix 1. References
 
-- [Kernel Minimization Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  (`Documentation/admin-guide/kernel-minimization.rst`) — base build, iterate, evaluate, and measurement method.
+- [Kernel Tailoring Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
+  (`Documentation/admin-guide/kernel-tailoring.rst`) base build, iterate, evaluate, and measurement method.
 - [Workload Tracing Guide (Draft PR)](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
-  (`Documentation/admin-guide/workload-tracing.rst`) — syscall and kernel-path discovery, including minimal user space.
+  (`Documentation/admin-guide/workload-tracing.rst`) syscall and kernel-path discovery, including minimal user space.
 - [Software Minimization](../SoftwareMinimization.md) — aerospace framing,
   assurance boundaries, and the experiment discipline.
 - [Kernel Config Analysis](./KernelConfigAnalysis.md) — historical reference configuration comparison.
