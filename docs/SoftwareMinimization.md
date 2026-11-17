@@ -13,8 +13,8 @@ developed for the upstream Linux kernel to safety-critical aerospace systems.
 The foundational approaches for trimming and analyzing a Linux kernel for a single,
 known workload are documented in the upstream kernel guides:
 
-- [Kernel Minimization Guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
-  (`Documentation/admin-guide/kernel-minimization.rst`)
+- [Kernel Tailoring Guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
+  (`Documentation/admin-guide/kernel-tailoring.rst`)
   — Covers the core mechanics of top-down and bottom-up Kconfig trimming, monolithic builds,
   cross-compilation for QEMU, feature probing, and SLOC/image size measurement.
 - [Workload Tracing Guide](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
@@ -91,7 +91,7 @@ New contributors and reviewers should follow the scenarios in order:
 
 ## References
 
-- [Kernel-minimization [DRAFT] (docs.kernel.org)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+- [Kernel-tailoring [DRAFT] (docs.kernel.org)](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
 - ELISA [Discovering Linux kernel subsystems used by a workload](https://github.com/elisa-tech/ELISA-White-Papers/blob/master/Processes/Discovering_Linux_kernel_subsystems_used_by_a_workload.md).
 - ELISA LFSCS [minimal-application ftrace study](https://github.com/elisa-tech/wg-lfscs/blob/main/min_prog_trace/README.md)
   and [configuration](https://github.com/elisa-tech/wg-lfscs/tree/main/min_prog_trace).

@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Certification Progression
 
 A **separate track** from the draft
-[kernel-minimization](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+[kernel-tailoring](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
 build/measure/boot workflow (see this repo's
 [aerospace framing](../SoftwareMinimization.md)): once a minimized kernel exists,
 moving it toward higher assurance levels is a distinct effort. This page is a
@@ -31,6 +31,6 @@ Moving up software levels adds verification obligations. In DO-178C terms:
 - [Technology Readiness Levels (TRL)](https://www.nasa.gov/directorates/somd/space-communications-navigation-program/technology-readiness-levels/)
   and [Technology Readiness Assessment (TRA)](https://acqnotes.com/acqnote/careerfields/technology-readiness-assessment).
 - [Capability Maturity Model (CMM)](https://en.wikipedia.org/wiki/Capability_Maturity_Model).
-- Draft [kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+- Draft [kernel-tailoring guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
   — the workflow this track builds on; see
   [aerospace framing](../SoftwareMinimization.md).

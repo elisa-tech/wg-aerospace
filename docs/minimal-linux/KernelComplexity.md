@@ -6,7 +6,7 @@ SPDX-License-Identifier: CC-BY-SA-4.0
 # Measuring Linux Kernel Complexity — Build-Time and Runtime Approaches
 
 This is a companion to the draft
-[kernel-minimization guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html)
+[kernel-tailoring guide](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html)
 (see this repo's [aerospace framing](../SoftwareMinimization.md)).
 Minimization reduces _size_; this document is about measuring
 _complexity_, which is a related but distinct concern and needs its own
@@ -42,7 +42,7 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 
 ### 1. Size and configuration surface
 
-- Use the [kernel guide's measurements](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring)
+- Use the [kernel guide's measurements](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html#measuring)
   for SLOC and image size, including their scope limitations. These describe
   build size, not structural complexity or the code reachable from a partition.
 - Kconfig option count and dependency graph. Tooling: `scripts/kconfig`, and
@@ -84,7 +84,7 @@ Ordered from cheap-and-shallow to expensive-and-deep.
 ### 1. Coverage of what is actually used
 
 - Follow the [workload-tracing guide](https://matthew-l-weber.github.io/linux/admin-guide/workload-tracing.html)
-  and the kernel guide's [present-versus-observed discussion](https://matthew-l-weber.github.io/linux/admin-guide/kernel-minimization.html#measuring)
+  and the kernel guide's [present-versus-observed discussion](https://matthew-l-weber.github.io/linux/admin-guide/kernel-tailoring.html#measuring)
   for collection methods and their limits. For aerospace analysis, use the
   observations to focus requirements and reachability review. Unobserved code
   is not a dead-code metric and does not establish dead or deactivated status
