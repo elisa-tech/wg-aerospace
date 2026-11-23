@@ -69,6 +69,9 @@ New contributors and reviewers should follow the scenarios in order:
 - **[Hello cFS (Flight Application Workload)](./minimal-linux/HelloCFS.md)** — Flight application
   scenario applying the same structure and observation tables to the NASA
   Core Flight System (cFS) and its OS Abstraction Layer (OSAL).
+- **[Maximizing Kernel Coverage with Open-Source Test Suites](./minimal-linux/MaxCoverageMultiSuite.md)**
+  — a worked example of applying these concepts to maximize whole-kernel
+  structural coverage, then audit and prune code that remains unreached.
 
 ## How this maps to the kernel.org draft guides
 
@@ -88,6 +91,8 @@ New contributors and reviewers should follow the scenarios in order:
   the separate assurance track.
 - [Nix-based kernel configuration](../demos/AvioNix-demo/NixBasedKernelConfig.md) —
   reproducible configuration using the same iterate-and-measure loop.
+- [AI Testing Steering Notes](./minimal-linux/TestingSteeringNotes.md) — a
+  reviewer and agent checklist for validating measured claims.
 
 ## References
 

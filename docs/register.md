@@ -58,11 +58,14 @@ This document register shall help to find the information you are looking for. D
 
 - [Hello Init (Practice)](./minimal-linux/HelloInit.md)
   - [Hello Init Artifacts & Dockerfiles](./minimal-linux/hello-init/README.md)
+- [Maximizing Kernel Coverage with Open-Source Test Suites (stress-ng, LTP, Syzkaller & GCOV)](./minimal-linux/MaxCoverageMultiSuite.md)
+  - [Max Coverage Multi-Suite Artifacts & Utilities](./minimal-linux/max-coverage/README.md)
 - [Hello cFS (minimization applied to NASA cFS)](./minimal-linux/HelloCFS.md)
   - [Hello cFS Artifacts & Dockerfiles](./minimal-linux/hello-cfs/README.md)
 - [Minimal Kernel Config Analysis (vs Boeing/LFSCS configs)](./minimal-linux/KernelConfigAnalysis.md)
 - [Measuring Linux Kernel Complexity](./minimal-linux/KernelComplexity.md)
 - [Certification Progression](./minimal-linux/CertificationProgression.md)
+- [Testing Steering Notes (reviewer/agent validation checklist)](./minimal-linux/TestingSteeringNotes.md)
 
 ## Seminars, talks, and blog posts
 
